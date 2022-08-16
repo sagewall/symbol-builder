@@ -1,22 +1,25 @@
 import "./style.css";
 
+import Basemap from "@arcgis/core/Basemap";
 import Color from "@arcgis/core/Color";
 import Polyline from "@arcgis/core/geometry/Polyline";
 import Graphic from "@arcgis/core/Graphic";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
+import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import Map from "@arcgis/core/Map";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import MapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
+import LocalBasemapsSource from "@arcgis/core/widgets/BasemapGallery/support/LocalBasemapsSource";
 import Expand from "@arcgis/core/widgets/Expand";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
 import "@esri/calcite-components/dist/components/calcite-accordion";
 import "@esri/calcite-components/dist/components/calcite-accordion-item";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
+import "@esri/calcite-components/dist/components/calcite-input-number";
+import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
-import "@esri/calcite-components/dist/components/calcite-option";
-import "@esri/calcite-components/dist/components/calcite-input-number";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
@@ -242,19 +245,55 @@ panel.appendChild(accordian);
 
 const simpleLineSymbol = new SimpleLineSymbol();
 
+const blankBasemapVectorTileLayer = new VectorTileLayer({
+  portalItem: {
+    id: "da7c2aa6b22a439fae31294413b5bc62",
+  },
+});
+
+const blankBasemap = new Basemap({
+  baseLayers: [blankBasemapVectorTileLayer],
+  thumbnailUrl:
+    "//jsapi.maps.arcgis.com/sharing/rest/content/items/da7c2aa6b22a439fae31294413b5bc62/info/thumbnail/ago_downloaded.png",
+  title: "Blank",
+});
+
 const map = new Map({
-  basemap: "hybrid",
+  basemap: blankBasemap,
 });
 
 const mapView = new MapView({
-  center: [-80, 35],
+  center: [-98, 49.5],
   container: "viewDiv",
   map: map,
   zoom: 3,
 });
 
+const localBasemapsSource = new LocalBasemapsSource({
+  basemaps: [
+    blankBasemap,
+    Basemap.fromId("satellite"),
+    Basemap.fromId("hybrid"),
+    Basemap.fromId("oceans"),
+    Basemap.fromId("osm"),
+    Basemap.fromId("terrain"),
+    Basemap.fromId("dark-gray-vector"),
+    Basemap.fromId("gray-vector"),
+    Basemap.fromId("streets-vector"),
+    Basemap.fromId("streets-night-vector"),
+    Basemap.fromId("streets-navigation-vector"),
+    Basemap.fromId("topo-vector"),
+    Basemap.fromId("streets-relief-vector"),
+    Basemap.fromId("terrain"),
+    Basemap.fromId("terrain"),
+    Basemap.fromId("terrain"),
+    Basemap.fromId("terrain"),
+  ],
+});
+
 const basemapGallery = new BasemapGallery({
   view: mapView,
+  source: localBasemapsSource,
 });
 
 const basemapGalleryExpand = new Expand({
