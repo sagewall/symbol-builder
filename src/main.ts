@@ -113,6 +113,19 @@ joinSelectOptionRound.innerText = "round";
 joinSelectOptionRound.selected = true;
 joinSelect.appendChild(joinSelectOptionRound);
 
+// miterLimit
+const miterLimitAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+miterLimitAccordianItem.heading = "miterLimit";
+accordian.appendChild(miterLimitAccordianItem);
+
+const miterLimitInputNumber = document.createElement(
+  "calcite-input-number"
+) as HTMLCalciteInputNumberElement;
+miterLimitInputNumber.value = "2";
+miterLimitAccordianItem.appendChild(miterLimitInputNumber);
+
 // style
 const styleAccordianItem = document.createElement(
   "calcite-accordion-item"
@@ -304,6 +317,15 @@ const handleJoinChange = () => {
 
 joinSelect.addEventListener("calciteSelectChange", () => {
   handleJoinChange();
+});
+
+const handleMiterLimitChange = () => {
+  simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
+  update();
+};
+
+miterLimitInputNumber.addEventListener("calciteInputNumberChange", () => {
+  handleMiterLimitChange();
 });
 
 const handleStyleChange = () => {
