@@ -233,7 +233,7 @@ const map = new Map({
   basemap: "hybrid",
 });
 
-const view = new MapView({
+const mapView = new MapView({
   center: [-80, 35],
   container: "viewDiv",
   map: map,
@@ -241,23 +241,23 @@ const view = new MapView({
 });
 
 const basemapGallery = new BasemapGallery({
-  view,
+  view: mapView,
 });
 
 const basemapGalleryExpand = new Expand({
-  view: view,
+  view: mapView,
   content: basemapGallery,
 });
 
-view.ui.add(basemapGalleryExpand, {
+mapView.ui.add(basemapGalleryExpand, {
   position: "top-left",
 });
 
-view.ui.add(panel, { position: "top-right" });
+mapView.ui.add(panel, { position: "top-right" });
 
 const graphicsLayer = new GraphicsLayer();
 map.add(graphicsLayer);
-view.goTo(graphicsLayer.graphics);
+mapView.goTo(graphicsLayer.graphics);
 
 const polyline = new Polyline({
   paths: [
@@ -345,7 +345,7 @@ handleWidthChange();
 update();
 
 // For debugging
-view.whenLayerView(graphicsLayer).then((graphicsLayerView) => {
+mapView.whenLayerView(graphicsLayer).then((graphicsLayerView) => {
   graphicsLayerView.watch("updating", function (updating) {
     if (!updating) {
       graphicsLayerView.queryGraphics().then((graphics) => {
