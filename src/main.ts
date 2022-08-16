@@ -109,6 +109,105 @@ joinSelectOptionRound.label = "round";
 joinSelectOptionRound.innerText = "round";
 joinSelect.appendChild(joinSelectOptionRound);
 
+// style
+const styleAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+styleAccordianItem.heading = "style";
+accordian.appendChild(styleAccordianItem);
+
+const styleSelect = document.createElement(
+  "calcite-select"
+) as HTMLCalciteSelectElement;
+styleSelect.label = "style selection";
+styleSelect.value = "solid";
+styleAccordianItem.appendChild(styleSelect);
+
+const styleSelectOptionDash = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionDash.label = "dash";
+styleSelectOptionDash.innerText = "dash";
+styleSelect.appendChild(styleSelectOptionDash);
+
+const styleSelectOptionDashDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionDashDot.label = "dash-dot";
+styleSelectOptionDashDot.innerText = "dash-dot";
+styleSelect.appendChild(styleSelectOptionDashDot);
+
+const styleSelectOptionDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionDot.label = "dot";
+styleSelectOptionDot.innerText = "dot";
+styleSelect.appendChild(styleSelectOptionDot);
+
+const styleSelectOptionLongDash = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionLongDash.label = "long-dash";
+styleSelectOptionLongDash.innerText = "long-dash";
+styleSelect.appendChild(styleSelectOptionLongDash);
+
+const styleSelectOptionLongDashDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionLongDashDot.label = "long-dash-dot";
+styleSelectOptionLongDashDot.innerText = "long-dash-dot";
+styleSelect.appendChild(styleSelectOptionLongDashDot);
+
+const styleSelectOptionLongDashDotDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionLongDashDotDot.label = "long-dash-dot-dot";
+styleSelectOptionLongDashDotDot.innerText = "long-dash-dot-dot";
+styleSelect.appendChild(styleSelectOptionLongDashDotDot);
+
+const styleSelectOptionNone = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionNone.label = "none";
+styleSelectOptionNone.innerText = "none";
+styleSelect.appendChild(styleSelectOptionNone);
+
+const styleSelectOptionShortDash = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionShortDash.label = "short-dash";
+styleSelectOptionShortDash.innerText = "short-dash";
+styleSelect.appendChild(styleSelectOptionShortDash);
+
+const styleSelectOptionShortDashDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionShortDashDot.label = "short-dash-dot";
+styleSelectOptionShortDashDot.innerText = "short-dash-dot";
+styleSelect.appendChild(styleSelectOptionShortDashDot);
+
+const styleSelectOptionShortDashDotDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionShortDashDotDot.label = "short-dash-dot-dot";
+styleSelectOptionShortDashDotDot.innerText = "short-dash-dot-dot";
+styleSelect.appendChild(styleSelectOptionShortDashDotDot);
+
+const styleSelectOptionShortDot = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionShortDot.label = "short-dot";
+styleSelectOptionShortDot.innerText = "short-dot";
+styleSelect.appendChild(styleSelectOptionShortDot);
+
+const styleSelectOptionShortSolid = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+styleSelectOptionShortSolid.label = "solid";
+styleSelectOptionShortSolid.innerText = "solid";
+styleSelectOptionShortSolid.selected = true;
+styleSelect.appendChild(styleSelectOptionShortSolid);
+
 // width
 const widthAccordianItem = document.createElement(
   "calcite-accordion-item"
@@ -202,6 +301,28 @@ joinSelect.addEventListener("calciteSelectChange", () => {
   handleJoinChange();
 });
 
+const handleStyleChange = () => {
+  simpleLineSymbol.style = <
+    | "dash"
+    | "dash-dot"
+    | "dot"
+    | "long-dash"
+    | "long-dash-dot"
+    | "long-dash-dot-dot"
+    | "none"
+    | "short-dash"
+    | "short-dash-dot"
+    | "short-dash-dot-dot"
+    | "short-dot"
+    | "solid"
+  >styleSelect.value;
+  update();
+};
+
+styleSelect.addEventListener("calciteSelectChange", () => {
+  handleStyleChange();
+});
+
 const handleWidthChange = () => {
   simpleLineSymbol.width = Number(widthInputNumber.value);
   update();
@@ -214,6 +335,7 @@ widthInputNumber.addEventListener("calciteInputNumberChange", () => {
 handleCapChange();
 handleColorChange();
 handleJoinChange();
+handleStyleChange();
 handleWidthChange();
 update();
 
@@ -222,7 +344,7 @@ view.whenLayerView(graphicsLayer).then((graphicsLayerView) => {
   graphicsLayerView.watch("updating", function (updating) {
     if (!updating) {
       graphicsLayerView.queryGraphics().then((graphics) => {
-        console.log(graphics);
+        console.log(graphics.getItemAt(0));
       });
     }
   });
