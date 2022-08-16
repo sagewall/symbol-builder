@@ -13,6 +13,8 @@ import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import MapView from "@arcgis/core/views/MapView";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
+import Expand from "@arcgis/core/widgets/Expand";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
@@ -39,6 +41,19 @@ const view = new MapView({
   container: "viewDiv",
   map: map,
   zoom: 3,
+});
+
+const basemapGallery = new BasemapGallery({
+  view,
+});
+
+const basemapGalleryExpand = new Expand({
+  view: view,
+  content: basemapGallery,
+});
+
+view.ui.add(basemapGalleryExpand, {
+  position: "top-left",
 });
 
 view.ui.add(simpleLineSymbolColorPicker, { position: "top-right" });
