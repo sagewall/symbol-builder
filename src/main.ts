@@ -14,30 +14,65 @@ import "@esri/calcite-components/dist/components/calcite-accordion";
 import "@esri/calcite-components/dist/components/calcite-accordion-item";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-panel";
+import "@esri/calcite-components/dist/components/calcite-select";
+import "@esri/calcite-components/dist/components/calcite-option";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
-const simpleLineSymbolPanel = document.createElement(
+const panel = document.createElement(
   "calcite-panel"
 ) as HTMLCalcitePanelElement;
 
-const simpleLineSymbolAccordian = document.createElement(
+const accordian = document.createElement(
   "calcite-accordion"
 ) as HTMLCalciteAccordionElement;
 
-const simpleLineSymbolAccordianItem = document.createElement(
+const capAccordianItem = document.createElement(
   "calcite-accordion-item"
 ) as HTMLCalciteAccordionItemElement;
-simpleLineSymbolAccordianItem.heading = "Color";
-simpleLineSymbolAccordian.appendChild(simpleLineSymbolAccordianItem);
+capAccordianItem.heading = "cap";
+accordian.appendChild(capAccordianItem);
 
-const simpleLineSymbolColorPicker = document.createElement(
+const capSelect = document.createElement(
+  "calcite-select"
+) as HTMLCalciteSelectElement;
+capSelect.label = "cap selection";
+capAccordianItem.appendChild(capSelect);
+
+const capSelectOptionButt = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+capSelectOptionButt.label = "butt";
+capSelectOptionButt.innerText = "butt";
+capSelect.appendChild(capSelectOptionButt);
+
+const capSelectOptionRound = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+capSelectOptionRound.label = "round";
+capSelectOptionRound.innerText = "round";
+capSelect.appendChild(capSelectOptionRound);
+
+const capSelectOptionSquare = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+capSelectOptionSquare.label = "square";
+capSelectOptionSquare.innerText = "square";
+capSelect.appendChild(capSelectOptionSquare);
+
+const colorAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+colorAccordianItem.heading = "color";
+accordian.appendChild(colorAccordianItem);
+
+const colorPicker = document.createElement(
   "calcite-color-picker"
 ) as HTMLCalciteColorPickerElement;
-simpleLineSymbolColorPicker.value = "#3eb33d";
-simpleLineSymbolAccordianItem.appendChild(simpleLineSymbolColorPicker);
+colorPicker.value = "#3eb33d";
+colorAccordianItem.appendChild(colorPicker);
 
-simpleLineSymbolPanel.appendChild(simpleLineSymbolAccordian);
+panel.appendChild(accordian);
 
 const simpleLineSymbol = new SimpleLineSymbol();
 
@@ -65,7 +100,7 @@ view.ui.add(basemapGalleryExpand, {
   position: "top-left",
 });
 
-view.ui.add(simpleLineSymbolPanel, { position: "top-right" });
+view.ui.add(panel, { position: "top-right" });
 
 const graphicsLayer = new GraphicsLayer();
 map.add(graphicsLayer);
@@ -92,17 +127,24 @@ const update = () => {
   graphicsLayer.graphics.add(newPolylineGraphic);
 };
 
-const handleSimpleLineSymbolColorPickerChange = () => {
-  simpleLineSymbol.color = new Color(simpleLineSymbolColorPicker.value);
+const handleCapChange = () => {
+  simpleLineSymbol.cap = <"butt" | "round" | "square">capSelect.value;
   update();
 };
 
-simpleLineSymbolColorPicker.addEventListener(
-  "calciteColorPickerChange",
-  handleSimpleLineSymbolColorPickerChange
-);
+capSelect.addEventListener("calciteSelectChange", () => {
+  handleCapChange();
+});
 
-handleSimpleLineSymbolColorPickerChange();
+const handleColorChange = () => {
+  simpleLineSymbol.color = new Color(colorPicker.value);
+  update();
+};
+
+colorPicker.addEventListener("calciteColorPickerChange", handleColorChange);
+
+handleCapChange();
+handleColorChange();
 update();
 
 // For debugging
