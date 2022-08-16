@@ -27,6 +27,7 @@ const accordian = document.createElement(
   "calcite-accordion"
 ) as HTMLCalciteAccordionElement;
 
+// cap
 const capAccordianItem = document.createElement(
   "calcite-accordion-item"
 ) as HTMLCalciteAccordionItemElement;
@@ -60,6 +61,7 @@ capSelectOptionSquare.label = "square";
 capSelectOptionSquare.innerText = "square";
 capSelect.appendChild(capSelectOptionSquare);
 
+// color
 const colorAccordianItem = document.createElement(
   "calcite-accordion-item"
 ) as HTMLCalciteAccordionItemElement;
@@ -71,6 +73,40 @@ const colorPicker = document.createElement(
 ) as HTMLCalciteColorPickerElement;
 colorPicker.value = "#3eb33d";
 colorAccordianItem.appendChild(colorPicker);
+
+// join
+const joinAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+joinAccordianItem.heading = "join";
+accordian.appendChild(joinAccordianItem);
+
+const joinSelect = document.createElement(
+  "calcite-select"
+) as HTMLCalciteSelectElement;
+joinSelect.label = "join selection";
+joinAccordianItem.appendChild(joinSelect);
+
+const joinSelectOptionBevel = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+joinSelectOptionBevel.label = "bevel";
+joinSelectOptionBevel.innerText = "bevel";
+joinSelect.appendChild(joinSelectOptionBevel);
+
+const joinSelectOptionMiter = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+joinSelectOptionMiter.label = "miter";
+joinSelectOptionMiter.innerText = "miter";
+joinSelect.appendChild(joinSelectOptionMiter);
+
+const joinSelectOptionRound = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+joinSelectOptionRound.label = "round";
+joinSelectOptionRound.innerText = "round";
+joinSelect.appendChild(joinSelectOptionRound);
 
 panel.appendChild(accordian);
 
@@ -143,8 +179,18 @@ const handleColorChange = () => {
 
 colorPicker.addEventListener("calciteColorPickerChange", handleColorChange);
 
+const handleJoinChange = () => {
+  simpleLineSymbol.join = <"round" | "miter" | "bevel">joinSelect.value;
+  update();
+};
+
+joinSelect.addEventListener("calciteSelectChange", () => {
+  handleJoinChange();
+});
+
 handleCapChange();
 handleColorChange();
+handleJoinChange();
 update();
 
 // For debugging
