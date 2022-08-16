@@ -257,6 +257,7 @@ view.ui.add(panel, { position: "top-right" });
 
 const graphicsLayer = new GraphicsLayer();
 map.add(graphicsLayer);
+view.goTo(graphicsLayer.graphics);
 
 const polyline = new Polyline({
   paths: [
