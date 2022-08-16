@@ -20,6 +20,7 @@ import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
+import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
@@ -115,6 +116,31 @@ joinSelectOptionRound.label = "round";
 joinSelectOptionRound.innerText = "round";
 joinSelectOptionRound.selected = true;
 joinSelect.appendChild(joinSelectOptionRound);
+
+// marker
+const markerAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+markerAccordianItem.heading = "marker";
+accordian.appendChild(markerAccordianItem);
+
+const markerAccordian = document.createElement(
+  "calcite-accordion"
+) as HTMLCalciteAccordionElement;
+markerAccordianItem.appendChild(markerAccordian);
+
+// marker color
+const markerColorAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+markerColorAccordianItem.heading = "color";
+markerAccordian.appendChild(markerColorAccordianItem);
+
+const markerColorPicker = document.createElement(
+  "calcite-color-picker"
+) as HTMLCalciteColorPickerElement;
+markerColorPicker.value = "#ff0000";
+markerColorAccordianItem.appendChild(markerColorPicker);
 
 // miterLimit
 const miterLimitAccordianItem = document.createElement(
@@ -243,7 +269,9 @@ widthAccordianItem.appendChild(widthInputNumber);
 
 panel.appendChild(accordian);
 
+const lineSymbolMarker = new LineSymbolMarker();
 const simpleLineSymbol = new SimpleLineSymbol();
+simpleLineSymbol.marker = lineSymbolMarker;
 
 const blankBasemapVectorTileLayer = new VectorTileLayer({
   portalItem: {
@@ -358,6 +386,16 @@ joinSelect.addEventListener("calciteSelectChange", () => {
   handleJoinChange();
 });
 
+const handleMarkerColorChange = () => {
+  lineSymbolMarker.color = new Color(markerColorPicker.value);
+  update();
+};
+
+markerColorPicker.addEventListener(
+  "calciteColorPickerChange",
+  handleMarkerColorChange
+);
+
 const handleMiterLimitChange = () => {
   simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
   update();
@@ -401,6 +439,8 @@ widthInputNumber.addEventListener("calciteInputNumberChange", () => {
 handleCapChange();
 handleColorChange();
 handleJoinChange();
+handleMarkerColorChange();
+handleMiterLimitChange();
 handleStyleChange();
 handleWidthChange();
 update();
