@@ -254,7 +254,7 @@ const blankBasemapVectorTileLayer = new VectorTileLayer({
 const blankBasemap = new Basemap({
   baseLayers: [blankBasemapVectorTileLayer],
   thumbnailUrl:
-    "//jsapi.maps.arcgis.com/sharing/rest/content/items/da7c2aa6b22a439fae31294413b5bc62/info/thumbnail/ago_downloaded.png",
+    "https://jsapi.maps.arcgis.com/sharing/rest/content/items/da7c2aa6b22a439fae31294413b5bc62/info/thumbnail/thumbnail1660688993675.png",
   title: "Blank",
 });
 
