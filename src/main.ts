@@ -16,6 +16,7 @@ import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-option";
+import "@esri/calcite-components/dist/components/calcite-input-number";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
@@ -108,6 +109,19 @@ joinSelectOptionRound.label = "round";
 joinSelectOptionRound.innerText = "round";
 joinSelect.appendChild(joinSelectOptionRound);
 
+// width
+const widthAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+widthAccordianItem.heading = "width";
+accordian.appendChild(widthAccordianItem);
+
+const widthInputNumber = document.createElement(
+  "calcite-input-number"
+) as HTMLCalciteInputNumberElement;
+widthInputNumber.value = "4";
+widthAccordianItem.appendChild(widthInputNumber);
+
 panel.appendChild(accordian);
 
 const simpleLineSymbol = new SimpleLineSymbol();
@@ -188,9 +202,19 @@ joinSelect.addEventListener("calciteSelectChange", () => {
   handleJoinChange();
 });
 
+const handleWidthChange = () => {
+  simpleLineSymbol.width = Number(widthInputNumber.value);
+  update();
+};
+
+widthInputNumber.addEventListener("calciteInputNumberChange", () => {
+  handleWidthChange();
+});
+
 handleCapChange();
 handleColorChange();
 handleJoinChange();
+handleWidthChange();
 update();
 
 // For debugging
