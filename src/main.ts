@@ -39,6 +39,7 @@ const capSelect = document.createElement(
   "calcite-select"
 ) as HTMLCalciteSelectElement;
 capSelect.label = "cap selection";
+capSelect.value = "round";
 capAccordianItem.appendChild(capSelect);
 
 const capSelectOptionButt = document.createElement(
@@ -53,6 +54,7 @@ const capSelectOptionRound = document.createElement(
 ) as HTMLCalciteOptionElement;
 capSelectOptionRound.label = "round";
 capSelectOptionRound.innerText = "round";
+capSelectOptionRound.selected = true;
 capSelect.appendChild(capSelectOptionRound);
 
 const capSelectOptionSquare = document.createElement(
@@ -72,7 +74,7 @@ accordian.appendChild(colorAccordianItem);
 const colorPicker = document.createElement(
   "calcite-color-picker"
 ) as HTMLCalciteColorPickerElement;
-colorPicker.value = "#3eb33d";
+colorPicker.value = "#000000";
 colorAccordianItem.appendChild(colorPicker);
 
 // join
@@ -86,6 +88,7 @@ const joinSelect = document.createElement(
   "calcite-select"
 ) as HTMLCalciteSelectElement;
 joinSelect.label = "join selection";
+joinSelect.value = "round";
 joinAccordianItem.appendChild(joinSelect);
 
 const joinSelectOptionBevel = document.createElement(
@@ -107,6 +110,7 @@ const joinSelectOptionRound = document.createElement(
 ) as HTMLCalciteOptionElement;
 joinSelectOptionRound.label = "round";
 joinSelectOptionRound.innerText = "round";
+joinSelectOptionRound.selected = true;
 joinSelect.appendChild(joinSelectOptionRound);
 
 // style
@@ -218,7 +222,7 @@ accordian.appendChild(widthAccordianItem);
 const widthInputNumber = document.createElement(
   "calcite-input-number"
 ) as HTMLCalciteInputNumberElement;
-widthInputNumber.value = "4";
+widthInputNumber.value = "0.75";
 widthAccordianItem.appendChild(widthInputNumber);
 
 panel.appendChild(accordian);
@@ -344,7 +348,7 @@ view.whenLayerView(graphicsLayer).then((graphicsLayerView) => {
   graphicsLayerView.watch("updating", function (updating) {
     if (!updating) {
       graphicsLayerView.queryGraphics().then((graphics) => {
-        console.log(graphics.getItemAt(0));
+        console.log(graphics);
       });
     }
   });
