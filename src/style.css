@@ -4,9 +4,15 @@
 :root,
 html,
 body,
+#app,
 #viewDiv {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
+}
+
+h1,
+h2 {
+  padding-left: 1rem;
 }

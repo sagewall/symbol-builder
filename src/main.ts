@@ -20,13 +20,41 @@ import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
+import "@esri/calcite-components/dist/components/calcite-shell";
+import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
-const panel = document.createElement(
-  "calcite-panel"
-) as HTMLCalcitePanelElement;
+const app = document.querySelector("#app") as HTMLDivElement;
+
+const shell = document.createElement("calcite-shell");
+app.appendChild(shell);
+
+const headerDiv = document.createElement("div") as HTMLDivElement;
+headerDiv.slot = "header";
+shell.appendChild(headerDiv);
+
+const header = document.createElement("header") as HTMLElement;
+headerDiv.appendChild(header);
+
+const h1 = document.createElement("h1") as HTMLHeadingElement;
+h1.innerText = "SimpleLineSymbol";
+header.appendChild(h1);
+
+const propertiesShellPanel = document.createElement("calcite-shell-panel");
+propertiesShellPanel.id = "propertiesShellPanel";
+propertiesShellPanel.slot = "panel-end";
+propertiesShellPanel.position = "end";
+shell.appendChild(propertiesShellPanel);
+
+const h2 = document.createElement("h2") as HTMLHeadingElement;
+h2.innerText = "Properties";
+propertiesShellPanel.appendChild(h2);
+
+const viewDiv = document.createElement("div") as HTMLDivElement;
+viewDiv.id = "viewDiv";
+shell.appendChild(viewDiv);
 
 const accordian = document.createElement(
   "calcite-accordion"
@@ -267,7 +295,7 @@ const widthInputNumber = document.createElement(
 widthInputNumber.value = "0.75";
 widthAccordianItem.appendChild(widthInputNumber);
 
-panel.appendChild(accordian);
+propertiesShellPanel.appendChild(accordian);
 
 const lineSymbolMarker = new LineSymbolMarker();
 const simpleLineSymbol = new SimpleLineSymbol();
@@ -292,7 +320,7 @@ const map = new Map({
 
 const mapView = new MapView({
   center: [-98, 49.5],
-  container: "viewDiv",
+  container: viewDiv,
   map: map,
   zoom: 3,
 });
@@ -332,8 +360,6 @@ const basemapGalleryExpand = new Expand({
 mapView.ui.add(basemapGalleryExpand, {
   position: "top-left",
 });
-
-mapView.ui.add(panel, { position: "top-right" });
 
 const graphicsLayer = new GraphicsLayer();
 map.add(graphicsLayer);
