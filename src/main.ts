@@ -7,6 +7,7 @@ import Graphic from "@arcgis/core/Graphic";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import Map from "@arcgis/core/Map";
+import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import MapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
@@ -22,7 +23,7 @@ import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
-import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
+import "@esri/calcite-components/dist/components/calcite-switch";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
 
@@ -151,6 +152,15 @@ const markerAccordianItem = document.createElement(
 ) as HTMLCalciteAccordionItemElement;
 markerAccordianItem.heading = "marker";
 accordian.appendChild(markerAccordianItem);
+
+const markerSwitchLabel = document.createElement("label") as HTMLLabelElement;
+markerSwitchLabel.innerText = "Show Marker";
+markerAccordianItem.appendChild(markerSwitchLabel);
+
+const markerSwitch = document.createElement(
+  "calcite-switch"
+) as HTMLCalciteSwitchElement;
+markerSwitchLabel.appendChild(markerSwitch);
 
 const markerAccordian = document.createElement(
   "calcite-accordion"
@@ -392,7 +402,7 @@ propertiesShellPanel.appendChild(accordian);
 
 const lineSymbolMarker = new LineSymbolMarker();
 const simpleLineSymbol = new SimpleLineSymbol();
-simpleLineSymbol.marker = lineSymbolMarker;
+// simpleLineSymbol.marker = lineSymbolMarker;
 
 const blankBasemapVectorTileLayer = new VectorTileLayer({
   portalItem: {
@@ -500,6 +510,18 @@ const handleJoinChange = () => {
 joinSelect.addEventListener("calciteSelectChange", () => {
   handleJoinChange();
 });
+
+const handleMarkerSwitchChange = () => {
+  if (markerSwitch.checked) {
+    simpleLineSymbol.marker = lineSymbolMarker;
+  } else {
+    // @ts-ignore
+    simpleLineSymbol.marker = null;
+  }
+  update();
+};
+
+markerSwitch.addEventListener("calciteSwitchChange", handleMarkerSwitchChange);
 
 const handleMarkerColorChange = () => {
   lineSymbolMarker.color = new Color(markerColorPicker.value);
