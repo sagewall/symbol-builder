@@ -170,6 +170,42 @@ const markerColorPicker = document.createElement(
 markerColorPicker.value = "#ff0000";
 markerColorAccordianItem.appendChild(markerColorPicker);
 
+// marker placement
+const markerPlacementAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+markerPlacementAccordianItem.heading = "placement";
+markerAccordian.appendChild(markerPlacementAccordianItem);
+
+const makerPlacementSelect = document.createElement(
+  "calcite-select"
+) as HTMLCalciteSelectElement;
+makerPlacementSelect.label = "style selection";
+makerPlacementSelect.value = "begin-end";
+markerPlacementAccordianItem.appendChild(makerPlacementSelect);
+
+const makerPlacementSelectOptionBegin = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerPlacementSelectOptionBegin.label = "begin";
+makerPlacementSelectOptionBegin.innerText = "begin";
+makerPlacementSelect.appendChild(makerPlacementSelectOptionBegin);
+
+const makerPlacementSelectOptionEnd = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerPlacementSelectOptionEnd.label = "end";
+makerPlacementSelectOptionEnd.innerText = "end";
+makerPlacementSelect.appendChild(makerPlacementSelectOptionEnd);
+
+const makerPlacementSelectOptionBeginEnd = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerPlacementSelectOptionBeginEnd.label = "begin-end";
+makerPlacementSelectOptionBeginEnd.innerText = "begin-end";
+makerPlacementSelectOptionBeginEnd.selected = true;
+makerPlacementSelect.appendChild(makerPlacementSelectOptionBeginEnd);
+
 // miterLimit
 const miterLimitAccordianItem = document.createElement(
   "calcite-accordion-item"
@@ -422,6 +458,17 @@ markerColorPicker.addEventListener(
   handleMarkerColorChange
 );
 
+const handleMarkerPlacementChange = () => {
+  lineSymbolMarker.placement = <"begin" | "end" | "begin-end">(
+    makerPlacementSelect.value
+  );
+  update();
+};
+
+makerPlacementSelect.addEventListener("calciteSelectChange", () => {
+  handleMarkerPlacementChange();
+});
+
 const handleMiterLimitChange = () => {
   simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
   update();
@@ -466,6 +513,7 @@ handleCapChange();
 handleColorChange();
 handleJoinChange();
 handleMarkerColorChange();
+handleMarkerPlacementChange();
 handleMiterLimitChange();
 handleStyleChange();
 handleWidthChange();
