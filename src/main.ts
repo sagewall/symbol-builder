@@ -433,10 +433,6 @@ const localBasemapsSource = new LocalBasemapsSource({
     Basemap.fromId("streets-navigation-vector"),
     Basemap.fromId("topo-vector"),
     Basemap.fromId("streets-relief-vector"),
-    Basemap.fromId("terrain"),
-    Basemap.fromId("terrain"),
-    Basemap.fromId("terrain"),
-    Basemap.fromId("terrain"),
   ],
 });
 
