@@ -206,6 +206,63 @@ makerPlacementSelectOptionBeginEnd.innerText = "begin-end";
 makerPlacementSelectOptionBeginEnd.selected = true;
 makerPlacementSelect.appendChild(makerPlacementSelectOptionBeginEnd);
 
+// marker placement
+const markerStyleAccordianItem = document.createElement(
+  "calcite-accordion-item"
+) as HTMLCalciteAccordionItemElement;
+markerStyleAccordianItem.heading = "style";
+markerAccordian.appendChild(markerStyleAccordianItem);
+
+const makerStyleSelect = document.createElement(
+  "calcite-select"
+) as HTMLCalciteSelectElement;
+makerStyleSelect.label = "marker style selection";
+makerStyleSelect.value = "arrow";
+markerStyleAccordianItem.appendChild(makerStyleSelect);
+
+const makerStyleSelectOptionArrow = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerStyleSelectOptionArrow.label = "arrow";
+makerStyleSelectOptionArrow.innerText = "arrow";
+makerStyleSelectOptionArrow.selected = true;
+makerStyleSelect.appendChild(makerStyleSelectOptionArrow);
+
+const makerStyleSelectOptionCircle = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerStyleSelectOptionCircle.label = "circle";
+makerStyleSelectOptionCircle.innerText = "circle";
+makerStyleSelect.appendChild(makerStyleSelectOptionCircle);
+
+const makerStyleSelectOptionSquare = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerStyleSelectOptionSquare.label = "square";
+makerStyleSelectOptionSquare.innerText = "square";
+makerStyleSelect.appendChild(makerStyleSelectOptionSquare);
+
+const makerStyleSelectOptionDiamond = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerStyleSelectOptionDiamond.label = "diamond";
+makerStyleSelectOptionDiamond.innerText = "diamond";
+makerStyleSelect.appendChild(makerStyleSelectOptionDiamond);
+
+const makerStyleSelectOptionCross = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerStyleSelectOptionCross.label = "cross";
+makerStyleSelectOptionCross.innerText = "cross";
+makerStyleSelect.appendChild(makerStyleSelectOptionCross);
+
+const makerStyleSelectOptionX = document.createElement(
+  "calcite-option"
+) as HTMLCalciteOptionElement;
+makerStyleSelectOptionX.label = "x";
+makerStyleSelectOptionX.innerText = "x";
+makerStyleSelect.appendChild(makerStyleSelectOptionX);
+
 // miterLimit
 const miterLimitAccordianItem = document.createElement(
   "calcite-accordion-item"
@@ -469,6 +526,17 @@ makerPlacementSelect.addEventListener("calciteSelectChange", () => {
   handleMarkerPlacementChange();
 });
 
+const handleMarkerStyleChange = () => {
+  lineSymbolMarker.style = <
+    "square" | "arrow" | "circle" | "diamond" | "cross" | "x"
+  >makerStyleSelect.value;
+  update();
+};
+
+makerStyleSelect.addEventListener("calciteSelectChange", () => {
+  handleMarkerStyleChange();
+});
+
 const handleMiterLimitChange = () => {
   simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
   update();
@@ -514,6 +582,7 @@ handleColorChange();
 handleJoinChange();
 handleMarkerColorChange();
 handleMarkerPlacementChange();
+handleMarkerStyleChange();
 handleMiterLimitChange();
 handleStyleChange();
 handleWidthChange();
