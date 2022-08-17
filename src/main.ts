@@ -151,11 +151,11 @@ joinSelect.appendChild(joinSelectOptionRound);
 const markerAccordianItem = document.createElement(
   "calcite-accordion-item"
 ) as HTMLCalciteAccordionItemElement;
-markerAccordianItem.heading = "marker";
+markerAccordianItem.heading = "marker: null";
 accordian.appendChild(markerAccordianItem);
 
 const markerSwitchLabel = document.createElement("label") as HTMLLabelElement;
-markerSwitchLabel.innerText = "Show Marker";
+markerSwitchLabel.innerText = "Add Marker";
 markerAccordianItem.appendChild(markerSwitchLabel);
 
 const markerSwitch = document.createElement(
@@ -489,6 +489,7 @@ const update = () => {
 
 const handleCapChange = () => {
   simpleLineSymbol.cap = <"butt" | "round" | "square">capSelect.value;
+  capAccordianItem.heading = `cap: "${capSelect.value}"`;
   update();
 };
 
@@ -498,6 +499,7 @@ capSelect.addEventListener("calciteSelectChange", () => {
 
 const handleColorChange = () => {
   simpleLineSymbol.color = new Color(colorPicker.value);
+  colorAccordianItem.heading = `color: "${colorPicker.value}"`;
   update();
 };
 
@@ -505,6 +507,7 @@ colorPicker.addEventListener("calciteColorPickerChange", handleColorChange);
 
 const handleJoinChange = () => {
   simpleLineSymbol.join = <"round" | "miter" | "bevel">joinSelect.value;
+  joinAccordianItem.heading = `join: "${joinSelect.value}"`;
   update();
 };
 
@@ -515,9 +518,11 @@ joinSelect.addEventListener("calciteSelectChange", () => {
 const handleMarkerSwitchChange = () => {
   if (markerSwitch.checked) {
     simpleLineSymbol.marker = lineSymbolMarker;
+    markerAccordianItem.heading = `marker: ${JSON.stringify(lineSymbolMarker)}`;
   } else {
     // @ts-ignore
     simpleLineSymbol.marker = null;
+    markerAccordianItem.heading = `marker: null`;
   }
   update();
 };
@@ -526,6 +531,7 @@ markerSwitch.addEventListener("calciteSwitchChange", handleMarkerSwitchChange);
 
 const handleMarkerColorChange = () => {
   lineSymbolMarker.color = new Color(markerColorPicker.value);
+  markerColorAccordianItem.heading = `color: "${markerColorPicker.value}"`;
   update();
 };
 
@@ -538,6 +544,7 @@ const handleMarkerPlacementChange = () => {
   lineSymbolMarker.placement = <"begin" | "end" | "begin-end">(
     makerPlacementSelect.value
   );
+  markerPlacementAccordianItem.heading = `placement: "${makerPlacementSelect.value}"`;
   update();
 };
 
@@ -549,6 +556,7 @@ const handleMarkerStyleChange = () => {
   lineSymbolMarker.style = <
     "square" | "arrow" | "circle" | "diamond" | "cross" | "x"
   >makerStyleSelect.value;
+  markerStyleAccordianItem.heading = `style "${makerStyleSelect.value}"`;
   update();
 };
 
@@ -558,6 +566,7 @@ makerStyleSelect.addEventListener("calciteSelectChange", () => {
 
 const handleMiterLimitChange = () => {
   simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
+  miterLimitAccordianItem.heading = `miterLimit: ${miterLimitInputNumber.value}`;
   update();
 };
 
@@ -580,6 +589,7 @@ const handleStyleChange = () => {
     | "short-dot"
     | "solid"
   >styleSelect.value;
+  styleAccordianItem.heading = `style: "${styleSelect.value}"`;
   update();
 };
 
@@ -589,6 +599,7 @@ styleSelect.addEventListener("calciteSelectChange", () => {
 
 const handleWidthChange = () => {
   simpleLineSymbol.width = Number(widthInputNumber.value);
+  widthAccordianItem.heading = `width: ${widthInputNumber.value}`;
   update();
 };
 
