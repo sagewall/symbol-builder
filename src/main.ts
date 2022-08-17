@@ -403,7 +403,6 @@ propertiesShellPanel.appendChild(accordian);
 
 const lineSymbolMarker = new LineSymbolMarker();
 const simpleLineSymbol = new SimpleLineSymbol();
-// simpleLineSymbol.marker = lineSymbolMarker;
 
 const blankBasemapVectorTileLayer = new VectorTileLayer({
   portalItem: {
