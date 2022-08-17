@@ -47,6 +47,7 @@ const propertiesShellPanel = document.createElement("calcite-shell-panel");
 propertiesShellPanel.id = "propertiesShellPanel";
 propertiesShellPanel.slot = "panel-end";
 propertiesShellPanel.position = "end";
+propertiesShellPanel.widthScale = "l";
 shell.appendChild(propertiesShellPanel);
 
 const h2 = document.createElement("h2") as HTMLHeadingElement;
