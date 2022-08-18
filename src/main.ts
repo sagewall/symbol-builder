@@ -396,7 +396,7 @@ accordian.appendChild(widthAccordianItem);
 const widthInputNumber = document.createElement(
   "calcite-input-number"
 ) as HTMLCalciteInputNumberElement;
-widthInputNumber.value = "0.75";
+widthInputNumber.value = "6";
 widthAccordianItem.appendChild(widthInputNumber);
 
 propertiesShellPanel.appendChild(accordian);
