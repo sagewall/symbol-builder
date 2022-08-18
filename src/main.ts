@@ -16,6 +16,7 @@ import Expand from "@arcgis/core/widgets/Expand";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
 import "@esri/calcite-components/dist/components/calcite-accordion";
 import "@esri/calcite-components/dist/components/calcite-accordion-item";
+import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-option";
@@ -43,7 +44,9 @@ const h1 = document.createElement("h1") as HTMLHeadingElement;
 h1.innerText = "SimpleLineSymbol";
 header.appendChild(h1);
 
-const propertiesShellPanel = document.createElement("calcite-shell-panel");
+const propertiesShellPanel = document.createElement(
+  "calcite-shell-panel"
+) as HTMLCalciteShellPanelElement;
 propertiesShellPanel.id = "propertiesShellPanel";
 propertiesShellPanel.slot = "panel-end";
 propertiesShellPanel.position = "end";
@@ -51,12 +54,41 @@ propertiesShellPanel.resizable = true;
 propertiesShellPanel.widthScale = "l";
 shell.appendChild(propertiesShellPanel);
 
-const propertiesPanel = document.createElement("calcite-panel");
+const propertiesPanel = document.createElement(
+  "calcite-panel"
+) as HTMLCalcitePanelElement;
 propertiesShellPanel.appendChild(propertiesPanel);
 
-const h2 = document.createElement("h2") as HTMLHeadingElement;
-h2.innerText = "Properties";
-propertiesPanel.appendChild(h2);
+const propertiesPanelHeaderContent = document.createElement(
+  "div"
+) as HTMLDivElement;
+propertiesPanelHeaderContent.slot = "header-content";
+propertiesPanelHeaderContent.innerText = "Properties";
+propertiesPanel.appendChild(propertiesPanelHeaderContent);
+
+const codePanel = document.createElement(
+  "calcite-panel"
+) as HTMLCalcitePanelElement;
+propertiesShellPanel.appendChild(codePanel);
+
+const codePanelHeaderContent = document.createElement("div") as HTMLDivElement;
+codePanelHeaderContent.slot = "header-content";
+codePanelHeaderContent.innerText = "Code";
+codePanel.appendChild(codePanelHeaderContent);
+
+const copyCodeAction = document.createElement(
+  "calcite-action"
+) as HTMLCalciteActionElement;
+copyCodeAction.icon = "copy-to-clipboard";
+copyCodeAction.label = "Copy code to clipboard";
+copyCodeAction.slot = "header-actions-end";
+copyCodeAction.text = "Copy code to clipboard";
+copyCodeAction.textEnabled = true;
+codePanel.appendChild(copyCodeAction);
+
+const codeOutputParagraph = document.createElement("p") as HTMLParagraphElement;
+codeOutputParagraph.classList.add("code");
+codePanel.appendChild(codeOutputParagraph);
 
 const viewDiv = document.createElement("div") as HTMLDivElement;
 viewDiv.id = "viewDiv";
@@ -488,6 +520,34 @@ const update = () => {
   newPolylineGraphic.symbol = simpleLineSymbol;
   graphicsLayer.graphics.removeAll();
   graphicsLayer.graphics.add(newPolylineGraphic);
+
+  if (simpleLineSymbol.marker) {
+    codeOutputParagraph.innerText = `
+    const simpleLineSymbol = new SimpleLineSymbol({
+      cap: "${simpleLineSymbol.cap}",
+      color: "${simpleLineSymbol.color.toHex()}",
+      join: "${simpleLineSymbol.join}",
+      marker: {
+        color: "${simpleLineSymbol.marker.color.toHex()}",
+        placement: "${simpleLineSymbol.marker.placement}",
+        style: "${simpleLineSymbol.marker.style}"
+      },
+      miterLimit: ${simpleLineSymbol.miterLimit},
+      style: "${simpleLineSymbol.style}",
+      width: ${simpleLineSymbol.width}
+    })`;
+  } else {
+    codeOutputParagraph.innerText = `
+    const simpleLineSymbol = new SimpleLineSymbol({
+      cap: "${simpleLineSymbol.cap}",
+      color: "${simpleLineSymbol.color.toHex()}",
+      join: "${simpleLineSymbol.join}",
+      miterLimit: ${simpleLineSymbol.miterLimit},
+      style: "${simpleLineSymbol.style}",
+      width: ${simpleLineSymbol.width}
+    })
+  `;
+  }
 };
 
 const handleCapChange = () => {
@@ -618,6 +678,10 @@ const handleWidthChange = () => {
 
 widthInputNumber.addEventListener("calciteInputNumberChange", () => {
   handleWidthChange();
+});
+
+copyCodeAction.addEventListener("click", () => {
+  navigator.clipboard.writeText(codeOutputParagraph.innerText);
 });
 
 handleCapChange();
