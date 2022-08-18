@@ -402,7 +402,7 @@ widthAccordianItem.appendChild(widthInputNumber);
 propertiesShellPanel.appendChild(accordian);
 
 const lineSymbolMarker = new LineSymbolMarker();
-const simpleLineSymbol = new SimpleLineSymbol();
+let simpleLineSymbol = new SimpleLineSymbol();
 
 const blankBasemapVectorTileLayer = new VectorTileLayer({
   portalItem: {
@@ -519,8 +519,14 @@ const handleMarkerSwitchChange = () => {
     simpleLineSymbol.marker = lineSymbolMarker;
     markerAccordianItem.heading = `marker: ${JSON.stringify(lineSymbolMarker)}`;
   } else {
-    // @ts-ignore
-    simpleLineSymbol.marker = null;
+    const newSimpleLineSymbol = new SimpleLineSymbol();
+    newSimpleLineSymbol.cap = simpleLineSymbol.cap;
+    newSimpleLineSymbol.color = simpleLineSymbol.color;
+    newSimpleLineSymbol.join = simpleLineSymbol.join;
+    newSimpleLineSymbol.miterLimit = simpleLineSymbol.miterLimit;
+    newSimpleLineSymbol.style = simpleLineSymbol.style;
+    newSimpleLineSymbol.width = simpleLineSymbol.width;
+    simpleLineSymbol = newSimpleLineSymbol;
     markerAccordianItem.heading = `marker: null`;
   }
   update();
@@ -531,6 +537,7 @@ markerSwitch.addEventListener("calciteSwitchChange", handleMarkerSwitchChange);
 const handleMarkerColorChange = () => {
   lineSymbolMarker.color = new Color(markerColorPicker.value);
   markerColorAccordianItem.heading = `color: "${markerColorPicker.value}"`;
+  handleMarkerSwitchChange();
   update();
 };
 
@@ -544,6 +551,7 @@ const handleMarkerPlacementChange = () => {
     makerPlacementSelect.value
   );
   markerPlacementAccordianItem.heading = `placement: "${makerPlacementSelect.value}"`;
+  handleMarkerSwitchChange();
   update();
 };
 
@@ -556,6 +564,7 @@ const handleMarkerStyleChange = () => {
     "square" | "arrow" | "circle" | "diamond" | "cross" | "x"
   >makerStyleSelect.value;
   markerStyleAccordianItem.heading = `style "${makerStyleSelect.value}"`;
+  handleMarkerSwitchChange();
   update();
 };
 
@@ -566,6 +575,7 @@ makerStyleSelect.addEventListener("calciteSelectChange", () => {
 const handleMiterLimitChange = () => {
   simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
   miterLimitAccordianItem.heading = `miterLimit: ${miterLimitInputNumber.value}`;
+  handleMarkerSwitchChange();
   update();
 };
 
@@ -609,6 +619,7 @@ widthInputNumber.addEventListener("calciteInputNumberChange", () => {
 handleCapChange();
 handleColorChange();
 handleJoinChange();
+handleMarkerSwitchChange();
 handleMarkerColorChange();
 handleMarkerPlacementChange();
 handleMarkerStyleChange();
