@@ -47,12 +47,16 @@ const propertiesShellPanel = document.createElement("calcite-shell-panel");
 propertiesShellPanel.id = "propertiesShellPanel";
 propertiesShellPanel.slot = "panel-end";
 propertiesShellPanel.position = "end";
+propertiesShellPanel.resizable = true;
 propertiesShellPanel.widthScale = "l";
 shell.appendChild(propertiesShellPanel);
 
+const propertiesPanel = document.createElement("calcite-panel");
+propertiesShellPanel.appendChild(propertiesPanel);
+
 const h2 = document.createElement("h2") as HTMLHeadingElement;
 h2.innerText = "Properties";
-propertiesShellPanel.appendChild(h2);
+propertiesPanel.appendChild(h2);
 
 const viewDiv = document.createElement("div") as HTMLDivElement;
 viewDiv.id = "viewDiv";
@@ -399,7 +403,7 @@ const widthInputNumber = document.createElement(
 widthInputNumber.value = "6";
 widthAccordianItem.appendChild(widthInputNumber);
 
-propertiesShellPanel.appendChild(accordian);
+propertiesPanel.appendChild(accordian);
 
 const lineSymbolMarker = new LineSymbolMarker();
 let simpleLineSymbol = new SimpleLineSymbol();
