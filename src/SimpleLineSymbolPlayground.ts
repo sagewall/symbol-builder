@@ -16,11 +16,13 @@ import "@esri/calcite-components/dist/components/calcite-accordion-item";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-input-number";
+import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-switch";
+import "@esri/calcite-components/dist/components/calcite-block";
 
 class SimpleLineSymbolPlayground {
   shellPanel: HTMLCalciteShellPanelElement;
@@ -75,23 +77,20 @@ class SimpleLineSymbolPlayground {
     codeOutputParagraph.classList.add("code");
     codePanel.appendChild(codeOutputParagraph);
 
-    const accordian = document.createElement(
-      "calcite-accordion"
-    ) as HTMLCalciteAccordionElement;
-
     // cap
-    const capAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    capAccordianItem.heading = "cap";
-    accordian.appendChild(capAccordianItem);
+    const capLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    capLabel.innerText = "cap: ";
+    capLabel.layout = "inline";
+    propertiesPanel.appendChild(capLabel);
 
     const capSelect = document.createElement(
       "calcite-select"
     ) as HTMLCalciteSelectElement;
     capSelect.label = "cap selection";
     capSelect.value = "round";
-    capAccordianItem.appendChild(capSelect);
+    capLabel.appendChild(capSelect);
 
     const capSelectOptionButt = document.createElement(
       "calcite-option"
@@ -116,31 +115,39 @@ class SimpleLineSymbolPlayground {
     capSelect.appendChild(capSelectOptionSquare);
 
     // color
-    const colorAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    colorAccordianItem.heading = "color";
-    accordian.appendChild(colorAccordianItem);
+    const colorBlock = document.createElement(
+      "calcite-block"
+    ) as HTMLCalciteBlockElement;
+    colorBlock.collapsible = true;
+    propertiesPanel.appendChild(colorBlock);
+
+    const colorPickerLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    colorPickerLabel.innerText = "color: ";
+    colorPickerLabel.layout = "inline";
+    colorBlock.appendChild(colorPickerLabel);
 
     const colorPicker = document.createElement(
       "calcite-color-picker"
     ) as HTMLCalciteColorPickerElement;
     colorPicker.value = "#000000";
-    colorAccordianItem.appendChild(colorPicker);
+    colorPickerLabel.appendChild(colorPicker);
 
     // join
-    const joinAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    joinAccordianItem.heading = "join";
-    accordian.appendChild(joinAccordianItem);
+    const joinSelectLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    joinSelectLabel.innerText = "join: ";
+    joinSelectLabel.layout = "inline";
+    propertiesPanel.appendChild(joinSelectLabel);
 
     const joinSelect = document.createElement(
       "calcite-select"
     ) as HTMLCalciteSelectElement;
     joinSelect.label = "join selection";
     joinSelect.value = "round";
-    joinAccordianItem.appendChild(joinSelect);
+    joinSelectLabel.appendChild(joinSelect);
 
     const joinSelectOptionBevel = document.createElement(
       "calcite-option"
@@ -165,54 +172,46 @@ class SimpleLineSymbolPlayground {
     joinSelect.appendChild(joinSelectOptionRound);
 
     // marker
-    const markerAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    markerAccordianItem.heading = "marker: null";
-    accordian.appendChild(markerAccordianItem);
-
-    const markerSwitchLabel = document.createElement(
-      "label"
-    ) as HTMLLabelElement;
-    markerSwitchLabel.innerText = "Add Marker";
-    markerAccordianItem.appendChild(markerSwitchLabel);
-
-    const markerSwitch = document.createElement(
-      "calcite-switch"
-    ) as HTMLCalciteSwitchElement;
-    markerSwitchLabel.appendChild(markerSwitch);
-
-    const markerAccordian = document.createElement(
-      "calcite-accordion"
-    ) as HTMLCalciteAccordionElement;
-    markerAccordianItem.appendChild(markerAccordian);
+    const markerBlock = document.createElement(
+      "calcite-block"
+    ) as HTMLCalciteBlockElement;
+    markerBlock.collapsible = true;
+    markerBlock.heading = "marker: ";
+    propertiesPanel.appendChild(markerBlock);
 
     // marker color
-    const markerColorAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    markerColorAccordianItem.heading = "color";
-    markerAccordian.appendChild(markerColorAccordianItem);
+    const markerColorBlock = document.createElement(
+      "calcite-block"
+    ) as HTMLCalciteBlockElement;
+    markerColorBlock.collapsible = true;
+    markerBlock.appendChild(markerColorBlock);
+
+    const markerColorLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    markerColorLabel.innerText = "color: ";
+    markerColorLabel.layout = "inline";
+    markerColorBlock.appendChild(markerColorLabel);
 
     const markerColorPicker = document.createElement(
       "calcite-color-picker"
     ) as HTMLCalciteColorPickerElement;
     markerColorPicker.value = "#ff0000";
-    markerColorAccordianItem.appendChild(markerColorPicker);
+    markerColorLabel.appendChild(markerColorPicker);
 
-    // marker placement
-    const markerPlacementAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    markerPlacementAccordianItem.heading = "placement";
-    markerAccordian.appendChild(markerPlacementAccordianItem);
+    const markerPlacementLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    markerPlacementLabel.innerText = "placement: ";
+    markerPlacementLabel.layout = "inline";
+    markerBlock.appendChild(markerPlacementLabel);
 
     const makerPlacementSelect = document.createElement(
       "calcite-select"
     ) as HTMLCalciteSelectElement;
     makerPlacementSelect.label = "style selection";
     makerPlacementSelect.value = "begin-end";
-    markerPlacementAccordianItem.appendChild(makerPlacementSelect);
+    markerPlacementLabel.appendChild(makerPlacementSelect);
 
     const makerPlacementSelectOptionBegin = document.createElement(
       "calcite-option"
@@ -236,19 +235,19 @@ class SimpleLineSymbolPlayground {
     makerPlacementSelectOptionBeginEnd.selected = true;
     makerPlacementSelect.appendChild(makerPlacementSelectOptionBeginEnd);
 
-    // marker placement
-    const markerStyleAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    markerStyleAccordianItem.heading = "style";
-    markerAccordian.appendChild(markerStyleAccordianItem);
+    const markerStyleLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    markerStyleLabel.innerText = "style: ";
+    markerStyleLabel.layout = "inline";
+    markerBlock.appendChild(markerStyleLabel);
 
     const makerStyleSelect = document.createElement(
       "calcite-select"
     ) as HTMLCalciteSelectElement;
     makerStyleSelect.label = "marker style selection";
     makerStyleSelect.value = "arrow";
-    markerStyleAccordianItem.appendChild(makerStyleSelect);
+    markerStyleLabel.appendChild(makerStyleSelect);
 
     const makerStyleSelectOptionArrow = document.createElement(
       "calcite-option"
@@ -294,31 +293,34 @@ class SimpleLineSymbolPlayground {
     makerStyleSelect.appendChild(makerStyleSelectOptionX);
 
     // miterLimit
-    const miterLimitAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    miterLimitAccordianItem.heading = "miterLimit";
-    accordian.appendChild(miterLimitAccordianItem);
+    const miterLimitLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    miterLimitLabel.innerText = "miterLimit: ";
+    miterLimitLabel.layout = "inline";
+    propertiesPanel.appendChild(miterLimitLabel);
 
     const miterLimitInputNumber = document.createElement(
       "calcite-input-number"
     ) as HTMLCalciteInputNumberElement;
+    miterLimitInputNumber.step = 0.5;
     miterLimitInputNumber.value = "2";
-    miterLimitAccordianItem.appendChild(miterLimitInputNumber);
+    miterLimitLabel.appendChild(miterLimitInputNumber);
 
     // style
-    const styleAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    styleAccordianItem.heading = "style";
-    accordian.appendChild(styleAccordianItem);
+    const styleLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    styleLabel.innerText = "style: ";
+    styleLabel.layout = "inline";
+    propertiesPanel.appendChild(styleLabel);
 
     const styleSelect = document.createElement(
       "calcite-select"
     ) as HTMLCalciteSelectElement;
     styleSelect.label = "style selection";
     styleSelect.value = "solid";
-    styleAccordianItem.appendChild(styleSelect);
+    styleLabel.appendChild(styleSelect);
 
     const styleSelectOptionDash = document.createElement(
       "calcite-option"
@@ -406,19 +408,19 @@ class SimpleLineSymbolPlayground {
     styleSelect.appendChild(styleSelectOptionShortSolid);
 
     // width
-    const widthAccordianItem = document.createElement(
-      "calcite-accordion-item"
-    ) as HTMLCalciteAccordionItemElement;
-    widthAccordianItem.heading = "width";
-    accordian.appendChild(widthAccordianItem);
+    const widthLabel = document.createElement(
+      "calcite-label"
+    ) as HTMLCalciteLabelElement;
+    widthLabel.innerText = "width: ";
+    widthLabel.layout = "inline";
+    propertiesPanel.appendChild(widthLabel);
 
     const widthInputNumber = document.createElement(
       "calcite-input-number"
     ) as HTMLCalciteInputNumberElement;
+    widthInputNumber.step = 0.5;
     widthInputNumber.value = "6";
-    widthAccordianItem.appendChild(widthInputNumber);
-
-    propertiesPanel.appendChild(accordian);
+    widthLabel.appendChild(widthInputNumber);
 
     const lineSymbolMarker = new LineSymbolMarker();
     let simpleLineSymbol = new SimpleLineSymbol();
@@ -506,36 +508,36 @@ class SimpleLineSymbolPlayground {
 
       if (simpleLineSymbol.marker) {
         codeOutputParagraph.innerText = `
-    const simpleLineSymbol = new SimpleLineSymbol({
-      cap: "${simpleLineSymbol.cap}",
-      color: "${simpleLineSymbol.color.toHex()}",
-      join: "${simpleLineSymbol.join}",
-      marker: {
-        color: "${simpleLineSymbol.marker.color.toHex()}",
-        placement: "${simpleLineSymbol.marker.placement}",
-        style: "${simpleLineSymbol.marker.style}"
-      },
-      miterLimit: ${simpleLineSymbol.miterLimit},
-      style: "${simpleLineSymbol.style}",
-      width: ${simpleLineSymbol.width}
-    })`;
+        const simpleLineSymbol = new SimpleLineSymbol({
+          cap: "${simpleLineSymbol.cap}",
+          color: "${simpleLineSymbol.color.toHex()}",
+          join: "${simpleLineSymbol.join}",
+          marker: {
+            color: "${simpleLineSymbol.marker.color.toHex()}",
+            placement: "${simpleLineSymbol.marker.placement}",
+            style: "${simpleLineSymbol.marker.style}"
+          },
+          miterLimit: ${simpleLineSymbol.miterLimit},
+          style: "${simpleLineSymbol.style}",
+          width: ${simpleLineSymbol.width}
+        })`;
       } else {
         codeOutputParagraph.innerText = `
-    const simpleLineSymbol = new SimpleLineSymbol({
-      cap: "${simpleLineSymbol.cap}",
-      color: "${simpleLineSymbol.color.toHex()}",
-      join: "${simpleLineSymbol.join}",
-      miterLimit: ${simpleLineSymbol.miterLimit},
-      style: "${simpleLineSymbol.style}",
-      width: ${simpleLineSymbol.width}
-    })
-  `;
+        const simpleLineSymbol = new SimpleLineSymbol({
+          cap: "${simpleLineSymbol.cap}",
+          color: "${simpleLineSymbol.color.toHex()}",
+          join: "${simpleLineSymbol.join}",
+          marker: null,
+          miterLimit: ${simpleLineSymbol.miterLimit},
+          style: "${simpleLineSymbol.style}",
+          width: ${simpleLineSymbol.width}
+        })
+      `;
       }
     };
 
     const handleCapChange = () => {
       simpleLineSymbol.cap = <"butt" | "round" | "square">capSelect.value;
-      capAccordianItem.heading = `cap: "${capSelect.value}"`;
       update();
     };
 
@@ -545,7 +547,7 @@ class SimpleLineSymbolPlayground {
 
     const handleColorChange = () => {
       simpleLineSymbol.color = new Color(colorPicker.value);
-      colorAccordianItem.heading = `color: "${colorPicker.value}"`;
+      colorBlock.heading = `color: ${simpleLineSymbol.color.toHex()}`;
       update();
     };
 
@@ -553,7 +555,6 @@ class SimpleLineSymbolPlayground {
 
     const handleJoinChange = () => {
       simpleLineSymbol.join = <"round" | "miter" | "bevel">joinSelect.value;
-      joinAccordianItem.heading = `join: "${joinSelect.value}"`;
       update();
     };
 
@@ -561,35 +562,22 @@ class SimpleLineSymbolPlayground {
       handleJoinChange();
     });
 
-    const handleMarkerSwitchChange = () => {
-      if (markerSwitch.checked) {
+    const handleMarkerBlockChange = () => {
+      if (markerBlock.open) {
         simpleLineSymbol.marker = lineSymbolMarker;
-        markerAccordianItem.heading = `marker: ${JSON.stringify(
-          lineSymbolMarker
-        )}`;
+        markerBlock.heading = "marker: ";
       } else {
-        const newSimpleLineSymbol = new SimpleLineSymbol();
-        newSimpleLineSymbol.cap = simpleLineSymbol.cap;
-        newSimpleLineSymbol.color = simpleLineSymbol.color;
-        newSimpleLineSymbol.join = simpleLineSymbol.join;
-        newSimpleLineSymbol.miterLimit = simpleLineSymbol.miterLimit;
-        newSimpleLineSymbol.style = simpleLineSymbol.style;
-        newSimpleLineSymbol.width = simpleLineSymbol.width;
-        simpleLineSymbol = newSimpleLineSymbol;
-        markerAccordianItem.heading = `marker: null`;
+        simpleLineSymbol.marker = null;
+        markerBlock.heading = "marker: null";
       }
       update();
     };
 
-    markerSwitch.addEventListener(
-      "calciteSwitchChange",
-      handleMarkerSwitchChange
-    );
+    markerBlock.addEventListener("calciteBlockToggle", handleMarkerBlockChange);
 
     const handleMarkerColorChange = () => {
       lineSymbolMarker.color = new Color(markerColorPicker.value);
-      markerColorAccordianItem.heading = `color: "${markerColorPicker.value}"`;
-      handleMarkerSwitchChange();
+      markerColorBlock.heading = `color: ${lineSymbolMarker.color.toHex()}`;
       update();
     };
 
@@ -602,8 +590,6 @@ class SimpleLineSymbolPlayground {
       lineSymbolMarker.placement = <"begin" | "end" | "begin-end">(
         makerPlacementSelect.value
       );
-      markerPlacementAccordianItem.heading = `placement: "${makerPlacementSelect.value}"`;
-      handleMarkerSwitchChange();
       update();
     };
 
@@ -615,8 +601,6 @@ class SimpleLineSymbolPlayground {
       lineSymbolMarker.style = <
         "square" | "arrow" | "circle" | "diamond" | "cross" | "x"
       >makerStyleSelect.value;
-      markerStyleAccordianItem.heading = `style "${makerStyleSelect.value}"`;
-      handleMarkerSwitchChange();
       update();
     };
 
@@ -626,8 +610,6 @@ class SimpleLineSymbolPlayground {
 
     const handleMiterLimitChange = () => {
       simpleLineSymbol.miterLimit = Number(miterLimitInputNumber.value);
-      miterLimitAccordianItem.heading = `miterLimit: ${miterLimitInputNumber.value}`;
-      handleMarkerSwitchChange();
       update();
     };
 
@@ -650,7 +632,7 @@ class SimpleLineSymbolPlayground {
         | "short-dot"
         | "solid"
       >styleSelect.value;
-      styleAccordianItem.heading = `style: "${styleSelect.value}"`;
+      // styleAccordianItem.heading = `style: "${styleSelect.value}"`;
       update();
     };
 
@@ -660,7 +642,6 @@ class SimpleLineSymbolPlayground {
 
     const handleWidthChange = () => {
       simpleLineSymbol.width = Number(widthInputNumber.value);
-      widthAccordianItem.heading = `width: ${widthInputNumber.value}`;
       update();
     };
 
@@ -675,7 +656,7 @@ class SimpleLineSymbolPlayground {
     handleCapChange();
     handleColorChange();
     handleJoinChange();
-    handleMarkerSwitchChange();
+    handleMarkerBlockChange();
     handleMarkerColorChange();
     handleMarkerPlacementChange();
     handleMarkerStyleChange();
