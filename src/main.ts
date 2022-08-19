@@ -4,7 +4,7 @@ import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 import "./style.css";
 
-setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.91/assets");
+setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.92/assets");
 
 const app = document.querySelector("#app") as HTMLDivElement;
 

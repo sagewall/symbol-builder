@@ -9,11 +9,11 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.6.4",
-    "vite": "^3.0.7"
+    "typescript": "^4.7.4",
+    "vite": "^3.0.9"
   },
   "dependencies": {
-    "@arcgis/core": "^4.24.7",
-    "@esri/calcite-components": "^1.0.0-beta.91"
+    "@arcgis/core": "^4.25.0-next.20220818",
+    "@esri/calcite-components": "^1.0.0-beta.92"
   }
 }
