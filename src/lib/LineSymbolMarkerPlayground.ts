@@ -1,10 +1,5 @@
 import Color from "@arcgis/core/Color";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
-import "@esri/calcite-components/dist/components/calcite-block";
-import "@esri/calcite-components/dist/components/calcite-color-picker";
-import "@esri/calcite-components/dist/components/calcite-label";
-import "@esri/calcite-components/dist/components/calcite-option";
-import "@esri/calcite-components/dist/components/calcite-select";
 
 class LineSymbolMarkerPlayground {
   colorBlock: HTMLCalciteBlockElement;
