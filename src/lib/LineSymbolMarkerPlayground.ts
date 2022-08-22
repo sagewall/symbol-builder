@@ -7,33 +7,31 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 
 class LineSymbolMarkerPlayground {
-  parentElement: HTMLElement;
-  lineSymbolMarker: LineSymbolMarker;
-  lineSymbolMarkerBlock: HTMLCalciteBlockElement;
   colorBlock: HTMLCalciteBlockElement;
   colorLabel: HTMLCalciteLabelElement;
   colorPicker: HTMLCalciteColorPickerElement;
+  lineSymbolMarker: LineSymbolMarker;
+  lineSymbolMarkerProperties: Object;
+  lineSymbolMarkerBlock: HTMLCalciteBlockElement;
+  parentElement: HTMLElement;
   placementLabel: HTMLCalciteLabelElement;
   placementSelect: HTMLCalciteSelectElement;
-  placementSelectOptionBegin: HTMLCalciteOptionElement;
-  placementSelectOptionEnd: HTMLCalciteOptionElement;
-  placementSelectOptionBeginEnd: HTMLCalciteOptionElement;
+  placementSelectOptions: string[];
   styleLabel: HTMLCalciteLabelElement;
   styleSelect: HTMLCalciteSelectElement;
-  styleSelectOptionArrow: HTMLCalciteOptionElement;
-  styleSelectOptionCircle: HTMLCalciteOptionElement;
-  styleSelectOptionSquare: HTMLCalciteOptionElement;
-  styleSelectOptionDiamond: HTMLCalciteOptionElement;
-  styleSelectOptionCross: HTMLCalciteOptionElement;
-  styleSelectOptionX: HTMLCalciteOptionElement;
+  styleSelectOptions: string[];
 
   constructor(parentElement: HTMLElement) {
     this.parentElement = parentElement;
-    this.lineSymbolMarker = new LineSymbolMarker({
+
+    this.lineSymbolMarkerProperties = {
       color: "#000000",
       placement: "begin-end",
       style: "arrow",
-    });
+    };
+    this.lineSymbolMarker = new LineSymbolMarker(
+      this.lineSymbolMarkerProperties
+    );
 
     this.lineSymbolMarkerBlock = document.createElement("calcite-block");
     this.lineSymbolMarkerBlock.collapsible = true;
@@ -72,22 +70,17 @@ class LineSymbolMarkerPlayground {
       this.handlePlacementChange();
     });
 
-    this.placementSelectOptionBegin = document.createElement("calcite-option");
-    this.placementSelectOptionBegin.label = "begin";
-    this.placementSelectOptionBegin.innerText = "begin";
-    this.placementSelect.appendChild(this.placementSelectOptionBegin);
+    this.placementSelectOptions = ["begin", "end", "begin-end"];
 
-    this.placementSelectOptionEnd = document.createElement("calcite-option");
-    this.placementSelectOptionEnd.label = "end";
-    this.placementSelectOptionEnd.innerText = "end";
-    this.placementSelect.appendChild(this.placementSelectOptionEnd);
-
-    this.placementSelectOptionBeginEnd =
-      document.createElement("calcite-option");
-    this.placementSelectOptionBeginEnd.label = "begin-end";
-    this.placementSelectOptionBeginEnd.innerText = "begin-end";
-    this.placementSelectOptionBeginEnd.selected = true;
-    this.placementSelect.appendChild(this.placementSelectOptionBeginEnd);
+    this.placementSelectOptions.forEach((option) => {
+      const selectOption = document.createElement("calcite-option");
+      selectOption.label = option;
+      selectOption.innerText = option;
+      if (option === "begin-end") {
+        selectOption.selected = true;
+      }
+      this.placementSelect.appendChild(selectOption);
+    });
 
     this.styleLabel = document.createElement("calcite-label");
     this.styleLabel.innerText = "style: ";
@@ -103,36 +96,24 @@ class LineSymbolMarkerPlayground {
       this.handleStyleChange();
     });
 
-    this.styleSelectOptionArrow = document.createElement("calcite-option");
-    this.styleSelectOptionArrow.label = "arrow";
-    this.styleSelectOptionArrow.innerText = "arrow";
-    this.styleSelectOptionArrow.selected = true;
-    this.styleSelect.appendChild(this.styleSelectOptionArrow);
+    this.styleSelectOptions = [
+      "arrow",
+      "circle",
+      "square",
+      "diamond",
+      "cross",
+      "x",
+    ];
 
-    this.styleSelectOptionCircle = document.createElement("calcite-option");
-    this.styleSelectOptionCircle.label = "circle";
-    this.styleSelectOptionCircle.innerText = "circle";
-    this.styleSelect.appendChild(this.styleSelectOptionCircle);
-
-    this.styleSelectOptionSquare = document.createElement("calcite-option");
-    this.styleSelectOptionSquare.label = "square";
-    this.styleSelectOptionSquare.innerText = "square";
-    this.styleSelect.appendChild(this.styleSelectOptionSquare);
-
-    this.styleSelectOptionDiamond = document.createElement("calcite-option");
-    this.styleSelectOptionDiamond.label = "diamond";
-    this.styleSelectOptionDiamond.innerText = "diamond";
-    this.styleSelect.appendChild(this.styleSelectOptionDiamond);
-
-    this.styleSelectOptionCross = document.createElement("calcite-option");
-    this.styleSelectOptionCross.label = "cross";
-    this.styleSelectOptionCross.innerText = "cross";
-    this.styleSelect.appendChild(this.styleSelectOptionCross);
-
-    this.styleSelectOptionX = document.createElement("calcite-option");
-    this.styleSelectOptionX.label = "x";
-    this.styleSelectOptionX.innerText = "x";
-    this.styleSelect.appendChild(this.styleSelectOptionX);
+    this.styleSelectOptions.forEach((option) => {
+      const selectOption = document.createElement("calcite-option");
+      selectOption.label = option;
+      selectOption.innerText = option;
+      if (option === "begin-end") {
+        selectOption.selected = true;
+      }
+      this.styleSelect.appendChild(selectOption);
+    });
   }
 
   handleColorChange() {

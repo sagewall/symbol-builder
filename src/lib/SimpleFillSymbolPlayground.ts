@@ -13,20 +13,21 @@ import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
 class SimpleFillSymbolPlayground {
   codeOutputParagraph: HTMLParagraphElement | null = null;
+  colorBlock: HTMLCalciteBlockElement;
+  colorPicker: HTMLCalciteColorPickerElement;
+  colorPickerLabel: HTMLCalciteLabelElement;
   mapView: MapView | null;
   parentElement: HTMLElement;
-  simpleFillSymbol: SimpleFillSymbol;
-  simpleLineSymbol: SimpleLineSymbol;
-  simpleLineSymbolPlayground: SimpleLineSymbolPlayground;
   polygon: Polygon;
   polygonGraphic: Graphic;
+  simpleFillSymbol: SimpleFillSymbol;
+  simpleFillSymbolProperties: Object;
+  simpleLineSymbol: SimpleLineSymbol;
+  simpleLineSymbolPlayground: SimpleLineSymbolPlayground;
   simpleFillSymbolBlock: HTMLCalciteBlockElement;
-  colorBlock: HTMLCalciteBlockElement;
-  colorPickerLabel: HTMLCalciteLabelElement;
-  colorPicker: HTMLCalciteColorPickerElement;
-  styleSelectLabel: HTMLCalciteLabelElement;
+  styleSelectOptions: string[];
   styleSelect: HTMLCalciteSelectElement;
-  styleOptions: string[];
+  styleSelectLabel: HTMLCalciteLabelElement;
 
   constructor(
     parentElement: HTMLElement,
@@ -105,11 +106,15 @@ class SimpleFillSymbolPlayground {
       ],
     });
 
-    this.simpleFillSymbol = new SimpleFillSymbol({
+    this.simpleFillSymbolProperties = {
       color: new Color("#000000"),
       outline: this.simpleLineSymbol,
-      style: "cross",
-    });
+      style: "solid",
+    };
+
+    this.simpleFillSymbol = new SimpleFillSymbol(
+      this.simpleFillSymbolProperties
+    );
 
     this.polygonGraphic = new Graphic({
       geometry: this.polygon,
@@ -144,7 +149,7 @@ class SimpleFillSymbolPlayground {
     this.styleSelect = document.createElement("calcite-select");
     this.styleSelect.label = `style selection`;
     this.styleSelectLabel.appendChild(this.styleSelect);
-    this.styleOptions = [
+    this.styleSelectOptions = [
       "backward-diagonal",
       "cross",
       "diagonal-cross",
@@ -155,11 +160,11 @@ class SimpleFillSymbolPlayground {
       "vertical",
     ];
 
-    this.styleOptions.forEach((option) => {
+    this.styleSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");
       selectOption.label = option;
       selectOption.innerText = option;
-      if (option === "cross") {
+      if (option === "solid") {
         selectOption.selected = true;
       }
       this.styleSelect.appendChild(selectOption);
