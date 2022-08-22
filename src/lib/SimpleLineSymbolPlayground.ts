@@ -20,18 +20,14 @@ import LineSymbolMarkerPlayground from "./LineSymbolMarkerPlayground";
 class SimpleLineSymbolPlayground {
   capLabel: HTMLCalciteLabelElement;
   capSelect: HTMLCalciteSelectElement;
-  capSelectOptionButt: HTMLCalciteOptionElement;
-  capSelectOptionRound: HTMLCalciteOptionElement;
-  capSelectOptionSquare: HTMLCalciteOptionElement;
+  capSelectOptions: string[];
   codeOutputParagraph: HTMLParagraphElement | null;
   colorBlock: HTMLCalciteBlockElement;
   colorPicker: HTMLCalciteColorPickerElement;
   colorPickerLabel: HTMLCalciteLabelElement;
   joinSelectLabel: HTMLCalciteLabelElement;
   joinSelect: HTMLCalciteSelectElement;
-  joinSelectOptionBevel: HTMLCalciteOptionElement;
-  joinSelectOptionMiter: HTMLCalciteOptionElement;
-  joinSelectOptionRound: HTMLCalciteOptionElement;
+  joinSelectOptions: string[];
   lineSymbolMarkerPlayground: LineSymbolMarkerPlayground;
   mapView: MapView | null;
   miterLimitInputNumber: HTMLCalciteInputNumberElement;
@@ -43,18 +39,7 @@ class SimpleLineSymbolPlayground {
   simpleLineSymbolBlock: HTMLCalciteBlockElement;
   styleLabel: HTMLCalciteLabelElement;
   styleSelect: HTMLCalciteSelectElement;
-  styleSelectOptionDash: HTMLCalciteOptionElement;
-  styleSelectOptionDashDot: HTMLCalciteOptionElement;
-  styleSelectOptionDot: HTMLCalciteOptionElement;
-  styleSelectOptionLongDash: HTMLCalciteOptionElement;
-  styleSelectOptionLongDashDot: HTMLCalciteOptionElement;
-  styleSelectOptionLongDashDotDot: HTMLCalciteOptionElement;
-  styleSelectOptionNone: HTMLCalciteOptionElement;
-  styleSelectOptionShortDash: HTMLCalciteOptionElement;
-  styleSelectOptionShortDashDot: HTMLCalciteOptionElement;
-  styleSelectOptionShortDashDotDot: HTMLCalciteOptionElement;
-  styleSelectOptionShortDot: HTMLCalciteOptionElement;
-  styleSelectOptionShortSolid: HTMLCalciteOptionElement;
+  styleSelectOptions: string[];
   widthInputNumber: HTMLCalciteInputNumberElement;
   widthLabel: HTMLCalciteLabelElement;
 
@@ -118,21 +103,17 @@ class SimpleLineSymbolPlayground {
       this.handleCapChange();
     });
 
-    this.capSelectOptionButt = document.createElement("calcite-option");
-    this.capSelectOptionButt.label = "butt";
-    this.capSelectOptionButt.innerText = "butt";
-    this.capSelect.appendChild(this.capSelectOptionButt);
+    this.capSelectOptions = ["butt", "round", "square"];
 
-    this.capSelectOptionRound = document.createElement("calcite-option");
-    this.capSelectOptionRound.label = "round";
-    this.capSelectOptionRound.innerText = "round";
-    this.capSelectOptionRound.selected = true;
-    this.capSelect.appendChild(this.capSelectOptionRound);
-
-    this.capSelectOptionSquare = document.createElement("calcite-option");
-    this.capSelectOptionSquare.label = "square";
-    this.capSelectOptionSquare.innerText = "square";
-    this.capSelect.appendChild(this.capSelectOptionSquare);
+    this.capSelectOptions.forEach((option) => {
+      const selectOption = document.createElement("calcite-option");
+      selectOption.label = option;
+      selectOption.innerText = option;
+      if (option === "round") {
+        selectOption.selected = true;
+      }
+      this.capSelect.appendChild(selectOption);
+    });
 
     this.colorBlock = document.createElement("calcite-block");
     this.colorBlock.collapsible = true;
@@ -166,21 +147,17 @@ class SimpleLineSymbolPlayground {
       this.handleJoinChange();
     });
 
-    this.joinSelectOptionBevel = document.createElement("calcite-option");
-    this.joinSelectOptionBevel.label = "bevel";
-    this.joinSelectOptionBevel.innerText = "bevel";
-    this.joinSelect.appendChild(this.joinSelectOptionBevel);
+    this.joinSelectOptions = ["miter", "round", "bevel"];
 
-    this.joinSelectOptionMiter = document.createElement("calcite-option");
-    this.joinSelectOptionMiter.label = "miter";
-    this.joinSelectOptionMiter.innerText = "miter";
-    this.joinSelect.appendChild(this.joinSelectOptionMiter);
-
-    this.joinSelectOptionRound = document.createElement("calcite-option");
-    this.joinSelectOptionRound.label = "round";
-    this.joinSelectOptionRound.innerText = "round";
-    this.joinSelectOptionRound.selected = true;
-    this.joinSelect.appendChild(this.joinSelectOptionRound);
+    this.joinSelectOptions.forEach((option) => {
+      const selectOption = document.createElement("calcite-option");
+      selectOption.label = option;
+      selectOption.innerText = option;
+      if (option === "round") {
+        selectOption.selected = true;
+      }
+      this.joinSelect.appendChild(selectOption);
+    });
 
     this.lineSymbolMarkerPlayground = new LineSymbolMarkerPlayground(
       this.simpleLineSymbolBlock
@@ -245,70 +222,30 @@ class SimpleLineSymbolPlayground {
       this.handleStyleChange();
     });
 
-    this.styleSelectOptionDash = document.createElement("calcite-option");
-    this.styleSelectOptionDash.label = "dash";
-    this.styleSelectOptionDash.innerText = "dash";
-    this.styleSelect.appendChild(this.styleSelectOptionDash);
+    this.styleSelectOptions = [
+      "dash",
+      "dash-dot",
+      "dot",
+      "long-dash",
+      "long-dash-dot",
+      "long-dash-dot-dot",
+      "none",
+      "short-dash",
+      "short-dash-dot",
+      "short-dash-dot-dot",
+      "short-dot",
+      "solid",
+    ];
 
-    this.styleSelectOptionDashDot = document.createElement("calcite-option");
-    this.styleSelectOptionDashDot.label = "dash-dot";
-    this.styleSelectOptionDashDot.innerText = "dash-dot";
-    this.styleSelect.appendChild(this.styleSelectOptionDashDot);
-
-    this.styleSelectOptionDot = document.createElement("calcite-option");
-    this.styleSelectOptionDot.label = "dot";
-    this.styleSelectOptionDot.innerText = "dot";
-    this.styleSelect.appendChild(this.styleSelectOptionDot);
-
-    this.styleSelectOptionLongDash = document.createElement("calcite-option");
-    this.styleSelectOptionLongDash.label = "long-dash";
-    this.styleSelectOptionLongDash.innerText = "long-dash";
-    this.styleSelect.appendChild(this.styleSelectOptionLongDash);
-
-    this.styleSelectOptionLongDashDot =
-      document.createElement("calcite-option");
-    this.styleSelectOptionLongDashDot.label = "long-dash-dot";
-    this.styleSelectOptionLongDashDot.innerText = "long-dash-dot";
-    this.styleSelect.appendChild(this.styleSelectOptionLongDashDot);
-
-    this.styleSelectOptionLongDashDotDot =
-      document.createElement("calcite-option");
-    this.styleSelectOptionLongDashDotDot.label = "long-dash-dot-dot";
-    this.styleSelectOptionLongDashDotDot.innerText = "long-dash-dot-dot";
-    this.styleSelect.appendChild(this.styleSelectOptionLongDashDotDot);
-
-    this.styleSelectOptionNone = document.createElement("calcite-option");
-    this.styleSelectOptionNone.label = "none";
-    this.styleSelectOptionNone.innerText = "none";
-    this.styleSelect.appendChild(this.styleSelectOptionNone);
-
-    this.styleSelectOptionShortDash = document.createElement("calcite-option");
-    this.styleSelectOptionShortDash.label = "short-dash";
-    this.styleSelectOptionShortDash.innerText = "short-dash";
-    this.styleSelect.appendChild(this.styleSelectOptionShortDash);
-
-    this.styleSelectOptionShortDashDot =
-      document.createElement("calcite-option");
-    this.styleSelectOptionShortDashDot.label = "short-dash-dot";
-    this.styleSelectOptionShortDashDot.innerText = "short-dash-dot";
-    this.styleSelect.appendChild(this.styleSelectOptionShortDashDot);
-
-    this.styleSelectOptionShortDashDotDot =
-      document.createElement("calcite-option");
-    this.styleSelectOptionShortDashDotDot.label = "short-dash-dot-dot";
-    this.styleSelectOptionShortDashDotDot.innerText = "short-dash-dot-dot";
-    this.styleSelect.appendChild(this.styleSelectOptionShortDashDotDot);
-
-    this.styleSelectOptionShortDot = document.createElement("calcite-option");
-    this.styleSelectOptionShortDot.label = "short-dot";
-    this.styleSelectOptionShortDot.innerText = "short-dot";
-    this.styleSelect.appendChild(this.styleSelectOptionShortDot);
-
-    this.styleSelectOptionShortSolid = document.createElement("calcite-option");
-    this.styleSelectOptionShortSolid.label = "solid";
-    this.styleSelectOptionShortSolid.innerText = "solid";
-    this.styleSelectOptionShortSolid.selected = true;
-    this.styleSelect.appendChild(this.styleSelectOptionShortSolid);
+    this.styleSelectOptions.forEach((option) => {
+      const selectOption = document.createElement("calcite-option");
+      selectOption.label = option;
+      selectOption.innerText = option;
+      if (option === "solid") {
+        selectOption.selected = true;
+      }
+      this.styleSelect.appendChild(selectOption);
+    });
 
     this.widthLabel = document.createElement("calcite-label");
     this.widthLabel.innerText = "width: ";
