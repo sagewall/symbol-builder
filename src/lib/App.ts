@@ -73,6 +73,7 @@ class App {
 
     this.viewSwitchLabel = document.createElement("calcite-label");
     this.viewSwitchLabel.innerText = "3D";
+    this.viewSwitchLabel.layout = "inline";
     this.header.appendChild(this.viewSwitchLabel);
 
     this.viewSwitch = document.createElement("calcite-switch");
