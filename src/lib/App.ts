@@ -7,6 +7,7 @@ import type View from "@arcgis/core/views/View";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import LocalBasemapsSource from "@arcgis/core/widgets/BasemapGallery/support/LocalBasemapsSource";
 import Expand from "@arcgis/core/widgets/Expand";
+import CIMSymbolPlayground from "./CIMSymbolPlayground";
 import SimpleFillSymbolPlayground from "./SimpleFillSymbolPlayground";
 import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
@@ -52,20 +53,24 @@ class App {
       "calcite-select"
     ) as HTMLCalciteSelectElement;
     this.symbolSelect.label = "select symbol";
-    this.symbolSelect.value = "SimpleFillSymbol";
+    this.symbolSelect.value = "CIMSymbol";
     this.header.appendChild(this.symbolSelect);
 
     this.symbolSelect.addEventListener("calciteSelectChange", () => {
       this.handleSymbolSelectChange();
     });
 
-    this.symbolSelectOptions = ["SimpleLineSymbol", "SimpleFillSymbol"];
+    this.symbolSelectOptions = [
+      "CIMSymbol",
+      "SimpleLineSymbol",
+      "SimpleFillSymbol",
+    ];
 
     this.symbolSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");
       selectOption.label = option;
       selectOption.innerText = option;
-      if (option === "SimpleFillSymbol") {
+      if (option === "CIMSymbol") {
         selectOption.selected = true;
       }
       this.symbolSelect.appendChild(selectOption);
@@ -144,6 +149,24 @@ class App {
 
   handleSymbolSelectChange() {
     this.reset();
+
+    if (this.symbolSelect.value === "CIMSymbol") {
+      if (this.viewSwitch.checked) {
+        const sceneView = this.createSceneView();
+        new CIMSymbolPlayground(
+          this.propertiesPanel,
+          this.codeOutputParagraph,
+          sceneView
+        );
+      } else {
+        const mapView = this.createMapView();
+        new CIMSymbolPlayground(
+          this.propertiesPanel,
+          this.codeOutputParagraph,
+          mapView
+        );
+      }
+    }
 
     if (this.symbolSelect.value === "SimpleLineSymbol") {
       if (this.viewSwitch.checked) {
