@@ -4,6 +4,7 @@ import Graphic from "@arcgis/core/Graphic";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import MapView from "@arcgis/core/views/MapView";
+import SceneView from "@arcgis/core/views/SceneView";
 import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
 class SimpleFillSymbolPlayground {
@@ -11,7 +12,7 @@ class SimpleFillSymbolPlayground {
   colorBlock: HTMLCalciteBlockElement;
   colorPicker: HTMLCalciteColorPickerElement;
   colorPickerLabel: HTMLCalciteLabelElement;
-  mapView: MapView | null;
+  view: MapView | SceneView | null;
   parentElement: HTMLElement;
   polygon: Polygon;
   polygonGraphic: Graphic;
@@ -27,11 +28,11 @@ class SimpleFillSymbolPlayground {
   constructor(
     parentElement: HTMLElement,
     codeOutputParagraph: HTMLParagraphElement | null = null,
-    mapView: MapView | null = null
+    mapView: MapView | SceneView | null = null
   ) {
     this.parentElement = parentElement;
     this.codeOutputParagraph = codeOutputParagraph;
-    this.mapView = mapView;
+    this.view = mapView;
 
     this.simpleFillSymbolBlock = document.createElement("calcite-block");
     this.simpleFillSymbolBlock.collapsible = false;
@@ -116,7 +117,9 @@ class SimpleFillSymbolPlayground {
       symbol: this.simpleFillSymbol,
     });
 
-    this.mapView?.goTo(this.polygon);
+    this.view?.when(() => {
+      this.view?.goTo(this.polygon);
+    });
 
     this.colorBlock = document.createElement("calcite-block");
     this.colorBlock.collapsible = true;
@@ -194,9 +197,9 @@ class SimpleFillSymbolPlayground {
   }
 
   update() {
-    if (this.mapView) {
-      this.mapView.graphics.removeAll();
-      this.mapView.graphics.add(this.polygonGraphic.clone());
+    if (this.view) {
+      this.view.graphics.removeAll();
+      this.view.graphics.add(this.polygonGraphic.clone());
     }
 
     if (this.codeOutputParagraph) {

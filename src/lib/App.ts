@@ -2,6 +2,7 @@ import Basemap from "@arcgis/core/Basemap";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMap from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
+import SceneView from "@arcgis/core/views/SceneView";
 import type View from "@arcgis/core/views/View";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import LocalBasemapsSource from "@arcgis/core/widgets/BasemapGallery/support/LocalBasemapsSource";
@@ -25,6 +26,8 @@ class App {
   symbolSelect: HTMLCalciteSelectElement;
   symbolSelectOptions: string[];
   viewDiv: HTMLDivElement;
+  viewSwitchLabel: HTMLCalciteLabelElement;
+  viewSwitch: HTMLCalciteSwitchElement;
 
   constructor(parentElement: HTMLElement) {
     this.parentElement = parentElement;
@@ -66,6 +69,18 @@ class App {
         selectOption.selected = true;
       }
       this.symbolSelect.appendChild(selectOption);
+    });
+
+    this.viewSwitchLabel = document.createElement("calcite-label");
+    this.viewSwitchLabel.innerText = "3D";
+    this.header.appendChild(this.viewSwitchLabel);
+
+    this.viewSwitch = document.createElement("calcite-switch");
+    this.viewSwitch.label = "view switch";
+    this.viewSwitchLabel.appendChild(this.viewSwitch);
+
+    this.viewSwitch.addEventListener("calciteSwitchChange", () => {
+      this.handleViewSwitchChange();
     });
 
     this.propertiesShellPanel = document.createElement(
@@ -130,22 +145,44 @@ class App {
     this.reset();
 
     if (this.symbolSelect.value === "SimpleLineSymbol") {
-      const mapView = this.createMapView();
-      new SimpleLineSymbolPlayground(
-        this.propertiesPanel,
-        this.codeOutputParagraph,
-        mapView
-      );
+      if (this.viewSwitch.checked) {
+        const sceneView = this.createSceneView();
+        new SimpleLineSymbolPlayground(
+          this.propertiesPanel,
+          this.codeOutputParagraph,
+          sceneView
+        );
+      } else {
+        const mapView = this.createMapView();
+        new SimpleLineSymbolPlayground(
+          this.propertiesPanel,
+          this.codeOutputParagraph,
+          mapView
+        );
+      }
     }
 
     if (this.symbolSelect.value === "SimpleFillSymbol") {
-      const mapView = this.createMapView();
-      new SimpleFillSymbolPlayground(
-        this.propertiesPanel,
-        this.codeOutputParagraph,
-        mapView
-      );
+      if (this.viewSwitch.checked) {
+        const sceneView = this.createSceneView();
+        new SimpleFillSymbolPlayground(
+          this.propertiesPanel,
+          this.codeOutputParagraph,
+          sceneView
+        );
+      } else {
+        const mapView = this.createMapView();
+        new SimpleFillSymbolPlayground(
+          this.propertiesPanel,
+          this.codeOutputParagraph,
+          mapView
+        );
+      }
     }
+  }
+
+  handleViewSwitchChange() {
+    this.handleSymbolSelectChange();
   }
 
   handleCopyCodeActionClick() {
@@ -209,16 +246,67 @@ class App {
       position: "top-left",
     });
 
-    // For debugging
-    mapView.when().then(() => {
-      mapView.graphics.watch("updating", function (updating) {
-        if (!updating) {
-          console.log(mapView.graphics);
-        }
-      });
+    return mapView;
+  }
+
+  createSceneView() {
+    const blankBasemapVectorTileLayer = new VectorTileLayer({
+      portalItem: {
+        id: "da7c2aa6b22a439fae31294413b5bc62",
+      },
     });
 
-    return mapView;
+    const blankBasemap = new Basemap({
+      baseLayers: [blankBasemapVectorTileLayer],
+      thumbnailUrl:
+        "https://jsapi.maps.arcgis.com/sharing/rest/content/items/da7c2aa6b22a439fae31294413b5bc62/info/thumbnail/thumbnail1660688993675.png",
+      title: "Blank",
+    });
+
+    const map = new ArcMap({
+      basemap: blankBasemap,
+    });
+
+    const sceneView = new SceneView({
+      container: this.viewDiv,
+      map,
+    });
+
+    this.activeView = sceneView;
+
+    const localBasemapsSource = new LocalBasemapsSource({
+      basemaps: [
+        blankBasemap,
+        Basemap.fromId("satellite"),
+        Basemap.fromId("hybrid"),
+        Basemap.fromId("oceans"),
+        Basemap.fromId("osm"),
+        Basemap.fromId("terrain"),
+        Basemap.fromId("dark-gray-vector"),
+        Basemap.fromId("gray-vector"),
+        Basemap.fromId("streets-vector"),
+        Basemap.fromId("streets-night-vector"),
+        Basemap.fromId("streets-navigation-vector"),
+        Basemap.fromId("topo-vector"),
+        Basemap.fromId("streets-relief-vector"),
+      ],
+    });
+
+    const basemapGallery = new BasemapGallery({
+      view: sceneView,
+      source: localBasemapsSource,
+    });
+
+    const basemapGalleryExpand = new Expand({
+      view: sceneView,
+      content: basemapGallery,
+    });
+
+    sceneView.ui.add(basemapGalleryExpand, {
+      position: "top-left",
+    });
+
+    return sceneView;
   }
 }
 

@@ -3,6 +3,7 @@ import Polyline from "@arcgis/core/geometry/Polyline";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import MapView from "@arcgis/core/views/MapView";
+import SceneView from "@arcgis/core/views/SceneView";
 import LineSymbolMarkerPlayground from "./LineSymbolMarkerPlayground";
 
 class SimpleLineSymbolPlayground {
@@ -17,7 +18,6 @@ class SimpleLineSymbolPlayground {
   joinSelect: HTMLCalciteSelectElement;
   joinSelectOptions: string[];
   lineSymbolMarkerPlayground: LineSymbolMarkerPlayground;
-  mapView: MapView | null;
   miterLimitInputNumber: HTMLCalciteInputNumberElement;
   miterLimitLabel: HTMLCalciteLabelElement;
   parentElement: HTMLElement;
@@ -28,15 +28,16 @@ class SimpleLineSymbolPlayground {
   styleLabel: HTMLCalciteLabelElement;
   styleSelect: HTMLCalciteSelectElement;
   styleSelectOptions: string[];
+  view: MapView | SceneView | null;
   widthInputNumber: HTMLCalciteInputNumberElement;
   widthLabel: HTMLCalciteLabelElement;
 
   constructor(
     parentElement: HTMLElement,
     codeOutputParagraph: HTMLParagraphElement | null = null,
-    mapView: MapView | null = null
+    mapView: MapView | SceneView | null = null
   ) {
-    this.mapView = mapView;
+    this.view = mapView;
     this.parentElement = parentElement;
     this.codeOutputParagraph = codeOutputParagraph;
 
@@ -65,11 +66,9 @@ class SimpleLineSymbolPlayground {
       symbol: this.simpleLineSymbol,
     });
 
-    if (this.mapView) {
-      this.mapView.when(() => {
-        this.mapView!.goTo(this.mapView!.graphics);
-      });
-    }
+    this.view?.when(() => {
+      this.view?.goTo(this.view?.graphics);
+    });
 
     this.simpleLineSymbolBlock = document.createElement("calcite-block");
     this.simpleLineSymbolBlock.collapsible = true;
@@ -254,9 +253,9 @@ class SimpleLineSymbolPlayground {
   }
 
   update() {
-    if (this.mapView) {
-      this.mapView.graphics.removeAll();
-      this.mapView.graphics.add(this.polylineGraphic.clone());
+    if (this.view) {
+      this.view.graphics.removeAll();
+      this.view.graphics.add(this.polylineGraphic.clone());
     }
 
     let marker = "marker: null,";
