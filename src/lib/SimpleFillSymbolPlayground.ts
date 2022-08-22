@@ -21,6 +21,12 @@ class SimpleFillSymbolPlayground {
   polygon: Polygon;
   polygonGraphic: Graphic;
   simpleFillSymbolBlock: HTMLCalciteBlockElement;
+  colorBlock: HTMLCalciteBlockElement;
+  colorPickerLabel: HTMLCalciteLabelElement;
+  colorPicker: HTMLCalciteColorPickerElement;
+  styleSelectLabel: HTMLCalciteLabelElement;
+  styleSelect: HTMLCalciteSelectElement;
+  styleOptions: string[];
 
   constructor(
     parentElement: HTMLElement,
@@ -112,72 +118,33 @@ class SimpleFillSymbolPlayground {
 
     this.mapView?.goTo(this.polygon);
 
-    this.createCalciteComponents();
-    this.update();
-  }
+    this.colorBlock = document.createElement("calcite-block");
+    this.colorBlock.collapsible = true;
+    this.colorBlock.heading = `color: ${this.simpleFillSymbol.color.toHex()}`;
+    this.simpleFillSymbolBlock.prepend(this.colorBlock);
 
-  createCalciteComponents() {
-    const symbol = this.simpleFillSymbol.toJSON();
+    this.colorPickerLabel = document.createElement("calcite-label");
+    this.colorPickerLabel.innerText = "color: ";
+    this.colorPickerLabel.layout = "inline";
+    this.colorBlock.appendChild(this.colorPickerLabel);
 
-    Object.entries(symbol).forEach(([key, value]) => {
-      switch (key) {
-        case "color":
-          this.createCalciteColorPicker(<string>key, <Color>new Color(value));
-          break;
+    this.colorPicker = document.createElement("calcite-color-picker");
+    this.colorPicker.value = "#000000";
+    this.colorPickerLabel.appendChild(this.colorPicker);
 
-        case "outline":
-          break;
-
-        case "style":
-          this.createCalciteSelect(<string>key);
-          break;
-
-        default:
-          break;
-      }
-    });
-  }
-
-  createCalciteColorPicker(key: string, color: Color) {
-    const colorBlock = document.createElement("calcite-block");
-    colorBlock.collapsible = true;
-    colorBlock.heading = `color: ${color.toHex()}`;
-    colorBlock.id = `${key}ColorBlock`;
-    this.simpleFillSymbolBlock.prepend(colorBlock);
-
-    const colorPickerLabel = document.createElement("calcite-label");
-    (colorPickerLabel.id = `${key}ColorLabel`),
-      (colorPickerLabel.innerText = "color: ");
-    colorPickerLabel.layout = "inline";
-    colorBlock.appendChild(colorPickerLabel);
-
-    const colorPicker = document.createElement("calcite-color-picker");
-    colorPicker.id = `${key}ColorPicker`;
-    colorPicker.value = "#000000";
-    colorPickerLabel.appendChild(colorPicker);
-
-    colorPicker.addEventListener("calciteColorPickerChange", () => {
-      this.handleColorChange(colorPicker.value?.toString());
-    });
-  }
-
-  createCalciteSelect(key: string) {
-    const selectLabel = document.createElement("calcite-label");
-    selectLabel.id = `${key}SelectLabel`;
-    selectLabel.innerText = `${key}: `;
-    selectLabel.layout = "inline";
-    this.simpleFillSymbolBlock.appendChild(selectLabel);
-
-    const select = document.createElement("calcite-select");
-    select.id = `${key}Select`;
-    select.label = `${key} selection`;
-    selectLabel.appendChild(select);
-
-    select.addEventListener("calciteSelectChange", () => {
-      this.handleSelectChange(key, select.value);
+    this.colorPicker.addEventListener("calciteColorPickerChange", () => {
+      this.handleColorChange(this.colorPicker.value?.toString());
     });
 
-    const styleOptions = [
+    this.styleSelectLabel = document.createElement("calcite-label");
+    this.styleSelectLabel.innerText = "select: ";
+    this.styleSelectLabel.layout = "inline";
+    this.simpleFillSymbolBlock.appendChild(this.styleSelectLabel);
+
+    this.styleSelect = document.createElement("calcite-select");
+    this.styleSelect.label = `style selection`;
+    this.styleSelectLabel.appendChild(this.styleSelect);
+    this.styleOptions = [
       "backward-diagonal",
       "cross",
       "diagonal-cross",
@@ -188,41 +155,41 @@ class SimpleFillSymbolPlayground {
       "vertical",
     ];
 
-    if (key === "style") {
-      styleOptions.forEach((option) => {
-        const selectOption = document.createElement("calcite-option");
-        selectOption.label = option;
-        selectOption.innerText = option;
-        if (option === "cross") {
-          selectOption.selected = true;
-        }
-        select.appendChild(selectOption);
-      });
-    }
+    this.styleOptions.forEach((option) => {
+      const selectOption = document.createElement("calcite-option");
+      selectOption.label = option;
+      selectOption.innerText = option;
+      if (option === "cross") {
+        selectOption.selected = true;
+      }
+      this.styleSelect.appendChild(selectOption);
+    });
+
+    this.styleSelect.addEventListener("calciteSelectChange", () => {
+      this.handleStyleSelectChange(this.styleSelect.value);
+    });
+
+    this.update();
   }
 
   handleColorChange(color: string | undefined) {
     this.simpleFillSymbol.color = new Color(color);
-    const colorColorBlock = document.querySelector(
-      "#colorColorBlock"
-    ) as HTMLCalciteBlockElement;
-    colorColorBlock.heading = <string>color;
+    this.colorBlock.heading = `color: ${this.simpleFillSymbol.color.toHex()}`;
     this.update();
   }
 
-  handleSelectChange(key: string, value: string) {
-    if (key === "style") {
-      this.simpleFillSymbol.style = <
-        | "backward-diagonal"
-        | "cross"
-        | "diagonal-cross"
-        | "forward-diagonal"
-        | "horizontal"
-        | "none"
-        | "solid"
-        | "vertical"
-      >value;
-    }
+  handleStyleSelectChange(value: string) {
+    this.simpleFillSymbol.style = <
+      | "backward-diagonal"
+      | "cross"
+      | "diagonal-cross"
+      | "forward-diagonal"
+      | "horizontal"
+      | "none"
+      | "solid"
+      | "vertical"
+    >value;
+
     this.update();
   }
 
