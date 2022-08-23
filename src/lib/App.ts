@@ -20,7 +20,7 @@ class App {
   header: HTMLElement;
   headerDiv: HTMLDivElement;
   heading: HTMLHeadingElement;
-  parentElement: HTMLElement;
+  // parentElement: HTMLElement;
   propertiesPanel: HTMLCalcitePanelElement;
   propertiesShellPanel: HTMLCalciteShellPanelElement;
   shell: HTMLCalciteShellElement;
@@ -30,9 +30,7 @@ class App {
   viewSwitchLabel: HTMLCalciteLabelElement;
   viewSwitch: HTMLCalciteSwitchElement;
 
-  constructor(parentElement: HTMLElement) {
-    this.parentElement = parentElement;
-
+  constructor(public parentElement: HTMLElement) {
     this.activeView = null;
 
     this.shell = document.createElement("calcite-shell");

@@ -10,7 +10,6 @@ class SimpleLineSymbolPlayground {
   capLabel: HTMLCalciteLabelElement;
   capSelect: HTMLCalciteSelectElement;
   capSelectOptions: string[];
-  codeOutputParagraph: HTMLParagraphElement | null;
   colorBlock: HTMLCalciteBlockElement;
   colorPicker: HTMLCalciteColorPickerElement;
   colorPickerLabel: HTMLCalciteLabelElement;
@@ -20,7 +19,6 @@ class SimpleLineSymbolPlayground {
   lineSymbolMarkerPlayground: LineSymbolMarkerPlayground;
   miterLimitInputNumber: HTMLCalciteInputNumberElement;
   miterLimitLabel: HTMLCalciteLabelElement;
-  parentElement: HTMLElement;
   polyline: Polyline;
   polylineGraphic: Graphic;
   simpleLineSymbol: SimpleLineSymbol;
@@ -28,19 +26,14 @@ class SimpleLineSymbolPlayground {
   styleLabel: HTMLCalciteLabelElement;
   styleSelect: HTMLCalciteSelectElement;
   styleSelectOptions: string[];
-  view: MapView | SceneView | null;
   widthInputNumber: HTMLCalciteInputNumberElement;
   widthLabel: HTMLCalciteLabelElement;
 
   constructor(
-    parentElement: HTMLElement,
-    codeOutputParagraph: HTMLParagraphElement | null = null,
-    mapView: MapView | SceneView | null = null
+    public parentElement: HTMLElement,
+    public codeOutputParagraph?: HTMLParagraphElement | null,
+    public view?: MapView | SceneView | null
   ) {
-    this.view = mapView;
-    this.parentElement = parentElement;
-    this.codeOutputParagraph = codeOutputParagraph;
-
     this.simpleLineSymbol = new SimpleLineSymbol({
       cap: "round",
       color: "#000000",

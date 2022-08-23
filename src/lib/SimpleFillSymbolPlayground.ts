@@ -8,12 +8,9 @@ import SceneView from "@arcgis/core/views/SceneView";
 import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
 class SimpleFillSymbolPlayground {
-  codeOutputParagraph: HTMLParagraphElement | null = null;
   colorBlock: HTMLCalciteBlockElement;
   colorPicker: HTMLCalciteColorPickerElement;
   colorPickerLabel: HTMLCalciteLabelElement;
-  view: MapView | SceneView | null;
-  parentElement: HTMLElement;
   polygon: Polygon;
   polygonGraphic: Graphic;
   simpleFillSymbol: SimpleFillSymbol;
@@ -26,14 +23,10 @@ class SimpleFillSymbolPlayground {
   styleSelectLabel: HTMLCalciteLabelElement;
 
   constructor(
-    parentElement: HTMLElement,
-    codeOutputParagraph: HTMLParagraphElement | null = null,
-    mapView: MapView | SceneView | null = null
+    public parentElement: HTMLElement,
+    public codeOutputParagraph?: HTMLParagraphElement | null,
+    public view?: MapView | SceneView | null
   ) {
-    this.parentElement = parentElement;
-    this.codeOutputParagraph = codeOutputParagraph;
-    this.view = mapView;
-
     this.simpleFillSymbolBlock = document.createElement("calcite-block");
     this.simpleFillSymbolBlock.collapsible = false;
     this.simpleFillSymbolBlock.heading = "SimpleFillSymbol";

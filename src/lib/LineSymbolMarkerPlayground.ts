@@ -8,7 +8,7 @@ class LineSymbolMarkerPlayground {
   lineSymbolMarker: LineSymbolMarker;
   lineSymbolMarkerProperties: Object;
   lineSymbolMarkerBlock: HTMLCalciteBlockElement;
-  parentElement: HTMLElement;
+  // parentElement: HTMLElement;
   placementLabel: HTMLCalciteLabelElement;
   placementSelect: HTMLCalciteSelectElement;
   placementSelectOptions: string[];
@@ -16,9 +16,7 @@ class LineSymbolMarkerPlayground {
   styleSelect: HTMLCalciteSelectElement;
   styleSelectOptions: string[];
 
-  constructor(parentElement: HTMLElement) {
-    this.parentElement = parentElement;
-
+  constructor(public parentElement: HTMLElement) {
     this.lineSymbolMarkerProperties = {
       color: "#000000",
       placement: "begin-end",
