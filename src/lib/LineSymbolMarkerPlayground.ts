@@ -6,7 +6,7 @@ class LineSymbolMarkerPlayground {
   colorLabel: HTMLCalciteLabelElement;
   colorPicker: HTMLCalciteColorPickerElement;
   lineSymbolMarker: LineSymbolMarker;
-  lineSymbolMarkerProperties: Object;
+  lineSymbolMarkerProperties: __esri.LineSymbolMarkerProperties;
   lineSymbolMarkerBlock: HTMLCalciteBlockElement;
   // parentElement: HTMLElement;
   placementLabel: HTMLCalciteLabelElement;

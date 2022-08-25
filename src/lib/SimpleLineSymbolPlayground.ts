@@ -23,6 +23,7 @@ class SimpleLineSymbolPlayground {
   polylineGraphic: Graphic;
   simpleLineSymbol: SimpleLineSymbol;
   simpleLineSymbolBlock: HTMLCalciteBlockElement;
+  simpleLineSymbolProperties: __esri.SimpleLineSymbolProperties;
   styleLabel: HTMLCalciteLabelElement;
   styleSelect: HTMLCalciteSelectElement;
   styleSelectOptions: string[];
@@ -34,7 +35,7 @@ class SimpleLineSymbolPlayground {
     public codeOutputParagraph?: HTMLParagraphElement | null,
     public view?: MapView | SceneView | null
   ) {
-    this.simpleLineSymbol = new SimpleLineSymbol({
+    this.simpleLineSymbolProperties = {
       cap: "round",
       color: "#000000",
       join: "round",
@@ -42,7 +43,11 @@ class SimpleLineSymbolPlayground {
       miterLimit: 2,
       style: "solid",
       width: 0.75,
-    });
+    };
+
+    this.simpleLineSymbol = new SimpleLineSymbol(
+      this.simpleLineSymbolProperties
+    );
 
     this.polyline = new Polyline({
       paths: [

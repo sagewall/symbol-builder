@@ -14,7 +14,7 @@ class SimpleFillSymbolPlayground {
   polygon: Polygon;
   polygonGraphic: Graphic;
   simpleFillSymbol: SimpleFillSymbol;
-  simpleFillSymbolProperties: Object;
+  simpleFillSymbolProperties: __esri.SimpleFillSymbolProperties;
   simpleLineSymbol: SimpleLineSymbol;
   simpleLineSymbolPlayground: SimpleLineSymbolPlayground;
   simpleFillSymbolBlock: HTMLCalciteBlockElement;
