@@ -7,79 +7,91 @@ import SceneView from "@arcgis/core/views/SceneView";
 import LineSymbolMarkerPlayground from "./LineSymbolMarkerPlayground";
 
 class SimpleLineSymbolPlayground {
-  capLabel: HTMLCalciteLabelElement;
-  capSelect: HTMLCalciteSelectElement;
-  capSelectOptions: string[];
-  colorBlock: HTMLCalciteBlockElement;
-  colorPicker: HTMLCalciteColorPickerElement;
-  colorPickerLabel: HTMLCalciteLabelElement;
-  joinSelectLabel: HTMLCalciteLabelElement;
-  joinSelect: HTMLCalciteSelectElement;
-  joinSelectOptions: string[];
-  lineSymbolMarkerPlayground: LineSymbolMarkerPlayground;
-  miterLimitInputNumber: HTMLCalciteInputNumberElement;
-  miterLimitLabel: HTMLCalciteLabelElement;
-  polyline: Polyline;
-  polylineGraphic: Graphic;
-  simpleLineSymbol: SimpleLineSymbol;
-  simpleLineSymbolBlock: HTMLCalciteBlockElement;
-  simpleLineSymbolProperties: __esri.SimpleLineSymbolProperties;
-  styleLabel: HTMLCalciteLabelElement;
-  styleSelect: HTMLCalciteSelectElement;
-  styleSelectOptions: string[];
-  widthInputNumber: HTMLCalciteInputNumberElement;
-  widthLabel: HTMLCalciteLabelElement;
+  public capSelect = document.createElement("calcite-select");
+  public colorPicker = document.createElement("calcite-color-picker");
+  public joinSelect = document.createElement("calcite-select");
+  public lineSymbolMarkerPlayground: LineSymbolMarkerPlayground;
+  public miterLimitInputNumber = document.createElement("calcite-input-number");
+  public simpleLineSymbol: SimpleLineSymbol;
+  public simpleLineSymbolBlock = document.createElement("calcite-block");
+  public styleSelect = document.createElement("calcite-select");
+  public widthInputNumber = document.createElement("calcite-input-number");
+
+  private capLabel = document.createElement("calcite-label");
+  private capSelectOptions = ["butt", "round", "square"];
+  private colorBlock = document.createElement("calcite-block");
+  private colorPickerLabel = document.createElement("calcite-label");
+  private joinSelectLabel = document.createElement("calcite-label");
+  private joinSelectOptions = ["miter", "round", "bevel"];
+  private miterLimitLabel = document.createElement("calcite-label");
+  private polyline = new Polyline({
+    paths: [
+      [
+        [-105.0, 40.0],
+        [-105.1, 40.2],
+        [-105.35, 40.1],
+      ],
+    ],
+  });
+  private polylineGraphic: Graphic;
+  private simpleLineSymbolProperties: __esri.SimpleLineSymbolProperties = {
+    cap: "round",
+    color: "#000000",
+    join: "round",
+    marker: null,
+    miterLimit: 2,
+    style: "solid",
+    width: 0.75,
+  };
+  private styleLabel = document.createElement("calcite-label");
+  private styleSelectOptions = [
+    "dash",
+    "dash-dot",
+    "dot",
+    "long-dash",
+    "long-dash-dot",
+    "long-dash-dot-dot",
+    "none",
+    "short-dash",
+    "short-dash-dot",
+    "short-dash-dot-dot",
+    "short-dot",
+    "solid",
+  ];
+
+  private widthLabel = document.createElement("calcite-label");
 
   constructor(
-    public parentElement: HTMLElement,
-    public codeOutputParagraph?: HTMLParagraphElement | null,
-    public view?: MapView | SceneView | null
+    private parentElement: HTMLElement,
+    private codeOutputParagraph?: HTMLParagraphElement | null,
+    private view?: MapView | SceneView | null
   ) {
-    this.simpleLineSymbolProperties = {
-      cap: "round",
-      color: "#000000",
-      join: "round",
-      marker: null,
-      miterLimit: 2,
-      style: "solid",
-      width: 0.75,
-    };
-
     this.simpleLineSymbol = new SimpleLineSymbol(
       this.simpleLineSymbolProperties
     );
-
-    this.polyline = new Polyline({
-      paths: [
-        [
-          [-105.0, 40.0],
-          [-105.1, 40.2],
-          [-105.35, 40.1],
-        ],
-      ],
-    });
 
     this.polylineGraphic = new Graphic({
       geometry: this.polyline,
       symbol: this.simpleLineSymbol,
     });
 
-    this.view?.when(() => {
-      this.view?.goTo(this.view?.graphics);
-    });
+    this.lineSymbolMarkerPlayground = new LineSymbolMarkerPlayground(
+      this.simpleLineSymbolBlock
+    );
+    this.lineSymbolMarkerPlayground.init();
+  }
 
-    this.simpleLineSymbolBlock = document.createElement("calcite-block");
+  init() {
+    this.parentElement.appendChild(this.simpleLineSymbolBlock);
+
     this.simpleLineSymbolBlock.collapsible = true;
     this.simpleLineSymbolBlock.heading = "SimpleLineSymbol";
     this.simpleLineSymbolBlock.open = true;
-    this.parentElement.appendChild(this.simpleLineSymbolBlock);
 
-    this.capLabel = document.createElement("calcite-label");
     this.capLabel.innerText = "cap: ";
     this.capLabel.layout = "inline";
     this.simpleLineSymbolBlock.appendChild(this.capLabel);
 
-    this.capSelect = document.createElement("calcite-select");
     this.capSelect.label = "cap selection";
     this.capSelect.value = "round";
     this.capLabel.appendChild(this.capSelect);
@@ -87,8 +99,6 @@ class SimpleLineSymbolPlayground {
     this.capSelect.addEventListener("calciteSelectChange", () => {
       this.handleCapChange();
     });
-
-    this.capSelectOptions = ["butt", "round", "square"];
 
     this.capSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");
@@ -100,17 +110,14 @@ class SimpleLineSymbolPlayground {
       this.capSelect.appendChild(selectOption);
     });
 
-    this.colorBlock = document.createElement("calcite-block");
     this.colorBlock.collapsible = true;
     this.colorBlock.heading = `color: ${this.simpleLineSymbol.color.toHex()}`;
     this.simpleLineSymbolBlock.appendChild(this.colorBlock);
 
-    this.colorPickerLabel = document.createElement("calcite-label");
     this.colorPickerLabel.innerText = "color: ";
     this.colorPickerLabel.layout = "inline";
     this.colorBlock.appendChild(this.colorPickerLabel);
 
-    this.colorPicker = document.createElement("calcite-color-picker");
     this.colorPicker.value = "#000000";
     this.colorPickerLabel.appendChild(this.colorPicker);
 
@@ -118,12 +125,10 @@ class SimpleLineSymbolPlayground {
       this.handleColorChange();
     });
 
-    this.joinSelectLabel = document.createElement("calcite-label");
     this.joinSelectLabel.innerText = "join: ";
     this.joinSelectLabel.layout = "inline";
     this.simpleLineSymbolBlock.appendChild(this.joinSelectLabel);
 
-    this.joinSelect = document.createElement("calcite-select");
     this.joinSelect.label = "join selection";
     this.joinSelect.value = "round";
     this.joinSelectLabel.appendChild(this.joinSelect);
@@ -131,8 +136,6 @@ class SimpleLineSymbolPlayground {
     this.joinSelect.addEventListener("calciteSelectChange", () => {
       this.handleJoinChange();
     });
-
-    this.joinSelectOptions = ["miter", "round", "bevel"];
 
     this.joinSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");
@@ -143,10 +146,6 @@ class SimpleLineSymbolPlayground {
       }
       this.joinSelect.appendChild(selectOption);
     });
-
-    this.lineSymbolMarkerPlayground = new LineSymbolMarkerPlayground(
-      this.simpleLineSymbolBlock
-    );
 
     this.lineSymbolMarkerPlayground.lineSymbolMarkerBlock.addEventListener(
       "calciteBlockToggle",
@@ -175,12 +174,10 @@ class SimpleLineSymbolPlayground {
       }
     );
 
-    this.miterLimitLabel = document.createElement("calcite-label");
     this.miterLimitLabel.innerText = "miterLimit: ";
     this.miterLimitLabel.layout = "inline";
     this.simpleLineSymbolBlock.appendChild(this.miterLimitLabel);
 
-    this.miterLimitInputNumber = document.createElement("calcite-input-number");
     this.miterLimitInputNumber.min = 0;
     this.miterLimitInputNumber.step = 0.5;
     this.miterLimitInputNumber.value = "2";
@@ -193,12 +190,10 @@ class SimpleLineSymbolPlayground {
       }
     );
 
-    this.styleLabel = document.createElement("calcite-label");
     this.styleLabel.innerText = "style: ";
     this.styleLabel.layout = "inline";
     this.simpleLineSymbolBlock.appendChild(this.styleLabel);
 
-    this.styleSelect = document.createElement("calcite-select");
     this.styleSelect.label = "style selection";
     this.styleSelect.value = "solid";
     this.styleLabel.appendChild(this.styleSelect);
@@ -206,21 +201,6 @@ class SimpleLineSymbolPlayground {
     this.styleSelect.addEventListener("calciteSelectChange", () => {
       this.handleStyleChange();
     });
-
-    this.styleSelectOptions = [
-      "dash",
-      "dash-dot",
-      "dot",
-      "long-dash",
-      "long-dash-dot",
-      "long-dash-dot-dot",
-      "none",
-      "short-dash",
-      "short-dash-dot",
-      "short-dash-dot-dot",
-      "short-dot",
-      "solid",
-    ];
 
     this.styleSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");
@@ -232,12 +212,10 @@ class SimpleLineSymbolPlayground {
       this.styleSelect.appendChild(selectOption);
     });
 
-    this.widthLabel = document.createElement("calcite-label");
     this.widthLabel.innerText = "width: ";
     this.widthLabel.layout = "inline";
     this.simpleLineSymbolBlock.appendChild(this.widthLabel);
 
-    this.widthInputNumber = document.createElement("calcite-input-number");
     this.widthInputNumber.min = 0;
     this.widthInputNumber.step = 0.25;
     this.widthInputNumber.value = "0.75";
@@ -245,6 +223,10 @@ class SimpleLineSymbolPlayground {
 
     this.widthInputNumber.addEventListener("calciteInputNumberChange", () => {
       this.handleWidthChange();
+    });
+
+    this.view?.when(() => {
+      this.view?.goTo(this.view?.graphics);
     });
 
     this.update();

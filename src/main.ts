@@ -19,5 +19,5 @@ setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.92/assets");
 
 const appDiv = document.querySelector("#app") as HTMLDivElement;
 if (appDiv) {
-  new App(appDiv);
+  new App(appDiv).init();
 }

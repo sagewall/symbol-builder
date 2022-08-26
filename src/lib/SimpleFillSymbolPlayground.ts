@@ -8,34 +8,72 @@ import SceneView from "@arcgis/core/views/SceneView";
 import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
 class SimpleFillSymbolPlayground {
-  colorBlock: HTMLCalciteBlockElement;
-  colorPicker: HTMLCalciteColorPickerElement;
-  colorPickerLabel: HTMLCalciteLabelElement;
-  polygon: Polygon;
-  polygonGraphic: Graphic;
-  simpleFillSymbol: SimpleFillSymbol;
-  simpleFillSymbolProperties: __esri.SimpleFillSymbolProperties;
-  simpleLineSymbol: SimpleLineSymbol;
-  simpleLineSymbolPlayground: SimpleLineSymbolPlayground;
-  simpleFillSymbolBlock: HTMLCalciteBlockElement;
-  styleSelectOptions: string[];
-  styleSelect: HTMLCalciteSelectElement;
-  styleSelectLabel: HTMLCalciteLabelElement;
+  private colorBlock = document.createElement("calcite-block");
+  private colorPicker = document.createElement("calcite-color-picker");
+  private colorPickerLabel = document.createElement("calcite-label");
+  private polygon = new Polygon({
+    rings: [
+      [
+        [-105.0, 40.0],
+        [-105.1, 40.2],
+        [-105.35, 40.1],
+      ],
+    ],
+  });
+  private polygonGraphic: Graphic;
+  private simpleFillSymbol: SimpleFillSymbol;
+  private simpleFillSymbolProperties: __esri.SimpleFillSymbolProperties;
+  private simpleLineSymbol: SimpleLineSymbol;
+  private simpleLineSymbolPlayground: SimpleLineSymbolPlayground;
+  private simpleFillSymbolBlock = document.createElement("calcite-block");
+  private styleSelectOptions = [
+    "backward-diagonal",
+    "cross",
+    "diagonal-cross",
+    "forward-diagonal",
+    "horizontal",
+    "none",
+    "solid",
+    "vertical",
+  ];
+  private styleSelect = document.createElement("calcite-select");
+  private styleSelectLabel = document.createElement("calcite-label");
 
   constructor(
-    public parentElement: HTMLElement,
-    public codeOutputParagraph?: HTMLParagraphElement | null,
-    public view?: MapView | SceneView | null
+    private parentElement: HTMLElement,
+    private codeOutputParagraph?: HTMLParagraphElement | null,
+    private view?: MapView | SceneView | null
   ) {
-    this.simpleFillSymbolBlock = document.createElement("calcite-block");
-    this.simpleFillSymbolBlock.collapsible = false;
-    this.simpleFillSymbolBlock.heading = "SimpleFillSymbol";
-    this.simpleFillSymbolBlock.open = true;
-    this.parentElement.appendChild(this.simpleFillSymbolBlock);
-
     this.simpleLineSymbolPlayground = new SimpleLineSymbolPlayground(
       this.simpleFillSymbolBlock
     );
+    this.simpleLineSymbolPlayground.init();
+
+    this.simpleLineSymbol = this.simpleLineSymbolPlayground.simpleLineSymbol;
+
+    this.simpleFillSymbolProperties = {
+      color: new Color("#000000"),
+      outline: this.simpleLineSymbol,
+      style: "solid",
+    };
+
+    this.simpleFillSymbol = new SimpleFillSymbol(
+      this.simpleFillSymbolProperties
+    );
+
+    this.polygonGraphic = new Graphic({
+      geometry: this.polygon,
+      symbol: this.simpleFillSymbol,
+    });
+  }
+
+  init() {
+    this.parentElement.appendChild(this.simpleFillSymbolBlock);
+
+    this.simpleFillSymbolBlock.collapsible = false;
+    this.simpleFillSymbolBlock.heading = "SimpleFillSymbol";
+    this.simpleFillSymbolBlock.open = true;
+
     this.simpleLineSymbolPlayground.simpleLineSymbolBlock.heading = "outline: ";
     this.simpleLineSymbolPlayground.simpleLineSymbolBlock.collapsible = false;
     this.simpleLineSymbolPlayground.lineSymbolMarkerPlayground.lineSymbolMarkerBlock.hidden =
@@ -83,48 +121,18 @@ class SimpleFillSymbolPlayground {
       }
     );
 
-    this.simpleLineSymbol = this.simpleLineSymbolPlayground.simpleLineSymbol;
-
-    this.polygon = new Polygon({
-      rings: [
-        [
-          [-105.0, 40.0],
-          [-105.1, 40.2],
-          [-105.35, 40.1],
-        ],
-      ],
-    });
-
-    this.simpleFillSymbolProperties = {
-      color: new Color("#000000"),
-      outline: this.simpleLineSymbol,
-      style: "solid",
-    };
-
-    this.simpleFillSymbol = new SimpleFillSymbol(
-      this.simpleFillSymbolProperties
-    );
-
-    this.polygonGraphic = new Graphic({
-      geometry: this.polygon,
-      symbol: this.simpleFillSymbol,
-    });
-
     this.view?.when(() => {
       this.view?.goTo(this.polygon);
     });
 
-    this.colorBlock = document.createElement("calcite-block");
     this.colorBlock.collapsible = true;
     this.colorBlock.heading = `color: ${this.simpleFillSymbol.color.toHex()}`;
     this.simpleFillSymbolBlock.prepend(this.colorBlock);
 
-    this.colorPickerLabel = document.createElement("calcite-label");
     this.colorPickerLabel.innerText = "color: ";
     this.colorPickerLabel.layout = "inline";
     this.colorBlock.appendChild(this.colorPickerLabel);
 
-    this.colorPicker = document.createElement("calcite-color-picker");
     this.colorPicker.value = "#000000";
     this.colorPickerLabel.appendChild(this.colorPicker);
 
@@ -132,24 +140,12 @@ class SimpleFillSymbolPlayground {
       this.handleColorChange(this.colorPicker.value?.toString());
     });
 
-    this.styleSelectLabel = document.createElement("calcite-label");
-    this.styleSelectLabel.innerText = "select: ";
+    this.styleSelectLabel.innerText = "style: ";
     this.styleSelectLabel.layout = "inline";
     this.simpleFillSymbolBlock.appendChild(this.styleSelectLabel);
 
-    this.styleSelect = document.createElement("calcite-select");
     this.styleSelect.label = `style selection`;
     this.styleSelectLabel.appendChild(this.styleSelect);
-    this.styleSelectOptions = [
-      "backward-diagonal",
-      "cross",
-      "diagonal-cross",
-      "forward-diagonal",
-      "horizontal",
-      "none",
-      "solid",
-      "vertical",
-    ];
 
     this.styleSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");

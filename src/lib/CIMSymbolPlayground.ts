@@ -2,18 +2,22 @@ import MapView from "@arcgis/core/views/MapView";
 import SceneView from "@arcgis/core/views/SceneView";
 
 class CIMSymbolPlayground {
-  cimSymbolBlock: HTMLCalciteBlockElement;
+  private cimSymbolBlock = document.createElement("calcite-block");
 
   constructor(
-    public parentElement: HTMLElement,
-    public codeOutputParagraph?: HTMLParagraphElement | null,
-    public view?: MapView | SceneView | null
+    private parentElement: HTMLElement,
+    private codeOutputParagraph?: HTMLParagraphElement | null,
+    private view?: MapView | SceneView | null
   ) {
     this.cimSymbolBlock = document.createElement("calcite-block");
+  }
+
+  init() {
+    this.parentElement.appendChild(this.cimSymbolBlock);
+
     this.cimSymbolBlock.collapsible = false;
     this.cimSymbolBlock.heading = "CIMSymbol";
     this.cimSymbolBlock.open = true;
-    this.parentElement.appendChild(this.cimSymbolBlock);
   }
 }
 

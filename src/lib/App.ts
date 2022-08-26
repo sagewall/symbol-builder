@@ -12,74 +12,64 @@ import SimpleFillSymbolPlayground from "./SimpleFillSymbolPlayground";
 import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
 class App {
-  activeView: View | null;
-  copyCodeAction: HTMLCalciteActionElement;
-  codeOutputParagraph: HTMLParagraphElement;
-  codePanel: HTMLCalcitePanelElement;
-  codePanelHeaderContent: HTMLDivElement;
-  header: HTMLElement;
-  headerDiv: HTMLDivElement;
-  heading: HTMLHeadingElement;
-  // parentElement: HTMLElement;
-  propertiesPanel: HTMLCalcitePanelElement;
-  propertiesShellPanel: HTMLCalciteShellPanelElement;
-  shell: HTMLCalciteShellElement;
-  symbolSelect: HTMLCalciteSelectElement;
-  symbolSelectOptions: string[];
-  viewDiv: HTMLDivElement;
-  viewSwitchLabel: HTMLCalciteLabelElement;
-  viewSwitch: HTMLCalciteSwitchElement;
+  private activeView: View | null = null;
+  private copyCodeAction = document.createElement("calcite-action");
+  private codeOutputParagraph = document.createElement("p");
+  private codePanel = document.createElement("calcite-panel");
+  private codePanelHeaderContent = document.createElement("div");
+  private header = document.createElement("header");
+  private headerDiv = document.createElement("div");
+  private heading = document.createElement("h1");
+  private propertiesPanel = document.createElement("calcite-panel");
+  private propertiesShellPanel = document.createElement("calcite-shell-panel");
+  private shell = document.createElement("calcite-shell");
+  private symbolSelect = document.createElement("calcite-select");
+  private symbolSelectOptions = [
+    "CIMSymbol",
+    "SimpleLineSymbol",
+    "SimpleFillSymbol",
+  ];
+  private viewDiv = document.createElement("div");
+  private viewSwitchLabel = document.createElement("calcite-label");
+  private viewSwitch = document.createElement("calcite-switch");
 
-  constructor(public parentElement: HTMLElement) {
-    this.activeView = null;
+  constructor(private parentElement: HTMLElement) {}
 
-    this.shell = document.createElement("calcite-shell");
+  init() {
     this.parentElement.appendChild(this.shell);
 
-    this.headerDiv = document.createElement("div") as HTMLDivElement;
+    this.activeView = null;
+
     this.headerDiv.slot = "header";
     this.shell.appendChild(this.headerDiv);
 
-    this.header = document.createElement("header") as HTMLElement;
     this.headerDiv.appendChild(this.header);
 
-    this.heading = document.createElement("h1") as HTMLHeadingElement;
     this.heading.innerText = "Symbol Playground";
     this.header.appendChild(this.heading);
 
-    this.symbolSelect = document.createElement(
-      "calcite-select"
-    ) as HTMLCalciteSelectElement;
     this.symbolSelect.label = "select symbol";
-    this.symbolSelect.value = "CIMSymbol";
+    this.symbolSelect.value = "SimpleFillSymbol";
     this.header.appendChild(this.symbolSelect);
 
     this.symbolSelect.addEventListener("calciteSelectChange", () => {
       this.handleSymbolSelectChange();
     });
 
-    this.symbolSelectOptions = [
-      "CIMSymbol",
-      "SimpleLineSymbol",
-      "SimpleFillSymbol",
-    ];
-
     this.symbolSelectOptions.forEach((option) => {
       const selectOption = document.createElement("calcite-option");
       selectOption.label = option;
       selectOption.innerText = option;
-      if (option === "CIMSymbol") {
+      if (option === "SimpleFillSymbol") {
         selectOption.selected = true;
       }
       this.symbolSelect.appendChild(selectOption);
     });
 
-    this.viewSwitchLabel = document.createElement("calcite-label");
     this.viewSwitchLabel.innerText = "3D";
     this.viewSwitchLabel.layout = "inline";
     this.header.appendChild(this.viewSwitchLabel);
 
-    this.viewSwitch = document.createElement("calcite-switch");
     this.viewSwitch.label = "view switch";
     this.viewSwitchLabel.appendChild(this.viewSwitch);
 
@@ -87,9 +77,6 @@ class App {
       this.handleViewSwitchChange();
     });
 
-    this.propertiesShellPanel = document.createElement(
-      "calcite-shell-panel"
-    ) as HTMLCalciteShellPanelElement;
     this.propertiesShellPanel.id = "propertiesShellPanel";
     this.propertiesShellPanel.slot = "panel-end";
     this.propertiesShellPanel.position = "end";
@@ -97,22 +84,17 @@ class App {
     this.propertiesShellPanel.widthScale = "l";
     this.shell.appendChild(this.propertiesShellPanel);
 
-    this.viewDiv = document.createElement("div") as HTMLDivElement;
     this.viewDiv.id = "viewDiv";
     this.shell.appendChild(this.viewDiv);
 
-    this.propertiesPanel = document.createElement("calcite-panel");
     this.propertiesShellPanel.appendChild(this.propertiesPanel);
 
-    this.codePanel = document.createElement("calcite-panel");
     this.propertiesShellPanel.appendChild(this.codePanel);
 
-    this.codePanelHeaderContent = document.createElement("div");
     this.codePanelHeaderContent.slot = "header-content";
     this.codePanelHeaderContent.innerText = "Code";
     this.codePanel.appendChild(this.codePanelHeaderContent);
 
-    this.copyCodeAction = document.createElement("calcite-action");
     this.copyCodeAction.icon = "copy-to-clipboard";
     this.copyCodeAction.label = "Copy code to clipboard";
     this.copyCodeAction.slot = "header-actions-end";
@@ -124,7 +106,6 @@ class App {
       this.handleCopyCodeActionClick();
     });
 
-    this.codeOutputParagraph = document.createElement("p");
     this.codeOutputParagraph.classList.add("code");
     this.codePanel.appendChild(this.codeOutputParagraph);
 
@@ -173,14 +154,14 @@ class App {
           this.propertiesPanel,
           this.codeOutputParagraph,
           sceneView
-        );
+        ).init();
       } else {
         const mapView = this.createMapView();
         new SimpleLineSymbolPlayground(
           this.propertiesPanel,
           this.codeOutputParagraph,
           mapView
-        );
+        ).init();
       }
     }
 
@@ -191,14 +172,14 @@ class App {
           this.propertiesPanel,
           this.codeOutputParagraph,
           sceneView
-        );
+        ).init();
       } else {
         const mapView = this.createMapView();
         new SimpleFillSymbolPlayground(
           this.propertiesPanel,
           this.codeOutputParagraph,
           mapView
-        );
+        ).init();
       }
     }
   }
