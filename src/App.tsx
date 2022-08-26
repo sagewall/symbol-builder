@@ -12,6 +12,7 @@ import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import { useRef } from "react";
 import "./App.css";
+import MapView from "./Components/MapView";
 import ShellPanel from "./Components/ShellPanel";
 
 function App({ header, footer }: AppProps) {
@@ -61,6 +62,7 @@ function App({ header, footer }: AppProps) {
           ></CalciteSwitch>
         </CalciteLabel>
       </header>
+      <MapView />
       <ShellPanel></ShellPanel>
       <footer slot="footer" className="footer">
         {footer}
