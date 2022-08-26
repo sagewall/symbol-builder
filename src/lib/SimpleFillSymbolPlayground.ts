@@ -26,7 +26,7 @@ class SimpleFillSymbolPlayground {
   private simpleLineSymbol: SimpleLineSymbol;
   private simpleLineSymbolPlayground: SimpleLineSymbolPlayground;
   private simpleFillSymbolBlock = document.createElement("calcite-block");
-  private styleSelectOptions = [
+  private styleSelectOptions: SimpleFillSymbolStyleOptions = [
     "backward-diagonal",
     "cross",
     "diagonal-cross",
@@ -171,17 +171,7 @@ class SimpleFillSymbolPlayground {
   }
 
   handleStyleSelectChange(value: string) {
-    this.simpleFillSymbol.style = <
-      | "backward-diagonal"
-      | "cross"
-      | "diagonal-cross"
-      | "forward-diagonal"
-      | "horizontal"
-      | "none"
-      | "solid"
-      | "vertical"
-    >value;
-
+    this.simpleFillSymbol.style = <SimpleFillSymbolStyleOption>value;
     this.update();
   }
 

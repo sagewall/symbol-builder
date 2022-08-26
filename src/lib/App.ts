@@ -23,7 +23,7 @@ class App {
   private propertiesShellPanel = document.createElement("calcite-shell-panel");
   private shell = document.createElement("calcite-shell");
   private symbolSelect = document.createElement("calcite-select");
-  private symbolSelectOptions = [
+  private symbolSelectOptions: SymbolOptions = [
     "CIMSymbol",
     "SimpleLineSymbol",
     "SimpleFillSymbol",

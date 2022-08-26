@@ -18,11 +18,19 @@ class SimpleLineSymbolPlayground {
   public widthInputNumber = document.createElement("calcite-input-number");
 
   private capLabel = document.createElement("calcite-label");
-  private capSelectOptions = ["butt", "round", "square"];
+  private capSelectOptions: SimpleLineSymbolCapOptions = [
+    "butt",
+    "round",
+    "square",
+  ];
   private colorBlock = document.createElement("calcite-block");
   private colorPickerLabel = document.createElement("calcite-label");
   private joinSelectLabel = document.createElement("calcite-label");
-  private joinSelectOptions = ["miter", "round", "bevel"];
+  private joinSelectOptions: SimpleLineSymbolJoinOptions = [
+    "miter",
+    "round",
+    "bevel",
+  ];
   private miterLimitLabel = document.createElement("calcite-label");
   private polyline = new Polyline({
     paths: [
@@ -44,7 +52,7 @@ class SimpleLineSymbolPlayground {
     width: 0.75,
   };
   private styleLabel = document.createElement("calcite-label");
-  private styleSelectOptions = [
+  private styleSelectOptions: SimpleLineSymbolStyleOptions = [
     "dash",
     "dash-dot",
     "dot",
@@ -262,9 +270,7 @@ class SimpleLineSymbolPlayground {
   }
 
   handleCapChange() {
-    this.simpleLineSymbol.cap = <"butt" | "round" | "square">(
-      this.capSelect.value
-    );
+    this.simpleLineSymbol.cap = <SimpleLineSymbolCapOption>this.capSelect.value;
     this.update();
   }
 
@@ -275,7 +281,7 @@ class SimpleLineSymbolPlayground {
   }
 
   handleJoinChange() {
-    this.simpleLineSymbol.join = <"round" | "miter" | "bevel">(
+    this.simpleLineSymbol.join = <SimpleLineSymbolJoinOption>(
       this.joinSelect.value
     );
     this.update();
@@ -313,20 +319,9 @@ class SimpleLineSymbolPlayground {
   }
 
   handleStyleChange() {
-    this.simpleLineSymbol.style = <
-      | "dash"
-      | "dash-dot"
-      | "dot"
-      | "long-dash"
-      | "long-dash-dot"
-      | "long-dash-dot-dot"
-      | "none"
-      | "short-dash"
-      | "short-dash-dot"
-      | "short-dash-dot-dot"
-      | "short-dot"
-      | "solid"
-    >this.styleSelect.value;
+    this.simpleLineSymbol.style = <SimpleLineSymbolStyleOption>(
+      this.styleSelect.value
+    );
     this.update();
   }
 

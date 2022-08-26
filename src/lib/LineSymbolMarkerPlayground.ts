@@ -16,9 +16,13 @@ class LineSymbolMarkerPlayground {
     style: "arrow",
   };
   private placementLabel = document.createElement("calcite-label");
-  private placementSelectOptions = ["begin", "end", "begin-end"];
+  private placementSelectOptions: LineSymbolMarkerPlacementOptions = [
+    "begin",
+    "end",
+    "begin-end",
+  ];
   private styleLabel = document.createElement("calcite-label");
-  private styleSelectOptions = [
+  private styleSelectOptions: LineSymbolMarkerStyleOptions = [
     "arrow",
     "circle",
     "square",
@@ -92,7 +96,7 @@ class LineSymbolMarkerPlayground {
       const selectOption = document.createElement("calcite-option");
       selectOption.label = option;
       selectOption.innerText = option;
-      if (option === "begin-end") {
+      if (option === "arrow") {
         selectOption.selected = true;
       }
       this.styleSelect.appendChild(selectOption);
@@ -105,15 +109,15 @@ class LineSymbolMarkerPlayground {
   }
 
   handlePlacementChange() {
-    this.lineSymbolMarker.placement = <"begin" | "end" | "begin-end">(
+    this.lineSymbolMarker.placement = <LineSymbolMarkerPlacementOption>(
       this.placementSelect.value
     );
   }
 
   handleStyleChange = () => {
-    this.lineSymbolMarker.style = <
-      "square" | "arrow" | "circle" | "diamond" | "cross" | "x"
-    >this.styleSelect.value;
+    this.lineSymbolMarker.style = <LineSymbolMarkerStyleOption>(
+      this.styleSelect.value
+    );
   };
 }
 
