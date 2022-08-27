@@ -5,3 +5,13 @@
   justify-content: space-between;
   padding: 0.5rem;
 }
+
+.nav {
+  display: flex;
+  align-content: space-between;
+  gap: 1rem;
+}
+
+.active {
+  background-color: lightgray;
+}
