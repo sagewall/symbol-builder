@@ -1,4 +1,5 @@
 import Basemap from "@arcgis/core/Basemap";
+import Graphic from "@arcgis/core/Graphic";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMap from "@arcgis/core/Map";
 import ArcMapView from "@arcgis/core/views/MapView";
@@ -8,7 +9,11 @@ import Expand from "@arcgis/core/widgets/Expand";
 import { useEffect, useRef } from "react";
 import "./MapView.css";
 
-function MapView() {
+interface MapViewProps {
+  graphics: Graphic[];
+}
+
+function MapView({ graphics }: MapViewProps) {
   const viewDiv = useRef(null);
 
   useEffect(() => {
@@ -32,6 +37,7 @@ function MapView() {
 
       const view = new ArcMapView({
         container: viewDiv.current,
+        graphics,
         map,
       });
 
@@ -65,6 +71,10 @@ function MapView() {
 
       view.ui.add(basemapGalleryExpand, {
         position: "top-left",
+      });
+
+      view.when().then(() => {
+        view.goTo(view.graphics);
       });
     }
   }, []);
