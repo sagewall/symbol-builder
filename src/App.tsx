@@ -20,14 +20,7 @@ import SimpleFillSymbolPage from "./Components/SimpleFillSymbolPage";
 import SimpleLineSymbolPage from "./Components/SimpleLineSymbolPage";
 
 function App({ header, footer }: AppProps) {
-  const symbolSelect = useRef(null);
   const viewSwitch = useRef(null);
-
-  const symbolSelectOptions = [
-    "CIMSymbol",
-    "SimpleLineSymbol",
-    "SimpleFillSymbol",
-  ];
 
   function handleSwitchChange() {
     if (viewSwitch.current) {
@@ -46,11 +39,12 @@ function App({ header, footer }: AppProps) {
         <header slot="header" className="header">
           <h2>{header}</h2>
           <nav className="nav">
-            {" "}
             <NavLink to="/SimpleLineSymbol">
               <CalciteLink>SimpleLineSymbol</CalciteLink>
             </NavLink>
-            <NavLink to="/SimpleFillSymbol">SimpleFillSymbol</NavLink>
+            <NavLink to="/SimpleFillSymbol">
+              <CalciteLink>SimpleFillSymbol</CalciteLink>
+            </NavLink>
           </nav>
 
           <CalciteLabel layout="inline">
