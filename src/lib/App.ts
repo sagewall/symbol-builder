@@ -13,13 +13,13 @@ import SimpleLineSymbolPlayground from "./SimpleLineSymbolPlayground";
 
 class App {
   private activeView: MapView | SceneView | null = null;
-  private copyCodeAction = document.createElement("calcite-action");
-  private codeOutputParagraph = document.createElement("p");
-  private codePanel = document.createElement("calcite-panel");
-  private codePanelHeaderContent = document.createElement("div");
+  private copyJSONAction = document.createElement("calcite-action");
   private header = document.createElement("header");
   private headerDiv = document.createElement("div");
   private heading = document.createElement("h1");
+  private jsonOutputPre = document.createElement("pre");
+  private jsonPanel = document.createElement("calcite-panel");
+  private jsonPanelHeaderContent = document.createElement("div");
   private propertiesPanel = document.createElement("calcite-panel");
   private propertiesShellPanel = document.createElement("calcite-shell-panel");
   private shell = document.createElement("calcite-shell");
@@ -89,32 +89,31 @@ class App {
 
     this.propertiesShellPanel.appendChild(this.propertiesPanel);
 
-    this.propertiesShellPanel.appendChild(this.codePanel);
+    this.propertiesShellPanel.appendChild(this.jsonPanel);
 
-    this.codePanelHeaderContent.slot = "header-content";
-    this.codePanelHeaderContent.innerText = "Code";
-    this.codePanel.appendChild(this.codePanelHeaderContent);
+    this.jsonPanelHeaderContent.slot = "header-content";
+    this.jsonPanelHeaderContent.innerText = "JSON";
+    this.jsonPanel.appendChild(this.jsonPanelHeaderContent);
 
-    this.copyCodeAction.icon = "copy-to-clipboard";
-    this.copyCodeAction.label = "Copy code to clipboard";
-    this.copyCodeAction.slot = "header-actions-end";
-    this.copyCodeAction.text = "Copy code to clipboard";
-    this.copyCodeAction.textEnabled = true;
-    this.codePanel.appendChild(this.copyCodeAction);
+    this.copyJSONAction.icon = "copy-to-clipboard";
+    this.copyJSONAction.label = "Copy JSON to clipboard";
+    this.copyJSONAction.slot = "header-actions-end";
+    this.copyJSONAction.text = "Copy JSON to clipboard";
+    this.copyJSONAction.textEnabled = true;
+    this.jsonPanel.appendChild(this.copyJSONAction);
 
-    this.copyCodeAction.addEventListener("click", () => {
-      this.handleCopyCodeActionClick();
+    this.copyJSONAction.addEventListener("click", () => {
+      this.handleCopyJSONActionClick();
     });
 
-    this.codeOutputParagraph.classList.add("code");
-    this.codePanel.appendChild(this.codeOutputParagraph);
+    this.jsonPanel.appendChild(this.jsonOutputPre);
 
     this.handleSymbolSelectChange();
   }
 
   reset() {
-    while (this.codeOutputParagraph.firstChild) {
-      this.codeOutputParagraph.removeChild(this.codeOutputParagraph.firstChild);
+    while (this.jsonOutputPre.firstChild) {
+      this.jsonOutputPre.removeChild(this.jsonOutputPre.firstChild);
     }
 
     while (this.propertiesPanel.firstChild) {
@@ -133,7 +132,7 @@ class App {
       this.createView();
       new CIMSymbolPlayground(
         this.propertiesPanel,
-        this.codeOutputParagraph,
+        this.jsonOutputPre,
         this.activeView
       ).init();
     }
@@ -142,7 +141,7 @@ class App {
       this.createView();
       new SimpleLineSymbolPlayground(
         this.propertiesPanel,
-        this.codeOutputParagraph,
+        this.jsonOutputPre,
         this.activeView
       ).init();
     }
@@ -151,7 +150,7 @@ class App {
       this.createView();
       new SimpleFillSymbolPlayground(
         this.propertiesPanel,
-        this.codeOutputParagraph,
+        this.jsonOutputPre,
         this.activeView
       ).init();
     }
@@ -161,8 +160,8 @@ class App {
     this.handleSymbolSelectChange();
   }
 
-  handleCopyCodeActionClick() {
-    navigator.clipboard.writeText(this.codeOutputParagraph.innerText);
+  handleCopyJSONActionClick() {
+    navigator.clipboard.writeText(this.jsonOutputPre.innerText);
   }
 
   createView() {

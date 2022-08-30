@@ -17,10 +17,6 @@ h2 {
   padding-left: 1rem;
 }
 
-.code {
-  white-space: pre;
-}
-
 header {
   display: flex;
   justify-content: space-between;

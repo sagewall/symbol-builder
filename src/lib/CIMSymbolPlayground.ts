@@ -1,10 +1,10 @@
+import Point from "@arcgis/core/geometry/Point";
+import Polygon from "@arcgis/core/geometry/Polygon";
+import Polyline from "@arcgis/core/geometry/Polyline";
+import Graphic from "@arcgis/core/Graphic";
+import CIMSymbol from "@arcgis/core/symbols/CIMSymbol";
 import MapView from "@arcgis/core/views/MapView";
 import SceneView from "@arcgis/core/views/SceneView";
-import CIMSymbol from "@arcgis/core/symbols/CIMSymbol";
-import Graphic from "@arcgis/core/Graphic";
-import Point from "@arcgis/core/geometry/Point";
-import Polyline from "@arcgis/core/geometry/Polyline";
-import Polygon from "@arcgis/core/geometry/Polygon";
 
 class CIMSymbolPlayground {
   private cimSymbolBlock = document.createElement("calcite-block");
@@ -199,7 +199,7 @@ class CIMSymbolPlayground {
 
   constructor(
     private parentElement: HTMLElement,
-    private codeOutputParagraph?: HTMLParagraphElement | null,
+    private jsonOutputParagraph?: HTMLPreElement | null,
     private view?: MapView | SceneView | null
   ) {
     this.cimSymbolBlock = document.createElement("calcite-block");
@@ -337,15 +337,6 @@ class CIMSymbolPlayground {
   }
 
   update() {
-    // this.cimSymbol = new CIMSymbol({
-    //   data: this.cimSymbolReference,
-    // });
-
-    // this.pointGraphic = new Graphic({
-    //   geometry: this.point,
-    //   symbol: this.cimSymbol,
-    // });
-
     if (this.view) {
       this.view.graphics.removeAll();
       switch (this.symbolSelect.value) {
@@ -366,11 +357,11 @@ class CIMSymbolPlayground {
       }
     }
 
-    if (this.codeOutputParagraph) {
-      this.codeOutputParagraph.innerText = JSON.stringify(
+    if (this.jsonOutputParagraph) {
+      this.jsonOutputParagraph.innerText = JSON.stringify(
         this.cimSymbol.toJSON(),
         null,
-        4
+        2
       );
     }
   }

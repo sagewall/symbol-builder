@@ -71,7 +71,7 @@ class SimpleLineSymbolPlayground {
 
   constructor(
     private parentElement: HTMLElement,
-    private codeOutputParagraph?: HTMLParagraphElement | null,
+    private jsonOutputParagraph?: HTMLPreElement | null,
     private view?: MapView | SceneView | null
   ) {
     this.simpleLineSymbol = new SimpleLineSymbol(
@@ -246,26 +246,12 @@ class SimpleLineSymbolPlayground {
       this.view.graphics.add(this.polylineGraphic.clone());
     }
 
-    let marker = "marker: null,";
-
-    if (this.simpleLineSymbol.marker) {
-      marker = `marker: new LineSymbolMarker({
-          color: "${this.simpleLineSymbol.marker.color.toHex()}",
-          placement: "${this.simpleLineSymbol.marker.placement}",
-          style: "${this.simpleLineSymbol.marker.style}"
-        }),`;
-    }
-    if (this.codeOutputParagraph) {
-      this.codeOutputParagraph.innerText = `
-      const simpleLineSymbol = new SimpleLineSymbol({
-        cap: "${this.simpleLineSymbol.cap}",
-        color: "${this.simpleLineSymbol.color.toHex()}",
-        join: "${this.simpleLineSymbol.join}",
-        ${marker}
-        miterLimit: ${this.simpleLineSymbol.miterLimit},
-        style: "${this.simpleLineSymbol.style}",
-        width: ${this.simpleLineSymbol.width}
-      })`;
+    if (this.jsonOutputParagraph) {
+      this.jsonOutputParagraph.innerText = JSON.stringify(
+        this.simpleLineSymbol.toJSON(),
+        null,
+        2
+      );
     }
   }
 

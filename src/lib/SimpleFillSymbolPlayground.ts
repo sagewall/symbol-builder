@@ -41,7 +41,7 @@ class SimpleFillSymbolPlayground {
 
   constructor(
     private parentElement: HTMLElement,
-    private codeOutputParagraph?: HTMLParagraphElement | null,
+    private jsonOutputParagraph?: HTMLPreElement | null,
     private view?: MapView | SceneView | null
   ) {
     this.simpleLineSymbolPlayground = new SimpleLineSymbolPlayground(
@@ -181,20 +181,12 @@ class SimpleFillSymbolPlayground {
       this.view.graphics.add(this.polygonGraphic.clone());
     }
 
-    if (this.codeOutputParagraph) {
-      this.codeOutputParagraph.innerText = `
-      const simpleFillSymbol = new SimpleFillSymbol({
-        color: "${this.simpleFillSymbol.color.toHex()}",
-        outline: new SimpleLineSymbol({
-          cap: "${this.simpleFillSymbol.outline.cap}",
-          color: "${this.simpleFillSymbol.outline.color.toHex()}",
-          join: "${this.simpleFillSymbol.outline.join}",
-          miterLimit: ${this.simpleFillSymbol.outline.miterLimit},
-          style: "${this.simpleFillSymbol.outline.style}",
-          width: ${this.simpleFillSymbol.outline.width}
-        }),
-        style: "${this.simpleFillSymbol.style}"
-      })`;
+    if (this.jsonOutputParagraph) {
+      this.jsonOutputParagraph.innerText = JSON.stringify(
+        this.simpleFillSymbol.toJSON(),
+        null,
+        2
+      );
     }
   }
 }
