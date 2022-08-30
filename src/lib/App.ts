@@ -1,4 +1,5 @@
 import Basemap from "@arcgis/core/Basemap";
+import Point from "@arcgis/core/geometry/Point";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMap from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
@@ -48,7 +49,7 @@ class App {
     this.header.appendChild(this.heading);
 
     this.symbolSelect.label = "select symbol";
-    this.symbolSelect.value = "SimpleFillSymbol";
+    this.symbolSelect.value = "CIMSymbol";
     this.header.appendChild(this.symbolSelect);
 
     this.symbolSelect.addEventListener("calciteSelectChange", () => {
@@ -59,7 +60,7 @@ class App {
       const selectOption = document.createElement("calcite-option");
       selectOption.label = option;
       selectOption.innerText = option;
-      if (option === "SimpleFillSymbol") {
+      if (option === "CIMSymbol") {
         selectOption.selected = true;
       }
       this.symbolSelect.appendChild(selectOption);
@@ -134,7 +135,7 @@ class App {
         this.propertiesPanel,
         this.codeOutputParagraph,
         this.activeView
-      );
+      ).init();
     }
 
     if (this.symbolSelect.value === "SimpleLineSymbol") {
@@ -182,17 +183,26 @@ class App {
       basemap: blankBasemap,
     });
 
+    const center = new Point({
+      x: -105.175,
+      y: 40.1,
+    });
+    const zoom = 10;
     let view: MapView | SceneView | null = null;
 
     if (this.viewSwitch.checked) {
       view = new SceneView({
+        center,
         container: this.viewDiv,
         map,
+        zoom,
       });
     } else {
       view = new MapView({
+        center,
         container: this.viewDiv,
         map,
+        zoom,
       });
     }
 
