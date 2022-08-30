@@ -7,62 +7,63 @@ import Point from "@arcgis/core/geometry/Point";
 class CIMSymbolPlayground {
   private cimSymbolBlock = document.createElement("calcite-block");
 
-  private cimSymbolReference: __esri.CIMSymbolReference = {
-    type: "CIMSymbolReference",
-    primitiveOverrides: undefined,
-    symbol: {
-      type: "CIMPointSymbol",
-      symbolLayers: [
-        {
-          type: "CIMVectorMarker",
-          enable: true,
-          size: 32,
-          frame: {
-            xmin: 0,
-            ymin: 0,
-            xmax: 16,
-            ymax: 16,
-          },
-          markerGraphics: [
-            {
-              type: "CIMMarkerGraphic",
-              geometry: {
-                rings: [
-                  [
-                    [8, 16],
-                    [0, 0],
-                    [16, 0],
-                    [8, 16],
-                  ],
-                ],
-              },
-              symbol: {
-                type: "CIMPolygonSymbol",
-                symbolLayers: [
-                  {
-                    type: "CIMSolidStroke",
-                    enable: true,
-                    width: 5,
-                    color: [240, 94, 35, 255],
-                  },
-                ],
-              },
-            },
-          ],
+  private cimPointSymbol: __esri.CIMPointSymbol = {
+    type: "CIMPointSymbol",
+    symbolLayers: [
+      {
+        type: "CIMVectorMarker",
+        enable: true,
+        size: 32,
+        frame: {
+          xmin: 0,
+          ymin: 0,
+          xmax: 16,
+          ymax: 16,
         },
-      ],
-    },
-    minScale: 0,
-    maxScale: 0,
+        markerGraphics: [
+          {
+            type: "CIMMarkerGraphic",
+            geometry: {
+              rings: [
+                [
+                  [8, 16],
+                  [0, 0],
+                  [16, 0],
+                  [8, 16],
+                ],
+              ],
+            },
+            symbol: {
+              type: "CIMPolygonSymbol",
+              symbolLayers: [
+                {
+                  type: "CIMSolidStroke",
+                  enable: true,
+                  width: 5,
+                  color: [240, 94, 35, 255],
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
   };
+
+  private cimSymbolReference: __esri.CIMSymbolReference;
 
   private cimSymbol: CIMSymbol;
 
-  point = new Point({
+  private minScale = 0;
+  private maxScale = 0;
+
+  private point = new Point({
     x: -105.175,
     y: 40.1,
   });
   private pointGraphic: Graphic;
+
+  private primitiveOverrides: __esri.PrimitiveOverride[] = [];
 
   constructor(
     private parentElement: HTMLElement,
@@ -70,6 +71,14 @@ class CIMSymbolPlayground {
     private view?: MapView | SceneView | null
   ) {
     this.cimSymbolBlock = document.createElement("calcite-block");
+
+    this.cimSymbolReference = {
+      type: "CIMSymbolReference",
+      primitiveOverrides: this.primitiveOverrides,
+      symbol: this.cimPointSymbol,
+      minScale: this.minScale,
+      maxScale: this.maxScale,
+    };
 
     this.cimSymbol = new CIMSymbol({
       data: this.cimSymbolReference,
