@@ -54,8 +54,13 @@ class CIMSymbolPlayground {
 
   private cimSymbol: CIMSymbol;
 
-  private minScale = 0;
   private maxScale = 0;
+  private maxScaleInputNumber = document.createElement("calcite-input-number");
+  private maxScaleLabel = document.createElement("calcite-label");
+
+  private minScale = 0;
+  private minScaleInputNumber = document.createElement("calcite-input-number");
+  private minScaleLabel = document.createElement("calcite-label");
 
   private point = new Point({
     x: -105.175,
@@ -97,6 +102,38 @@ class CIMSymbolPlayground {
     this.cimSymbolBlock.heading = "CIMSymbol";
     this.cimSymbolBlock.open = true;
 
+    this.maxScaleLabel.innerText = "minScale: ";
+    this.maxScaleLabel.layout = "inline";
+    this.cimSymbolBlock.appendChild(this.maxScaleLabel);
+
+    this.maxScaleInputNumber.min = 0;
+    this.maxScaleInputNumber.step = 500;
+    this.maxScaleInputNumber.value = "0";
+    this.maxScaleLabel.appendChild(this.maxScaleInputNumber);
+
+    this.maxScaleInputNumber.addEventListener(
+      "calciteInputNumberChange",
+      () => {
+        this.handleMaxScaleChange();
+      }
+    );
+
+    this.minScaleLabel.innerText = "maxScale: ";
+    this.minScaleLabel.layout = "inline";
+    this.cimSymbolBlock.appendChild(this.minScaleLabel);
+
+    this.minScaleInputNumber.min = 0;
+    this.minScaleInputNumber.step = 500;
+    this.minScaleInputNumber.value = "0";
+    this.minScaleLabel.appendChild(this.minScaleInputNumber);
+
+    this.minScaleInputNumber.addEventListener(
+      "calciteInputNumberChange",
+      () => {
+        this.handleMinScaleChange();
+      }
+    );
+
     this.view?.when(() => {
       console.log("view ready");
 
@@ -106,8 +143,26 @@ class CIMSymbolPlayground {
     this.update();
   }
 
+  handleMaxScaleChange() {
+    this.cimSymbolReference.maxScale = Number(this.maxScaleInputNumber.value);
+    this.update();
+  }
+
+  handleMinScaleChange() {
+    this.cimSymbolReference.minScale = Number(this.minScaleInputNumber.value);
+    this.update();
+  }
+
   update() {
-    console.log("update");
+    this.cimSymbol = new CIMSymbol({
+      data: this.cimSymbolReference,
+    });
+
+    this.pointGraphic = new Graphic({
+      geometry: this.point,
+      symbol: this.cimSymbol,
+    });
+
     if (this.view) {
       this.view.graphics.removeAll();
       this.view.graphics.add(this.pointGraphic.clone());
