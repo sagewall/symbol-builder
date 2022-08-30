@@ -2,13 +2,25 @@ import Color from "@arcgis/core/Color";
 import Polygon from "@arcgis/core/geometry/Polygon";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-import { CalciteShell } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import { useState } from "react";
-import MapView from "./MapView";
-import ShellPanel from "./ShellPanel";
 
-function SimpleFillSymbolPage() {
+import {
+  CalcitePanel,
+  CalciteShell,
+  CalciteShellPanel,
+} from "@esri/calcite-components-react";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import "@esri/calcite-components/dist/components/calcite-shell";
+import "@esri/calcite-components/dist/components/calcite-shell-panel";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
+
+interface SimpleFillSymbolPageProps {
+  sceneView: boolean;
+}
+
+function SimpleFillSymbolPage({ sceneView }: SimpleFillSymbolPageProps) {
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
     new SimpleFillSymbol({
       color: new Color("#000000"),
@@ -44,10 +56,27 @@ function SimpleFillSymbolPage() {
     })
   );
 
+  let view = <MapView graphics={[polygonGraphic]} />;
+  if (sceneView) {
+    view = <SceneView graphics={[polygonGraphic]} />;
+  }
+
   return (
     <CalciteShell>
-      <MapView graphics={[polygonGraphic]} />
-      <ShellPanel></ShellPanel>
+      {view}
+      <CalciteShellPanel
+        slot="panel-end"
+        position="end"
+        resizable
+        widthScale="l"
+      >
+        <CalcitePanel>
+          <div slot="header-content">Properties</div>
+        </CalcitePanel>
+        <CalcitePanel>
+          <div slot="header-content">Code</div>
+        </CalcitePanel>
+      </CalciteShellPanel>
     </CalciteShell>
   );
 }

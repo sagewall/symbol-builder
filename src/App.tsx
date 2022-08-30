@@ -8,7 +8,7 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-link";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   BrowserRouter as Router,
   NavLink,
@@ -19,12 +19,18 @@ import "./App.css";
 import SimpleFillSymbolPage from "./Components/SimpleFillSymbolPage";
 import SimpleLineSymbolPage from "./Components/SimpleLineSymbolPage";
 
+interface AppProps {
+  header: string;
+  footer: string;
+}
+
 function App({ header, footer }: AppProps) {
   const viewSwitch = useRef(null);
+  const [sceneView, setSceneView] = useState(false);
 
   function handleSwitchChange() {
     if (viewSwitch.current) {
-      console.log((viewSwitch.current as HTMLCalciteSwitchElement).checked);
+      setSceneView((viewSwitch.current as HTMLCalciteSwitchElement).checked);
     }
   }
 
@@ -32,9 +38,18 @@ function App({ header, footer }: AppProps) {
     <CalciteShell>
       <Router>
         <Routes>
-          <Route path="/" element={<SimpleLineSymbolPage />} />
-          <Route path="/SimpleLineSymbol" element={<SimpleLineSymbolPage />} />
-          <Route path="/SimpleFillSymbol" element={<SimpleFillSymbolPage />} />
+          <Route
+            path="/"
+            element={<SimpleLineSymbolPage sceneView={sceneView} />}
+          />
+          <Route
+            path="/SimpleLineSymbol"
+            element={<SimpleLineSymbolPage sceneView={sceneView} />}
+          />
+          <Route
+            path="/SimpleFillSymbol"
+            element={<SimpleFillSymbolPage sceneView={sceneView} />}
+          />
         </Routes>
         <header slot="header" className="header">
           <h2>{header}</h2>
@@ -48,7 +63,7 @@ function App({ header, footer }: AppProps) {
           </nav>
 
           <CalciteLabel layout="inline">
-            3D
+            SceneView
             <CalciteSwitch
               ref={viewSwitch}
               onCalciteSwitchChange={handleSwitchChange}
