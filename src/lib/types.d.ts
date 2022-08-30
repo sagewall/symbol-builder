@@ -1,3 +1,9 @@
+type CIMSymbolStyleOption =
+  | __esri.CIMPointSymbol
+  | __esri.CIMLineSymbol
+  | __esri.CIMPolygonSymbol;
+type CIMSymbolStyleOptions = CIMSymbolStyleOption[];
+
 type LineSymbolMarkerPlacementOption = "begin" | "end" | "begin-end";
 type LineSymbolMarkerPlacementOptions = LineSymbolMarkerPlacementOption[];
 
