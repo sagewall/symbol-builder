@@ -6,10 +6,12 @@ import "@esri/calcite-components/dist/components/calcite-shell";
 import { useState } from "react";
 
 import {
+  CalciteAction,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
 } from "@esri/calcite-components-react";
+import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
@@ -61,6 +63,12 @@ function SimpleFillSymbolPage({ sceneView }: SimpleFillSymbolPageProps) {
     view = <SceneView graphics={[polygonGraphic]} />;
   }
 
+  function handleCopyJSONClick() {
+    navigator.clipboard.writeText(
+      JSON.stringify(simpleFillSymbol.toJSON(), null, 2)
+    );
+  }
+
   return (
     <CalciteShell>
       {view}
@@ -74,7 +82,16 @@ function SimpleFillSymbolPage({ sceneView }: SimpleFillSymbolPageProps) {
           <div slot="header-content">Properties</div>
         </CalcitePanel>
         <CalcitePanel>
-          <div slot="header-content">Code</div>
+          <div slot="header-content">JSON</div>
+          <CalciteAction
+            icon="copy-to-clipboard"
+            label="Copy code to clipboard"
+            text="Copy JSON"
+            textEnabled
+            slot="header-actions-end"
+            onClick={handleCopyJSONClick}
+          ></CalciteAction>
+          <pre>{JSON.stringify(simpleFillSymbol.toJSON(), null, 2)}</pre>
         </CalcitePanel>
       </CalciteShellPanel>
     </CalciteShell>
