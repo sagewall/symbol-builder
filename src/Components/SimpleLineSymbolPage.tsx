@@ -36,36 +36,33 @@ interface SimpleLineSymbolPageProps {
 type CapOption = "butt" | "round" | "square";
 
 function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol({
-      cap: "round",
-      color: "#000000",
-      join: "round",
-      marker: undefined,
-      miterLimit: 2,
-      style: "solid",
-      width: 8,
-    })
-  );
+  let simpleLineSymbol = new SimpleLineSymbol({
+    cap: "round",
+    color: "#000000",
+    join: "round",
+    marker: undefined,
+    miterLimit: 2,
+    style: "solid",
+    width: 8,
+  });
 
-  const [polyline, setPolyline] = useState(
-    new Polyline({
-      paths: [
-        [
-          [-105.0, 40.0],
-          [-105.1, 40.2],
-          [-105.35, 40.1],
-        ],
+  let [simpleLineSymbolState, setSimpleLineSymbolState] =
+    useState(simpleLineSymbol);
+
+  const polyline = new Polyline({
+    paths: [
+      [
+        [-105.0, 40.0],
+        [-105.1, 40.2],
+        [-105.35, 40.1],
       ],
-    })
-  );
+    ],
+  });
 
-  const [polylineGraphic, setPolylineGraphic] = useState(
-    new Graphic({
-      geometry: polyline,
-      symbol: simpleLineSymbol,
-    })
-  );
+  let polylineGraphic = new Graphic({
+    geometry: polyline,
+    symbol: simpleLineSymbol,
+  });
 
   const capSelect = useRef(null);
 
@@ -75,6 +72,8 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
   // }
 
   const viewDiv = useRef(null);
+  let view = new ArcMapView();
+  let map = new ArcMap();
 
   function handleCopyJSONClick() {
     navigator.clipboard.writeText(
@@ -83,6 +82,7 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
   }
 
   function handleCapChange() {
+    console.log("changed");
     if (capSelect.current) {
       const currentValue: CapOption = (
         capSelect.current as HTMLCalciteSelectElement
@@ -91,11 +91,17 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
 
       const newSimpleLineSymbol = simpleLineSymbol.clone();
       newSimpleLineSymbol.cap = currentValue;
-      setSimpleLineSymbol(newSimpleLineSymbol);
+      simpleLineSymbol = newSimpleLineSymbol;
 
       const newPolylineGraphic = polylineGraphic.clone();
       newPolylineGraphic.symbol = newSimpleLineSymbol;
-      setPolylineGraphic(newPolylineGraphic);
+      polylineGraphic = newPolylineGraphic;
+
+      console.log("new graphic: ", newPolylineGraphic);
+      view.graphics.removeAll();
+      view.graphics.add(newPolylineGraphic);
+
+      //  setSimpleLineSymbolState(newSimpleLineSymbol);
     }
   }
 
@@ -116,11 +122,11 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
         title: "Blank",
       });
 
-      const map = new ArcMap({
+      map = new ArcMap({
         basemap: blankBasemap,
       });
 
-      const view = new ArcMapView({
+      view = new ArcMapView({
         container: viewDiv.current,
         graphics: [polylineGraphic],
         map,
@@ -159,10 +165,11 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
       });
 
       view.when().then(() => {
+        console.log("view ready");
         view.goTo(view.graphics);
       });
     }
-  }, [polylineGraphic]);
+  }, []);
 
   return (
     <CalciteShell>
@@ -198,7 +205,7 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
             slot="header-actions-end"
             onClick={handleCopyJSONClick}
           ></CalciteAction>
-          <pre>{JSON.stringify(simpleLineSymbol.toJSON(), null, 2)}</pre>
+          <pre>{JSON.stringify(simpleLineSymbolState.toJSON(), null, 2)}</pre>
         </CalcitePanel>
       </CalciteShellPanel>
     </CalciteShell>
