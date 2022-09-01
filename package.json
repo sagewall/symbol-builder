@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@arcgis/core": "^4.24.7",
+    "@arcgis/core": "^4.25.0-next.20220901",
     "@esri/calcite-components-react": "^0.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
