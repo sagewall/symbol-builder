@@ -2,52 +2,45 @@ import Polyline from "@arcgis/core/geometry/Polyline";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import "@esri/calcite-components/dist/components/calcite-shell";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
+import Collection from "@arcgis/core/core/Collection";
 import {
   CalciteAction,
   CalciteLabel,
+  CalciteOption,
   CalcitePanel,
+  CalciteSelect,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSelect,
-  CalciteOption,
 } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-label";
+import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-shell";
-import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
-import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
-import Basemap from "@arcgis/core/Basemap";
-import ArcMap from "@arcgis/core/Map";
-import ArcMapView from "@arcgis/core/views/MapView";
-import LocalBasemapsSource from "@arcgis/core/widgets/BasemapGallery/support/LocalBasemapsSource";
-import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
-import Expand from "@arcgis/core/widgets/Expand";
 
 interface SimpleLineSymbolPageProps {
   sceneView: boolean;
 }
 type CapOption = "butt" | "round" | "square";
 
-function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
-  let simpleLineSymbol = new SimpleLineSymbol({
-    cap: "round",
-    color: "#000000",
-    join: "round",
-    marker: undefined,
-    miterLimit: 2,
-    style: "solid",
-    width: 8,
-  });
-
-  let [simpleLineSymbolState, setSimpleLineSymbolState] =
-    useState(simpleLineSymbol);
+const SimpleLineSymbolPage = ({ sceneView }: SimpleLineSymbolPageProps) => {
+  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
+    new SimpleLineSymbol({
+      cap: "round",
+      color: "#000000",
+      join: "round",
+      marker: undefined,
+      miterLimit: 2,
+      style: "solid",
+      width: 8,
+    })
+  );
 
   const polyline = new Polyline({
     paths: [
@@ -59,121 +52,56 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
     ],
   });
 
-  let polylineGraphic = new Graphic({
+  const polylineGraphic = new Graphic({
     geometry: polyline,
     symbol: simpleLineSymbol,
   });
 
+  const graphicsCollection = new Collection();
+  graphicsCollection.add(polylineGraphic);
+
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
+
+  let view = <MapView graphics={graphics} />;
+  if (sceneView) {
+    view = <SceneView graphics={graphics} />;
+  }
+
   const capSelect = useRef(null);
 
-  // let view = <MapView graphics={[polylineGraphic]} />;
-  // if (sceneView) {
-  //   view = <SceneView graphics={[polylineGraphic]} />;
-  // }
+  const handleCapChange = () => {
+    if (capSelect.current) {
+      const currentCapValue: CapOption = (
+        capSelect.current as HTMLCalciteSelectElement
+      ).value as CapOption;
 
-  const viewDiv = useRef(null);
-  let view = new ArcMapView();
-  let map = new ArcMap();
+      const newSimpleLineSymbol = simpleLineSymbol.clone();
+      newSimpleLineSymbol.cap = currentCapValue;
+      setSimpleLineSymbol(newSimpleLineSymbol);
 
-  function handleCopyJSONClick() {
+      const newPolylineGraphic = graphics.getItemAt(0).clone();
+      newPolylineGraphic.symbol = newSimpleLineSymbol;
+
+      const newGraphics = new Collection();
+
+      newGraphics.add(newPolylineGraphic);
+
+      setGraphics(newGraphics);
+    }
+  };
+
+  const handleCopyJSONClick = () => {
     navigator.clipboard.writeText(
       JSON.stringify(simpleLineSymbol.toJSON(), null, 2)
     );
-  }
+  };
 
-  function handleCapChange() {
-    console.log("changed");
-    if (capSelect.current) {
-      const currentValue: CapOption = (
-        capSelect.current as HTMLCalciteSelectElement
-      ).value as CapOption;
-      console.log(currentValue);
-
-      const newSimpleLineSymbol = simpleLineSymbol.clone();
-      newSimpleLineSymbol.cap = currentValue;
-      simpleLineSymbol = newSimpleLineSymbol;
-
-      const newPolylineGraphic = polylineGraphic.clone();
-      newPolylineGraphic.symbol = newSimpleLineSymbol;
-      polylineGraphic = newPolylineGraphic;
-
-      console.log("new graphic: ", newPolylineGraphic);
-      view.graphics.removeAll();
-      view.graphics.add(newPolylineGraphic);
-
-      //  setSimpleLineSymbolState(newSimpleLineSymbol);
-    }
-  }
-
-  const capOptions = ["butt", "round", "square"];
-
-  useEffect(() => {
-    if (viewDiv.current) {
-      const blankBasemapVectorTileLayer = new VectorTileLayer({
-        portalItem: {
-          id: "da7c2aa6b22a439fae31294413b5bc62",
-        },
-      });
-
-      const blankBasemap = new Basemap({
-        baseLayers: [blankBasemapVectorTileLayer],
-        thumbnailUrl:
-          "https://jsapi.maps.arcgis.com/sharing/rest/content/items/da7c2aa6b22a439fae31294413b5bc62/info/thumbnail/thumbnail1660688993675.png",
-        title: "Blank",
-      });
-
-      map = new ArcMap({
-        basemap: blankBasemap,
-      });
-
-      view = new ArcMapView({
-        container: viewDiv.current,
-        graphics: [polylineGraphic],
-        map,
-      });
-
-      const localBasemapsSource = new LocalBasemapsSource({
-        basemaps: [
-          blankBasemap,
-          Basemap.fromId("satellite"),
-          Basemap.fromId("hybrid"),
-          Basemap.fromId("oceans"),
-          Basemap.fromId("osm"),
-          Basemap.fromId("terrain"),
-          Basemap.fromId("dark-gray-vector"),
-          Basemap.fromId("gray-vector"),
-          Basemap.fromId("streets-vector"),
-          Basemap.fromId("streets-night-vector"),
-          Basemap.fromId("streets-navigation-vector"),
-          Basemap.fromId("topo-vector"),
-          Basemap.fromId("streets-relief-vector"),
-        ],
-      });
-
-      const basemapGallery = new BasemapGallery({
-        view,
-        source: localBasemapsSource,
-      });
-
-      const basemapGalleryExpand = new Expand({
-        view,
-        content: basemapGallery,
-      });
-
-      view.ui.add(basemapGalleryExpand, {
-        position: "top-left",
-      });
-
-      view.when().then(() => {
-        console.log("view ready");
-        view.goTo(view.graphics);
-      });
-    }
-  }, []);
+  const capOptions = ["round", "butt", "square"];
 
   return (
     <CalciteShell>
-      <div className="viewDiv" ref={viewDiv}></div>;
+      {view}
       <CalciteShellPanel
         slot="panel-end"
         position="end"
@@ -189,8 +117,8 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
               label={"cap selection"}
               onCalciteSelectChange={handleCapChange}
             >
-              {capOptions.map((option) => (
-                <CalciteOption key={option}>{option}</CalciteOption>
+              {capOptions.map((option, index) => (
+                <CalciteOption key={index}>{option}</CalciteOption>
               ))}
             </CalciteSelect>
           </CalciteLabel>
@@ -205,11 +133,11 @@ function SimpleLineSymbolPage({ sceneView }: SimpleLineSymbolPageProps) {
             slot="header-actions-end"
             onClick={handleCopyJSONClick}
           ></CalciteAction>
-          <pre>{JSON.stringify(simpleLineSymbolState.toJSON(), null, 2)}</pre>
+          <pre>{JSON.stringify(simpleLineSymbol.toJSON(), null, 2)}</pre>
         </CalcitePanel>
       </CalciteShellPanel>
     </CalciteShell>
   );
-}
+};
 
 export default SimpleLineSymbolPage;

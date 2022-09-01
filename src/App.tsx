@@ -24,15 +24,15 @@ interface AppProps {
   footer: string;
 }
 
-function App({ header, footer }: AppProps) {
+const App = ({ header, footer }: AppProps) => {
   const viewSwitch = useRef(null);
   const [sceneView, setSceneView] = useState(false);
 
-  function handleSwitchChange() {
+  const handleSwitchChange = () => {
     if (viewSwitch.current) {
       setSceneView((viewSwitch.current as HTMLCalciteSwitchElement).checked);
     }
-  }
+  };
 
   return (
     <CalciteShell>
@@ -76,6 +76,6 @@ function App({ header, footer }: AppProps) {
       </footer>
     </CalciteShell>
   );
-}
+};
 
 export default App;

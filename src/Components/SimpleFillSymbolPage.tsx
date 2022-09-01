@@ -5,6 +5,7 @@ import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import { useState } from "react";
 
+import Collection from "@arcgis/core/core/Collection";
 import {
   CalciteAction,
   CalcitePanel,
@@ -22,7 +23,7 @@ interface SimpleFillSymbolPageProps {
   sceneView: boolean;
 }
 
-function SimpleFillSymbolPage({ sceneView }: SimpleFillSymbolPageProps) {
+const SimpleFillSymbolPage = ({ sceneView }: SimpleFillSymbolPageProps) => {
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
     new SimpleFillSymbol({
       color: new Color("#000000"),
@@ -39,35 +40,36 @@ function SimpleFillSymbolPage({ sceneView }: SimpleFillSymbolPageProps) {
     })
   );
 
-  const [polygon, setPolygon] = useState(
-    new Polygon({
-      rings: [
-        [
-          [-105.0, 40.0],
-          [-105.1, 40.2],
-          [-105.35, 40.1],
-        ],
+  const polygon = new Polygon({
+    rings: [
+      [
+        [-105.0, 40.0],
+        [-105.1, 40.2],
+        [-105.35, 40.1],
       ],
-    })
-  );
+    ],
+  });
 
-  const [polygonGraphic, setPolygonGraphic] = useState(
-    new Graphic({
-      geometry: polygon,
-      symbol: simpleFillSymbol,
-    })
-  );
+  const polygonGraphic = new Graphic({
+    geometry: polygon,
+    symbol: simpleFillSymbol,
+  });
 
-  let view = <MapView graphics={[polygonGraphic]} />;
+  const graphicsCollection = new Collection();
+  graphicsCollection.add(polygonGraphic);
+
+  const [graphics, setGraphics] = useState(graphicsCollection);
+
+  let view = <MapView graphics={graphics} />;
   if (sceneView) {
-    view = <SceneView graphics={[polygonGraphic]} />;
+    view = <SceneView graphics={graphics} />;
   }
 
-  function handleCopyJSONClick() {
+  const handleCopyJSONClick = () => {
     navigator.clipboard.writeText(
       JSON.stringify(simpleFillSymbol.toJSON(), null, 2)
     );
-  }
+  };
 
   return (
     <CalciteShell>
@@ -96,6 +98,6 @@ function SimpleFillSymbolPage({ sceneView }: SimpleFillSymbolPageProps) {
       </CalciteShellPanel>
     </CalciteShell>
   );
-}
+};
 
 export default SimpleFillSymbolPage;
