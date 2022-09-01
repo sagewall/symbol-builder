@@ -2,12 +2,13 @@ import Polyline from "@arcgis/core/geometry/Polyline";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import "@esri/calcite-components/dist/components/calcite-shell";
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 
 import Collection from "@arcgis/core/core/Collection";
 import {
   CalciteAction,
   CalciteLabel,
+  CalciteLoader,
   CalciteOption,
   CalcitePanel,
   CalciteSelect,
@@ -16,13 +17,15 @@ import {
 } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-label";
+import "@esri/calcite-components/dist/components/calcite-loader";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
+
+const MapView = lazy(() => import("./MapView"));
+const SceneView = lazy(() => import("./SceneView"));
 
 interface SimpleLineSymbolPageProps {
   sceneView: boolean;
@@ -101,7 +104,11 @@ const SimpleLineSymbolPage = ({ sceneView }: SimpleLineSymbolPageProps) => {
 
   return (
     <CalciteShell>
-      {view}
+      <Suspense
+        fallback={<CalciteLoader label="loading" text="laoding" active />}
+      >
+        {view}
+      </Suspense>
       <CalciteShellPanel
         slot="panel-end"
         position="end"

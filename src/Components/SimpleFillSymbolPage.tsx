@@ -3,21 +3,24 @@ import Polygon from "@arcgis/core/geometry/Polygon";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import "@esri/calcite-components/dist/components/calcite-shell";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 
 import Collection from "@arcgis/core/core/Collection";
 import {
   CalciteAction,
+  CalciteLoader,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
 } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-loader";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
+
+const MapView = lazy(() => import("./MapView"));
+const SceneView = lazy(() => import("./SceneView"));
 
 interface SimpleFillSymbolPageProps {
   sceneView: boolean;
@@ -73,7 +76,12 @@ const SimpleFillSymbolPage = ({ sceneView }: SimpleFillSymbolPageProps) => {
 
   return (
     <CalciteShell>
-      {view}
+      <Suspense
+        fallback={<CalciteLoader label="loading" text="laoding" active />}
+      >
+        {view}
+      </Suspense>
+
       <CalciteShellPanel
         slot="panel-end"
         position="end"

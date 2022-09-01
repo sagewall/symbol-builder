@@ -2,7 +2,7 @@ import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
 import ArcMapView from "@arcgis/core/views/MapView";
 import { useEffect, useRef, useState } from "react";
-import createMapView from "../lib/mapview";
+import { goToGraphics } from "../lib/mapview";
 import "./MapView.css";
 
 interface MapViewProps {
@@ -16,7 +16,14 @@ const MapView = ({ graphics }: MapViewProps) => {
 
   useEffect(() => {
     if (viewDivRef.current) {
-      setView(createMapView(viewDivRef.current as HTMLDivElement, graphics));
+      const loadMapView = async () => {
+        const { createMapView } = await import("../lib/mapview");
+        setView(
+          await createMapView(viewDivRef.current as HTMLDivElement, graphics)
+        );
+      };
+      loadMapView();
+
       return () => {
         view && view.destroy();
       };
@@ -25,7 +32,12 @@ const MapView = ({ graphics }: MapViewProps) => {
 
   useEffect(() => {
     if (view) {
-      view.graphics = graphics;
+      const loadGraphics = async () => {
+        const { goToGraphics } = await import("../lib/mapview");
+        view.graphics = graphics;
+        goToGraphics();
+      };
+      loadGraphics();
     }
   }, [view, graphics]);
 

@@ -2,7 +2,7 @@ import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
 import ArcSceneView from "@arcgis/core/views/SceneView";
 import { useEffect, useRef, useState } from "react";
-import createSceneView from "../lib/sceneview";
+
 import "./MapView.css";
 
 interface SceneViewProps {
@@ -16,7 +16,14 @@ const SceneView = ({ graphics }: SceneViewProps) => {
 
   useEffect(() => {
     if (viewDivRef.current) {
-      setView(createSceneView(viewDivRef.current as HTMLDivElement, graphics));
+      const loadSceneView = async () => {
+        const { createSceneView } = await import("../lib/sceneview");
+        setView(
+          await createSceneView(viewDivRef.current as HTMLDivElement, graphics)
+        );
+      };
+      loadSceneView();
+
       return () => {
         view && view.destroy();
       };
@@ -25,7 +32,12 @@ const SceneView = ({ graphics }: SceneViewProps) => {
 
   useEffect(() => {
     if (view) {
-      view.graphics = graphics;
+      const loadGraphics = async () => {
+        const { goToGraphics } = await import("../lib/sceneview");
+        view.graphics = graphics;
+        goToGraphics();
+      };
+      loadGraphics();
     }
   }, [view, graphics]);
 
