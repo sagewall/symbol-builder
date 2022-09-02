@@ -165,6 +165,7 @@ const SimpleLineSymbolPage = ({ sceneView }: SimpleLineSymbolPageProps) => {
       const newSimpleLineSymbol = simpleLineSymbol.clone();
       if (currentMarkerBlock.open) {
         newSimpleLineSymbol.marker = lineSymbolMarker;
+        setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
         setSimpleLineSymbol(newSimpleLineSymbol);
       } else {
         newSimpleLineSymbol.marker = null;
@@ -190,6 +191,8 @@ const SimpleLineSymbolPage = ({ sceneView }: SimpleLineSymbolPageProps) => {
       if (newSimpleLineSymbol.marker) {
         newSimpleLineSymbol.marker.color = new Color(currentColor);
       }
+
+      setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
       setSimpleLineSymbol(newSimpleLineSymbol);
 
       const newPolylineGraphic = graphics.getItemAt(0).clone();
@@ -212,6 +215,7 @@ const SimpleLineSymbolPage = ({ sceneView }: SimpleLineSymbolPageProps) => {
         newSimpleLineSymbol.marker.placement = currentMarkerPlacementValue;
       }
 
+      setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
       setSimpleLineSymbol(newSimpleLineSymbol);
 
       const newPolylineGraphic = graphics.getItemAt(0).clone();
@@ -234,6 +238,7 @@ const SimpleLineSymbolPage = ({ sceneView }: SimpleLineSymbolPageProps) => {
         newSimpleLineSymbol.marker.style = currentMarkerStyleValue;
       }
 
+      setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
       setSimpleLineSymbol(newSimpleLineSymbol);
 
       const newPolylineGraphic = graphics.getItemAt(0).clone();
