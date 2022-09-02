@@ -2,7 +2,6 @@ import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
 import ArcMapView from "@arcgis/core/views/MapView";
 import { useEffect, useRef, useState } from "react";
-import { goToGraphics } from "../lib/mapview";
 import "./MapView.css";
 
 interface MapViewProps {

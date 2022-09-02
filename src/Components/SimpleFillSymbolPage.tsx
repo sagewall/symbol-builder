@@ -1,11 +1,8 @@
 import Color from "@arcgis/core/Color";
+import Collection from "@arcgis/core/core/Collection";
 import Polygon from "@arcgis/core/geometry/Polygon";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-import "@esri/calcite-components/dist/components/calcite-shell";
-import { lazy, Suspense, useState } from "react";
-
-import Collection from "@arcgis/core/core/Collection";
 import {
   CalciteAction,
   CalciteLoader,
@@ -18,6 +15,7 @@ import "@esri/calcite-components/dist/components/calcite-loader";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
+import { lazy, Suspense, useState } from "react";
 
 const MapView = lazy(() => import("./MapView"));
 const SceneView = lazy(() => import("./SceneView"));

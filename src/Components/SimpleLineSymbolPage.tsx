@@ -1,11 +1,9 @@
-import Polyline from "@arcgis/core/geometry/Polyline";
-import Graphic from "@arcgis/core/Graphic";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import "@esri/calcite-components/dist/components/calcite-shell";
-import { lazy, Suspense, useRef, useState } from "react";
-import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
+import Polyline from "@arcgis/core/geometry/Polyline";
+import Graphic from "@arcgis/core/Graphic";
+import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteAction,
   CalciteBlock,
@@ -28,6 +26,7 @@ import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
+import { lazy, Suspense, useRef, useState } from "react";
 
 const MapView = lazy(() => import("./MapView"));
 const SceneView = lazy(() => import("./SceneView"));
