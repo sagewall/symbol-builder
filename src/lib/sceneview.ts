@@ -1,6 +1,7 @@
 import Basemap from "@arcgis/core/Basemap";
 import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Layer from "@arcgis/core/layers/Layer";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMap from "@arcgis/core/Map";
 import ArcSceneView from "@arcgis/core/views/SceneView";
@@ -69,9 +70,11 @@ export const goToGraphics = async () => {
 
 export const createSceneView = async (
   parentElement: HTMLDivElement,
-  graphics: Collection<Graphic>
+  graphics?: Collection<Graphic>,
+  layers?: Collection<Layer>
 ) => {
   view.container = parentElement;
-  view.graphics = graphics;
+  view.graphics = graphics as Collection<Graphic>;
+  map.layers = layers as Collection<Layer>;
   return view;
 };
