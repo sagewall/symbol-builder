@@ -21,19 +21,26 @@ const IconSymbol3DLayerMaterialForm = ({
   const [color, setColor] = useState("#ff0000");
 
   return (
-    <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-      <CalciteLabel layout="default" style={labelStyles}>
-        color
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value.toString());
-            }
-            handleColorChange(layerIndex, event.target.value as string);
-          }}
-          value={color}
-        ></CalciteColorPicker>
-      </CalciteLabel>
+    <CalciteBlock
+      style={blockStyles}
+      collapsible
+      heading={"material"}
+      open={true}
+    >
+      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
+        <CalciteLabel layout="default" style={labelStyles}>
+          color
+          <CalciteColorPicker
+            onCalciteColorPickerChange={(event) => {
+              if (event.target.value) {
+                setColor(event.target.value.toString());
+              }
+              handleColorChange(layerIndex, event.target.value as string);
+            }}
+            value={color}
+          ></CalciteColorPicker>
+        </CalciteLabel>
+      </CalciteBlock>
     </CalciteBlock>
   );
 };
