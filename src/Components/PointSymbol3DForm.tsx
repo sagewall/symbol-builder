@@ -27,6 +27,14 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleIconSymbol3DLayerOutlineColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleIconSymbol3DLayerOutlineSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
   handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
   handleVerticalOffsetScreenLengthChange: (value: string) => void;
@@ -40,6 +48,8 @@ const PointSymbol3DForm = ({
   handleIconSymbol3DLayerAnchorPositionXChange,
   handleIconSymbol3DLayerAnchorPositionYChange,
   handleIconSymbol3DLayerMaterialColorChange,
+  handleIconSymbol3DLayerOutlineColorChange,
+  handleIconSymbol3DLayerOutlineSizeChange,
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
@@ -65,6 +75,12 @@ const PointSymbol3DForm = ({
         }
         handleIconSymbol3DLayerMaterialColorChange={
           handleIconSymbol3DLayerMaterialColorChange
+        }
+        handleIconSymbol3DLayerOutlineColorChange={
+          handleIconSymbol3DLayerOutlineColorChange
+        }
+        handleIconSymbol3DLayerOutlineSizeChange={
+          handleIconSymbol3DLayerOutlineSizeChange
         }
         updateSymbolLayers={updateSymbolLayers}
       ></Symbol3DLayerCollectionForm>

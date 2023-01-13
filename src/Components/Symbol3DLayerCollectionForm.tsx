@@ -26,6 +26,14 @@ interface PageProps {
     layerIndex: number,
     value: string
   ) => void;
+  handleIconSymbol3DLayerOutlineColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleIconSymbol3DLayerOutlineSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 const Symbol3DLayerCollectionForm = ({
@@ -33,6 +41,8 @@ const Symbol3DLayerCollectionForm = ({
   handleIconSymbol3DLayerAnchorPositionXChange,
   handleIconSymbol3DLayerAnchorPositionYChange,
   handleIconSymbol3DLayerMaterialColorChange,
+  handleIconSymbol3DLayerOutlineColorChange,
+  handleIconSymbol3DLayerOutlineSizeChange,
   updateSymbolLayers,
 }: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
@@ -40,6 +50,7 @@ const Symbol3DLayerCollectionForm = ({
     newIconSymbol3DLayer.anchor = "center";
     newIconSymbol3DLayer.anchorPosition = { x: 0, y: 0 };
     newIconSymbol3DLayer.material = { color: new Color("red") };
+    newIconSymbol3DLayer.outline = { color: new Color("black"), size: 1.5 };
     newIconSymbol3DLayer.size = 12;
     return newIconSymbol3DLayer;
   };
@@ -103,6 +114,12 @@ const Symbol3DLayerCollectionForm = ({
                 }
                 handleIconSymbol3DLayerMaterialColorChange={
                   handleIconSymbol3DLayerMaterialColorChange
+                }
+                handleIconSymbol3DLayerOutlineColorChange={
+                  handleIconSymbol3DLayerOutlineColorChange
+                }
+                handleIconSymbol3DLayerOutlineSizeChange={
+                  handleIconSymbol3DLayerOutlineSizeChange
                 }
               />
             </CalciteBlock>

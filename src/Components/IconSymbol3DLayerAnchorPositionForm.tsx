@@ -30,12 +30,7 @@ const IconSymbol3DLayerForm = ({
   const [anchorPosition, setAnchorPosition] = useState({ x: "0", y: "0" });
 
   return (
-    <CalciteBlock
-      style={blockStyles}
-      collapsible
-      heading={"anchorPosition"}
-      open={true}
-    >
+    <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
       <CalciteLabel layout="default" style={labelStyles}>
         x
         <CalciteInputNumber

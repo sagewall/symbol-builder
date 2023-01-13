@@ -11,6 +11,7 @@ import { labelStyles } from "../lib/styles";
 import { AnchorOption } from "../lib/types";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
+import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 
 interface Props {
   layerIndex: number;
@@ -30,6 +31,14 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleIconSymbol3DLayerOutlineColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleIconSymbol3DLayerOutlineSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
 }
 
 const IconSymbol3DLayerForm = ({
@@ -38,6 +47,8 @@ const IconSymbol3DLayerForm = ({
   handleIconSymbol3DLayerAnchorPositionXChange,
   handleIconSymbol3DLayerAnchorPositionYChange,
   handleIconSymbol3DLayerMaterialColorChange,
+  handleIconSymbol3DLayerOutlineColorChange,
+  handleIconSymbol3DLayerOutlineSizeChange,
 }: Props) => {
   const anchorOptions = [
     "center",
@@ -91,6 +102,12 @@ const IconSymbol3DLayerForm = ({
         layerIndex={layerIndex}
         handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
       ></IconSymbol3DLayerMaterialForm>
+
+      <IconSymbol3DLayerOutlineForm
+        layerIndex={layerIndex}
+        handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
+        handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
+      ></IconSymbol3DLayerOutlineForm>
     </React.Fragment>
   );
 };

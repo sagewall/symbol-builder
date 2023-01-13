@@ -14,6 +14,9 @@ const IndexPage = () => {
             <Link to="/picture-marker-symbol/">PictureMarkerSymbol</Link>
           </li>
           <li>
+            <Link to="/point-symbol-3d/">PointSymbol3D</Link>
+          </li>
+          <li>
             <Link to="/simple-fill-symbol/">SimpleFillSymbol</Link>
           </li>
           <li>
@@ -24,9 +27,6 @@ const IndexPage = () => {
           </li>
           <li>
             <Link to="/text-symbol/">TextSymbol</Link>
-          </li>
-          <li>
-            <Link to="/point-symbol-3d/">PointSymbol3D</Link>
           </li>
         </ul>
       </main>

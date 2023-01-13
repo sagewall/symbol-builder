@@ -155,6 +155,26 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleIconSymbol3DLayerOutlineColorChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as IconSymbol3DLayer).outline.color = new Color(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleIconSymbol3DLayerOutlineSizeChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as IconSymbol3DLayer).outline.size = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
   const handleVerticalOffsetMaxWorldLengthChange = (
     currentMaxWorldLength: string
   ) => {
@@ -252,6 +272,12 @@ const PointSymbol3DPage = () => {
               }
               handleIconSymbol3DLayerMaterialColorChange={
                 handleIconSymbol3DLayerMaterialColorChange
+              }
+              handleIconSymbol3DLayerOutlineColorChange={
+                handleIconSymbol3DLayerOutlineColorChange
+              }
+              handleIconSymbol3DLayerOutlineSizeChange={
+                handleIconSymbol3DLayerOutlineSizeChange
               }
               updateSymbolLayers={updateSymbolLayers}
             ></PointSymbol3DForm>
