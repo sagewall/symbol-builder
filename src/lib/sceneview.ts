@@ -11,23 +11,23 @@ import Expand from "@arcgis/core/widgets/Expand";
 
 const blankBasemapVectorTileLayer = new VectorTileLayer({
   portalItem: {
-    id: "da7c2aa6b22a439fae31294413b5bc62",
-  },
+    id: "da7c2aa6b22a439fae31294413b5bc62"
+  }
 });
 
 const blankBasemap = new Basemap({
   baseLayers: [blankBasemapVectorTileLayer],
   thumbnailUrl:
     "https://jsapi.maps.arcgis.com/sharing/rest/content/items/da7c2aa6b22a439fae31294413b5bc62/info/thumbnail/thumbnail1660688993675.png",
-  title: "Blank",
+  title: "Blank"
 });
 
 const map = new ArcMap({
-  basemap: blankBasemap,
+  basemap: blankBasemap
 });
 
 const view = new ArcSceneView({
-  map,
+  map
 });
 
 const localBasemapsSource = new LocalBasemapsSource({
@@ -44,29 +44,23 @@ const localBasemapsSource = new LocalBasemapsSource({
     Basemap.fromId("streets-night-vector"),
     Basemap.fromId("streets-navigation-vector"),
     Basemap.fromId("topo-vector"),
-    Basemap.fromId("streets-relief-vector"),
-  ],
+    Basemap.fromId("streets-relief-vector")
+  ]
 });
 
 const basemapGallery = new BasemapGallery({
   view,
-  source: localBasemapsSource,
+  source: localBasemapsSource
 });
 
 const basemapGalleryExpand = new Expand({
   view,
-  content: basemapGallery,
+  content: basemapGallery
 });
 
 view.ui.add(basemapGalleryExpand, {
-  position: "top-left",
+  position: "top-left"
 });
-
-export const goToGraphics = async () => {
-  view.when().then(() => {
-    view.goTo(view.graphics);
-  });
-};
 
 export const createSceneView = async (
   parentElement: HTMLDivElement,

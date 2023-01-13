@@ -1,15 +1,21 @@
+import "@arcgis/core/assets/esri/themes/light/main.css";
 import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Layer from "@arcgis/core/layers/Layer";
 import ArcSceneView from "@arcgis/core/views/SceneView";
 import { useEffect, useRef, useState } from "react";
 
-import "./MapView.css";
+const viewStyles = {
+  height: "100%",
+  width: "100%",
+};
 
 interface SceneViewProps {
-  graphics: Collection<Graphic>;
+  graphics?: Collection<Graphic>;
+  layers?: Collection<Layer>;
 }
 
-const SceneView = ({ graphics }: SceneViewProps) => {
+const SceneView = ({ graphics, layers }: SceneViewProps) => {
   const viewDivRef = useRef(document.createElement("div"));
 
   const [view, setView] = useState<ArcSceneView | null>(null);
@@ -19,7 +25,11 @@ const SceneView = ({ graphics }: SceneViewProps) => {
       const loadSceneView = async () => {
         const { createSceneView } = await import("../lib/sceneview");
         setView(
-          await createSceneView(viewDivRef.current as HTMLDivElement, graphics)
+          await createSceneView(
+            viewDivRef.current as HTMLDivElement,
+            graphics,
+            layers
+          )
         );
       };
       loadSceneView();
@@ -33,15 +43,37 @@ const SceneView = ({ graphics }: SceneViewProps) => {
   useEffect(() => {
     if (view) {
       const loadGraphics = async () => {
-        const { goToGraphics } = await import("../lib/sceneview");
-        view.graphics = graphics;
-        goToGraphics();
+        if (graphics) {
+          view.graphics = graphics;
+          await view.when();
+          view.goTo(graphics).catch((error) => {
+            if (error.name != "AbortError") {
+              console.error(error);
+            }
+          });
+        }
       };
-      loadGraphics();
-    }
-  }, [view, graphics]);
 
-  return <div className="viewDiv" ref={viewDivRef}></div>;
+      const loadLayers = async () => {
+        if (layers) {
+          view.map.layers = layers;
+          await view.when();
+          if (!graphics) {
+            view.goTo(layers).catch((error) => {
+              if (error.name != "AbortError") {
+                console.error(error);
+              }
+            });
+          }
+        }
+      };
+
+      loadGraphics();
+      loadLayers();
+    }
+  }, [view, graphics, layers]);
+
+  return <div style={viewStyles} ref={viewDivRef}></div>;
 };
 
 export default SceneView;
