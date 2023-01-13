@@ -46,3 +46,12 @@ export type SimpleMarkerSymbolStyleOption =
   | "diamond"
   | "triangle"
   | "path";
+
+export type LineSymbolMarkerPlacementOption = "begin" | "end" | "begin-end";
+export type LineSymbolMarkerStyleOption =
+  | "arrow"
+  | "circle"
+  | "square"
+  | "diamond"
+  | "cross"
+  | "x";

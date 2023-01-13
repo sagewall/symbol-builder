@@ -13,14 +13,14 @@ import {
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import React, { lazy, Suspense, useRef, useState } from "react";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
+import { lazy, Suspense, useRef, useState } from "react";
 import SimpleFillSymbolForm from "../components/SimpleFillSymbolForm";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
 import {
-  OutlineCapOption,
-  OutlineJoinOption,
-  OutlineStyleOption,
-  StyleOption,
+  SimpleFillSymbolStyleOption,
+  SimpleLineSymbolCapOption,
+  SimpleLineSymbolJoinOption,
+  SimpleLineSymbolStyleOption,
 } from "../lib/types";
 
 const MapView = lazy(() => import("../components/MapView"));
@@ -90,7 +90,9 @@ const SimpleFillSymbolPage = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: OutlineCapOption) => {
+  const handleOutlineCapChange = (
+    currentCapValue: SimpleLineSymbolCapOption
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -110,7 +112,9 @@ const SimpleFillSymbolPage = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: OutlineJoinOption) => {
+  const handleOutlineJoinChange = (
+    currentJoinValue: SimpleLineSymbolJoinOption
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -130,7 +134,9 @@ const SimpleFillSymbolPage = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: OutlineStyleOption) => {
+  const handleOutlineStyleChange = (
+    currentStyleValue: SimpleLineSymbolStyleOption
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -150,7 +156,9 @@ const SimpleFillSymbolPage = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: StyleOption) => {
+  const handleStyleChange = (
+    currentStyleValue: SimpleFillSymbolStyleOption
+  ) => {
     const newSimpleFillSymbol = simpleFillSymbol.clone();
     newSimpleFillSymbol.style = currentStyleValue;
     updateGraphics(newSimpleFillSymbol);

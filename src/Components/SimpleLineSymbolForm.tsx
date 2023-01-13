@@ -14,12 +14,14 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "../lib/styles";
-import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 import {
+  LineSymbolMarkerStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
 } from "../lib/types";
+import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
+import { LineSymbolMarkerPlacementOption } from "../lib/types";
 
 interface Props {
   handleCapChange: (value: SimpleLineSymbolCapOption) => void;
@@ -27,8 +29,10 @@ interface Props {
   handleJoinChange: (value: SimpleLineSymbolJoinOption) => void;
   handleMarkerBlockToggle?: (value: HTMLCalciteBlockElement) => void;
   handleMarkerColorChange?: (value: string) => void;
-  handleMarkerPlacementChange?: (value: string) => void;
-  handleMarkerStyleChange?: (value: string) => void;
+  handleMarkerPlacementChange?: (
+    value: LineSymbolMarkerPlacementOption
+  ) => void;
+  handleMarkerStyleChange?: (value: LineSymbolMarkerStyleOption) => void;
   handleMiterLimitChange: (value: string) => void;
   handleStyleChange: (value: SimpleLineSymbolStyleOption) => void;
   handleWidthChange: (value: string) => void;

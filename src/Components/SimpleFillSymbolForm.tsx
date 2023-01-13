@@ -13,10 +13,10 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "../lib/styles";
 import {
+  SimpleFillSymbolStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-  SimpleFillSymbolStyleOption,
 } from "../lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 

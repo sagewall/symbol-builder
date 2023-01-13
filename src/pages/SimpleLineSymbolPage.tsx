@@ -16,34 +16,15 @@ import {
 import { lazy, Suspense, useRef, useState } from "react";
 import SimpleLineSymbolForm from "../components/SimpleLineSymbolForm";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
-
+import {
+  LineSymbolMarkerPlacementOption,
+  LineSymbolMarkerStyleOption,
+  SimpleLineSymbolCapOption,
+  SimpleLineSymbolJoinOption,
+  SimpleLineSymbolStyleOption,
+} from "../lib/types";
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
-
-type CapOption = "butt" | "round" | "square";
-type JoinOption = "miter" | "round" | "bevel";
-type MarkerPlacementOption = "begin" | "end" | "begin-end";
-type MarkerStyleOption =
-  | "arrow"
-  | "circle"
-  | "square"
-  | "diamond"
-  | "cross"
-  | "x";
-
-type StyleOption =
-  | "dash"
-  | "dash-dot"
-  | "dot"
-  | "long-dash"
-  | "long-dash-dot"
-  | "long-dash-dot-dot"
-  | "none"
-  | "short-dash"
-  | "short-dash-dot"
-  | "short-dash-dot-dot"
-  | "short-dot"
-  | "solid";
 
 const SimpleLineSymbolPage = () => {
   const viewSwitchRef = useRef(null);
@@ -105,7 +86,7 @@ const SimpleLineSymbolPage = () => {
     setGraphics(newGraphics);
   };
 
-  const handleCapChange = (currentCapValue: CapOption) => {
+  const handleCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     updateGraphics(newSimpleLineSymbol);
@@ -117,7 +98,7 @@ const SimpleLineSymbolPage = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleJoinChange = (currentJoinValue: JoinOption) => {
+  const handleJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     updateGraphics(newSimpleLineSymbol);
@@ -150,7 +131,7 @@ const SimpleLineSymbolPage = () => {
   };
 
   const handleMarkerPlacementChange = (
-    currentPlacementValue: MarkerPlacementOption
+    currentPlacementValue: LineSymbolMarkerPlacementOption
   ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
@@ -161,7 +142,9 @@ const SimpleLineSymbolPage = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerStyleChange = (currentMarkerStyle: MarkerStyleOption) => {
+  const handleMarkerStyleChange = (
+    currentMarkerStyle: LineSymbolMarkerStyleOption
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.style = currentMarkerStyle;
@@ -177,7 +160,9 @@ const SimpleLineSymbolPage = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: StyleOption) => {
+  const handleStyleChange = (
+    currentStyleValue: SimpleLineSymbolStyleOption
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     updateGraphics(newSimpleLineSymbol);

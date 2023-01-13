@@ -12,11 +12,17 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "../lib/styles";
+import {
+  LineSymbolMarkerPlacementOption,
+  LineSymbolMarkerStyleOption,
+} from "../lib/types";
 
 interface Props {
   handleColorChange: ((value: string) => void) | undefined;
-  handlePlacementChange: ((value: string) => void) | undefined;
-  handleStyleChange: ((value: string) => void) | undefined;
+  handlePlacementChange:
+    | ((value: LineSymbolMarkerPlacementOption) => void)
+    | undefined;
+  handleStyleChange: ((value: LineSymbolMarkerStyleOption) => void) | undefined;
 }
 
 const LineSymbolMarkerForm = ({
@@ -64,7 +70,9 @@ const LineSymbolMarkerForm = ({
           onCalciteSelectChange={(event) => {
             setPlacement(event.target.value);
             if (handlePlacementChange) {
-              handlePlacementChange(event.target.value);
+              handlePlacementChange(
+                event.target.value as LineSymbolMarkerPlacementOption
+              );
             }
           }}
           value={placement}
@@ -82,7 +90,9 @@ const LineSymbolMarkerForm = ({
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
             if (handleStyleChange) {
-              handleStyleChange(event.target.value);
+              handleStyleChange(
+                event.target.value as LineSymbolMarkerStyleOption
+              );
             }
           }}
           value={style}

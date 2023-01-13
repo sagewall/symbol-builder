@@ -19,7 +19,6 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import React, { useState } from "react";
-import FontForm from "./FontForm";
 import { blockStyles, labelStyles } from "../lib/styles";
 import {
   FontDecoration,
@@ -28,6 +27,7 @@ import {
   HorizontalAlignment,
   VerticalAlignment,
 } from "../lib/types";
+import FontForm from "./FontForm";
 
 interface Props {
   handleAngleChange: (value: number) => void;
