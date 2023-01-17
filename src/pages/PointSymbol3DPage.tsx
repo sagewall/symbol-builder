@@ -20,7 +20,10 @@ import {
 import { lazy, Suspense, useRef, useState } from "react";
 import PointSymbol3DForm from "../components/PointSymbol3DForm";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
-import { AnchorOption } from "../lib/types";
+import {
+  AnchorOption,
+  IconSymbol3DLayerResourcePrimitiveOption,
+} from "../lib/types";
 
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
@@ -175,6 +178,26 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleIconSymbol3DLayerResourceHrefChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as IconSymbol3DLayer).resource.href = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleIconSymbol3DLayerResourcePrimitiveChange = (
+    index: number,
+    value: IconSymbol3DLayerResourcePrimitiveOption
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as IconSymbol3DLayer).resource.primitive = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
   const handleVerticalOffsetMaxWorldLengthChange = (
     currentMaxWorldLength: string
   ) => {
@@ -278,6 +301,12 @@ const PointSymbol3DPage = () => {
               }
               handleIconSymbol3DLayerOutlineSizeChange={
                 handleIconSymbol3DLayerOutlineSizeChange
+              }
+              handleIconSymbol3DLayerResourceHrefChange={
+                handleIconSymbol3DLayerResourceHrefChange
+              }
+              handleIconSymbol3DLayerResourcePrimitiveChange={
+                handleIconSymbol3DLayerResourcePrimitiveChange
               }
               updateSymbolLayers={updateSymbolLayers}
             ></PointSymbol3DForm>

@@ -6,7 +6,10 @@ import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-block";
 import React, { useState } from "react";
 import { blockStyles } from "../lib/styles";
-import { AnchorOption } from "../lib/types";
+import {
+  AnchorOption,
+  IconSymbol3DLayerResourcePrimitiveOption,
+} from "../lib/types";
 import IconSymbol3DForm from "./IconSymbol3DLayerForm";
 
 interface PageProps {
@@ -34,6 +37,14 @@ interface PageProps {
     layerIndex: number,
     value: string
   ) => void;
+  handleIconSymbol3DLayerResourceHrefChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleIconSymbol3DLayerResourcePrimitiveChange: (
+    layerIndex: number,
+    value: IconSymbol3DLayerResourcePrimitiveOption
+  ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 const Symbol3DLayerCollectionForm = ({
@@ -43,6 +54,8 @@ const Symbol3DLayerCollectionForm = ({
   handleIconSymbol3DLayerMaterialColorChange,
   handleIconSymbol3DLayerOutlineColorChange,
   handleIconSymbol3DLayerOutlineSizeChange,
+  handleIconSymbol3DLayerResourceHrefChange,
+  handleIconSymbol3DLayerResourcePrimitiveChange,
   updateSymbolLayers,
 }: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
@@ -51,6 +64,7 @@ const Symbol3DLayerCollectionForm = ({
     newIconSymbol3DLayer.anchorPosition = { x: 0, y: 0 };
     newIconSymbol3DLayer.material = { color: new Color("red") };
     newIconSymbol3DLayer.outline = { color: new Color("black"), size: 1.5 };
+    newIconSymbol3DLayer.resource = { href: undefined, primitive: "circle" };
     newIconSymbol3DLayer.size = 12;
     return newIconSymbol3DLayer;
   };
@@ -120,6 +134,12 @@ const Symbol3DLayerCollectionForm = ({
                 }
                 handleIconSymbol3DLayerOutlineSizeChange={
                   handleIconSymbol3DLayerOutlineSizeChange
+                }
+                handleIconSymbol3DLayerResourceHrefChange={
+                  handleIconSymbol3DLayerResourceHrefChange
+                }
+                handleIconSymbol3DLayerResourcePrimitiveChange={
+                  handleIconSymbol3DLayerResourcePrimitiveChange
                 }
               />
             </CalciteBlock>

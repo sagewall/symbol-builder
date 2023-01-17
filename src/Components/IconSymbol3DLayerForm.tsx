@@ -8,10 +8,14 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import { labelStyles } from "../lib/styles";
-import { AnchorOption } from "../lib/types";
+import {
+  AnchorOption,
+  IconSymbol3DLayerResourcePrimitiveOption,
+} from "../lib/types";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
+import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
 
 interface Props {
   layerIndex: number;
@@ -39,6 +43,14 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleIconSymbol3DLayerResourceHrefChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleIconSymbol3DLayerResourcePrimitiveChange: (
+    layerIndex: number,
+    value: IconSymbol3DLayerResourcePrimitiveOption
+  ) => void;
 }
 
 const IconSymbol3DLayerForm = ({
@@ -49,6 +61,8 @@ const IconSymbol3DLayerForm = ({
   handleIconSymbol3DLayerMaterialColorChange,
   handleIconSymbol3DLayerOutlineColorChange,
   handleIconSymbol3DLayerOutlineSizeChange,
+  handleIconSymbol3DLayerResourceHrefChange,
+  handleIconSymbol3DLayerResourcePrimitiveChange,
 }: Props) => {
   const anchorOptions = [
     "center",
@@ -108,6 +122,12 @@ const IconSymbol3DLayerForm = ({
         handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
         handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
       ></IconSymbol3DLayerOutlineForm>
+
+      <IconSymbol3DLayerResourceForm
+        layerIndex={layerIndex}
+        handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
+        handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
+      ></IconSymbol3DLayerResourceForm>
     </React.Fragment>
   );
 };

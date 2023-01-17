@@ -3,7 +3,10 @@ import { CalciteBlock } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
 import { blockStyles } from "../lib/styles";
-import { AnchorOption } from "../lib/types";
+import {
+  AnchorOption,
+  IconSymbol3DLayerResourcePrimitiveOption,
+} from "../lib/types";
 import LineCallout3DForm from "./LineCallout3DForm";
 import Symbol3DLayerCollectionForm from "./Symbol3DLayerCollectionForm";
 import Symbol3DVerticalOffsetForm from "./Symbol3DVerticalOffsetForm";
@@ -38,6 +41,14 @@ interface Props {
   handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
   handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
   handleVerticalOffsetScreenLengthChange: (value: string) => void;
+  handleIconSymbol3DLayerResourceHrefChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleIconSymbol3DLayerResourcePrimitiveChange: (
+    layerIndex: number,
+    value: IconSymbol3DLayerResourcePrimitiveOption
+  ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
@@ -53,6 +64,8 @@ const PointSymbol3DForm = ({
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
+  handleIconSymbol3DLayerResourceHrefChange,
+  handleIconSymbol3DLayerResourcePrimitiveChange,
   updateSymbolLayers,
 }: Props) => {
   return (
@@ -81,6 +94,12 @@ const PointSymbol3DForm = ({
         }
         handleIconSymbol3DLayerOutlineSizeChange={
           handleIconSymbol3DLayerOutlineSizeChange
+        }
+        handleIconSymbol3DLayerResourceHrefChange={
+          handleIconSymbol3DLayerResourceHrefChange
+        }
+        handleIconSymbol3DLayerResourcePrimitiveChange={
+          handleIconSymbol3DLayerResourcePrimitiveChange
         }
         updateSymbolLayers={updateSymbolLayers}
       ></Symbol3DLayerCollectionForm>
