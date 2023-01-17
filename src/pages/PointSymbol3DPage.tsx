@@ -198,6 +198,13 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleIconSymbol3DLayerSizeChange = (index: number, value: string) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as IconSymbol3DLayer).size = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
   const handleVerticalOffsetMaxWorldLengthChange = (
     currentMaxWorldLength: string
   ) => {
@@ -307,6 +314,9 @@ const PointSymbol3DPage = () => {
               }
               handleIconSymbol3DLayerResourcePrimitiveChange={
                 handleIconSymbol3DLayerResourcePrimitiveChange
+              }
+              handleIconSymbol3DLayerSizeChange={
+                handleIconSymbol3DLayerSizeChange
               }
               updateSymbolLayers={updateSymbolLayers}
             ></PointSymbol3DForm>

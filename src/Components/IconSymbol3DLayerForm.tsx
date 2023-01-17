@@ -1,4 +1,5 @@
 import {
+  CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
@@ -51,6 +52,7 @@ interface Props {
     layerIndex: number,
     value: IconSymbol3DLayerResourcePrimitiveOption
   ) => void;
+  handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
 const IconSymbol3DLayerForm = ({
@@ -63,6 +65,7 @@ const IconSymbol3DLayerForm = ({
   handleIconSymbol3DLayerOutlineSizeChange,
   handleIconSymbol3DLayerResourceHrefChange,
   handleIconSymbol3DLayerResourcePrimitiveChange,
+  handleSizeChange,
 }: Props) => {
   const anchorOptions = [
     "center",
@@ -78,6 +81,7 @@ const IconSymbol3DLayerForm = ({
   ];
 
   const [anchor, setAnchor] = useState("center");
+  const [size, setSize] = useState("12");
 
   return (
     <React.Fragment>
@@ -128,6 +132,19 @@ const IconSymbol3DLayerForm = ({
         handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
         handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
       ></IconSymbol3DLayerResourceForm>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        size
+        <CalciteInputNumber
+          label={"size input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setSize(event.target.value);
+            handleSizeChange(layerIndex, event.target.value);
+          }}
+          value={size}
+        ></CalciteInputNumber>
+      </CalciteLabel>
     </React.Fragment>
   );
 };

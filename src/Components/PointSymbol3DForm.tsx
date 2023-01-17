@@ -38,9 +38,6 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
-  handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
-  handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
-  handleVerticalOffsetScreenLengthChange: (value: string) => void;
   handleIconSymbol3DLayerResourceHrefChange: (
     layerIndex: number,
     value: string
@@ -49,6 +46,13 @@ interface Props {
     layerIndex: number,
     value: IconSymbol3DLayerResourcePrimitiveOption
   ) => void;
+  handleIconSymbol3DLayerSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
+  handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
+  handleVerticalOffsetScreenLengthChange: (value: string) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
@@ -61,11 +65,12 @@ const PointSymbol3DForm = ({
   handleIconSymbol3DLayerMaterialColorChange,
   handleIconSymbol3DLayerOutlineColorChange,
   handleIconSymbol3DLayerOutlineSizeChange,
+  handleIconSymbol3DLayerResourceHrefChange,
+  handleIconSymbol3DLayerResourcePrimitiveChange,
+  handleIconSymbol3DLayerSizeChange,
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
-  handleIconSymbol3DLayerResourceHrefChange,
-  handleIconSymbol3DLayerResourcePrimitiveChange,
   updateSymbolLayers,
 }: Props) => {
   return (
@@ -101,6 +106,7 @@ const PointSymbol3DForm = ({
         handleIconSymbol3DLayerResourcePrimitiveChange={
           handleIconSymbol3DLayerResourcePrimitiveChange
         }
+        handleIconSymbol3DLayerSizeChange={handleIconSymbol3DLayerSizeChange}
         updateSymbolLayers={updateSymbolLayers}
       ></Symbol3DLayerCollectionForm>
       <CalciteBlock style={blockStyles} collapsible heading={"verticalOffset"}>

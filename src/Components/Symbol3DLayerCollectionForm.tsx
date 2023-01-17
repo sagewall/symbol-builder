@@ -45,6 +45,10 @@ interface PageProps {
     layerIndex: number,
     value: IconSymbol3DLayerResourcePrimitiveOption
   ) => void;
+  handleIconSymbol3DLayerSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 const Symbol3DLayerCollectionForm = ({
@@ -56,6 +60,7 @@ const Symbol3DLayerCollectionForm = ({
   handleIconSymbol3DLayerOutlineSizeChange,
   handleIconSymbol3DLayerResourceHrefChange,
   handleIconSymbol3DLayerResourcePrimitiveChange,
+  handleIconSymbol3DLayerSizeChange,
   updateSymbolLayers,
 }: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
@@ -141,6 +146,7 @@ const Symbol3DLayerCollectionForm = ({
                 handleIconSymbol3DLayerResourcePrimitiveChange={
                   handleIconSymbol3DLayerResourcePrimitiveChange
                 }
+                handleSizeChange={handleIconSymbol3DLayerSizeChange}
               />
             </CalciteBlock>
           ))}
