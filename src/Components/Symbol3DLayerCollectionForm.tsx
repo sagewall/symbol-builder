@@ -163,9 +163,7 @@ const Symbol3DLayerCollectionForm = ({
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const createSymbol3DLayerCollectionForm = (
-    symbolLayers: Collection<IconSymbol3DLayer | ObjectSymbol3DLayer>
-  ) => {
+  const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       let symbol3DLayerCollectionForm: JSX.Element[] = [];
 
@@ -292,8 +290,7 @@ const Symbol3DLayerCollectionForm = ({
           text-enabled
           text="Add ObjectSymbol3DLayer"
         ></CalciteAction>
-
-        {createSymbol3DLayerCollectionForm(symbolLayers)}
+        {createSymbol3DLayerCollectionForm()}
       </CalciteBlock>
     </React.Fragment>
   );
