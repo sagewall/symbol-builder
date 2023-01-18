@@ -73,6 +73,10 @@ interface PageProps {
     layerIndex: number,
     value: boolean
   ) => void;
+  handleObjectSymbol3DLayerDepthChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -102,6 +106,7 @@ const Symbol3DLayerCollectionForm = ({
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
   handleObjectSymbol3DLayerCastShadowsChange,
+  handleObjectSymbol3DLayerDepthChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -226,9 +231,7 @@ const Symbol3DLayerCollectionForm = ({
                 />
                 <ObjectSymbol3DLayerForm
                   layerIndex={index}
-                  handleObjectSymbol3DLayerAnchorChange={
-                    handleObjectSymbol3DLayerAnchorChange
-                  }
+                  handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
                   handleObjectSymbol3DLayerAnchorPositionXChange={
                     handleObjectSymbol3DLayerAnchorPositionXChange
                   }
@@ -238,9 +241,10 @@ const Symbol3DLayerCollectionForm = ({
                   handleObjectSymbol3DLayerAnchorPositionZChange={
                     handleObjectSymbol3DLayerAnchorPositionZChange
                   }
-                  handleObjectSymbol3DLayerCastShadowsChange={
+                  handleCastShadowsChange={
                     handleObjectSymbol3DLayerCastShadowsChange
                   }
+                  handleDepthChange={handleObjectSymbol3DLayerDepthChange}
                   handleObjectSymbol3DLayerMaterialColorChange={
                     handleObjectSymbol3DLayerMaterialColorChange
                   }

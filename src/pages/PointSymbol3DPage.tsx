@@ -257,6 +257,16 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleObjectSymbol3DLayerDepthChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).depth = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
   const handleObjectSymbol3DLayerMaterialColorChange = (
     index: number,
     value: string
@@ -415,6 +425,9 @@ const PointSymbol3DPage = () => {
               }
               handleObjectSymbol3DLayerCastShadowsChange={
                 handleObjectSymbol3DLayerCastShadowsChange
+              }
+              handleObjectSymbol3DLayerDepthChange={
+                handleObjectSymbol3DLayerDepthChange
               }
               handleObjectSymbol3DLayerMaterialColorChange={
                 handleObjectSymbol3DLayerMaterialColorChange

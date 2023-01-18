@@ -1,4 +1,5 @@
 import {
+  CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
@@ -19,7 +20,7 @@ import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
 
 interface Props {
   layerIndex: number;
-  handleObjectSymbol3DLayerAnchorChange: (
+  handleAnchorChange: (
     layerIndex: number,
     value: ObjectSymbol3DLayerAnchorOption
   ) => void;
@@ -35,10 +36,8 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
-  handleObjectSymbol3DLayerCastShadowsChange: (
-    layerIndex: number,
-    value: boolean
-  ) => void;
+  handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
+  handleDepthChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -55,11 +54,12 @@ interface Props {
 
 const ObjectSymbol3DLayerForm = ({
   layerIndex,
-  handleObjectSymbol3DLayerAnchorChange,
+  handleAnchorChange,
   handleObjectSymbol3DLayerAnchorPositionXChange,
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
-  handleObjectSymbol3DLayerCastShadowsChange,
+  handleCastShadowsChange,
+  handleDepthChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -68,6 +68,7 @@ const ObjectSymbol3DLayerForm = ({
 
   const [anchor, setAnchor] = useState("center");
   const [castShadows, setCastShadows] = useState(false);
+  const [depth, setDepth] = useState("10");
 
   return (
     <React.Fragment>
@@ -77,7 +78,7 @@ const ObjectSymbol3DLayerForm = ({
           label={"anchor selection"}
           onCalciteSelectChange={(event) => {
             setAnchor(event.target.value);
-            handleObjectSymbol3DLayerAnchorChange(
+            handleAnchorChange(
               layerIndex,
               event.target.value as ObjectSymbol3DLayerAnchorOption
             );
@@ -110,13 +111,23 @@ const ObjectSymbol3DLayerForm = ({
         <CalciteSwitch
           onCalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
-            handleObjectSymbol3DLayerCastShadowsChange(
-              layerIndex,
-              event.target.checked
-            );
+            handleCastShadowsChange(layerIndex, event.target.checked);
           }}
           value={castShadows}
         ></CalciteSwitch>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        depth
+        <CalciteInputNumber
+          label={"depth input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setDepth(event.target.value);
+            handleDepthChange(layerIndex, event.target.value);
+          }}
+          value={depth}
+        ></CalciteInputNumber>
       </CalciteLabel>
 
       <ObjectSymbol3DLayerMaterialForm
