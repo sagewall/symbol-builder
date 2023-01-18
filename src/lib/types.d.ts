@@ -1,4 +1,12 @@
-type AnchorOption =
+export type FontDecoration = "underline" | "line-through" | "none";
+
+export type FontStyle = "normal" | "italic" | "oblique";
+
+export type FontWeight = "normal" | "bold" | "bolder" | "lighter";
+
+export type HorizontalAlignment = "left" | "right" | "center";
+
+export type IconSymbol3DLayerAnchorOption =
   | "center"
   | "left"
   | "right"
@@ -10,14 +18,6 @@ type AnchorOption =
   | "bottom-right"
   | "relative";
 
-export type FontDecoration = "underline" | "line-through" | "none";
-
-export type FontStyle = "normal" | "italic" | "oblique";
-
-export type FontWeight = "normal" | "bold" | "bolder" | "lighter";
-
-export type HorizontalAlignment = "left" | "right" | "center";
-
 export type IconSymbol3DLayerResourcePrimitiveOption =
   | "circle"
   | "square"
@@ -25,6 +25,22 @@ export type IconSymbol3DLayerResourcePrimitiveOption =
   | "x"
   | "kite"
   | "triangle";
+
+export type ObjectSymbol3DLayerAnchorOption =
+  | "center"
+  | "top"
+  | "bottom"
+  | "origin"
+  | "relative";
+
+export type ObjectSymbol3DLayerResourcePrimitiveOption =
+  | "sphere"
+  | "cylinder"
+  | "cube"
+  | "cone"
+  | "inverted-cone"
+  | "diamond"
+  | "tetrahedron";
 
 export type VerticalAlignment = "baseline" | "top" | "middle" | "bottom";
 

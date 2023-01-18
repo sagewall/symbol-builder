@@ -4,8 +4,10 @@ import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
 import { blockStyles } from "../lib/styles";
 import {
-  AnchorOption,
+  IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
+  ObjectSymbol3DLayerAnchorOption,
+  ObjectSymbol3DLayerResourcePrimitiveOption,
 } from "../lib/types";
 import LineCallout3DForm from "./LineCallout3DForm";
 import Symbol3DLayerCollectionForm from "./Symbol3DLayerCollectionForm";
@@ -16,7 +18,7 @@ interface Props {
   handleCalloutSizeChange: (value: string) => void;
   handleIconSymbol3DLayerAnchorChange: (
     layerIndex: number,
-    value: AnchorOption
+    value: IconSymbol3DLayerAnchorOption
   ) => void;
   handleIconSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
@@ -50,6 +52,34 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleObjectSymbol3DLayerAnchorChange: (
+    layerIndex: number,
+    value: ObjectSymbol3DLayerAnchorOption
+  ) => void;
+  handleObjectSymbol3DLayerAnchorPositionXChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleObjectSymbol3DLayerAnchorPositionYChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleObjectSymbol3DLayerAnchorPositionZChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleObjectSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleObjectSymbol3DLayerResourceHrefChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleObjectSymbol3DLayerResourcePrimitiveChange: (
+    layerIndex: number,
+    value: ObjectSymbol3DLayerResourcePrimitiveOption
+  ) => void;
   handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
   handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
   handleVerticalOffsetScreenLengthChange: (value: string) => void;
@@ -68,6 +98,13 @@ const PointSymbol3DForm = ({
   handleIconSymbol3DLayerResourceHrefChange,
   handleIconSymbol3DLayerResourcePrimitiveChange,
   handleIconSymbol3DLayerSizeChange,
+  handleObjectSymbol3DLayerAnchorChange,
+  handleObjectSymbol3DLayerAnchorPositionXChange,
+  handleObjectSymbol3DLayerAnchorPositionYChange,
+  handleObjectSymbol3DLayerAnchorPositionZChange,
+  handleObjectSymbol3DLayerMaterialColorChange,
+  handleObjectSymbol3DLayerResourceHrefChange,
+  handleObjectSymbol3DLayerResourcePrimitiveChange,
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
@@ -107,6 +144,27 @@ const PointSymbol3DForm = ({
           handleIconSymbol3DLayerResourcePrimitiveChange
         }
         handleIconSymbol3DLayerSizeChange={handleIconSymbol3DLayerSizeChange}
+        handleObjectSymbol3DLayerAnchorChange={
+          handleObjectSymbol3DLayerAnchorChange
+        }
+        handleObjectSymbol3DLayerAnchorPositionXChange={
+          handleObjectSymbol3DLayerAnchorPositionXChange
+        }
+        handleObjectSymbol3DLayerAnchorPositionYChange={
+          handleObjectSymbol3DLayerAnchorPositionYChange
+        }
+        handleObjectSymbol3DLayerAnchorPositionZChange={
+          handleObjectSymbol3DLayerAnchorPositionZChange
+        }
+        handleObjectSymbol3DLayerMaterialColorChange={
+          handleObjectSymbol3DLayerMaterialColorChange
+        }
+        handleObjectSymbol3DLayerResourceHrefChange={
+          handleObjectSymbol3DLayerResourceHrefChange
+        }
+        handleObjectSymbol3DLayerResourcePrimitiveChange={
+          handleObjectSymbol3DLayerResourcePrimitiveChange
+        }
         updateSymbolLayers={updateSymbolLayers}
       ></Symbol3DLayerCollectionForm>
       <CalciteBlock style={blockStyles} collapsible heading={"verticalOffset"}>

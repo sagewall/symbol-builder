@@ -8,38 +8,47 @@ import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
 import { useState } from "react";
 import { blockStyles, labelStyles } from "../lib/styles";
-import { IconSymbol3DLayerAnchorOption } from "../lib/types";
+import { ObjectSymbol3DLayerAnchorOption } from "../lib/types";
 
 interface Props {
   layerIndex: number;
-  handleIconSymbol3DLayerAnchorPositionXChange: (
+  handleObjectSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
-    value: IconSymbol3DLayerAnchorOption
+    value: ObjectSymbol3DLayerAnchorOption
   ) => void;
-  handleIconSymbol3DLayerAnchorPositionYChange: (
+  handleObjectSymbol3DLayerAnchorPositionYChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleObjectSymbol3DLayerAnchorPositionZChange: (
     layerIndex: number,
     value: string
   ) => void;
 }
 
-const IconSymbol3DLayerForm = ({
+const ObjectSymbol3DLayerAnchorPositionForm = ({
   layerIndex,
-  handleIconSymbol3DLayerAnchorPositionXChange,
-  handleIconSymbol3DLayerAnchorPositionYChange,
+  handleObjectSymbol3DLayerAnchorPositionXChange,
+  handleObjectSymbol3DLayerAnchorPositionYChange,
+  handleObjectSymbol3DLayerAnchorPositionZChange,
 }: Props) => {
-  const [anchorPosition, setAnchorPosition] = useState({ x: "0", y: "0" });
+  const [anchorPosition, setAnchorPosition] = useState({
+    x: "0",
+    y: "0",
+    z: "0",
+  });
 
   return (
     <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
       <CalciteLabel layout="default" style={labelStyles}>
         x
         <CalciteInputNumber
-          label={"xoffset anchor position x"}
+          label={"anchor position x"}
           onCalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, x: event.target.value });
-            handleIconSymbol3DLayerAnchorPositionXChange(
+            handleObjectSymbol3DLayerAnchorPositionXChange(
               layerIndex,
-              event.target.value as IconSymbol3DLayerAnchorOption
+              event.target.value as ObjectSymbol3DLayerAnchorOption
             );
           }}
           value={anchorPosition.x}
@@ -49,10 +58,10 @@ const IconSymbol3DLayerForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         y
         <CalciteInputNumber
-          label={"xoffset anchor position y"}
+          label={"anchor position y"}
           onCalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, y: event.target.value });
-            handleIconSymbol3DLayerAnchorPositionYChange(
+            handleObjectSymbol3DLayerAnchorPositionYChange(
               layerIndex,
               event.target.value
             );
@@ -60,8 +69,23 @@ const IconSymbol3DLayerForm = ({
           value={anchorPosition.y}
         ></CalciteInputNumber>
       </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        z
+        <CalciteInputNumber
+          label={"anchor position z"}
+          onCalciteInputNumberChange={(event) => {
+            setAnchorPosition({ ...anchorPosition, z: event.target.value });
+            handleObjectSymbol3DLayerAnchorPositionZChange(
+              layerIndex,
+              event.target.value
+            );
+          }}
+          value={anchorPosition.z}
+        ></CalciteInputNumber>
+      </CalciteLabel>
     </CalciteBlock>
   );
 };
 
-export default IconSymbol3DLayerForm;
+export default ObjectSymbol3DLayerAnchorPositionForm;

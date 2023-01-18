@@ -10,7 +10,7 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import { labelStyles } from "../lib/styles";
 import {
-  AnchorOption,
+  IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
 } from "../lib/types";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
@@ -22,7 +22,7 @@ interface Props {
   layerIndex: number;
   handleIconSymbol3DLayerAnchorChange: (
     layerIndex: number,
-    value: AnchorOption
+    value: IconSymbol3DLayerAnchorOption
   ) => void;
   handleIconSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
@@ -86,14 +86,14 @@ const IconSymbol3DLayerForm = ({
   return (
     <React.Fragment>
       <CalciteLabel layout="default" style={labelStyles}>
-        horizontalAlignment
+        anchor
         <CalciteSelect
-          label={"horizontalAlignment selection"}
+          label={"anchor selection"}
           onCalciteSelectChange={(event) => {
             setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
-              event.target.value as AnchorOption
+              event.target.value as IconSymbol3DLayerAnchorOption
             );
           }}
           value={anchor}

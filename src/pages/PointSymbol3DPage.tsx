@@ -21,8 +21,10 @@ import { lazy, Suspense, useRef, useState } from "react";
 import PointSymbol3DForm from "../components/PointSymbol3DForm";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
 import {
-  AnchorOption,
+  IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
+  ObjectSymbol3DLayerAnchorOption,
+  ObjectSymbol3DLayerResourcePrimitiveOption,
 } from "../lib/types";
 
 const MapView = lazy(() => import("../components/MapView"));
@@ -120,7 +122,7 @@ const PointSymbol3DPage = () => {
 
   const handleIconSymbol3DLayerAnchorChange = (
     index: number,
-    value: AnchorOption
+    value: IconSymbol3DLayerAnchorOption
   ) => {
     const newPointSymbol3D = pointSymbol3D.clone();
     const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
@@ -202,6 +204,77 @@ const PointSymbol3DPage = () => {
     const newPointSymbol3D = pointSymbol3D.clone();
     const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
     (symbolLayer as IconSymbol3DLayer).size = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerAnchorChange = (
+    index: number,
+    value: ObjectSymbol3DLayerAnchorOption
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).anchor = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerAnchorPositionXChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).anchorPosition.x = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerAnchorPositionYChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).anchorPosition.y = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerAnchorPositionZChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).anchorPosition.z = Number(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerMaterialColorChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).material.color = new Color(value);
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerResourceHrefChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).resource.href = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleObjectSymbol3DLayerResourcePrimitiveChange = (
+    index: number,
+    value: ObjectSymbol3DLayerResourcePrimitiveOption
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).resource.primitive =
+      value as ObjectSymbol3DLayerResourcePrimitiveOption;
     updateGraphics(newPointSymbol3D);
   };
 
@@ -317,6 +390,27 @@ const PointSymbol3DPage = () => {
               }
               handleIconSymbol3DLayerSizeChange={
                 handleIconSymbol3DLayerSizeChange
+              }
+              handleObjectSymbol3DLayerAnchorChange={
+                handleObjectSymbol3DLayerAnchorChange
+              }
+              handleObjectSymbol3DLayerAnchorPositionXChange={
+                handleObjectSymbol3DLayerAnchorPositionXChange
+              }
+              handleObjectSymbol3DLayerAnchorPositionYChange={
+                handleObjectSymbol3DLayerAnchorPositionYChange
+              }
+              handleObjectSymbol3DLayerAnchorPositionZChange={
+                handleObjectSymbol3DLayerAnchorPositionZChange
+              }
+              handleObjectSymbol3DLayerMaterialColorChange={
+                handleObjectSymbol3DLayerMaterialColorChange
+              }
+              handleObjectSymbol3DLayerResourceHrefChange={
+                handleObjectSymbol3DLayerResourceHrefChange
+              }
+              handleObjectSymbol3DLayerResourcePrimitiveChange={
+                handleObjectSymbol3DLayerResourcePrimitiveChange
               }
               updateSymbolLayers={updateSymbolLayers}
             ></PointSymbol3DForm>
