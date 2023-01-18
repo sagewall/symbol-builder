@@ -77,6 +77,10 @@ interface PageProps {
     layerIndex: number,
     value: string
   ) => void;
+  handleObjectSymbol3DLayerHeadingChange: (
+    layerIndex: number,
+    value: number
+  ) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -107,6 +111,7 @@ const Symbol3DLayerCollectionForm = ({
   handleObjectSymbol3DLayerAnchorPositionZChange,
   handleObjectSymbol3DLayerCastShadowsChange,
   handleObjectSymbol3DLayerDepthChange,
+  handleObjectSymbol3DLayerHeadingChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -245,6 +250,7 @@ const Symbol3DLayerCollectionForm = ({
                     handleObjectSymbol3DLayerCastShadowsChange
                   }
                   handleDepthChange={handleObjectSymbol3DLayerDepthChange}
+                  handleHeadingChange={handleObjectSymbol3DLayerHeadingChange}
                   handleObjectSymbol3DLayerMaterialColorChange={
                     handleObjectSymbol3DLayerMaterialColorChange
                   }

@@ -267,6 +267,16 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleObjectSymbol3DLayerHeadingChange = (
+    index: number,
+    value: number
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).heading = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
   const handleObjectSymbol3DLayerMaterialColorChange = (
     index: number,
     value: string
@@ -428,6 +438,9 @@ const PointSymbol3DPage = () => {
               }
               handleObjectSymbol3DLayerDepthChange={
                 handleObjectSymbol3DLayerDepthChange
+              }
+              handleObjectSymbol3DLayerHeadingChange={
+                handleObjectSymbol3DLayerHeadingChange
               }
               handleObjectSymbol3DLayerMaterialColorChange={
                 handleObjectSymbol3DLayerMaterialColorChange

@@ -3,6 +3,7 @@ import {
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
+  CalciteSlider,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-label";
@@ -38,6 +39,7 @@ interface Props {
   ) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleDepthChange: (layerIndex: number, value: string) => void;
+  handleHeadingChange: (layerIndex: number, value: number) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -60,6 +62,7 @@ const ObjectSymbol3DLayerForm = ({
   handleObjectSymbol3DLayerAnchorPositionZChange,
   handleCastShadowsChange,
   handleDepthChange,
+  handleHeadingChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -69,6 +72,7 @@ const ObjectSymbol3DLayerForm = ({
   const [anchor, setAnchor] = useState("center");
   const [castShadows, setCastShadows] = useState(false);
   const [depth, setDepth] = useState("10");
+  const [heading, setHeading] = useState(0);
 
   return (
     <React.Fragment>
@@ -128,6 +132,23 @@ const ObjectSymbol3DLayerForm = ({
           }}
           value={depth}
         ></CalciteInputNumber>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        heading
+        <CalciteSlider
+          labelHandles={true}
+          labelTicks={true}
+          max={360}
+          min={0}
+          onCalciteSliderChange={(event) => {
+            setHeading(event.target.value as number);
+            handleHeadingChange(layerIndex, event.target.value as number);
+          }}
+          step={1}
+          ticks={90}
+          value={heading}
+        ></CalciteSlider>
       </CalciteLabel>
 
       <ObjectSymbol3DLayerMaterialForm
