@@ -26,7 +26,7 @@ interface Props {
   ) => void;
   handleIconSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
-    value: AnchorOption
+    value: string
   ) => void;
   handleIconSymbol3DLayerAnchorPositionYChange: (
     layerIndex: number,

@@ -10,7 +10,7 @@ import {
   AnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
 } from "../lib/types";
-import IconSymbol3DForm from "./IconSymbol3DLayerForm";
+import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 
 interface PageProps {
   handleIconSymbol3DLayerAnchorChange: (
@@ -120,7 +120,7 @@ const Symbol3DLayerCollectionForm = ({
                 slot="control"
                 text="Delete"
               />
-              <IconSymbol3DForm
+              <IconSymbol3DLayerForm
                 layerIndex={index}
                 handleIconSymbol3DLayerAnchorChange={
                   handleIconSymbol3DLayerAnchorChange
