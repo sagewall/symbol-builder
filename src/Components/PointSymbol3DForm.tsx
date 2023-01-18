@@ -68,6 +68,10 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleObjectSymbol3DLayerCastShadowsChange: (
+    layerIndex: number,
+    value: boolean
+  ) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -102,6 +106,7 @@ const PointSymbol3DForm = ({
   handleObjectSymbol3DLayerAnchorPositionXChange,
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
+  handleObjectSymbol3DLayerCastShadowsChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -155,6 +160,9 @@ const PointSymbol3DForm = ({
         }
         handleObjectSymbol3DLayerAnchorPositionZChange={
           handleObjectSymbol3DLayerAnchorPositionZChange
+        }
+        handleObjectSymbol3DLayerCastShadowsChange={
+          handleObjectSymbol3DLayerCastShadowsChange
         }
         handleObjectSymbol3DLayerMaterialColorChange={
           handleObjectSymbol3DLayerMaterialColorChange

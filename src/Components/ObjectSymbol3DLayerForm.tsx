@@ -2,6 +2,7 @@ import {
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
+  CalciteSwitch,
 } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
@@ -34,6 +35,10 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleObjectSymbol3DLayerCastShadowsChange: (
+    layerIndex: number,
+    value: boolean
+  ) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -54,6 +59,7 @@ const ObjectSymbol3DLayerForm = ({
   handleObjectSymbol3DLayerAnchorPositionXChange,
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
+  handleObjectSymbol3DLayerCastShadowsChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -61,6 +67,7 @@ const ObjectSymbol3DLayerForm = ({
   const anchorOptions = ["center", "top", "bottom", "origin", "relative"];
 
   const [anchor, setAnchor] = useState("center");
+  const [castShadows, setCastShadows] = useState(false);
 
   return (
     <React.Fragment>
@@ -97,6 +104,20 @@ const ObjectSymbol3DLayerForm = ({
           }
         ></ObjectSymbol3DLayerAnchorPositionForm>
       )}
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        castShadows
+        <CalciteSwitch
+          onCalciteSwitchChange={(event) => {
+            setCastShadows(event.target.checked);
+            handleObjectSymbol3DLayerCastShadowsChange(
+              layerIndex,
+              event.target.checked
+            );
+          }}
+          value={castShadows}
+        ></CalciteSwitch>
+      </CalciteLabel>
 
       <ObjectSymbol3DLayerMaterialForm
         layerIndex={layerIndex}

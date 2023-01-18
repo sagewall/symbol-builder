@@ -69,6 +69,10 @@ interface PageProps {
     layerIndex: number,
     value: string
   ) => void;
+  handleObjectSymbol3DLayerCastShadowsChange: (
+    layerIndex: number,
+    value: boolean
+  ) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -97,6 +101,7 @@ const Symbol3DLayerCollectionForm = ({
   handleObjectSymbol3DLayerAnchorPositionXChange,
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
+  handleObjectSymbol3DLayerCastShadowsChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -117,6 +122,7 @@ const Symbol3DLayerCollectionForm = ({
     const newObjectSymbol3DLayer = new ObjectSymbol3DLayer();
     newObjectSymbol3DLayer.anchor = "center";
     newObjectSymbol3DLayer.anchorPosition = { x: 0, y: 0, z: 0 };
+    newObjectSymbol3DLayer.castShadows = false;
     newObjectSymbol3DLayer.material = { color: new Color("red") };
     newObjectSymbol3DLayer.resource = { href: undefined, primitive: "sphere" };
     return newObjectSymbol3DLayer;
@@ -231,6 +237,9 @@ const Symbol3DLayerCollectionForm = ({
                   }
                   handleObjectSymbol3DLayerAnchorPositionZChange={
                     handleObjectSymbol3DLayerAnchorPositionZChange
+                  }
+                  handleObjectSymbol3DLayerCastShadowsChange={
+                    handleObjectSymbol3DLayerCastShadowsChange
                   }
                   handleObjectSymbol3DLayerMaterialColorChange={
                     handleObjectSymbol3DLayerMaterialColorChange
