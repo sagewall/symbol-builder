@@ -3,7 +3,7 @@ import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
 import Layer from "@arcgis/core/layers/Layer";
 import ArcSceneView from "@arcgis/core/views/SceneView";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
@@ -73,7 +73,11 @@ const SceneView = ({ graphics, layers }: SceneViewProps) => {
     }
   }, [view, graphics, layers]);
 
-  return <div style={viewStyles} ref={viewDivRef}></div>;
+  return (
+    <React.Fragment>
+      <div style={viewStyles} ref={viewDivRef}></div>
+    </React.Fragment>
+  );
 };
 
 export default SceneView;

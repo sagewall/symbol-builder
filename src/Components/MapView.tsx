@@ -3,7 +3,7 @@ import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
 import Layer from "@arcgis/core/layers/Layer";
 import ArcMapView from "@arcgis/core/views/MapView";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
@@ -73,7 +73,11 @@ const MapView = ({ graphics, layers }: MapViewProps) => {
     }
   }, [view, graphics, layers]);
 
-  return <div style={viewStyles} ref={viewDivRef}></div>;
+  return (
+    <React.Fragment>
+      <div style={viewStyles} ref={viewDivRef}></div>
+    </React.Fragment>
+  );
 };
 
 export default MapView;
