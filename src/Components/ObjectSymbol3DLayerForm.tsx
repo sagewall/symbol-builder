@@ -53,6 +53,7 @@ interface Props {
     value: ObjectSymbol3DLayerResourcePrimitiveOption
   ) => void;
   handleRollChange: (layerIndex: number, value: number) => void;
+  handleTiltChange: (layerIndex: number, value: number) => void;
 }
 
 const ObjectSymbol3DLayerForm = ({
@@ -68,6 +69,7 @@ const ObjectSymbol3DLayerForm = ({
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
   handleRollChange,
+  handleTiltChange,
 }: Props) => {
   const anchorOptions = ["center", "top", "bottom", "origin", "relative"];
 
@@ -76,6 +78,7 @@ const ObjectSymbol3DLayerForm = ({
   const [depth, setDepth] = useState("10");
   const [heading, setHeading] = useState(0);
   const [roll, setRoll] = useState(0);
+  const [tilt, setTilt] = useState(0);
 
   return (
     <React.Fragment>
@@ -179,6 +182,23 @@ const ObjectSymbol3DLayerForm = ({
           step={1}
           ticks={90}
           value={roll}
+        ></CalciteSlider>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        tilt
+        <CalciteSlider
+          labelHandles={true}
+          labelTicks={true}
+          max={360}
+          min={0}
+          onCalciteSliderChange={(event) => {
+            setTilt(event.target.value as number);
+            handleTiltChange(layerIndex, event.target.value as number);
+          }}
+          step={1}
+          ticks={90}
+          value={tilt}
         ></CalciteSlider>
       </CalciteLabel>
     </React.Fragment>

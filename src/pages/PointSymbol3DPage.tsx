@@ -322,6 +322,16 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleObjectSymbol3DLayerTiltChange = (
+    index: number,
+    value: number
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(index);
+    (symbolLayer as ObjectSymbol3DLayer).tilt = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
   const handleVerticalOffsetMaxWorldLengthChange = (
     currentMaxWorldLength: string
   ) => {
@@ -467,6 +477,9 @@ const PointSymbol3DPage = () => {
               }
               handleObjectSymbol3DLayerRollChange={
                 handleObjectSymbol3DLayerRollChange
+              }
+              handleObjectSymbol3DLayerTiltChange={
+                handleObjectSymbol3DLayerTiltChange
               }
               updateSymbolLayers={updateSymbolLayers}
             ></PointSymbol3DForm>
