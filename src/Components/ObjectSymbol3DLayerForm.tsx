@@ -52,6 +52,7 @@ interface Props {
     layerIndex: number,
     value: ObjectSymbol3DLayerResourcePrimitiveOption
   ) => void;
+  handleRollChange: (layerIndex: number, value: number) => void;
 }
 
 const ObjectSymbol3DLayerForm = ({
@@ -66,6 +67,7 @@ const ObjectSymbol3DLayerForm = ({
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
+  handleRollChange,
 }: Props) => {
   const anchorOptions = ["center", "top", "bottom", "origin", "relative"];
 
@@ -73,6 +75,7 @@ const ObjectSymbol3DLayerForm = ({
   const [castShadows, setCastShadows] = useState(false);
   const [depth, setDepth] = useState("10");
   const [heading, setHeading] = useState(0);
+  const [roll, setRoll] = useState(0);
 
   return (
     <React.Fragment>
@@ -161,6 +164,23 @@ const ObjectSymbol3DLayerForm = ({
         handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
         handlePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
       ></ObjectSymbol3DLayerResourceForm>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        roll
+        <CalciteSlider
+          labelHandles={true}
+          labelTicks={true}
+          max={360}
+          min={0}
+          onCalciteSliderChange={(event) => {
+            setRoll(event.target.value as number);
+            handleRollChange(layerIndex, event.target.value as number);
+          }}
+          step={1}
+          ticks={90}
+          value={roll}
+        ></CalciteSlider>
+      </CalciteLabel>
     </React.Fragment>
   );
 };

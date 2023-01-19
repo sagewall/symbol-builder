@@ -92,6 +92,10 @@ interface Props {
     layerIndex: number,
     value: ObjectSymbol3DLayerResourcePrimitiveOption
   ) => void;
+  handleObjectSymbol3DLayerRollChange: (
+    layerIndex: number,
+    value: number
+  ) => void;
   handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
   handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
   handleVerticalOffsetScreenLengthChange: (value: string) => void;
@@ -120,6 +124,7 @@ const PointSymbol3DForm = ({
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
+  handleObjectSymbol3DLayerRollChange,
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
@@ -188,6 +193,9 @@ const PointSymbol3DForm = ({
         }
         handleObjectSymbol3DLayerResourcePrimitiveChange={
           handleObjectSymbol3DLayerResourcePrimitiveChange
+        }
+        handleObjectSymbol3DLayerRollChange={
+          handleObjectSymbol3DLayerRollChange
         }
         updateSymbolLayers={updateSymbolLayers}
       ></Symbol3DLayerCollectionForm>
