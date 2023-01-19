@@ -11,13 +11,13 @@ import {
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import { lazy, Suspense, useRef, useState } from "react";
+import React, { lazy, Suspense, useRef, useState } from "react";
 import PictureMarkerSymbolForm from "../components//PictureMarkerSymbolForm";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
-} from "../Components/lib/styles";
+} from "../components/lib/styles";
 
 const MapView = lazy(() => import("../components//MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
@@ -113,60 +113,66 @@ const PictureMarkerSymbolPage = () => {
   };
 
   return (
-    <CalciteShell style={shellStyles}>
-      <Suspense
-        fallback={
-          <CalciteLoader label="loading" text="loading" type="indeterminate" />
-        }
-      >
-        {view}
-      </Suspense>
-      <CalciteShellPanel
-        slot="panel-start"
-        position="start"
-        resizable
-        widthScale="l"
-      >
-        <CalcitePanel>
-          <div slot="header-content">Properties </div>
-          <CalciteLabel
-            slot="header-actions-end"
-            layout="inline"
-            style={viewSwitchLabelStyles}
-          >
-            SceneView
-            <CalciteSwitch
-              ref={viewSwitchRef}
-              onCalciteSwitchChange={handleSwitchChange}
-            ></CalciteSwitch>
-          </CalciteLabel>
-
-          <form style={formStyles}>
-            <PictureMarkerSymbolForm
-              handleAngleChange={handleAngleChange}
-              handleHeightChange={handleHeightChange}
-              handleUrlChange={handleUrlChange}
-              handleWidthChange={handleWidthChange}
-              handleXoffsetChange={handleXoffsetChange}
-              handleYoffsetChange={handleYoffsetChange}
+    <React.Fragment>
+      <CalciteShell style={shellStyles}>
+        <Suspense
+          fallback={
+            <CalciteLoader
+              label="loading"
+              text="loading"
+              type="indeterminate"
             />
-          </form>
-        </CalcitePanel>
+          }
+        >
+          {view}
+        </Suspense>
+        <CalciteShellPanel
+          slot="panel-start"
+          position="start"
+          resizable
+          widthScale="l"
+        >
+          <CalcitePanel>
+            <div slot="header-content">Properties </div>
+            <CalciteLabel
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
+              SceneView
+              <CalciteSwitch
+                ref={viewSwitchRef}
+                onCalciteSwitchChange={handleSwitchChange}
+              ></CalciteSwitch>
+            </CalciteLabel>
 
-        <CalcitePanel>
-          <div slot="header-content">JSON</div>
-          <CalciteAction
-            icon="copy-to-clipboard"
-            label="Copy code to clipboard"
-            text="Copy JSON"
-            textEnabled
-            slot="header-actions-end"
-            onClick={handleCopyJSONClick}
-          ></CalciteAction>
-          <pre>{JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)}</pre>
-        </CalcitePanel>
-      </CalciteShellPanel>
-    </CalciteShell>
+            <form style={formStyles}>
+              <PictureMarkerSymbolForm
+                handleAngleChange={handleAngleChange}
+                handleHeightChange={handleHeightChange}
+                handleUrlChange={handleUrlChange}
+                handleWidthChange={handleWidthChange}
+                handleXoffsetChange={handleXoffsetChange}
+                handleYoffsetChange={handleYoffsetChange}
+              />
+            </form>
+          </CalcitePanel>
+
+          <CalcitePanel>
+            <div slot="header-content">JSON</div>
+            <CalciteAction
+              icon="copy-to-clipboard"
+              label="Copy code to clipboard"
+              text="Copy JSON"
+              textEnabled
+              slot="header-actions-end"
+              onClick={handleCopyJSONClick}
+            ></CalciteAction>
+            <pre>{JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)}</pre>
+          </CalcitePanel>
+        </CalciteShellPanel>
+      </CalciteShell>
+    </React.Fragment>
   );
 };
 

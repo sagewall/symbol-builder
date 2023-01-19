@@ -20,17 +20,17 @@ import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import { lazy, Suspense, useRef, useState } from "react";
+import React, { lazy, Suspense, useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
-} from "../Components/lib/styles";
+} from "../components/lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../Components/lib/types";
+} from "../components/lib/types";
 import PictureFillSymbolForm from "../components/PictureFillSymbolForm";
 
 const MapView = lazy(() => import("../components/MapView"));
@@ -208,68 +208,74 @@ const PictureFillSymbolPage = () => {
   };
 
   return (
-    <CalciteShell style={shellStyles}>
-      <Suspense
-        fallback={
-          <CalciteLoader label="loading" text="loading" type="indeterminate" />
-        }
-      >
-        {view}
-      </Suspense>
-      <CalciteShellPanel
-        slot="panel-start"
-        position="start"
-        resizable
-        widthScale="l"
-      >
-        <CalcitePanel>
-          <div slot="header-content">Properties </div>
-          <CalciteLabel
-            slot="header-actions-end"
-            layout="inline"
-            style={viewSwitchLabelStyles}
-          >
-            MapView Only
-            <CalciteSwitch
-              disabled={true}
-              ref={viewSwitchRef}
-              onCalciteSwitchChange={handleSwitchChange}
-            ></CalciteSwitch>
-          </CalciteLabel>
-
-          <form style={formStyles}>
-            <PictureFillSymbolForm
-              handleHeightChange={handleHeightChange}
-              handleOutlineCapChange={handleOutlineCapChange}
-              handleOutlineColorChange={handleOutlineColorChange}
-              handleOutlineJoinChange={handleOutlineJoinChange}
-              handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
-              handleOutlineStyleChange={handleOutlineStyleChange}
-              handleOutlineWidthChange={handleOutlineWidthChange}
-              handleUrlChange={handleUrlChange}
-              handleWidthChange={handleWidthChange}
-              handleXOffsetChange={handleXOffsetChange}
-              handleXScaleChange={handleXScaleChange}
-              handleYOffsetChange={handleYOffsetChange}
-              handleYScaleChange={handleYScaleChange}
+    <React.Fragment>
+      <CalciteShell style={shellStyles}>
+        <Suspense
+          fallback={
+            <CalciteLoader
+              label="loading"
+              text="loading"
+              type="indeterminate"
             />
-          </form>
-        </CalcitePanel>
+          }
+        >
+          {view}
+        </Suspense>
+        <CalciteShellPanel
+          slot="panel-start"
+          position="start"
+          resizable
+          widthScale="l"
+        >
+          <CalcitePanel>
+            <div slot="header-content">Properties </div>
+            <CalciteLabel
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
+              MapView Only
+              <CalciteSwitch
+                disabled={true}
+                ref={viewSwitchRef}
+                onCalciteSwitchChange={handleSwitchChange}
+              ></CalciteSwitch>
+            </CalciteLabel>
 
-        <CalcitePanel>
-          <div slot="header-content">JSON</div>
-          <CalciteAction
-            icon="copy-to-clipboard"
-            label="Copy code to clipboard"
-            text="Copy JSON"
-            textEnabled
-            slot="header-actions-end"
-            onClick={handleCopyJSONClick}
-          ></CalciteAction>
-          <pre>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
-        </CalcitePanel>
-      </CalciteShellPanel>
-    </CalciteShell>
+            <form style={formStyles}>
+              <PictureFillSymbolForm
+                handleHeightChange={handleHeightChange}
+                handleOutlineCapChange={handleOutlineCapChange}
+                handleOutlineColorChange={handleOutlineColorChange}
+                handleOutlineJoinChange={handleOutlineJoinChange}
+                handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
+                handleOutlineStyleChange={handleOutlineStyleChange}
+                handleOutlineWidthChange={handleOutlineWidthChange}
+                handleUrlChange={handleUrlChange}
+                handleWidthChange={handleWidthChange}
+                handleXOffsetChange={handleXOffsetChange}
+                handleXScaleChange={handleXScaleChange}
+                handleYOffsetChange={handleYOffsetChange}
+                handleYScaleChange={handleYScaleChange}
+              />
+            </form>
+          </CalcitePanel>
+
+          <CalcitePanel>
+            <div slot="header-content">JSON</div>
+            <CalciteAction
+              icon="copy-to-clipboard"
+              label="Copy code to clipboard"
+              text="Copy JSON"
+              textEnabled
+              slot="header-actions-end"
+              onClick={handleCopyJSONClick}
+            ></CalciteAction>
+            <pre>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
+          </CalcitePanel>
+        </CalciteShellPanel>
+      </CalciteShell>
+    </React.Fragment>
   );
 };
 

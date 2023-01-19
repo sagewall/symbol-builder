@@ -7,7 +7,7 @@ import {
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-label";
-import { useState } from "react";
+import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
@@ -25,33 +25,35 @@ const IconSymbol3DLayerOutlineForm = ({
   const [size, setSize] = useState("1.5");
 
   return (
-    <CalciteBlock style={blockStyles} collapsible heading={"outline"}>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
+    <React.Fragment>
+      <CalciteBlock style={blockStyles} collapsible heading={"outline"}>
+        <CalciteBlock style={blockStyles} collapsible heading={"color"}>
+          <CalciteLabel layout="default" style={labelStyles}>
+            color
+            <CalciteColorPicker
+              onCalciteColorPickerChange={(event) => {
+                if (event.target.value) {
+                  setColor(event.target.value.toString());
+                }
+                handleColorChange(layerIndex, event.target.value as string);
+              }}
+              value={color}
+            ></CalciteColorPicker>
+          </CalciteLabel>
+        </CalciteBlock>
         <CalciteLabel layout="default" style={labelStyles}>
-          color
-          <CalciteColorPicker
-            onCalciteColorPickerChange={(event) => {
-              if (event.target.value) {
-                setColor(event.target.value.toString());
-              }
-              handleColorChange(layerIndex, event.target.value as string);
+          size
+          <CalciteInputNumber
+            label={"xoffset anchor position y"}
+            onCalciteInputNumberChange={(event) => {
+              setSize(event.target.value);
+              handleSizeChange(layerIndex, event.target.value);
             }}
-            value={color}
-          ></CalciteColorPicker>
+            value={size}
+          ></CalciteInputNumber>
         </CalciteLabel>
       </CalciteBlock>
-      <CalciteLabel layout="default" style={labelStyles}>
-        size
-        <CalciteInputNumber
-          label={"xoffset anchor position y"}
-          onCalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
-            handleSizeChange(layerIndex, event.target.value);
-          }}
-          value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
-    </CalciteBlock>
+    </React.Fragment>
   );
 };
 

@@ -6,7 +6,7 @@ import {
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-label";
-import { useState } from "react";
+import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
@@ -21,22 +21,24 @@ const ObjectSymbol3DLayerMaterialForm = ({
   const [color, setColor] = useState("#ff0000");
 
   return (
-    <CalciteBlock style={blockStyles} collapsible heading={"material"}>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteLabel layout="default" style={labelStyles}>
-          color
-          <CalciteColorPicker
-            onCalciteColorPickerChange={(event) => {
-              if (event.target.value) {
-                setColor(event.target.value.toString());
-              }
-              handleColorChange(layerIndex, event.target.value as string);
-            }}
-            value={color}
-          ></CalciteColorPicker>
-        </CalciteLabel>
+    <React.Fragment>
+      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+        <CalciteBlock style={blockStyles} collapsible heading={"color"}>
+          <CalciteLabel layout="default" style={labelStyles}>
+            color
+            <CalciteColorPicker
+              onCalciteColorPickerChange={(event) => {
+                if (event.target.value) {
+                  setColor(event.target.value.toString());
+                }
+                handleColorChange(layerIndex, event.target.value as string);
+              }}
+              value={color}
+            ></CalciteColorPicker>
+          </CalciteLabel>
+        </CalciteBlock>
       </CalciteBlock>
-    </CalciteBlock>
+    </React.Fragment>
   );
 };
 

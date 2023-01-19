@@ -20,19 +20,19 @@ import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import { lazy, Suspense, useRef, useState } from "react";
+import React, { lazy, Suspense, useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
-} from "../Components/lib/styles";
+} from "../components/lib/styles";
 import {
   FontDecoration,
   FontStyle,
   FontWeight,
   HorizontalAlignment,
   VerticalAlignment,
-} from "../Components/lib/types";
+} from "../components/lib/types";
 import TextSymbolForm from "../components/TextSymbolForm";
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
@@ -210,71 +210,79 @@ const TextSymbolPage = () => {
   };
 
   return (
-    <CalciteShell style={shellStyles}>
-      <Suspense
-        fallback={
-          <CalciteLoader label="loading" text="loading" type="indeterminate" />
-        }
-      >
-        {view}
-      </Suspense>
-      <CalciteShellPanel
-        slot="panel-start"
-        position="start"
-        resizable
-        widthScale="l"
-      >
-        <CalcitePanel>
-          <div slot="header-content">Properties </div>
-          <CalciteLabel
-            slot="header-actions-end"
-            layout="inline"
-            style={viewSwitchLabelStyles}
-          >
-            SceneView
-            <CalciteSwitch
-              ref={viewSwitchRef}
-              onCalciteSwitchChange={handleSwitchChange}
-            ></CalciteSwitch>
-          </CalciteLabel>
-
-          <form style={formStyles}>
-            <TextSymbolForm
-              handleAngleChange={handleAngleChange}
-              handleColorChange={handleColorChange}
-              handleFontDecorationChange={handleFontDecorationChange}
-              handleFontFamilyChange={handleFontFamilyChange}
-              handleFontSizeChange={handleFontSizeChange}
-              handleFontStyleChange={handleFontStyleChange}
-              handleFontWeightChange={handleFontWeightChange}
-              handleHaloColorChange={handleHaloColorChange}
-              handleHaloSizeChange={handleHaloSizeChange}
-              handleHorizontalAlignmentChange={handleHorizontalAlignmentChange}
-              handleKerningChange={handleKerningChange}
-              handleLineWidthChange={handleLineWidthChange}
-              handleRotatedChange={handleRotatedChange}
-              handleTextChange={handleTextChange}
-              handleVerticalAlignmentChange={handleVerticalAlignmentChange}
-              handleXOffsetChange={handleXOffsetChange}
-              handleYOffsetChange={handleYOffsetChange}
+    <React.Fragment>
+      <CalciteShell style={shellStyles}>
+        <Suspense
+          fallback={
+            <CalciteLoader
+              label="loading"
+              text="loading"
+              type="indeterminate"
             />
-          </form>
-        </CalcitePanel>
+          }
+        >
+          {view}
+        </Suspense>
+        <CalciteShellPanel
+          slot="panel-start"
+          position="start"
+          resizable
+          widthScale="l"
+        >
+          <CalcitePanel>
+            <div slot="header-content">Properties </div>
+            <CalciteLabel
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
+              SceneView
+              <CalciteSwitch
+                ref={viewSwitchRef}
+                onCalciteSwitchChange={handleSwitchChange}
+              ></CalciteSwitch>
+            </CalciteLabel>
 
-        <CalcitePanel>
-          <div slot="header-content">JSON</div>
-          <CalciteAction
-            icon="copy-to-clipboard"
-            label="Copy code to clipboard"
-            text="Copy JSON"
-            textEnabled
-            slot="header-actions-end"
-            onClick={handleCopyJSONClick}
-          ></CalciteAction>
-          <pre>{JSON.stringify(textSymbol.toJSON(), null, 2)}</pre>
-        </CalcitePanel>
-      </CalciteShellPanel>
-    </CalciteShell>
+            <form style={formStyles}>
+              <TextSymbolForm
+                handleAngleChange={handleAngleChange}
+                handleColorChange={handleColorChange}
+                handleFontDecorationChange={handleFontDecorationChange}
+                handleFontFamilyChange={handleFontFamilyChange}
+                handleFontSizeChange={handleFontSizeChange}
+                handleFontStyleChange={handleFontStyleChange}
+                handleFontWeightChange={handleFontWeightChange}
+                handleHaloColorChange={handleHaloColorChange}
+                handleHaloSizeChange={handleHaloSizeChange}
+                handleHorizontalAlignmentChange={
+                  handleHorizontalAlignmentChange
+                }
+                handleKerningChange={handleKerningChange}
+                handleLineWidthChange={handleLineWidthChange}
+                handleRotatedChange={handleRotatedChange}
+                handleTextChange={handleTextChange}
+                handleVerticalAlignmentChange={handleVerticalAlignmentChange}
+                handleXOffsetChange={handleXOffsetChange}
+                handleYOffsetChange={handleYOffsetChange}
+              />
+            </form>
+          </CalcitePanel>
+
+          <CalcitePanel>
+            <div slot="header-content">JSON</div>
+            <CalciteAction
+              icon="copy-to-clipboard"
+              label="Copy code to clipboard"
+              text="Copy JSON"
+              textEnabled
+              slot="header-actions-end"
+              onClick={handleCopyJSONClick}
+            ></CalciteAction>
+            <pre>{JSON.stringify(textSymbol.toJSON(), null, 2)}</pre>
+          </CalcitePanel>
+        </CalciteShellPanel>
+      </CalciteShell>
+    </React.Fragment>
   );
 };
 

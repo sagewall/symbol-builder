@@ -1,12 +1,12 @@
 import {
   CalciteBlock,
   CalciteInputNumber,
-  CalciteLabel
+  CalciteLabel,
 } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
-import { useState } from "react";
+import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { ObjectSymbol3DLayerAnchorOption } from "./lib/types";
 
@@ -39,52 +39,54 @@ const ObjectSymbol3DLayerAnchorPositionForm = ({
   });
 
   return (
-    <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
-      <CalciteLabel layout="default" style={labelStyles}>
-        x
-        <CalciteInputNumber
-          label={"anchor position x"}
-          onCalciteInputNumberChange={(event) => {
-            setAnchorPosition({ ...anchorPosition, x: event.target.value });
-            handleObjectSymbol3DLayerAnchorPositionXChange(
-              layerIndex,
-              event.target.value as ObjectSymbol3DLayerAnchorOption
-            );
-          }}
-          value={anchorPosition.x}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+    <React.Fragment>
+      <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
+        <CalciteLabel layout="default" style={labelStyles}>
+          x
+          <CalciteInputNumber
+            label={"anchor position x"}
+            onCalciteInputNumberChange={(event) => {
+              setAnchorPosition({ ...anchorPosition, x: event.target.value });
+              handleObjectSymbol3DLayerAnchorPositionXChange(
+                layerIndex,
+                event.target.value as ObjectSymbol3DLayerAnchorOption
+              );
+            }}
+            value={anchorPosition.x}
+          ></CalciteInputNumber>
+        </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        y
-        <CalciteInputNumber
-          label={"anchor position y"}
-          onCalciteInputNumberChange={(event) => {
-            setAnchorPosition({ ...anchorPosition, y: event.target.value });
-            handleObjectSymbol3DLayerAnchorPositionYChange(
-              layerIndex,
-              event.target.value
-            );
-          }}
-          value={anchorPosition.y}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        <CalciteLabel layout="default" style={labelStyles}>
+          y
+          <CalciteInputNumber
+            label={"anchor position y"}
+            onCalciteInputNumberChange={(event) => {
+              setAnchorPosition({ ...anchorPosition, y: event.target.value });
+              handleObjectSymbol3DLayerAnchorPositionYChange(
+                layerIndex,
+                event.target.value
+              );
+            }}
+            value={anchorPosition.y}
+          ></CalciteInputNumber>
+        </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        z
-        <CalciteInputNumber
-          label={"anchor position z"}
-          onCalciteInputNumberChange={(event) => {
-            setAnchorPosition({ ...anchorPosition, z: event.target.value });
-            handleObjectSymbol3DLayerAnchorPositionZChange(
-              layerIndex,
-              event.target.value
-            );
-          }}
-          value={anchorPosition.z}
-        ></CalciteInputNumber>
-      </CalciteLabel>
-    </CalciteBlock>
+        <CalciteLabel layout="default" style={labelStyles}>
+          z
+          <CalciteInputNumber
+            label={"anchor position z"}
+            onCalciteInputNumberChange={(event) => {
+              setAnchorPosition({ ...anchorPosition, z: event.target.value });
+              handleObjectSymbol3DLayerAnchorPositionZChange(
+                layerIndex,
+                event.target.value
+              );
+            }}
+            value={anchorPosition.z}
+          ></CalciteInputNumber>
+        </CalciteLabel>
+      </CalciteBlock>
+    </React.Fragment>
   );
 };
 

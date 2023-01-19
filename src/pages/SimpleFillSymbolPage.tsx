@@ -13,18 +13,18 @@ import {
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import { lazy, Suspense, useRef, useState } from "react";
+import React, { lazy, Suspense, useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
-} from "../Components/lib/styles";
+} from "../components/lib/styles";
 import {
   SimpleFillSymbolStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../Components/lib/types";
+} from "../components/lib/types";
 import SimpleFillSymbolForm from "../components/SimpleFillSymbolForm";
 
 const MapView = lazy(() => import("../components/MapView"));
@@ -175,62 +175,68 @@ const SimpleFillSymbolPage = () => {
   };
 
   return (
-    <CalciteShell style={shellStyles}>
-      <Suspense
-        fallback={
-          <CalciteLoader label="loading" text="loading" type="indeterminate" />
-        }
-      >
-        {view}
-      </Suspense>
-      <CalciteShellPanel
-        slot="panel-start"
-        position="start"
-        resizable
-        widthScale="l"
-      >
-        <CalcitePanel>
-          <div slot="header-content">Properties </div>
-          <CalciteLabel
-            slot="header-actions-end"
-            layout="inline"
-            style={viewSwitchLabelStyles}
-          >
-            SceneView
-            <CalciteSwitch
-              ref={viewSwitchRef}
-              onCalciteSwitchChange={handleSwitchChange}
-            ></CalciteSwitch>
-          </CalciteLabel>
-
-          <form style={formStyles}>
-            <SimpleFillSymbolForm
-              handleColorChange={handleColorChange}
-              handleOutlineCapChange={handleOutlineCapChange}
-              handleOutlineColorChange={handleOutlineColorChange}
-              handleOutlineJoinChange={handleOutlineJoinChange}
-              handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
-              handleOutlineStyleChange={handleOutlineStyleChange}
-              handleOutlineWidthChange={handleOutlineWidthChange}
-              handleStyleChange={handleStyleChange}
+    <React.Fragment>
+      <CalciteShell style={shellStyles}>
+        <Suspense
+          fallback={
+            <CalciteLoader
+              label="loading"
+              text="loading"
+              type="indeterminate"
             />
-          </form>
-        </CalcitePanel>
+          }
+        >
+          {view}
+        </Suspense>
+        <CalciteShellPanel
+          slot="panel-start"
+          position="start"
+          resizable
+          widthScale="l"
+        >
+          <CalcitePanel>
+            <div slot="header-content">Properties </div>
+            <CalciteLabel
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
+              SceneView
+              <CalciteSwitch
+                ref={viewSwitchRef}
+                onCalciteSwitchChange={handleSwitchChange}
+              ></CalciteSwitch>
+            </CalciteLabel>
 
-        <CalcitePanel>
-          <div slot="header-content">JSON</div>
-          <CalciteAction
-            icon="copy-to-clipboard"
-            label="Copy code to clipboard"
-            text="Copy JSON"
-            textEnabled
-            slot="header-actions-end"
-            onClick={handleCopyJSONClick}
-          ></CalciteAction>
-          <pre>{JSON.stringify(simpleFillSymbol.toJSON(), null, 2)}</pre>
-        </CalcitePanel>
-      </CalciteShellPanel>
-    </CalciteShell>
+            <form style={formStyles}>
+              <SimpleFillSymbolForm
+                handleColorChange={handleColorChange}
+                handleOutlineCapChange={handleOutlineCapChange}
+                handleOutlineColorChange={handleOutlineColorChange}
+                handleOutlineJoinChange={handleOutlineJoinChange}
+                handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
+                handleOutlineStyleChange={handleOutlineStyleChange}
+                handleOutlineWidthChange={handleOutlineWidthChange}
+                handleStyleChange={handleStyleChange}
+              />
+            </form>
+          </CalcitePanel>
+
+          <CalcitePanel>
+            <div slot="header-content">JSON</div>
+            <CalciteAction
+              icon="copy-to-clipboard"
+              label="Copy code to clipboard"
+              text="Copy JSON"
+              textEnabled
+              slot="header-actions-end"
+              onClick={handleCopyJSONClick}
+            ></CalciteAction>
+            <pre>{JSON.stringify(simpleFillSymbol.toJSON(), null, 2)}</pre>
+          </CalcitePanel>
+        </CalciteShellPanel>
+      </CalciteShell>
+    </React.Fragment>
   );
 };
 
