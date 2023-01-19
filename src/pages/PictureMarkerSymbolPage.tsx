@@ -12,14 +12,14 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { lazy, Suspense, useRef, useState } from "react";
-import PictureMarkerSymbolForm from "../components//PictureMarkerSymbolForm";
+import PictureMarkerSymbolForm from "../components/PictureMarkerSymbolForm";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
 } from "../components/lib/styles";
 
-const MapView = lazy(() => import("../components//MapView"));
+const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
 
 const PictureMarkerSymbolPage = () => {
