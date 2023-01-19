@@ -6,14 +6,14 @@ import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-block";
 import React, { useState } from "react";
-import { blockStyles } from "../lib/styles";
+import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
+import { blockStyles } from "./lib/styles";
 import {
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
-} from "../lib/types";
-import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
+} from "./lib/types";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 
 interface PageProps {

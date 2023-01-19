@@ -13,15 +13,15 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import {
+  LineSymbolMarkerPlacementOption,
   LineSymbolMarkerStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../lib/types";
+} from "./lib/types";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
-import { LineSymbolMarkerPlacementOption } from "../lib/types";
 
 interface Props {
   handleCapChange: (value: SimpleLineSymbolCapOption) => void;

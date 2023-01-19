@@ -11,9 +11,13 @@ import {
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import React, { lazy, Suspense, useRef, useState } from "react";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
+import { lazy, Suspense, useRef, useState } from "react";
 import PictureMarkerSymbolForm from "../components//PictureMarkerSymbolForm";
+import {
+  formStyles,
+  shellStyles,
+  viewSwitchLabelStyles,
+} from "../Components/lib/styles";
 
 const MapView = lazy(() => import("../components//MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));

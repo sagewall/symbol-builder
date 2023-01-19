@@ -23,7 +23,7 @@ const SceneView = ({ graphics, layers }: SceneViewProps) => {
   useEffect(() => {
     if (viewDivRef.current) {
       const loadSceneView = async () => {
-        const { createSceneView } = await import("../lib/sceneview");
+        const { createSceneView } = await import("./lib/sceneview");
         setView(
           await createSceneView(
             viewDivRef.current as HTMLDivElement,

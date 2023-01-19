@@ -23,7 +23,7 @@ const MapView = ({ graphics, layers }: MapViewProps) => {
   useEffect(() => {
     if (viewDivRef.current) {
       const loadMapView = async () => {
-        const { createMapView } = await import("../lib/mapview");
+        const { createMapView } = await import("./lib/mapview");
         setView(
           await createMapView(
             viewDivRef.current as HTMLDivElement,

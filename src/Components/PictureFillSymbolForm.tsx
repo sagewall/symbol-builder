@@ -9,12 +9,12 @@ import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../lib/types";
+} from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {

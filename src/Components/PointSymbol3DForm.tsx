@@ -2,13 +2,13 @@ import Collection from "@arcgis/core/core/Collection";
 import { CalciteBlock } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
-import { blockStyles } from "../lib/styles";
+import { blockStyles } from "./lib/styles";
 import {
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
-} from "../lib/types";
+} from "./lib/types";
 import LineCallout3DForm from "./LineCallout3DForm";
 import Symbol3DLayerCollectionForm from "./Symbol3DLayerCollectionForm";
 import Symbol3DVerticalOffsetForm from "./Symbol3DVerticalOffsetForm";

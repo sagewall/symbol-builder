@@ -7,8 +7,8 @@ import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
 import { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
-import { IconSymbol3DLayerAnchorOption } from "../lib/types";
+import { blockStyles, labelStyles } from "./lib/styles";
+import { IconSymbol3DLayerAnchorOption } from "./lib/types";
 
 interface Props {
   layerIndex: number;

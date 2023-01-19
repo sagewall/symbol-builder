@@ -17,13 +17,13 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
   SimpleMarkerSymbolStyleOption,
-} from "../lib/types";
+} from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {

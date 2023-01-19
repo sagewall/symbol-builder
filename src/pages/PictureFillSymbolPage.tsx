@@ -20,14 +20,18 @@ import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import React, { lazy, Suspense, useRef, useState } from "react";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
-import PictureFillSymbolForm from "../components/PictureFillSymbolForm";
+import { lazy, Suspense, useRef, useState } from "react";
+import {
+  formStyles,
+  shellStyles,
+  viewSwitchLabelStyles,
+} from "../Components/lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../lib/types";
+} from "../Components/lib/types";
+import PictureFillSymbolForm from "../components/PictureFillSymbolForm";
 
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));

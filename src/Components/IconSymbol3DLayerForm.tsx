@@ -8,15 +8,15 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
-import { labelStyles } from "../lib/styles";
-import {
-  IconSymbol3DLayerAnchorOption,
-  IconSymbol3DLayerResourcePrimitiveOption,
-} from "../lib/types";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
+import { labelStyles } from "./lib/styles";
+import {
+  IconSymbol3DLayerAnchorOption,
+  IconSymbol3DLayerResourcePrimitiveOption,
+} from "./lib/types";
 
 interface Props {
   layerIndex: number;

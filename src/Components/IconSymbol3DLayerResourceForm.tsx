@@ -9,8 +9,8 @@ import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-label";
 import { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
-import { IconSymbol3DLayerResourcePrimitiveOption } from "../lib/types";
+import { blockStyles, labelStyles } from "./lib/styles";
+import { IconSymbol3DLayerResourcePrimitiveOption } from "./lib/types";
 
 interface Props {
   layerIndex: number;

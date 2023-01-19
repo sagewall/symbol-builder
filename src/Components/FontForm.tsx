@@ -11,8 +11,8 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
-import { labelStyles } from "../lib/styles";
-import { FontDecoration, FontStyle, FontWeight } from "../lib/types";
+import { labelStyles } from "./lib/styles";
+import { FontDecoration, FontStyle, FontWeight } from "./lib/types";
 
 interface Props {
   handleDecorationChange: (value: FontDecoration) => void;

@@ -14,14 +14,18 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import { lazy, Suspense, useRef, useState } from "react";
-import SimpleFillSymbolForm from "../components/SimpleFillSymbolForm";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
+import {
+  formStyles,
+  shellStyles,
+  viewSwitchLabelStyles,
+} from "../Components/lib/styles";
 import {
   SimpleFillSymbolStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../lib/types";
+} from "../Components/lib/types";
+import SimpleFillSymbolForm from "../components/SimpleFillSymbolForm";
 
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));

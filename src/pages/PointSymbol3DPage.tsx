@@ -18,14 +18,18 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import { lazy, Suspense, useRef, useState } from "react";
-import PointSymbol3DForm from "../components/PointSymbol3DForm";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
+import {
+  formStyles,
+  shellStyles,
+  viewSwitchLabelStyles,
+} from "../Components/lib/styles";
 import {
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
-} from "../lib/types";
+} from "../Components/lib/types";
+import PointSymbol3DForm from "../components/PointSymbol3DForm";
 
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));

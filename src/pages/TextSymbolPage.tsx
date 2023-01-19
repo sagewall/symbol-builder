@@ -21,15 +21,19 @@ import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import { lazy, Suspense, useRef, useState } from "react";
-import TextSymbolForm from "../components/TextSymbolForm";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "../lib/styles";
+import {
+  formStyles,
+  shellStyles,
+  viewSwitchLabelStyles,
+} from "../Components/lib/styles";
 import {
   FontDecoration,
   FontStyle,
   FontWeight,
   HorizontalAlignment,
   VerticalAlignment,
-} from "../lib/types";
+} from "../Components/lib/types";
+import TextSymbolForm from "../components/TextSymbolForm";
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
 
