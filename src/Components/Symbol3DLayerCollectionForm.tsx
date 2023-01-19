@@ -101,6 +101,10 @@ interface PageProps {
     layerIndex: number,
     value: number
   ) => void;
+  handleObjectSymbol3DLayerWidthChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 const Symbol3DLayerCollectionForm = ({
@@ -125,6 +129,7 @@ const Symbol3DLayerCollectionForm = ({
   handleObjectSymbol3DLayerResourcePrimitiveChange,
   handleObjectSymbol3DLayerRollChange,
   handleObjectSymbol3DLayerTiltChange,
+  handleObjectSymbol3DLayerWidthChange,
   updateSymbolLayers,
 }: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
@@ -425,6 +430,18 @@ const Symbol3DLayerCollectionForm = ({
     handleObjectSymbol3DLayerTiltChange(layerIndex, value);
   };
 
+  const handleSymbolLayersObjectSymbol3DLayerWidthChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer: ObjectSymbol3DLayer =
+      newSymbolLayers.getItemAt(layerIndex);
+    symbolLayer.width = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    handleObjectSymbol3DLayerWidthChange(layerIndex, value);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       let symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -533,6 +550,9 @@ const Symbol3DLayerCollectionForm = ({
                   }
                   handleTiltChange={
                     handleSymbolLayersObjectSymbol3DLayerTiltChange
+                  }
+                  handleWidthChange={
+                    handleSymbolLayersObjectSymbol3DLayerWidthChange
                   }
                 ></ObjectSymbol3DLayerForm>
               </CalciteBlock>

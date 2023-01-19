@@ -54,6 +54,7 @@ interface Props {
   ) => void;
   handleRollChange: (layerIndex: number, value: number) => void;
   handleTiltChange: (layerIndex: number, value: number) => void;
+  handleWidthChange: (layerIndex: number, value: string) => void;
 }
 
 const ObjectSymbol3DLayerForm = ({
@@ -70,6 +71,7 @@ const ObjectSymbol3DLayerForm = ({
   handleObjectSymbol3DLayerResourcePrimitiveChange,
   handleRollChange,
   handleTiltChange,
+  handleWidthChange,
 }: Props) => {
   const anchorOptions = ["center", "top", "bottom", "origin", "relative"];
 
@@ -79,6 +81,7 @@ const ObjectSymbol3DLayerForm = ({
   const [heading, setHeading] = useState(0);
   const [roll, setRoll] = useState(0);
   const [tilt, setTilt] = useState(0);
+  const [width, setWidth] = useState("10");
 
   return (
     <React.Fragment>
@@ -200,6 +203,19 @@ const ObjectSymbol3DLayerForm = ({
           ticks={90}
           value={tilt}
         ></CalciteSlider>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        width
+        <CalciteInputNumber
+          label={"width input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setWidth(event.target.value);
+            handleWidthChange(layerIndex, event.target.value);
+          }}
+          value={width}
+        ></CalciteInputNumber>
       </CalciteLabel>
     </React.Fragment>
   );
