@@ -9,10 +9,15 @@ import React, { useState } from "react";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
 import {
+  FontDecoration,
+  FontStyle,
+  FontWeight,
+  HorizontalAlignment,
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
+  VerticalAlignment,
 } from "./lib/types";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 
@@ -104,6 +109,46 @@ interface PageProps {
   handleObjectSymbol3DLayerWidthChange: (
     layerIndex: number,
     value: string
+  ) => void;
+  handleTextSymbol3DLayerBackgroundColorChange: (
+    value: string,
+    layerIndex: number
+  ) => void;
+  handleTextSymbol3DLayerFontDecorationChange: (
+    value: FontDecoration,
+    layerIndex: number | undefined
+  ) => void;
+  handleTextSymbol3DLayerFontFamilyChange: (
+    value: string,
+    layerIndex: number | undefined
+  ) => void;
+  handleTextSymbol3DLayerFontSizeChange: (
+    value: string,
+    layerIndex: number | undefined
+  ) => void;
+  handleTextSymbol3DLayerFontStyleChange: (
+    value: FontStyle | undefined,
+    layerIndex: number | undefined
+  ) => void;
+  handleTextSymbol3DLayerFontWeightChange: (
+    value: FontWeight | undefined,
+    layerIndex: number | undefined
+  ) => void;
+  handleTextSymbol3DLayerHorizontalAlignmentChange: (
+    value: HorizontalAlignment,
+    layerIndex: number
+  ) => void;
+  handleTextSymbol3DLayerLineHeightChange: (
+    value: string,
+    layerIndex: number
+  ) => void;
+  handleTextSymbol3DLayerTextChange: (
+    value: string,
+    layerIndex: number
+  ) => void;
+  handleTextSymbol3DLayerVerticalAlignmentChange: (
+    value: VerticalAlignment,
+    layerIndex: number
   ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }

@@ -25,27 +25,31 @@ import {
   HorizontalAlignment,
   VerticalAlignment,
 } from "./lib/types";
+import TextSymbol3DLayerBackgroundForm from "./TextSymbol3DLayerBackgroundForm";
 
 interface Props {
   layerIndex: number;
-  handleTextSymbol3DLayerBackgroundChange: (
+  handleTextSymbol3DLayerBackgroundColorChange: (
     value: string,
     layerIndex: number
   ) => void;
-  handleFontDecorationChange: (
+  handleTextSymbol3DLayerFontDecorationChange: (
     value: FontDecoration,
     layerIndex: number | undefined
   ) => void;
-  handleFontFamilyChange: (
+  handleTextSymbol3DLayerFontFamilyChange: (
     value: string,
     layerIndex: number | undefined
   ) => void;
-  handleFontSizeChange: (value: string, layerIndex: number | undefined) => void;
-  handleFontStyleChange: (
+  handleTextSymbol3DLayerFontSizeChange: (
+    value: string,
+    layerIndex: number | undefined
+  ) => void;
+  handleTextSymbol3DLayerFontStyleChange: (
     value: FontStyle | undefined,
     layerIndex: number | undefined
   ) => void;
-  handleFontWeightChange: (
+  handleTextSymbol3DLayerFontWeightChange: (
     value: FontWeight | undefined,
     layerIndex: number | undefined
   ) => void;
@@ -62,11 +66,12 @@ interface Props {
 }
 
 const TextSymbol3DLayerForm = ({
-  handleFontDecorationChange,
-  handleFontFamilyChange,
-  handleFontSizeChange,
-  handleFontStyleChange,
-  handleFontWeightChange,
+  handleTextSymbol3DLayerBackgroundColorChange,
+  handleTextSymbol3DLayerFontDecorationChange,
+  handleTextSymbol3DLayerFontFamilyChange,
+  handleTextSymbol3DLayerFontSizeChange,
+  handleTextSymbol3DLayerFontStyleChange,
+  handleTextSymbol3DLayerFontWeightChange,
   handleHorizontalAlignmentChange,
   handleLineHeightChange,
   handleTextChange,
@@ -83,13 +88,18 @@ const TextSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
+      <TextSymbol3DLayerBackgroundForm
+        layerIndex={layerIndex}
+        handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
+      ></TextSymbol3DLayerBackgroundForm>
+
       <CalciteBlock style={blockStyles} collapsible heading={"font"}>
         <FontForm
-          handleDecorationChange={handleFontDecorationChange}
-          handleFamilyChange={handleFontFamilyChange}
-          handleSizeChange={handleFontSizeChange}
-          handleStyleChange={handleFontStyleChange}
-          handleWeightChange={handleFontWeightChange}
+          handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
+          handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
+          handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
+          handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
+          handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
         />
       </CalciteBlock>
 
