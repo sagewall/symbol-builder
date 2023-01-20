@@ -27,15 +27,38 @@ import {
 } from "./lib/types";
 
 interface Props {
-  handleFontDecorationChange: (value: FontDecoration) => void;
-  handleFontFamilyChange: (value: string) => void;
-  handleFontSizeChange: (value: string) => void;
-  handleFontStyleChange: (value: FontStyle) => void;
-  handleFontWeightChange: (value: FontWeight) => void;
-  handleHorizontalAlignmentChange: (value: HorizontalAlignment) => void;
-  handleLineHeightChange: (value: string) => void;
-  handleTextChange: (value: string) => void;
-  handleVerticalAlignmentChange: (value: VerticalAlignment) => void;
+  layerIndex: number;
+  handleTextSymbol3DLayerBackgroundChange: (
+    value: string,
+    layerIndex: number
+  ) => void;
+  handleFontDecorationChange: (
+    value: FontDecoration,
+    layerIndex: number | undefined
+  ) => void;
+  handleFontFamilyChange: (
+    value: string,
+    layerIndex: number | undefined
+  ) => void;
+  handleFontSizeChange: (value: string, layerIndex: number | undefined) => void;
+  handleFontStyleChange: (
+    value: FontStyle | undefined,
+    layerIndex: number | undefined
+  ) => void;
+  handleFontWeightChange: (
+    value: FontWeight | undefined,
+    layerIndex: number | undefined
+  ) => void;
+  handleHorizontalAlignmentChange: (
+    value: HorizontalAlignment,
+    layerIndex: number
+  ) => void;
+  handleLineHeightChange: (value: string, layerIndex: number) => void;
+  handleTextChange: (value: string, layerIndex: number) => void;
+  handleVerticalAlignmentChange: (
+    value: VerticalAlignment,
+    layerIndex: number
+  ) => void;
 }
 
 const TextSymbol3DLayerForm = ({
@@ -48,6 +71,7 @@ const TextSymbol3DLayerForm = ({
   handleLineHeightChange,
   handleTextChange,
   handleVerticalAlignmentChange,
+  layerIndex,
 }: Props) => {
   const horizontalAlignmentOptions = ["center", "right", "left"];
   const verticalAlignmentOptions = ["baseline", "top", "middle", "bottom"];
@@ -76,7 +100,8 @@ const TextSymbol3DLayerForm = ({
           onCalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
-              event.target.value as HorizontalAlignment
+              event.target.value as HorizontalAlignment,
+              layerIndex
             );
           }}
           value={horizontalAlignment}
@@ -94,7 +119,7 @@ const TextSymbol3DLayerForm = ({
           min={0}
           onCalciteInputNumberChange={(event) => {
             setLineHeight(event.target.value);
-            handleLineHeightChange(event.target.value);
+            handleLineHeightChange(event.target.value, layerIndex);
           }}
           value={lineHeight}
         ></CalciteInputNumber>
@@ -106,7 +131,7 @@ const TextSymbol3DLayerForm = ({
           label={"text input"}
           onCalciteInputTextChange={(event) => {
             setText(event.target.value);
-            handleTextChange(event.target.value);
+            handleTextChange(event.target.value, layerIndex);
           }}
           value={text}
         ></CalciteInputText>
@@ -119,7 +144,8 @@ const TextSymbol3DLayerForm = ({
           onCalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
-              event.target.value as VerticalAlignment
+              event.target.value as VerticalAlignment,
+              layerIndex
             );
           }}
           value={verticalAlignment}
