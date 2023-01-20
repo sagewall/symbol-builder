@@ -16,7 +16,6 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import React, { useState } from "react";
-import FontForm from "./FontForm";
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   FontDecoration,
@@ -26,42 +25,43 @@ import {
   VerticalAlignment,
 } from "./lib/types";
 import TextSymbol3DLayerBackgroundForm from "./TextSymbol3DLayerBackgroundForm";
+import TextSymbol3DLayerFontForm from "./TextSymbol3DLayerFontForm";
 
 interface Props {
   layerIndex: number;
   handleTextSymbol3DLayerBackgroundColorChange: (
-    value: string,
-    layerIndex: number
+    layerIndex: number,
+    value: string
   ) => void;
   handleTextSymbol3DLayerFontDecorationChange: (
-    value: FontDecoration,
-    layerIndex: number | undefined
+    layerIndex: number,
+    value: FontDecoration
   ) => void;
   handleTextSymbol3DLayerFontFamilyChange: (
-    value: string,
-    layerIndex: number | undefined
+    layerIndex: number,
+    value: string
   ) => void;
   handleTextSymbol3DLayerFontSizeChange: (
-    value: string,
-    layerIndex: number | undefined
+    layerIndex: number,
+    value: string
   ) => void;
   handleTextSymbol3DLayerFontStyleChange: (
-    value: FontStyle | undefined,
-    layerIndex: number | undefined
+    layerIndex: number,
+    value: FontStyle | undefined
   ) => void;
   handleTextSymbol3DLayerFontWeightChange: (
-    value: FontWeight | undefined,
-    layerIndex: number | undefined
+    layerIndex: number,
+    value: FontWeight | undefined
   ) => void;
   handleHorizontalAlignmentChange: (
-    value: HorizontalAlignment,
-    layerIndex: number
+    layerIndex: number,
+    value: HorizontalAlignment
   ) => void;
-  handleLineHeightChange: (value: string, layerIndex: number) => void;
-  handleTextChange: (value: string, layerIndex: number) => void;
+  handleLineHeightChange: (layerIndex: number, value: string) => void;
+  handleTextChange: (layerIndex: number, value: string) => void;
   handleVerticalAlignmentChange: (
-    value: VerticalAlignment,
-    layerIndex: number
+    layerIndex: number,
+    value: VerticalAlignment
   ) => void;
 }
 
@@ -94,7 +94,8 @@ const TextSymbol3DLayerForm = ({
       ></TextSymbol3DLayerBackgroundForm>
 
       <CalciteBlock style={blockStyles} collapsible heading={"font"}>
-        <FontForm
+        <TextSymbol3DLayerFontForm
+          layerIndex={layerIndex}
           handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
           handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
           handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
@@ -110,8 +111,8 @@ const TextSymbol3DLayerForm = ({
           onCalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
-              event.target.value as HorizontalAlignment,
-              layerIndex
+              layerIndex,
+              event.target.value as HorizontalAlignment
             );
           }}
           value={horizontalAlignment}
@@ -129,7 +130,7 @@ const TextSymbol3DLayerForm = ({
           min={0}
           onCalciteInputNumberChange={(event) => {
             setLineHeight(event.target.value);
-            handleLineHeightChange(event.target.value, layerIndex);
+            handleLineHeightChange(layerIndex, event.target.value);
           }}
           value={lineHeight}
         ></CalciteInputNumber>
@@ -141,7 +142,7 @@ const TextSymbol3DLayerForm = ({
           label={"text input"}
           onCalciteInputTextChange={(event) => {
             setText(event.target.value);
-            handleTextChange(event.target.value, layerIndex);
+            handleTextChange(layerIndex, event.target.value);
           }}
           value={text}
         ></CalciteInputText>
@@ -154,8 +155,8 @@ const TextSymbol3DLayerForm = ({
           onCalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
-              event.target.value as VerticalAlignment,
-              layerIndex
+              layerIndex,
+              event.target.value as VerticalAlignment
             );
           }}
           value={verticalAlignment}

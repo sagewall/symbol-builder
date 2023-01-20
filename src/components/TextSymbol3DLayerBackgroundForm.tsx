@@ -11,18 +11,18 @@ import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
-  handleColorChange: (value: string, layerIndex: number) => void;
+  handleColorChange: (layerIndex: number, value: string) => void;
 }
 
 const TextSymbol3DLayerBackgroundForm = ({
   layerIndex,
   handleColorChange,
 }: Props) => {
-  const [color, setColor] = useState("#ff0000");
+  const [color, setColor] = useState("#000000");
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <CalciteBlock style={blockStyles} collapsible heading={"background"}>
         <CalciteBlock style={blockStyles} collapsible heading={"color"}>
           <CalciteLabel layout="default" style={labelStyles}>
             color
@@ -31,7 +31,7 @@ const TextSymbol3DLayerBackgroundForm = ({
                 if (event.target.value) {
                   setColor(event.target.value.toString());
                 }
-                handleColorChange(event.target.value as string, layerIndex);
+                handleColorChange(layerIndex, event.target.value as string);
               }}
               value={color}
             ></CalciteColorPicker>

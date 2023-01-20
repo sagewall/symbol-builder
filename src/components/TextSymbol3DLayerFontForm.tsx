@@ -15,14 +15,16 @@ import { labelStyles } from "./lib/styles";
 import { FontDecoration, FontStyle, FontWeight } from "./lib/types";
 
 interface Props {
-  handleDecorationChange: (value: FontDecoration) => void;
-  handleFamilyChange: (value: string) => void;
-  handleSizeChange: (value: string) => void;
-  handleStyleChange: (value: FontStyle) => void;
-  handleWeightChange: (value: FontWeight) => void;
+  layerIndex: number;
+  handleDecorationChange: (layerIndex: number, value: FontDecoration) => void;
+  handleFamilyChange: (layerIndex: number, value: string) => void;
+  handleSizeChange: (layerIndex: number, value: string) => void;
+  handleStyleChange: (layerIndex: number, value: FontStyle) => void;
+  handleWeightChange: (layerIndex: number, value: FontWeight) => void;
 }
 
 const FontForm = ({
+  layerIndex,
   handleDecorationChange,
   handleFamilyChange,
   handleSizeChange,
@@ -47,7 +49,10 @@ const FontForm = ({
           label={"font decoration selection"}
           onCalciteSelectChange={(event) => {
             setDecoration(event.target.value);
-            handleDecorationChange(event.target.value as FontDecoration);
+            handleDecorationChange(
+              layerIndex,
+              event.target.value as FontDecoration
+            );
           }}
           value={decoration}
         >
@@ -63,7 +68,7 @@ const FontForm = ({
           label={"font family input"}
           onCalciteInputTextChange={(event) => {
             setFamily(event.target.value);
-            handleFamilyChange(event.target.value);
+            handleFamilyChange(layerIndex, event.target.value);
           }}
           value={family}
         ></CalciteInputText>
@@ -76,7 +81,7 @@ const FontForm = ({
           min={0}
           onCalciteInputNumberChange={(event) => {
             setSize(event.target.value);
-            handleSizeChange(event.target.value);
+            handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
         ></CalciteInputNumber>
@@ -88,7 +93,7 @@ const FontForm = ({
           label={"font style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as FontStyle);
+            handleStyleChange(layerIndex, event.target.value as FontStyle);
           }}
           value={style}
         >
@@ -104,7 +109,7 @@ const FontForm = ({
           label={"font weight selection"}
           onCalciteSelectChange={(event) => {
             setWeight(event.target.value);
-            handleWeightChange(event.target.value as FontWeight);
+            handleWeightChange(layerIndex, event.target.value as FontWeight);
           }}
           value={weight}
         >

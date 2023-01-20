@@ -4,10 +4,15 @@ import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
 import { blockStyles } from "./lib/styles";
 import {
+  FontDecoration,
+  FontStyle,
+  FontWeight,
+  HorizontalAlignment,
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
+  VerticalAlignment,
 } from "./lib/types";
 import LineCallout3DForm from "./LineCallout3DForm";
 import Symbol3DLayerCollectionForm from "./Symbol3DLayerCollectionForm";
@@ -104,6 +109,46 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleTextSymbol3DLayerBackgroundColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerFontDecorationChange: (
+    layerIndex: number,
+    value: FontDecoration
+  ) => void;
+  handleTextSymbol3DLayerFontFamilyChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerFontSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerFontStyleChange: (
+    layerIndex: number,
+    value: FontStyle | undefined
+  ) => void;
+  handleTextSymbol3DLayerFontWeightChange: (
+    layerIndex: number,
+    value: FontWeight | undefined
+  ) => void;
+  handleTextSymbol3DLayerHorizontalAlignmentChange: (
+    layerIndex: number,
+    value: HorizontalAlignment
+  ) => void;
+  handleTextSymbol3DLayerLineHeightChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerTextChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerVerticalAlignmentChange: (
+    layerIndex: number,
+    value: VerticalAlignment
+  ) => void;
   handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
   handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
   handleVerticalOffsetScreenLengthChange: (value: string) => void;
@@ -138,6 +183,16 @@ const PointSymbol3DForm = ({
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
+  handleTextSymbol3DLayerBackgroundColorChange,
+  handleTextSymbol3DLayerFontDecorationChange,
+  handleTextSymbol3DLayerFontFamilyChange,
+  handleTextSymbol3DLayerFontSizeChange,
+  handleTextSymbol3DLayerFontStyleChange,
+  handleTextSymbol3DLayerFontWeightChange,
+  handleTextSymbol3DLayerHorizontalAlignmentChange,
+  handleTextSymbol3DLayerLineHeightChange,
+  handleTextSymbol3DLayerTextChange,
+  handleTextSymbol3DLayerVerticalAlignmentChange,
   updateSymbolLayers,
 }: Props) => {
   return (
@@ -212,6 +267,34 @@ const PointSymbol3DForm = ({
         }
         handleObjectSymbol3DLayerWidthChange={
           handleObjectSymbol3DLayerWidthChange
+        }
+        handleTextSymbol3DLayerBackgroundColorChange={
+          handleTextSymbol3DLayerBackgroundColorChange
+        }
+        handleTextSymbol3DLayerFontDecorationChange={
+          handleTextSymbol3DLayerFontDecorationChange
+        }
+        handleTextSymbol3DLayerFontFamilyChange={
+          handleTextSymbol3DLayerFontFamilyChange
+        }
+        handleTextSymbol3DLayerFontSizeChange={
+          handleTextSymbol3DLayerFontSizeChange
+        }
+        handleTextSymbol3DLayerFontStyleChange={
+          handleTextSymbol3DLayerFontStyleChange
+        }
+        handleTextSymbol3DLayerFontWeightChange={
+          handleTextSymbol3DLayerFontWeightChange
+        }
+        handleTextSymbol3DLayerHorizontalAlignmentChange={
+          handleTextSymbol3DLayerHorizontalAlignmentChange
+        }
+        handleTextSymbol3DLayerLineHeightChange={
+          handleTextSymbol3DLayerLineHeightChange
+        }
+        handleTextSymbol3DLayerTextChange={handleTextSymbol3DLayerTextChange}
+        handleTextSymbol3DLayerVerticalAlignmentChange={
+          handleTextSymbol3DLayerVerticalAlignmentChange
         }
         updateSymbolLayers={updateSymbolLayers}
       ></Symbol3DLayerCollectionForm>

@@ -31,10 +31,15 @@ import {
   viewSwitchLabelStyles,
 } from "../components/lib/styles";
 import {
+  FontDecoration,
+  FontStyle,
+  FontWeight,
+  HorizontalAlignment,
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
+  VerticalAlignment,
 } from "../components/lib/types";
 import PointSymbol3DForm from "../components/PointSymbol3DForm";
 
@@ -349,6 +354,133 @@ const PointSymbol3DPage = () => {
     updateGraphics(newPointSymbol3D);
   };
 
+  const handleTextSymbol3DLayerBackgroundColorChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.background.color = new Color(value);
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerBackgroundColorChange;
+  };
+
+  const handleTextSymbol3DLayerFontDecorationChange = (
+    index: number,
+    value: FontDecoration
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.font.decoration = value;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerFontDecorationChange;
+  };
+
+  const handleTextSymbol3DLayerFontFamilyChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.font.family = value;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerFontFamilyChange;
+  };
+
+  const handleTextSymbol3DLayerFontSizeChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.font.size = Number(value);
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerFontSizeChange;
+  };
+
+  const handleTextSymbol3DLayerFontStyleChange = (
+    index: number,
+    value: FontStyle | undefined
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.font.style = value as FontStyle;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerFontStyleChange;
+  };
+
+  const handleTextSymbol3DLayerFontWeightChange = (
+    index: number,
+    value: FontWeight | undefined
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.font.weight = value as FontWeight;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerFontWeightChange;
+  };
+
+  const handleTextSymbol3DLayerHorizontalAlignmentChange = (
+    index: number,
+    value: HorizontalAlignment
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.horizontalAlignment = value;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerHorizontalAlignmentChange;
+  };
+
+  const handleTextSymbol3DLayerLineHeightChange = (
+    index: number,
+    value: string
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.lineHeight = Number(value);
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerLineHeightChange;
+  };
+
+  const handleTextSymbol3DLayerTextChange = (index: number, value: string) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.text = value;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerTextChange;
+  };
+
+  const handleTextSymbol3DLayerVerticalAlignmentChange = (
+    index: number,
+    value: VerticalAlignment
+  ) => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    const symbolLayer = newPointSymbol3D.symbolLayers.at(
+      index
+    ) as TextSymbol3DLayer;
+    symbolLayer.verticalAlignment = value;
+    updateGraphics(newPointSymbol3D);
+    handleTextSymbol3DLayerVerticalAlignmentChange;
+  };
+
   const handleVerticalOffsetMaxWorldLengthChange = (
     currentMaxWorldLength: string
   ) => {
@@ -505,6 +637,36 @@ const PointSymbol3DPage = () => {
                 }
                 handleObjectSymbol3DLayerWidthChange={
                   handleObjectSymbol3DLayerWidthChange
+                }
+                handleTextSymbol3DLayerBackgroundColorChange={
+                  handleTextSymbol3DLayerBackgroundColorChange
+                }
+                handleTextSymbol3DLayerFontDecorationChange={
+                  handleTextSymbol3DLayerFontDecorationChange
+                }
+                handleTextSymbol3DLayerFontFamilyChange={
+                  handleTextSymbol3DLayerFontFamilyChange
+                }
+                handleTextSymbol3DLayerFontSizeChange={
+                  handleTextSymbol3DLayerFontSizeChange
+                }
+                handleTextSymbol3DLayerFontStyleChange={
+                  handleTextSymbol3DLayerFontStyleChange
+                }
+                handleTextSymbol3DLayerFontWeightChange={
+                  handleTextSymbol3DLayerFontWeightChange
+                }
+                handleTextSymbol3DLayerHorizontalAlignmentChange={
+                  handleTextSymbol3DLayerHorizontalAlignmentChange
+                }
+                handleTextSymbol3DLayerLineHeightChange={
+                  handleTextSymbol3DLayerLineHeightChange
+                }
+                handleTextSymbol3DLayerTextChange={
+                  handleTextSymbol3DLayerTextChange
+                }
+                handleTextSymbol3DLayerVerticalAlignmentChange={
+                  handleTextSymbol3DLayerVerticalAlignmentChange
                 }
                 updateSymbolLayers={updateSymbolLayers}
               ></PointSymbol3DForm>
