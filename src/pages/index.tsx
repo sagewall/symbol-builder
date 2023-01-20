@@ -7,7 +7,6 @@ const IndexPage = () => {
       <main>
         <ul>
           <li>
-            <a href="picture-fill-symbol"></a>
             <Link to="/picture-fill-symbol/">PictureFillSymbol</Link>
           </li>
           <li>
