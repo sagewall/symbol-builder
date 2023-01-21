@@ -25,171 +25,9 @@ import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 
 interface PageProps {
-  handleIconSymbol3DLayerAnchorChange: (
-    layerIndex: number,
-    value: IconSymbol3DLayerAnchorOption
-  ) => void;
-  handleIconSymbol3DLayerAnchorPositionXChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerAnchorPositionYChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerMaterialColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerOutlineColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerOutlineSizeChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerResourceHrefChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerResourcePrimitiveChange: (
-    layerIndex: number,
-    value: IconSymbol3DLayerResourcePrimitiveOption
-  ) => void;
-  handleIconSymbol3DLayerSizeChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerAnchorChange: (
-    layerIndex: number,
-    value: ObjectSymbol3DLayerAnchorOption
-  ) => void;
-  handleObjectSymbol3DLayerAnchorPositionXChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerAnchorPositionYChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerAnchorPositionZChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerCastShadowsChange: (
-    layerIndex: number,
-    value: boolean
-  ) => void;
-  handleObjectSymbol3DLayerDepthChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerHeadingChange: (
-    layerIndex: number,
-    value: number
-  ) => void;
-  handleObjectSymbol3DLayerMaterialColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerResourceHrefChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerResourcePrimitiveChange: (
-    layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitiveOption
-  ) => void;
-  handleObjectSymbol3DLayerRollChange: (
-    layerIndex: number,
-    value: number
-  ) => void;
-  handleObjectSymbol3DLayerTiltChange: (
-    layerIndex: number,
-    value: number
-  ) => void;
-  handleObjectSymbol3DLayerWidthChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleTextSymbol3DLayerBackgroundColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleTextSymbol3DLayerFontDecorationChange: (
-    layerIndex: number,
-    value: FontDecoration
-  ) => void;
-  handleTextSymbol3DLayerFontFamilyChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleTextSymbol3DLayerFontSizeChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleTextSymbol3DLayerFontStyleChange: (
-    layerIndex: number,
-    value: FontStyle | undefined
-  ) => void;
-  handleTextSymbol3DLayerFontWeightChange: (
-    layerIndex: number,
-    value: FontWeight | undefined
-  ) => void;
-  handleTextSymbol3DLayerHorizontalAlignmentChange: (
-    layerIndex: number,
-    value: HorizontalAlignment
-  ) => void;
-  handleTextSymbol3DLayerLineHeightChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleTextSymbol3DLayerTextChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleTextSymbol3DLayerVerticalAlignmentChange: (
-    layerIndex: number,
-    value: VerticalAlignment
-  ) => void;
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
-const Symbol3DLayerCollectionForm = ({
-  handleIconSymbol3DLayerAnchorChange,
-  handleIconSymbol3DLayerAnchorPositionXChange,
-  handleIconSymbol3DLayerAnchorPositionYChange,
-  handleIconSymbol3DLayerMaterialColorChange,
-  handleIconSymbol3DLayerOutlineColorChange,
-  handleIconSymbol3DLayerOutlineSizeChange,
-  handleIconSymbol3DLayerResourceHrefChange,
-  handleIconSymbol3DLayerResourcePrimitiveChange,
-  handleIconSymbol3DLayerSizeChange,
-  handleObjectSymbol3DLayerAnchorChange,
-  handleObjectSymbol3DLayerAnchorPositionXChange,
-  handleObjectSymbol3DLayerAnchorPositionYChange,
-  handleObjectSymbol3DLayerAnchorPositionZChange,
-  handleObjectSymbol3DLayerCastShadowsChange,
-  handleObjectSymbol3DLayerDepthChange,
-  handleObjectSymbol3DLayerHeadingChange,
-  handleObjectSymbol3DLayerMaterialColorChange,
-  handleObjectSymbol3DLayerResourceHrefChange,
-  handleObjectSymbol3DLayerResourcePrimitiveChange,
-  handleObjectSymbol3DLayerRollChange,
-  handleObjectSymbol3DLayerTiltChange,
-  handleObjectSymbol3DLayerWidthChange,
-  handleTextSymbol3DLayerBackgroundColorChange,
-  handleTextSymbol3DLayerFontDecorationChange,
-  handleTextSymbol3DLayerFontFamilyChange,
-  handleTextSymbol3DLayerFontSizeChange,
-  handleTextSymbol3DLayerFontStyleChange,
-  handleTextSymbol3DLayerFontWeightChange,
-  handleTextSymbol3DLayerHorizontalAlignmentChange,
-  handleTextSymbol3DLayerLineHeightChange,
-  handleTextSymbol3DLayerTextChange,
-  handleTextSymbol3DLayerVerticalAlignmentChange,
-  updateSymbolLayers,
-}: PageProps) => {
+const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
     const newIconSymbol3DLayer = new IconSymbol3DLayer();
     newIconSymbol3DLayer.anchor = "center";
@@ -256,7 +94,7 @@ const Symbol3DLayerCollectionForm = ({
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerAnchorChange = (
+  const handleIconSymbol3DLayerAnchorChange = (
     layerIndex: number,
     value: IconSymbol3DLayerAnchorOption
   ) => {
@@ -265,10 +103,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerAnchorChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerAnchorPositionXChange = (
+  const handleIconSymbol3DLayerAnchorPositionXChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -277,10 +115,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchorPosition.x = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerAnchorPositionXChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerAnchorPositionYChange = (
+  const handleIconSymbol3DLayerAnchorPositionYChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -289,10 +127,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchorPosition.y = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerAnchorPositionYChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerMaterialColorChange = (
+  const handleIconSymbol3DLayerMaterialColorChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -301,10 +139,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.material.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerMaterialColorChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerOutlineColorChange = (
+  const handleIconSymbol3DLayerOutlineColorChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -313,10 +151,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.outline.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerOutlineColorChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerOutlineSizeChange = (
+  const handleIconSymbol3DLayerOutlineSizeChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -325,10 +163,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.outline.size = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerOutlineSizeChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerResourceHrefChange = (
+  const handleIconSymbol3DLayerResourceHrefChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -337,10 +175,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.resource.href = value;
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerResourceHrefChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerResourcePrimitiveChange = (
+  const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
     value: IconSymbol3DLayerResourcePrimitiveOption
   ) => {
@@ -349,10 +187,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.resource.primitive = value;
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerResourcePrimitiveChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersIconSymbol3DLayerSizeChange = (
+  const handleIconSymbol3DLayerSizeChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -361,10 +199,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.size = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleIconSymbol3DLayerSizeChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerAnchorChange = (
+  const handleObjectSymbol3DLayerAnchorChange = (
     layerIndex: number,
     value: ObjectSymbol3DLayerAnchorOption
   ) => {
@@ -373,10 +211,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerAnchorChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerAnchorPositionXChange = (
+  const handleObjectSymbol3DLayerAnchorPositionXChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -385,10 +223,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchorPosition.x = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerAnchorPositionXChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerAnchorPositionYChange = (
+  const handleObjectSymbol3DLayerAnchorPositionYChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -397,10 +235,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchorPosition.y = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerAnchorPositionYChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerAnchorPositionZChange = (
+  const handleObjectSymbol3DLayerAnchorPositionZChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -409,10 +247,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.anchorPosition.z = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerAnchorPositionZChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerCastShadowsChange = (
+  const handleObjectSymbol3DLayerCastShadowsChange = (
     layerIndex: number,
     value: boolean
   ) => {
@@ -421,10 +259,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerCastShadowsChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerDepthChange = (
+  const handleObjectSymbol3DLayerDepthChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -433,10 +271,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.depth = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerDepthChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerHeadingChange = (
+  const handleObjectSymbol3DLayerHeadingChange = (
     layerIndex: number,
     value: number
   ) => {
@@ -445,10 +283,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.heading = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerHeadingChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerMaterialColorChange = (
+  const handleObjectSymbol3DLayerMaterialColorChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -457,10 +295,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.material.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerMaterialColorChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerResourceHrefChange = (
+  const handleObjectSymbol3DLayerResourceHrefChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -469,10 +307,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.resource.href = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerResourceHrefChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerResourcePrimitiveChange = (
+  const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
     value: ObjectSymbol3DLayerResourcePrimitiveOption
   ) => {
@@ -481,10 +319,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.resource.primitive = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerResourcePrimitiveChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerRollChange = (
+  const handleObjectSymbol3DLayerRollChange = (
     layerIndex: number,
     value: number
   ) => {
@@ -493,10 +331,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.roll = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerRollChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerTiltChange = (
+  const handleObjectSymbol3DLayerTiltChange = (
     layerIndex: number,
     value: number
   ) => {
@@ -505,10 +343,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.tilt = value;
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerTiltChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersObjectSymbol3DLayerWidthChange = (
+  const handleObjectSymbol3DLayerWidthChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -517,10 +355,10 @@ const Symbol3DLayerCollectionForm = ({
       newSymbolLayers.getItemAt(layerIndex);
     symbolLayer.width = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleObjectSymbol3DLayerWidthChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerBackgroundColorChange = (
+  const handleTextSymbol3DLayerBackgroundColorChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -530,10 +368,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.background.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerBackgroundColorChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerFontDecorationChange = (
+  const handleTextSymbol3DLayerFontDecorationChange = (
     layerIndex: number,
     value: FontDecoration
   ) => {
@@ -543,10 +381,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.font.decoration = value;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerFontDecorationChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerFontFamilyChange = (
+  const handleTextSymbol3DLayerFontFamilyChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -556,10 +394,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.font.family = value;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerFontFamilyChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerFontSizeChange = (
+  const handleTextSymbol3DLayerFontSizeChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -569,10 +407,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.font.size = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerFontSizeChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerFontStyleChange = (
+  const handleTextSymbol3DLayerFontStyleChange = (
     layerIndex: number,
     value: FontStyle | undefined
   ) => {
@@ -582,10 +420,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.font.style = value as FontStyle;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerFontStyleChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerFontWeightChange = (
+  const handleTextSymbol3DLayerFontWeightChange = (
     layerIndex: number,
     value: FontWeight | undefined
   ) => {
@@ -595,10 +433,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.font.weight = value as FontWeight;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerFontWeightChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerHorizontalAlignmentChange = (
+  const handleTextSymbol3DLayerHorizontalAlignmentChange = (
     layerIndex: number,
     value: HorizontalAlignment
   ) => {
@@ -608,10 +446,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.horizontalAlignment = value;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerHorizontalAlignmentChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerLineHeightChange = (
+  const handleTextSymbol3DLayerLineHeightChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -621,10 +459,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.lineHeight = Number(value);
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerLineHeightChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerTextChange = (
+  const handleTextSymbol3DLayerTextChange = (
     layerIndex: number,
     value: string
   ) => {
@@ -634,10 +472,10 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.text = value;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerTextChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleSymbolLayersTextSymbol3DLayerVerticalAlignmentChange = (
+  const handleTextSymbol3DLayerVerticalAlignmentChange = (
     layerIndex: number,
     value: VerticalAlignment
   ) => {
@@ -647,7 +485,7 @@ const Symbol3DLayerCollectionForm = ({
     ) as TextSymbol3DLayer;
     symbolLayer.verticalAlignment = value;
     setSymbolLayers(newSymbolLayers);
-    handleTextSymbol3DLayerVerticalAlignmentChange(layerIndex, value);
+    updateSymbolLayers(newSymbolLayers);
   };
 
   const createSymbol3DLayerCollectionForm = () => {
@@ -679,32 +517,30 @@ const Symbol3DLayerCollectionForm = ({
                 <IconSymbol3DLayerForm
                   layerIndex={index}
                   handleIconSymbol3DLayerAnchorChange={
-                    handleSymbolLayersIconSymbol3DLayerAnchorChange
+                    handleIconSymbol3DLayerAnchorChange
                   }
                   handleIconSymbol3DLayerAnchorPositionXChange={
-                    handleSymbolLayersIconSymbol3DLayerAnchorPositionXChange
+                    handleIconSymbol3DLayerAnchorPositionXChange
                   }
                   handleIconSymbol3DLayerAnchorPositionYChange={
-                    handleSymbolLayersIconSymbol3DLayerAnchorPositionYChange
+                    handleIconSymbol3DLayerAnchorPositionYChange
                   }
                   handleIconSymbol3DLayerMaterialColorChange={
-                    handleSymbolLayersIconSymbol3DLayerMaterialColorChange
+                    handleIconSymbol3DLayerMaterialColorChange
                   }
                   handleIconSymbol3DLayerOutlineColorChange={
-                    handleSymbolLayersIconSymbol3DLayerOutlineColorChange
+                    handleIconSymbol3DLayerOutlineColorChange
                   }
                   handleIconSymbol3DLayerOutlineSizeChange={
-                    handleSymbolLayersIconSymbol3DLayerOutlineSizeChange
+                    handleIconSymbol3DLayerOutlineSizeChange
                   }
                   handleIconSymbol3DLayerResourceHrefChange={
-                    handleSymbolLayersIconSymbol3DLayerResourceHrefChange
+                    handleIconSymbol3DLayerResourceHrefChange
                   }
                   handleIconSymbol3DLayerResourcePrimitiveChange={
-                    handleSymbolLayersIconSymbol3DLayerResourcePrimitiveChange
+                    handleIconSymbol3DLayerResourcePrimitiveChange
                   }
-                  handleSizeChange={
-                    handleSymbolLayersIconSymbol3DLayerSizeChange
-                  }
+                  handleSizeChange={handleIconSymbol3DLayerSizeChange}
                 />
               </CalciteBlock>
             );
@@ -726,45 +562,33 @@ const Symbol3DLayerCollectionForm = ({
                 />
                 <ObjectSymbol3DLayerForm
                   layerIndex={index}
-                  handleAnchorChange={
-                    handleSymbolLayersObjectSymbol3DLayerAnchorChange
-                  }
+                  handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
                   handleObjectSymbol3DLayerAnchorPositionXChange={
-                    handleSymbolLayersObjectSymbol3DLayerAnchorPositionXChange
+                    handleObjectSymbol3DLayerAnchorPositionXChange
                   }
                   handleObjectSymbol3DLayerAnchorPositionYChange={
-                    handleSymbolLayersObjectSymbol3DLayerAnchorPositionYChange
+                    handleObjectSymbol3DLayerAnchorPositionYChange
                   }
                   handleObjectSymbol3DLayerAnchorPositionZChange={
-                    handleSymbolLayersObjectSymbol3DLayerAnchorPositionZChange
+                    handleObjectSymbol3DLayerAnchorPositionZChange
                   }
                   handleCastShadowsChange={
-                    handleSymbolLayersObjectSymbol3DLayerCastShadowsChange
+                    handleObjectSymbol3DLayerCastShadowsChange
                   }
-                  handleDepthChange={
-                    handleSymbolLayersObjectSymbol3DLayerDepthChange
-                  }
-                  handleHeadingChange={
-                    handleSymbolLayersObjectSymbol3DLayerHeadingChange
-                  }
+                  handleDepthChange={handleObjectSymbol3DLayerDepthChange}
+                  handleHeadingChange={handleObjectSymbol3DLayerHeadingChange}
                   handleObjectSymbol3DLayerMaterialColorChange={
-                    handleSymbolLayersObjectSymbol3DLayerMaterialColorChange
+                    handleObjectSymbol3DLayerMaterialColorChange
                   }
                   handleObjectSymbol3DLayerResourceHrefChange={
-                    handleSymbolLayersObjectSymbol3DLayerResourceHrefChange
+                    handleObjectSymbol3DLayerResourceHrefChange
                   }
                   handleObjectSymbol3DLayerResourcePrimitiveChange={
-                    handleSymbolLayersObjectSymbol3DLayerResourcePrimitiveChange
+                    handleObjectSymbol3DLayerResourcePrimitiveChange
                   }
-                  handleRollChange={
-                    handleSymbolLayersObjectSymbol3DLayerRollChange
-                  }
-                  handleTiltChange={
-                    handleSymbolLayersObjectSymbol3DLayerTiltChange
-                  }
-                  handleWidthChange={
-                    handleSymbolLayersObjectSymbol3DLayerWidthChange
-                  }
+                  handleRollChange={handleObjectSymbol3DLayerRollChange}
+                  handleTiltChange={handleObjectSymbol3DLayerTiltChange}
+                  handleWidthChange={handleObjectSymbol3DLayerWidthChange}
                 ></ObjectSymbol3DLayerForm>
               </CalciteBlock>
             );
@@ -786,34 +610,32 @@ const Symbol3DLayerCollectionForm = ({
                 <TextSymbol3DLayerForm
                   layerIndex={index}
                   handleTextSymbol3DLayerBackgroundColorChange={
-                    handleSymbolLayersTextSymbol3DLayerBackgroundColorChange
+                    handleTextSymbol3DLayerBackgroundColorChange
                   }
                   handleTextSymbol3DLayerFontDecorationChange={
-                    handleSymbolLayersTextSymbol3DLayerFontDecorationChange
+                    handleTextSymbol3DLayerFontDecorationChange
                   }
                   handleTextSymbol3DLayerFontFamilyChange={
-                    handleSymbolLayersTextSymbol3DLayerFontFamilyChange
+                    handleTextSymbol3DLayerFontFamilyChange
                   }
                   handleTextSymbol3DLayerFontSizeChange={
-                    handleSymbolLayersTextSymbol3DLayerFontSizeChange
+                    handleTextSymbol3DLayerFontSizeChange
                   }
                   handleTextSymbol3DLayerFontStyleChange={
-                    handleSymbolLayersTextSymbol3DLayerFontStyleChange
+                    handleTextSymbol3DLayerFontStyleChange
                   }
                   handleTextSymbol3DLayerFontWeightChange={
-                    handleSymbolLayersTextSymbol3DLayerFontWeightChange
+                    handleTextSymbol3DLayerFontWeightChange
                   }
                   handleHorizontalAlignmentChange={
-                    handleSymbolLayersTextSymbol3DLayerHorizontalAlignmentChange
+                    handleTextSymbol3DLayerHorizontalAlignmentChange
                   }
                   handleLineHeightChange={
-                    handleSymbolLayersTextSymbol3DLayerLineHeightChange
+                    handleTextSymbol3DLayerLineHeightChange
                   }
-                  handleTextChange={
-                    handleSymbolLayersTextSymbol3DLayerTextChange
-                  }
+                  handleTextChange={handleTextSymbol3DLayerTextChange}
                   handleVerticalAlignmentChange={
-                    handleSymbolLayersTextSymbol3DLayerVerticalAlignmentChange
+                    handleTextSymbol3DLayerVerticalAlignmentChange
                   }
                 ></TextSymbol3DLayerForm>
               </CalciteBlock>
