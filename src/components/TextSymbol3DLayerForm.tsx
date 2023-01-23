@@ -5,15 +5,11 @@ import {
   CalciteOption,
   CalciteSelect,
 } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-block";
-import "@esri/calcite-components/dist/components/calcite-color-picker";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
-import "@esri/calcite-components/dist/components/calcite-slider";
-import "@esri/calcite-components/dist/components/calcite-switch";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 import {

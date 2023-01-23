@@ -6,6 +6,7 @@ import {
   CalciteOption,
   CalciteSelect,
 } from "@esri/calcite-components-react";
+import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
