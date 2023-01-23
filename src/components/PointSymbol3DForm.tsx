@@ -4,7 +4,7 @@ import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
 import { blockStyles } from "./lib/styles";
 import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";
-import PointSymbol3DLayerCollectionForm from "./PointSymbol3DLayerCollectionForm";
+import PointSymbol3DSymbolLayersForm from "./PointSymbol3DSymbolLayersForm";
 import PointSymbol3DVerticalOffsetForm from "./PointSymbol3DVerticalOffsetForm";
 
 interface Props {
@@ -32,9 +32,9 @@ const PointSymbol3DForm = ({
           handleSizeChange={handleCalloutSizeChange}
         ></PointSymbol3DCalloutForm>
       </CalciteBlock>
-      <PointSymbol3DLayerCollectionForm
+      <PointSymbol3DSymbolLayersForm
         updateSymbolLayers={updateSymbolLayers}
-      ></PointSymbol3DLayerCollectionForm>
+      ></PointSymbol3DSymbolLayersForm>
       <CalciteBlock style={blockStyles} collapsible heading={"verticalOffset"}>
         <PointSymbol3DVerticalOffsetForm
           handleMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}

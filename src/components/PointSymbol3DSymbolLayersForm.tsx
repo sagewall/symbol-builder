@@ -27,9 +27,7 @@ import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
-const PointSymbol3DLayerCollectionForm = ({
-  updateSymbolLayers,
-}: PageProps) => {
+const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
     const newIconSymbol3DLayer = new IconSymbol3DLayer();
     newIconSymbol3DLayer.anchor = "center";
@@ -770,4 +768,4 @@ const PointSymbol3DLayerCollectionForm = ({
   );
 };
 
-export default PointSymbol3DLayerCollectionForm;
+export default PointSymbol3DSymbolLayersForm;
