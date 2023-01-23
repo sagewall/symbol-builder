@@ -1,4 +1,5 @@
 import {
+  CalciteBlock,
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
@@ -7,7 +8,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import {
   ObjectSymbol3DLayerAnchorOption,
   ObjectSymbol3DLayerResourcePrimitiveOption,
@@ -102,18 +103,24 @@ const ObjectSymbol3DLayerForm = ({
       </CalciteLabel>
 
       {anchor === "relative" && (
-        <ObjectSymbol3DLayerAnchorPositionForm
-          layerIndex={layerIndex}
-          handleObjectSymbol3DLayerAnchorPositionXChange={
-            handleObjectSymbol3DLayerAnchorPositionXChange
-          }
-          handleObjectSymbol3DLayerAnchorPositionYChange={
-            handleObjectSymbol3DLayerAnchorPositionYChange
-          }
-          handleObjectSymbol3DLayerAnchorPositionZChange={
-            handleObjectSymbol3DLayerAnchorPositionZChange
-          }
-        ></ObjectSymbol3DLayerAnchorPositionForm>
+        <CalciteBlock
+          style={blockStyles}
+          collapsible
+          heading={"anchorPosition"}
+        >
+          <ObjectSymbol3DLayerAnchorPositionForm
+            layerIndex={layerIndex}
+            handleObjectSymbol3DLayerAnchorPositionXChange={
+              handleObjectSymbol3DLayerAnchorPositionXChange
+            }
+            handleObjectSymbol3DLayerAnchorPositionYChange={
+              handleObjectSymbol3DLayerAnchorPositionYChange
+            }
+            handleObjectSymbol3DLayerAnchorPositionZChange={
+              handleObjectSymbol3DLayerAnchorPositionZChange
+            }
+          ></ObjectSymbol3DLayerAnchorPositionForm>
+        </CalciteBlock>
       )}
 
       <CalciteLabel layout="default" style={labelStyles}>
@@ -157,16 +164,22 @@ const ObjectSymbol3DLayerForm = ({
         ></CalciteSlider>
       </CalciteLabel>
 
-      <ObjectSymbol3DLayerMaterialForm
-        layerIndex={layerIndex}
-        handleColorChange={handleObjectSymbol3DLayerMaterialColorChange}
-      ></ObjectSymbol3DLayerMaterialForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+        <ObjectSymbol3DLayerMaterialForm
+          layerIndex={layerIndex}
+          handleColorChange={handleObjectSymbol3DLayerMaterialColorChange}
+        ></ObjectSymbol3DLayerMaterialForm>
+      </CalciteBlock>
 
-      <ObjectSymbol3DLayerResourceForm
-        layerIndex={layerIndex}
-        handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
-        handlePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
-      ></ObjectSymbol3DLayerResourceForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"resource"}>
+        <ObjectSymbol3DLayerResourceForm
+          layerIndex={layerIndex}
+          handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
+          handlePrimitiveChange={
+            handleObjectSymbol3DLayerResourcePrimitiveChange
+          }
+        ></ObjectSymbol3DLayerResourceForm>
+      </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>
         roll

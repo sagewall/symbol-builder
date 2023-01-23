@@ -23,34 +23,32 @@ const TextSymbol3DLayerHaloForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"halo"}>
-        <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-          <CalciteLabel layout="default" style={labelStyles}>
-            color
-            <CalciteColorPicker
-              onCalciteColorPickerChange={(event) => {
-                if (event.target.value) {
-                  setColor(event.target.value.toString());
-                }
-                handleColorChange(layerIndex, event.target.value as string);
-              }}
-              value={color}
-            ></CalciteColorPicker>
-          </CalciteLabel>
-        </CalciteBlock>
+      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
         <CalciteLabel layout="default" style={labelStyles}>
-          size
-          <CalciteInputNumber
-            label={"size input"}
-            min={0}
-            onCalciteInputNumberChange={(event) => {
-              setSize(event.target.value);
-              handleSizeChange(layerIndex, event.target.value);
+          color
+          <CalciteColorPicker
+            onCalciteColorPickerChange={(event) => {
+              if (event.target.value) {
+                setColor(event.target.value.toString());
+              }
+              handleColorChange(layerIndex, event.target.value as string);
             }}
-            value={size}
-          ></CalciteInputNumber>
+            value={color}
+          ></CalciteColorPicker>
         </CalciteLabel>
       </CalciteBlock>
+      <CalciteLabel layout="default" style={labelStyles}>
+        size
+        <CalciteInputNumber
+          label={"size input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setSize(event.target.value);
+            handleSizeChange(layerIndex, event.target.value);
+          }}
+          value={size}
+        ></CalciteInputNumber>
+      </CalciteLabel>
     </React.Fragment>
   );
 };

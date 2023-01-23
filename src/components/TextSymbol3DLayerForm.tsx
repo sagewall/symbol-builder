@@ -1,4 +1,5 @@
 import {
+  CalciteBlock,
   CalciteInputNumber,
   CalciteInputText,
   CalciteLabel,
@@ -6,7 +7,7 @@ import {
   CalciteSelect,
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import {
   FontDecoration,
   FontStyle,
@@ -98,25 +99,31 @@ const TextSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <TextSymbol3DLayerBackgroundForm
-        layerIndex={layerIndex}
-        handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
-      ></TextSymbol3DLayerBackgroundForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"background"}>
+        <TextSymbol3DLayerBackgroundForm
+          layerIndex={layerIndex}
+          handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
+        ></TextSymbol3DLayerBackgroundForm>
+      </CalciteBlock>
 
-      <TextSymbol3DLayerFontForm
-        layerIndex={layerIndex}
-        handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
-        handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
-        handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
-        handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
-        handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
-      />
+      <CalciteBlock style={blockStyles} collapsible heading={"font"}>
+        <TextSymbol3DLayerFontForm
+          layerIndex={layerIndex}
+          handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
+          handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
+          handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
+          handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
+          handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
+        />
+      </CalciteBlock>
 
-      <TextSymbol3DLayerHaloForm
-        layerIndex={layerIndex}
-        handleColorChange={handleTextSymbol3DLayerHaloColorChange}
-        handleSizeChange={handleTextSymbol3DLayerHaloSizeChange}
-      ></TextSymbol3DLayerHaloForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"halo"}>
+        <TextSymbol3DLayerHaloForm
+          layerIndex={layerIndex}
+          handleColorChange={handleTextSymbol3DLayerHaloColorChange}
+          handleSizeChange={handleTextSymbol3DLayerHaloSizeChange}
+        ></TextSymbol3DLayerHaloForm>
+      </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>
         horizontalAlignment
@@ -150,10 +157,12 @@ const TextSymbol3DLayerForm = ({
         ></CalciteInputNumber>
       </CalciteLabel>
 
-      <TextSymbol3DLayerMaterialForm
-        layerIndex={layerIndex}
-        handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
-      ></TextSymbol3DLayerMaterialForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+        <TextSymbol3DLayerMaterialForm
+          layerIndex={layerIndex}
+          handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
+        ></TextSymbol3DLayerMaterialForm>
+      </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>
         size

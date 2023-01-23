@@ -1,4 +1,5 @@
 import {
+  CalciteBlock,
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
@@ -9,7 +10,7 @@ import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositi
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
-import { labelStyles } from "./lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import {
   IconSymbol3DLayerAnchorOption,
   IconSymbol3DLayerResourcePrimitiveOption,
@@ -102,33 +103,45 @@ const IconSymbol3DLayerForm = ({
       </CalciteLabel>
 
       {anchor === "relative" && (
-        <IconSymbol3DLayerAnchorPositionForm
-          layerIndex={layerIndex}
-          handleIconSymbol3DLayerAnchorPositionXChange={
-            handleIconSymbol3DLayerAnchorPositionXChange
-          }
-          handleIconSymbol3DLayerAnchorPositionYChange={
-            handleIconSymbol3DLayerAnchorPositionYChange
-          }
-        ></IconSymbol3DLayerAnchorPositionForm>
+        <CalciteBlock
+          style={blockStyles}
+          collapsible
+          heading={"anchorPosition"}
+        >
+          <IconSymbol3DLayerAnchorPositionForm
+            layerIndex={layerIndex}
+            handleIconSymbol3DLayerAnchorPositionXChange={
+              handleIconSymbol3DLayerAnchorPositionXChange
+            }
+            handleIconSymbol3DLayerAnchorPositionYChange={
+              handleIconSymbol3DLayerAnchorPositionYChange
+            }
+          ></IconSymbol3DLayerAnchorPositionForm>
+        </CalciteBlock>
       )}
 
-      <IconSymbol3DLayerMaterialForm
-        layerIndex={layerIndex}
-        handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
-      ></IconSymbol3DLayerMaterialForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+        <IconSymbol3DLayerMaterialForm
+          layerIndex={layerIndex}
+          handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
+        ></IconSymbol3DLayerMaterialForm>
+      </CalciteBlock>
 
-      <IconSymbol3DLayerOutlineForm
-        layerIndex={layerIndex}
-        handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
-        handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
-      ></IconSymbol3DLayerOutlineForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"outline"}>
+        <IconSymbol3DLayerOutlineForm
+          layerIndex={layerIndex}
+          handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
+          handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
+        ></IconSymbol3DLayerOutlineForm>
+      </CalciteBlock>
 
-      <IconSymbol3DLayerResourceForm
-        layerIndex={layerIndex}
-        handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
-        handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
-      ></IconSymbol3DLayerResourceForm>
+      <CalciteBlock style={blockStyles} collapsible heading={"resource"}>
+        <IconSymbol3DLayerResourceForm
+          layerIndex={layerIndex}
+          handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
+          handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
+        ></IconSymbol3DLayerResourceForm>
+      </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>
         size

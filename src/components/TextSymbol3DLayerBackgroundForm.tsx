@@ -19,21 +19,19 @@ const TextSymbol3DLayerBackgroundForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"background"}>
-        <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-          <CalciteLabel layout="default" style={labelStyles}>
-            color
-            <CalciteColorPicker
-              onCalciteColorPickerChange={(event) => {
-                if (event.target.value) {
-                  setColor(event.target.value.toString());
-                }
-                handleColorChange(layerIndex, event.target.value as string);
-              }}
-              value={color}
-            ></CalciteColorPicker>
-          </CalciteLabel>
-        </CalciteBlock>
+      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
+        <CalciteLabel layout="default" style={labelStyles}>
+          color
+          <CalciteColorPicker
+            onCalciteColorPickerChange={(event) => {
+              if (event.target.value) {
+                setColor(event.target.value.toString());
+              }
+              handleColorChange(layerIndex, event.target.value as string);
+            }}
+            value={color}
+          ></CalciteColorPicker>
+        </CalciteLabel>
       </CalciteBlock>
     </React.Fragment>
   );

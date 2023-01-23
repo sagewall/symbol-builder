@@ -1,12 +1,11 @@
 import {
-  CalciteBlock,
   CalciteInputText,
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
+import { labelStyles } from "./lib/styles";
 import { ObjectSymbol3DLayerResourcePrimitiveOption } from "./lib/types";
 
 interface Props {
@@ -38,37 +37,35 @@ const ObjectSymbol3DLayerResourceForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"resource"}>
-        <CalciteLabel layout="default" style={labelStyles}>
-          href
-          <CalciteInputText
-            label={"url input"}
-            onCalciteInputTextChange={(event) => {
-              setHref(event.target.value);
-              handleHrefChange(layerIndex, event.target.value);
-            }}
-            value={href}
-          ></CalciteInputText>
-        </CalciteLabel>
-        <CalciteLabel layout="default" style={labelStyles}>
-          primitive
-          <CalciteSelect
-            label={"primitive selection"}
-            onCalciteSelectChange={(event) => {
-              setPrimitive(event.target.value);
-              handlePrimitiveChange(
-                layerIndex,
-                event.target.value as ObjectSymbol3DLayerResourcePrimitiveOption
-              );
-            }}
-            value={primitive}
-          >
-            {primitiveOptions.map((option, index) => (
-              <CalciteOption key={index}>{option}</CalciteOption>
-            ))}
-          </CalciteSelect>
-        </CalciteLabel>
-      </CalciteBlock>
+      <CalciteLabel layout="default" style={labelStyles}>
+        href
+        <CalciteInputText
+          label={"url input"}
+          onCalciteInputTextChange={(event) => {
+            setHref(event.target.value);
+            handleHrefChange(layerIndex, event.target.value);
+          }}
+          value={href}
+        ></CalciteInputText>
+      </CalciteLabel>
+      <CalciteLabel layout="default" style={labelStyles}>
+        primitive
+        <CalciteSelect
+          label={"primitive selection"}
+          onCalciteSelectChange={(event) => {
+            setPrimitive(event.target.value);
+            handlePrimitiveChange(
+              layerIndex,
+              event.target.value as ObjectSymbol3DLayerResourcePrimitiveOption
+            );
+          }}
+          value={primitive}
+        >
+          {primitiveOptions.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
     </React.Fragment>
   );
 };
