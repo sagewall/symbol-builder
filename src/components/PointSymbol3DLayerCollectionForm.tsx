@@ -513,6 +513,19 @@ const PointSymbol3DLayerCollectionForm = ({
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleTextSymbol3DLayerMaterialColorChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as TextSymbol3DLayer;
+    symbolLayer.material.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleTextSymbol3DLayerTextChange = (
     layerIndex: number,
     value: string
@@ -689,6 +702,9 @@ const PointSymbol3DLayerCollectionForm = ({
                   }
                   handleLineHeightChange={
                     handleTextSymbol3DLayerLineHeightChange
+                  }
+                  handleTextSymbol3DLayerMaterialColorChange={
+                    handleTextSymbol3DLayerMaterialColorChange
                   }
                   handleTextChange={handleTextSymbol3DLayerTextChange}
                   handleVerticalAlignmentChange={
