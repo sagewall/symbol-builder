@@ -1,5 +1,4 @@
 import {
-  CalciteBlock,
   CalciteInputNumber,
   CalciteInputText,
   CalciteLabel,
@@ -16,7 +15,7 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
+import { labelStyles } from "./lib/styles";
 import {
   FontDecoration,
   FontStyle,
@@ -113,16 +112,14 @@ const TextSymbol3DLayerForm = ({
         handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
       ></TextSymbol3DLayerBackgroundForm>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"font"}>
-        <TextSymbol3DLayerFontForm
-          layerIndex={layerIndex}
-          handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
-          handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
-          handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
-          handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
-          handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
-        />
-      </CalciteBlock>
+      <TextSymbol3DLayerFontForm
+        layerIndex={layerIndex}
+        handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
+        handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
+        handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
+        handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
+        handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
+      />
 
       <TextSymbol3DLayerHaloForm
         layerIndex={layerIndex}

@@ -1,4 +1,5 @@
 import {
+  CalciteBlock,
   CalciteInputNumber,
   CalciteInputText,
   CalciteLabel,
@@ -11,7 +12,7 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import { FontDecoration, FontStyle, FontWeight } from "./lib/types";
 
 interface Props {
@@ -43,81 +44,83 @@ const FontForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
-        decoration
-        <CalciteSelect
-          label={"font decoration selection"}
-          onCalciteSelectChange={(event) => {
-            setDecoration(event.target.value);
-            handleDecorationChange(
-              layerIndex,
-              event.target.value as FontDecoration
-            );
-          }}
-          value={decoration}
-        >
-          {fontDecorationOptions.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
-      </CalciteLabel>
+      <CalciteBlock style={blockStyles} collapsible heading={"font"}>
+        <CalciteLabel layout="default" style={labelStyles}>
+          decoration
+          <CalciteSelect
+            label={"font decoration selection"}
+            onCalciteSelectChange={(event) => {
+              setDecoration(event.target.value);
+              handleDecorationChange(
+                layerIndex,
+                event.target.value as FontDecoration
+              );
+            }}
+            value={decoration}
+          >
+            {fontDecorationOptions.map((option, index) => (
+              <CalciteOption key={index}>{option}</CalciteOption>
+            ))}
+          </CalciteSelect>
+        </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        family
-        <CalciteInputText
-          label={"font family input"}
-          onCalciteInputTextChange={(event) => {
-            setFamily(event.target.value);
-            handleFamilyChange(layerIndex, event.target.value);
-          }}
-          value={family}
-        ></CalciteInputText>
-      </CalciteLabel>
+        <CalciteLabel layout="default" style={labelStyles}>
+          family
+          <CalciteInputText
+            label={"font family input"}
+            onCalciteInputTextChange={(event) => {
+              setFamily(event.target.value);
+              handleFamilyChange(layerIndex, event.target.value);
+            }}
+            value={family}
+          ></CalciteInputText>
+        </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        size
-        <CalciteInputNumber
-          label={"font size input"}
-          min={0}
-          onCalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
-            handleSizeChange(layerIndex, event.target.value);
-          }}
-          value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        <CalciteLabel layout="default" style={labelStyles}>
+          size
+          <CalciteInputNumber
+            label={"font size input"}
+            min={0}
+            onCalciteInputNumberChange={(event) => {
+              setSize(event.target.value);
+              handleSizeChange(layerIndex, event.target.value);
+            }}
+            value={size}
+          ></CalciteInputNumber>
+        </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        style
-        <CalciteSelect
-          label={"font style selection"}
-          onCalciteSelectChange={(event) => {
-            setStyle(event.target.value);
-            handleStyleChange(layerIndex, event.target.value as FontStyle);
-          }}
-          value={style}
-        >
-          {fontStyleOptions.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        <CalciteLabel layout="default" style={labelStyles}>
+          style
+          <CalciteSelect
+            label={"font style selection"}
+            onCalciteSelectChange={(event) => {
+              setStyle(event.target.value);
+              handleStyleChange(layerIndex, event.target.value as FontStyle);
+            }}
+            value={style}
+          >
+            {fontStyleOptions.map((option, index) => (
+              <CalciteOption key={index}>{option}</CalciteOption>
+            ))}
+          </CalciteSelect>
+        </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        weight
-        <CalciteSelect
-          label={"font weight selection"}
-          onCalciteSelectChange={(event) => {
-            setWeight(event.target.value);
-            handleWeightChange(layerIndex, event.target.value as FontWeight);
-          }}
-          value={weight}
-        >
-          {fontWeightOptions.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        <CalciteLabel layout="default" style={labelStyles}>
+          weight
+          <CalciteSelect
+            label={"font weight selection"}
+            onCalciteSelectChange={(event) => {
+              setWeight(event.target.value);
+              handleWeightChange(layerIndex, event.target.value as FontWeight);
+            }}
+            value={weight}
+          >
+            {fontWeightOptions.map((option, index) => (
+              <CalciteOption key={index}>{option}</CalciteOption>
+            ))}
+          </CalciteSelect>
+        </CalciteLabel>
+      </CalciteBlock>
     </React.Fragment>
   );
 };
