@@ -72,6 +72,7 @@ interface Props {
     layerIndex: number,
     value: string
   ) => void;
+  handleSizeChange: (layerIndex: number, value: string) => void;
   handleTextChange: (layerIndex: number, value: string) => void;
   handleVerticalAlignmentChange: (
     layerIndex: number,
@@ -91,6 +92,7 @@ const TextSymbol3DLayerForm = ({
   handleHorizontalAlignmentChange,
   handleLineHeightChange,
   handleTextSymbol3DLayerMaterialColorChange,
+  handleSizeChange,
   handleTextChange,
   handleVerticalAlignmentChange,
   layerIndex,
@@ -100,6 +102,7 @@ const TextSymbol3DLayerForm = ({
 
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [lineHeight, setLineHeight] = useState("1");
+  const [size, setSize] = useState("9");
   const [text, setText] = useState("Hello World!");
   const [verticalAlignment, setVerticalAlignment] = useState("baseline");
 
@@ -163,6 +166,19 @@ const TextSymbol3DLayerForm = ({
         layerIndex={layerIndex}
         handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
       ></TextSymbol3DLayerMaterialForm>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        size
+        <CalciteInputNumber
+          label={"size input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setSize(event.target.value);
+            handleSizeChange(layerIndex, event.target.value);
+          }}
+          value={size}
+        ></CalciteInputNumber>
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         text
