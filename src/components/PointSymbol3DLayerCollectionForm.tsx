@@ -27,7 +27,9 @@ import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
-const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
+const PointSymbol3DLayerCollectionForm = ({
+  updateSymbolLayers,
+}: PageProps) => {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
     const newIconSymbol3DLayer = new IconSymbol3DLayer();
     newIconSymbol3DLayer.anchor = "center";
@@ -100,8 +102,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: IconSymbol3DLayerAnchorOption
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -112,8 +115,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.x = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -124,8 +128,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.y = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -136,8 +141,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.material.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -148,8 +154,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.outline.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -160,8 +167,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.outline.size = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -172,8 +180,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.resource.href = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -184,8 +193,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: IconSymbol3DLayerResourcePrimitiveOption
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.resource.primitive = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -196,8 +206,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: IconSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as IconSymbol3DLayer;
     symbolLayer.size = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -208,8 +219,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: ObjectSymbol3DLayerAnchorOption
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -220,8 +232,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.anchorPosition.x = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -232,8 +245,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.anchorPosition.y = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -244,8 +258,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.anchorPosition.z = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -256,8 +271,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: boolean
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -268,8 +284,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.depth = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -280,8 +297,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: number
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.heading = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -292,8 +310,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.material.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -304,8 +323,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.resource.href = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -316,8 +336,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: ObjectSymbol3DLayerResourcePrimitiveOption
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.resource.primitive = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -328,8 +349,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: number
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.roll = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -340,8 +362,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: number
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.tilt = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -352,8 +375,9 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     value: string
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer: ObjectSymbol3DLayer =
-      newSymbolLayers.getItemAt(layerIndex);
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as ObjectSymbol3DLayer;
     symbolLayer.width = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -365,7 +389,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.background.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
@@ -378,7 +402,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.font.decoration = value;
     setSymbolLayers(newSymbolLayers);
@@ -391,7 +415,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.font.family = value;
     setSymbolLayers(newSymbolLayers);
@@ -404,7 +428,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.font.size = Number(value);
     setSymbolLayers(newSymbolLayers);
@@ -413,11 +437,11 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerFontStyleChange = (
     layerIndex: number,
-    value: FontStyle | undefined
+    value: FontStyle
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.font.style = value as FontStyle;
     setSymbolLayers(newSymbolLayers);
@@ -426,11 +450,11 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerFontWeightChange = (
     layerIndex: number,
-    value: FontWeight | undefined
+    value: FontWeight
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.font.weight = value as FontWeight;
     setSymbolLayers(newSymbolLayers);
@@ -469,7 +493,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.horizontalAlignment = value;
     setSymbolLayers(newSymbolLayers);
@@ -482,7 +506,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.lineHeight = Number(value);
     setSymbolLayers(newSymbolLayers);
@@ -495,7 +519,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.text = value;
     setSymbolLayers(newSymbolLayers);
@@ -508,7 +532,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex as number
+      layerIndex
     ) as TextSymbol3DLayer;
     symbolLayer.verticalAlignment = value;
     setSymbolLayers(newSymbolLayers);
@@ -715,4 +739,4 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
   );
 };
 
-export default Symbol3DLayerCollectionForm;
+export default PointSymbol3DLayerCollectionForm;

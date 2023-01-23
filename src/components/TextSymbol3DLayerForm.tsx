@@ -48,11 +48,11 @@ interface Props {
   ) => void;
   handleTextSymbol3DLayerFontStyleChange: (
     layerIndex: number,
-    value: FontStyle | undefined
+    value: FontStyle
   ) => void;
   handleTextSymbol3DLayerFontWeightChange: (
     layerIndex: number,
-    value: FontWeight | undefined
+    value: FontWeight
   ) => void;
   handleTextSymbol3DLayerHaloColorChange: (
     layerIndex: number,
