@@ -53,6 +53,7 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     const newTextSymbol3DLayer = new TextSymbol3DLayer();
     newTextSymbol3DLayer.background = { color: new Color("#aaaaaa") };
     newTextSymbol3DLayer.font = new Font();
+    newTextSymbol3DLayer.halo = { color: new Color("#000000"), size: 0 };
     newTextSymbol3DLayer.horizontalAlignment = "center";
     newTextSymbol3DLayer.lineHeight = 1;
     newTextSymbol3DLayer.material = { color: new Color("#ffffff") };
@@ -436,6 +437,32 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleTextSymbol3DLayerHaloColorChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as TextSymbol3DLayer;
+    symbolLayer.halo.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleTextSymbol3DLayerHaloSizeChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as TextSymbol3DLayer;
+    symbolLayer.halo.size = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleTextSymbol3DLayerHorizontalAlignmentChange = (
     layerIndex: number,
     value: HorizontalAlignment
@@ -626,6 +653,12 @@ const Symbol3DLayerCollectionForm = ({ updateSymbolLayers }: PageProps) => {
                   }
                   handleTextSymbol3DLayerFontWeightChange={
                     handleTextSymbol3DLayerFontWeightChange
+                  }
+                  handleTextSymbol3DLayerHaloColorChange={
+                    handleTextSymbol3DLayerHaloColorChange
+                  }
+                  handleTextSymbol3DLayerHaloSizeChange={
+                    handleTextSymbol3DLayerHaloSizeChange
                   }
                   handleHorizontalAlignmentChange={
                     handleTextSymbol3DLayerHorizontalAlignmentChange

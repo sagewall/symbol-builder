@@ -26,6 +26,7 @@ import {
 } from "./lib/types";
 import TextSymbol3DLayerBackgroundForm from "./TextSymbol3DLayerBackgroundForm";
 import TextSymbol3DLayerFontForm from "./TextSymbol3DLayerFontForm";
+import TextSymbol3DLayerHaloForm from "./TextSymbol3DLayerHaloForm";
 
 interface Props {
   layerIndex: number;
@@ -53,6 +54,14 @@ interface Props {
     layerIndex: number,
     value: FontWeight | undefined
   ) => void;
+  handleTextSymbol3DLayerHaloColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerHaloSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleHorizontalAlignmentChange: (
     layerIndex: number,
     value: HorizontalAlignment
@@ -72,6 +81,8 @@ const TextSymbol3DLayerForm = ({
   handleTextSymbol3DLayerFontSizeChange,
   handleTextSymbol3DLayerFontStyleChange,
   handleTextSymbol3DLayerFontWeightChange,
+  handleTextSymbol3DLayerHaloColorChange,
+  handleTextSymbol3DLayerHaloSizeChange,
   handleHorizontalAlignmentChange,
   handleLineHeightChange,
   handleTextChange,
@@ -103,6 +114,12 @@ const TextSymbol3DLayerForm = ({
           handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
         />
       </CalciteBlock>
+
+      <TextSymbol3DLayerHaloForm
+        layerIndex={layerIndex}
+        handleColorChange={handleTextSymbol3DLayerHaloColorChange}
+        handleSizeChange={handleTextSymbol3DLayerHaloSizeChange}
+      ></TextSymbol3DLayerHaloForm>
 
       <CalciteLabel layout="default" style={labelStyles}>
         horizontalAlignment
