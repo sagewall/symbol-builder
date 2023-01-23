@@ -16,7 +16,10 @@ interface Props {
   handleSizeChange: (value: string) => void;
 }
 
-const LineCallout3DForm = ({ handleColorChange, handleSizeChange }: Props) => {
+const PointSymbol3DCalloutForm = ({
+  handleColorChange,
+  handleSizeChange,
+}: Props) => {
   const [color, setColor] = useState("#007ac2");
   const [size, setSize] = useState("1");
 
@@ -53,4 +56,4 @@ const LineCallout3DForm = ({ handleColorChange, handleSizeChange }: Props) => {
   );
 };
 
-export default LineCallout3DForm;
+export default PointSymbol3DCalloutForm;

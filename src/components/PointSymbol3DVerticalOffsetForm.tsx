@@ -12,7 +12,7 @@ interface Props {
   handleMinWorldLengthChange: (value: string) => void;
   handleScreenLengthChange: (value: string) => void;
 }
-const Symbol3DVerticalOffsetForm = ({
+const PointSymbol3DVerticalOffsetForm = ({
   handleMaxWorldLengthChange,
   handleMinWorldLengthChange,
   handleScreenLengthChange,
@@ -65,4 +65,4 @@ const Symbol3DVerticalOffsetForm = ({
   );
 };
 
-export default Symbol3DVerticalOffsetForm;
+export default PointSymbol3DVerticalOffsetForm;

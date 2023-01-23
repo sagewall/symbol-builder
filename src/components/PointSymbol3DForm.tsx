@@ -3,9 +3,9 @@ import { CalciteBlock } from "@esri/calcite-components-react";
 import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
 import { blockStyles } from "./lib/styles";
-import LineCallout3DForm from "./LineCallout3DForm";
+import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";
 import PointSymbol3DLayerCollectionForm from "./PointSymbol3DLayerCollectionForm";
-import Symbol3DVerticalOffsetForm from "./Symbol3DVerticalOffsetForm";
+import PointSymbol3DVerticalOffsetForm from "./PointSymbol3DVerticalOffsetForm";
 
 interface Props {
   handleCalloutColorChange: (value: string) => void;
@@ -27,20 +27,20 @@ const PointSymbol3DForm = ({
   return (
     <React.Fragment>
       <CalciteBlock style={blockStyles} collapsible heading={"callout"}>
-        <LineCallout3DForm
+        <PointSymbol3DCalloutForm
           handleColorChange={handleCalloutColorChange}
           handleSizeChange={handleCalloutSizeChange}
-        ></LineCallout3DForm>
+        ></PointSymbol3DCalloutForm>
       </CalciteBlock>
       <PointSymbol3DLayerCollectionForm
         updateSymbolLayers={updateSymbolLayers}
       ></PointSymbol3DLayerCollectionForm>
       <CalciteBlock style={blockStyles} collapsible heading={"verticalOffset"}>
-        <Symbol3DVerticalOffsetForm
+        <PointSymbol3DVerticalOffsetForm
           handleMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
           handleMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}
           handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}
-        ></Symbol3DVerticalOffsetForm>
+        ></PointSymbol3DVerticalOffsetForm>
       </CalciteBlock>
     </React.Fragment>
   );
