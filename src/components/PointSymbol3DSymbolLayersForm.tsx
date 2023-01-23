@@ -5,8 +5,6 @@ import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-action";
-import "@esri/calcite-components/dist/components/calcite-block";
 import React, { useState } from "react";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";

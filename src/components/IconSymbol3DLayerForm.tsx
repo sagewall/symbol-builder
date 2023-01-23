@@ -4,10 +4,6 @@ import {
   CalciteOption,
   CalciteSelect,
 } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-input-number";
-import "@esri/calcite-components/dist/components/calcite-label";
-import "@esri/calcite-components/dist/components/calcite-option";
-import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";

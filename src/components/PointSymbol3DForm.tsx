@@ -1,6 +1,5 @@
 import Collection from "@arcgis/core/core/Collection";
 import { CalciteBlock } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-block";
 import React from "react";
 import { blockStyles } from "./lib/styles";
 import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";

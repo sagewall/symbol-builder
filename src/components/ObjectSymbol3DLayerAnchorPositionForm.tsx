@@ -3,9 +3,6 @@ import {
   CalciteInputNumber,
   CalciteLabel,
 } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-block";
-import "@esri/calcite-components/dist/components/calcite-input-number";
-import "@esri/calcite-components/dist/components/calcite-label";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { ObjectSymbol3DLayerAnchorOption } from "./lib/types";

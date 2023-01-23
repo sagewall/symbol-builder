@@ -13,13 +13,6 @@ import {
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-action";
-import "@esri/calcite-components/dist/components/calcite-label";
-import "@esri/calcite-components/dist/components/calcite-loader";
-import "@esri/calcite-components/dist/components/calcite-panel";
-import "@esri/calcite-components/dist/components/calcite-shell";
-import "@esri/calcite-components/dist/components/calcite-shell-panel";
-import "@esri/calcite-components/dist/components/calcite-switch";
 import React, { lazy, Suspense, useRef, useState } from "react";
 import {
   formStyles,
@@ -34,6 +27,7 @@ import {
   SimpleLineSymbolStyleOption,
 } from "../components/lib/types";
 import SimpleLineSymbolForm from "../components/SimpleLineSymbolForm";
+
 const MapView = lazy(() => import("../components/MapView"));
 const SceneView = lazy(() => import("../components/SceneView"));
 

@@ -5,11 +5,6 @@ import {
   CalciteOption,
   CalciteSelect,
 } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-block";
-import "@esri/calcite-components/dist/components/calcite-input-text";
-import "@esri/calcite-components/dist/components/calcite-label";
-import "@esri/calcite-components/dist/components/calcite-option";
-import "@esri/calcite-components/dist/components/calcite-select";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { IconSymbol3DLayerResourcePrimitiveOption } from "./lib/types";

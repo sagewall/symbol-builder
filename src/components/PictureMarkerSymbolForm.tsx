@@ -4,10 +4,6 @@ import {
   CalciteLabel,
   CalciteSlider,
 } from "@esri/calcite-components-react";
-import "@esri/calcite-components/dist/components/calcite-input-number";
-import "@esri/calcite-components/dist/components/calcite-input-text";
-import "@esri/calcite-components/dist/components/calcite-label";
-import "@esri/calcite-components/dist/components/calcite-slider";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
