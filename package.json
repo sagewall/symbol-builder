@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@arcgis/core": "^4.26.0-next.20230112",
-    "@esri/calcite-components-react": "^0.37.0",
+    "@esri/calcite-components-react": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.7.0"
