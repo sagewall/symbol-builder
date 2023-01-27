@@ -11,16 +11,12 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import {
-  formStyles,
-  shellStyles,
-  viewSwitchLabelStyles,
-} from "../components/lib/styles";
-import MapView from "../components/MapView";
-import PictureMarkerSymbolForm from "../components/PictureMarkerSymbolForm";
-import SceneView from "../components/SceneView";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import MapView from "./MapView";
+import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
+import SceneView from "./SceneView";
 
-const PictureMarkerSymbolPage = () => {
+const PictureMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
@@ -159,4 +155,4 @@ const PictureMarkerSymbolPage = () => {
   );
 };
 
-export default PictureMarkerSymbolPage;
+export default PictureMarkerSymbolShell;

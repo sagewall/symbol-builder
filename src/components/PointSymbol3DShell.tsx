@@ -17,16 +17,12 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import {
-  formStyles,
-  shellStyles,
-  viewSwitchLabelStyles,
-} from "../components/lib/styles";
-import MapView from "../components/MapView";
-import PointSymbol3DForm from "../components/PointSymbol3DForm";
-import SceneView from "../components/SceneView";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import MapView from "./MapView";
+import PointSymbol3DForm from "./PointSymbol3DForm";
+import SceneView from "./SceneView";
 
-const PointSymbol3DPage = () => {
+const PointSymbol3DShell = () => {
   const viewSwitchRef = useRef(null);
 
   const [lineCallout3D, setLineCallout3D] = useState(
@@ -215,4 +211,4 @@ const PointSymbol3DPage = () => {
   );
 };
 
-export default PointSymbol3DPage;
+export default PointSymbol3DShell;

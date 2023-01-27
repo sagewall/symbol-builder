@@ -1,9 +1,9 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
+import Polygon from "@arcgis/core/geometry/Polygon";
 import Graphic from "@arcgis/core/Graphic";
+import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import {
   CalciteAction,
   CalciteLabel,
@@ -13,46 +13,47 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import {
-  formStyles,
-  shellStyles,
-  viewSwitchLabelStyles,
-} from "../components/lib/styles";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-  SimpleMarkerSymbolStyleOption,
-} from "../components/lib/types";
-import MapView from "../components/MapView";
-import SceneView from "../components/SceneView";
-import SimpleMarkerSymbolForm from "../components/SimpleMarkerSymbolForm";
+} from "./lib/types";
+import MapView from "./MapView";
+import PictureFillSymbolForm from "./PictureFillSymbolForm";
+import SceneView from "./SceneView";
 
-const SimpleMarkerSymbolPage = () => {
+const PictureFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol({ color: "#007ac2" })
+    new SimpleLineSymbol()
   );
 
-  const [simpleMarkerSymbol, setSimpleMarkerSymbol] = useState(
-    new SimpleMarkerSymbol({
+  const [pictureFillSymbol, setPictureFillSymbol] = useState(
+    new PictureFillSymbol({
       outline: simpleLineSymbol,
+      url: "https://sagewall.github.io/test-images/check-mark.svg",
     })
   );
 
-  const point = new Point({
-    latitude: 40.2,
-    longitude: -105.1,
+  const polygon = new Polygon({
+    rings: [
+      [
+        [-105.0, 40.0],
+        [-105.1, 40.2],
+        [-105.35, 40.1],
+      ],
+    ],
   });
 
-  const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: simpleMarkerSymbol,
+  const polygonGraphic = new Graphic({
+    geometry: polygon,
+    symbol: pictureFillSymbol,
   });
 
   const graphicsCollection = new Collection();
-  graphicsCollection.add(pointGraphic);
+  graphicsCollection.add(polygonGraphic);
 
   const [graphics, setGraphics] =
     useState<Collection<Graphic>>(graphicsCollection);
@@ -69,27 +70,20 @@ const SimpleMarkerSymbolPage = () => {
     }
   };
 
-  const updateGraphics = (newSimpleMarkerSymbol: SimpleMarkerSymbol) => {
-    setSimpleMarkerSymbol(newSimpleMarkerSymbol);
-
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newSimpleMarkerSymbol;
+  const updateGraphics = (newPictureFillSymbol: PictureFillSymbol) => {
+    setPictureFillSymbol(newPictureFillSymbol);
+    const newPolygonGraphic = graphics.getItemAt(0).clone();
+    newPolygonGraphic.symbol = newPictureFillSymbol;
 
     const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
+    newGraphics.add(newPolygonGraphic);
     setGraphics(newGraphics);
   };
 
-  const handleAngleChange = (currentAngle: number) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.angle = Number(currentAngle);
-    updateGraphics(newSimpleMarkerSymbol);
-  };
-
-  const handleColorChange = (currentColor: string) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.color = new Color(currentColor);
-    updateGraphics(newSimpleMarkerSymbol);
+  const handleHeightChange = (currentHeight: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.height = Number(currentHeight);
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleOutlineCapChange = (
@@ -99,9 +93,9 @@ const SimpleMarkerSymbolPage = () => {
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.outline = newSimpleLineSymbol;
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleOutlineColorChange = (currentColor: string) => {
@@ -109,9 +103,9 @@ const SimpleMarkerSymbolPage = () => {
     newSimpleLineSymbol.color = new Color(currentColor);
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.outline = newSimpleLineSymbol;
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleOutlineJoinChange = (
@@ -121,9 +115,9 @@ const SimpleMarkerSymbolPage = () => {
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.outline = newSimpleLineSymbol;
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleOutlineMiterLimitChange = (currentMiterLimitValue: string) => {
@@ -131,9 +125,9 @@ const SimpleMarkerSymbolPage = () => {
     newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.outline = newSimpleLineSymbol;
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleOutlineStyleChange = (
@@ -143,9 +137,9 @@ const SimpleMarkerSymbolPage = () => {
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.outline = newSimpleLineSymbol;
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleOutlineWidthChange = (currentWidthValue: string) => {
@@ -153,46 +147,50 @@ const SimpleMarkerSymbolPage = () => {
     newSimpleLineSymbol.width = Number(currentWidthValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.outline = newSimpleLineSymbol;
+    updateGraphics(newPictureFillSymbol);
   };
 
-  const handlePathChange = (currentPathValue: string) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.path = currentPathValue;
-    updateGraphics(newSimpleMarkerSymbol);
+  const handleUrlChange = (currentUrlValue: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.url = currentUrlValue;
+    updateGraphics(newPictureFillSymbol);
   };
 
-  const handleSizeChange = (currentSize: string) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.size = Number(currentSize);
-    updateGraphics(newSimpleMarkerSymbol);
+  const handleWidthChange = (currentWidth: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.width = Number(currentWidth);
+    updateGraphics(newPictureFillSymbol);
   };
 
-  const handleStyleChange = (
-    currentStyleValue: SimpleMarkerSymbolStyleOption
-  ) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.style = currentStyleValue;
-    updateGraphics(newSimpleMarkerSymbol);
+  const handleXOffsetChange = (currentXOffset: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.xoffset = Number(currentXOffset);
+    updateGraphics(newPictureFillSymbol);
   };
 
-  const handleXoffsetChange = (currentXOffset: string) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.xoffset = Number(currentXOffset);
-    updateGraphics(newSimpleMarkerSymbol);
+  const handleXScaleChange = (currentXScale: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.xscale = Number(currentXScale);
+    updateGraphics(newPictureFillSymbol);
   };
 
-  const handleYoffsetChange = (currentYOffset: string) => {
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.yoffset = Number(currentYOffset);
-    updateGraphics(newSimpleMarkerSymbol);
+  const handleYOffsetChange = (currentYOffset: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.yoffset = Number(currentYOffset);
+    updateGraphics(newPictureFillSymbol);
+  };
+
+  const handleYScaleChange = (currentYScale: string) => {
+    const newPictureFillSymbol = pictureFillSymbol.clone();
+    newPictureFillSymbol.yscale = Number(currentYScale);
+    updateGraphics(newPictureFillSymbol);
   };
 
   const handleCopyJSONClick = () => {
     navigator.clipboard.writeText(
-      JSON.stringify(simpleLineSymbol.toJSON(), null, 2)
+      JSON.stringify(pictureFillSymbol.toJSON(), null, 2)
     );
   };
 
@@ -207,28 +205,29 @@ const SimpleMarkerSymbolPage = () => {
               layout="inline"
               style={viewSwitchLabelStyles}
             >
-              SceneView
+              MapView Only
               <CalciteSwitch
+                disabled={true}
                 ref={viewSwitchRef}
                 onCalciteSwitchChange={handleSwitchChange}
               ></CalciteSwitch>
             </CalciteLabel>
 
             <div style={formStyles}>
-              <SimpleMarkerSymbolForm
-                handleAngleChange={handleAngleChange}
-                handleColorChange={handleColorChange}
+              <PictureFillSymbolForm
+                handleHeightChange={handleHeightChange}
                 handleOutlineCapChange={handleOutlineCapChange}
                 handleOutlineColorChange={handleOutlineColorChange}
                 handleOutlineJoinChange={handleOutlineJoinChange}
                 handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
                 handleOutlineStyleChange={handleOutlineStyleChange}
                 handleOutlineWidthChange={handleOutlineWidthChange}
-                handlePathChange={handlePathChange}
-                handleSizeChange={handleSizeChange}
-                handleStyleChange={handleStyleChange}
-                handleXoffsetChange={handleXoffsetChange}
-                handleYoffsetChange={handleYoffsetChange}
+                handleUrlChange={handleUrlChange}
+                handleWidthChange={handleWidthChange}
+                handleXOffsetChange={handleXOffsetChange}
+                handleXScaleChange={handleXScaleChange}
+                handleYOffsetChange={handleYOffsetChange}
+                handleYScaleChange={handleYScaleChange}
               />
             </div>
           </CalcitePanel>
@@ -243,7 +242,7 @@ const SimpleMarkerSymbolPage = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2)}</pre>
+            <pre>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}
@@ -252,4 +251,4 @@ const SimpleMarkerSymbolPage = () => {
   );
 };
 
-export default SimpleMarkerSymbolPage;
+export default PictureFillSymbolShell;

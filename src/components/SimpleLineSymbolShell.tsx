@@ -13,23 +13,19 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import {
-  formStyles,
-  shellStyles,
-  viewSwitchLabelStyles,
-} from "../components/lib/styles";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   LineSymbolMarkerPlacementOption,
   LineSymbolMarkerStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-} from "../components/lib/types";
-import MapView from "../components/MapView";
-import SceneView from "../components/SceneView";
-import SimpleLineSymbolForm from "../components/SimpleLineSymbolForm";
+} from "./lib/types";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
+import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
-const SimpleLineSymbolPage = () => {
+const SimpleLineSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -238,4 +234,4 @@ const SimpleLineSymbolPage = () => {
   );
 };
 
-export default SimpleLineSymbolPage;
+export default SimpleLineSymbolShell;

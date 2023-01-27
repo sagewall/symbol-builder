@@ -21,13 +21,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import IndexPage from "./pages";
-import PictureFillSymbolPage from "./pages/PictureFillSymbolPage";
-import PictureMarkerSymbolPage from "./pages/PictureMarkerSymbolPage";
-import PointSymbol3DPage from "./pages/PointSymbol3DPage";
-import SimpleFillSymbolPage from "./pages/SimpleFillSymbolPage";
-import SimpleLineSymbolPage from "./pages/SimpleLineSymbolPage";
-import SimpleMarkerSymbolPage from "./pages/SimpleMarkerSymbolPage";
-import TextSymbolPage from "./pages/TextSymbolPage";
+import PictureFillSymbolPage from "./pages/picture-fill-symbol";
+import PictureMarkerSymbolPage from "./pages/picture-marker-symbol";
+import PointSymbol3DPage from "./pages/point-symbol-3d";
+import SimpleFillSymbolPage from "./pages/simple-fill-symbol";
+import SimpleLineSymbolPage from "./pages/simple-line-symbol";
+import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
+import TextSymbolPage from "./pages/text-symbol";
+
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.99/assets");
 
 const router = createBrowserRouter([

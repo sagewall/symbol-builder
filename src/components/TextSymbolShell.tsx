@@ -13,23 +13,19 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import {
-  formStyles,
-  shellStyles,
-  viewSwitchLabelStyles,
-} from "../components/lib/styles";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   FontDecoration,
   FontStyle,
   FontWeight,
   HorizontalAlignment,
   VerticalAlignment,
-} from "../components/lib/types";
-import MapView from "../components/MapView";
-import SceneView from "../components/SceneView";
-import TextSymbolForm from "../components/TextSymbolForm";
+} from "./lib/types";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
+import TextSymbolForm from "./TextSymbolForm";
 
-const TextSymbolPage = () => {
+const TextSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
   const [font, setFont] = useState(new Font({ family: "serif" }));
@@ -263,4 +259,4 @@ const TextSymbolPage = () => {
   );
 };
 
-export default TextSymbolPage;
+export default TextSymbolShell;
