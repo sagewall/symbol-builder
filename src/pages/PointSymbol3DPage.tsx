@@ -11,22 +11,20 @@ import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import {
   CalciteAction,
   CalciteLabel,
-  CalciteLoader,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import React, { lazy, Suspense, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
 } from "../components/lib/styles";
+import MapView from "../components/MapView";
 import PointSymbol3DForm from "../components/PointSymbol3DForm";
-
-const MapView = lazy(() => import("../components/MapView"));
-const SceneView = lazy(() => import("../components/SceneView"));
+import SceneView from "../components/SceneView";
 
 const PointSymbol3DPage = () => {
   const viewSwitchRef = useRef(null);
@@ -163,17 +161,6 @@ const PointSymbol3DPage = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Suspense
-          fallback={
-            <CalciteLoader
-              label="loading"
-              text="loading"
-              type="indeterminate"
-            />
-          }
-        >
-          {view}
-        </Suspense>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
@@ -222,6 +209,7 @@ const PointSymbol3DPage = () => {
             <pre>{JSON.stringify(pointSymbol3D.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

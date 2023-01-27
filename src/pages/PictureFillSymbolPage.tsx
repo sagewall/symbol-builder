@@ -7,13 +7,12 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteAction,
   CalciteLabel,
-  CalciteLoader,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import React, { lazy, Suspense, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
@@ -24,10 +23,9 @@ import {
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
 } from "../components/lib/types";
+import MapView from "../components/MapView";
 import PictureFillSymbolForm from "../components/PictureFillSymbolForm";
-
-const MapView = lazy(() => import("../components/MapView"));
-const SceneView = lazy(() => import("../components/SceneView"));
+import SceneView from "../components/SceneView";
 
 const PictureFillSymbolPage = () => {
   const viewSwitchRef = useRef(null);
@@ -203,17 +201,6 @@ const PictureFillSymbolPage = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Suspense
-          fallback={
-            <CalciteLoader
-              label="loading"
-              text="loading"
-              type="indeterminate"
-            />
-          }
-        >
-          {view}
-        </Suspense>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
@@ -262,6 +249,7 @@ const PictureFillSymbolPage = () => {
             <pre>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

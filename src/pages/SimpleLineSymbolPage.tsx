@@ -7,13 +7,12 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteAction,
   CalciteLabel,
-  CalciteLoader,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import React, { lazy, Suspense, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
@@ -26,10 +25,9 @@ import {
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
 } from "../components/lib/types";
+import MapView from "../components/MapView";
+import SceneView from "../components/SceneView";
 import SimpleLineSymbolForm from "../components/SimpleLineSymbolForm";
-
-const MapView = lazy(() => import("../components/MapView"));
-const SceneView = lazy(() => import("../components/SceneView"));
 
 const SimpleLineSymbolPage = () => {
   const viewSwitchRef = useRef(null);
@@ -188,17 +186,6 @@ const SimpleLineSymbolPage = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Suspense
-          fallback={
-            <CalciteLoader
-              label="loading"
-              text="loading"
-              type="indeterminate"
-            />
-          }
-        >
-          {view}
-        </Suspense>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
@@ -245,6 +232,7 @@ const SimpleLineSymbolPage = () => {
             <pre>{JSON.stringify(simpleLineSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

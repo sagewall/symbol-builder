@@ -5,22 +5,20 @@ import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import {
   CalciteAction,
   CalciteLabel,
-  CalciteLoader,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
   CalciteSwitch,
 } from "@esri/calcite-components-react";
-import React, { lazy, Suspense, useRef, useState } from "react";
-import PictureMarkerSymbolForm from "../components/PictureMarkerSymbolForm";
+import React, { useRef, useState } from "react";
 import {
   formStyles,
   shellStyles,
   viewSwitchLabelStyles,
 } from "../components/lib/styles";
-
-const MapView = lazy(() => import("../components/MapView"));
-const SceneView = lazy(() => import("../components/SceneView"));
+import MapView from "../components/MapView";
+import PictureMarkerSymbolForm from "../components/PictureMarkerSymbolForm";
+import SceneView from "../components/SceneView";
 
 const PictureMarkerSymbolPage = () => {
   const viewSwitchRef = useRef(null);
@@ -115,17 +113,6 @@ const PictureMarkerSymbolPage = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Suspense
-          fallback={
-            <CalciteLoader
-              label="loading"
-              text="loading"
-              type="indeterminate"
-            />
-          }
-        >
-          {view}
-        </Suspense>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
@@ -166,6 +153,7 @@ const PictureMarkerSymbolPage = () => {
             <pre>{JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
+        {view}
       </CalciteShell>
     </React.Fragment>
   );
