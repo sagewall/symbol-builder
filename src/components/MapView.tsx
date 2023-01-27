@@ -16,68 +16,72 @@ interface MapViewProps {
 }
 
 const MapView = ({ graphics, layers }: MapViewProps) => {
-  const viewDivRef = useRef(document.createElement("div"));
+  if (typeof window !== "undefined") {
+    const viewDivRef = useRef(document.createElement("div"));
 
-  const [view, setView] = useState<ArcMapView | null>(null);
+    const [view, setView] = useState<ArcMapView | null>(null);
 
-  useEffect(() => {
-    if (viewDivRef.current) {
-      const loadMapView = async () => {
-        const { createMapView } = await import("./lib/mapview");
-        setView(
-          await createMapView(
-            viewDivRef.current as HTMLDivElement,
-            graphics,
-            layers
-          )
-        );
-      };
-      loadMapView();
+    useEffect(() => {
+      if (viewDivRef.current) {
+        const loadMapView = async () => {
+          const { createMapView } = await import("./lib/mapview");
+          setView(
+            await createMapView(
+              viewDivRef.current as HTMLDivElement,
+              graphics,
+              layers
+            )
+          );
+        };
+        loadMapView();
 
-      return () => {
-        view && view.destroy();
-      };
-    }
-  }, []);
+        return () => {
+          view && view.destroy();
+        };
+      }
+    }, []);
 
-  useEffect(() => {
-    if (view) {
-      const loadGraphics = async () => {
-        if (graphics) {
-          view.graphics = graphics;
-          await view.when();
-          view.goTo(graphics).catch((error) => {
-            if (error.name != "view:goto-interrupted") {
-              console.error(error);
-            }
-          });
-        }
-      };
-
-      const loadLayers = async () => {
-        if (layers) {
-          view.map.layers = layers;
-          await view.when();
-          if (!graphics) {
-            view.goTo(layers).catch((error) => {
+    useEffect(() => {
+      if (view) {
+        const loadGraphics = async () => {
+          if (graphics) {
+            view.graphics = graphics;
+            await view.when();
+            view.goTo(graphics).catch((error) => {
               if (error.name != "view:goto-interrupted") {
                 console.error(error);
               }
             });
           }
-        }
-      };
+        };
 
-      loadGraphics();
-      loadLayers();
-    }
-  }, [view, graphics, layers]);
+        const loadLayers = async () => {
+          if (layers) {
+            view.map.layers = layers;
+            await view.when();
+            if (!graphics) {
+              view.goTo(layers).catch((error) => {
+                if (error.name != "view:goto-interrupted") {
+                  console.error(error);
+                }
+              });
+            }
+          }
+        };
 
-  return (
-    <React.Fragment>
-      <div style={viewStyles} ref={viewDivRef}></div>
-    </React.Fragment>
-  );
+        loadGraphics();
+        loadLayers();
+      }
+    }, [view, graphics, layers]);
+
+    return (
+      <React.Fragment>
+        <div style={viewStyles} ref={viewDivRef}></div>
+      </React.Fragment>
+    );
+  } else {
+    return <React.Fragment />;
+  }
 };
 
 export default MapView;

@@ -16,68 +16,72 @@ interface SceneViewProps {
 }
 
 const SceneView = ({ graphics, layers }: SceneViewProps) => {
-  const viewDivRef = useRef(document.createElement("div"));
+  if (typeof window !== "undefined") {
+    const viewDivRef = useRef(document.createElement("div"));
 
-  const [view, setView] = useState<ArcSceneView | null>(null);
+    const [view, setView] = useState<ArcSceneView | null>(null);
 
-  useEffect(() => {
-    if (viewDivRef.current) {
-      const loadSceneView = async () => {
-        const { createSceneView } = await import("./lib/sceneview");
-        setView(
-          await createSceneView(
-            viewDivRef.current as HTMLDivElement,
-            graphics,
-            layers
-          )
-        );
-      };
-      loadSceneView();
+    useEffect(() => {
+      if (viewDivRef.current) {
+        const loadSceneView = async () => {
+          const { createSceneView } = await import("./lib/sceneview");
+          setView(
+            await createSceneView(
+              viewDivRef.current as HTMLDivElement,
+              graphics,
+              layers
+            )
+          );
+        };
+        loadSceneView();
 
-      return () => {
-        view && view.destroy();
-      };
-    }
-  }, []);
+        return () => {
+          view && view.destroy();
+        };
+      }
+    }, []);
 
-  useEffect(() => {
-    if (view) {
-      const loadGraphics = async () => {
-        if (graphics) {
-          view.graphics = graphics;
-          await view.when();
-          view.goTo(graphics).catch((error) => {
-            if (error.name != "AbortError") {
-              console.error(error);
-            }
-          });
-        }
-      };
-
-      const loadLayers = async () => {
-        if (layers) {
-          view.map.layers = layers;
-          await view.when();
-          if (!graphics) {
-            view.goTo(layers).catch((error) => {
+    useEffect(() => {
+      if (view) {
+        const loadGraphics = async () => {
+          if (graphics) {
+            view.graphics = graphics;
+            await view.when();
+            view.goTo(graphics).catch((error) => {
               if (error.name != "AbortError") {
                 console.error(error);
               }
             });
           }
-        }
-      };
+        };
 
-      loadGraphics();
-      loadLayers();
-    }
-  }, [view, graphics, layers]);
+        const loadLayers = async () => {
+          if (layers) {
+            view.map.layers = layers;
+            await view.when();
+            if (!graphics) {
+              view.goTo(layers).catch((error) => {
+                if (error.name != "AbortError") {
+                  console.error(error);
+                }
+              });
+            }
+          }
+        };
 
-  return (
-    <React.Fragment>
-      <div style={viewStyles} ref={viewDivRef}></div>
-    </React.Fragment>
-  );
+        loadGraphics();
+        loadLayers();
+      }
+    }, [view, graphics, layers]);
+
+    return (
+      <React.Fragment>
+        <div style={viewStyles} ref={viewDivRef}></div>
+      </React.Fragment>
+    );
+  } else {
+    return <React.Fragment />;
+  }
 };
 
 export default SceneView;
