@@ -580,7 +580,6 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 collapsible
                 heading={`symbolLayers[${index}]`}
                 key={index}
-                open={true}
               >
                 <CalciteAction
                   icon="trash"
@@ -626,7 +625,6 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 collapsible
                 heading={`symbolLayers[${index}]`}
                 key={index}
-                open={true}
               >
                 <CalciteAction
                   icon="trash"
@@ -673,7 +671,6 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 collapsible
                 heading={`symbolLayers[${index}]`}
                 key={index}
-                open={true}
               >
                 <CalciteAction
                   icon="trash"
