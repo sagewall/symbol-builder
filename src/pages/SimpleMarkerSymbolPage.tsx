@@ -214,7 +214,7 @@ const SimpleMarkerSymbolPage = () => {
               ></CalciteSwitch>
             </CalciteLabel>
 
-            <form style={formStyles}>
+            <div style={formStyles}>
               <SimpleMarkerSymbolForm
                 handleAngleChange={handleAngleChange}
                 handleColorChange={handleColorChange}
@@ -230,7 +230,7 @@ const SimpleMarkerSymbolPage = () => {
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
               />
-            </form>
+            </div>
           </CalcitePanel>
 
           <CalcitePanel>

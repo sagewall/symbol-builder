@@ -219,7 +219,7 @@ const TextSymbolPage = () => {
               ></CalciteSwitch>
             </CalciteLabel>
 
-            <form style={formStyles}>
+            <div style={formStyles}>
               <TextSymbolForm
                 handleAngleChange={handleAngleChange}
                 handleColorChange={handleColorChange}
@@ -241,7 +241,7 @@ const TextSymbolPage = () => {
                 handleXOffsetChange={handleXOffsetChange}
                 handleYOffsetChange={handleYOffsetChange}
               />
-            </form>
+            </div>
           </CalcitePanel>
 
           <CalcitePanel>

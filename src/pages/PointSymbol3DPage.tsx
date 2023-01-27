@@ -178,7 +178,7 @@ const PointSymbol3DPage = () => {
               ></CalciteSwitch>
             </CalciteLabel>
 
-            <form style={formStyles}>
+            <div style={formStyles}>
               <PointSymbol3DForm
                 handleCalloutColorChange={handleCalloutColorChange}
                 handleCalloutSizeChange={handleCalloutSizeChange}
@@ -193,7 +193,7 @@ const PointSymbol3DPage = () => {
                 }
                 updateSymbolLayers={updateSymbolLayers}
               ></PointSymbol3DForm>
-            </form>
+            </div>
           </CalcitePanel>
 
           <CalcitePanel>

@@ -128,7 +128,7 @@ const PictureMarkerSymbolPage = () => {
               ></CalciteSwitch>
             </CalciteLabel>
 
-            <form style={formStyles}>
+            <div style={formStyles}>
               <PictureMarkerSymbolForm
                 handleAngleChange={handleAngleChange}
                 handleHeightChange={handleHeightChange}
@@ -137,7 +137,7 @@ const PictureMarkerSymbolPage = () => {
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
               />
-            </form>
+            </div>
           </CalcitePanel>
 
           <CalcitePanel>

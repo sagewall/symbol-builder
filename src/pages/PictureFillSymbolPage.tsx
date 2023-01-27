@@ -217,7 +217,7 @@ const PictureFillSymbolPage = () => {
               ></CalciteSwitch>
             </CalciteLabel>
 
-            <form style={formStyles}>
+            <div style={formStyles}>
               <PictureFillSymbolForm
                 handleHeightChange={handleHeightChange}
                 handleOutlineCapChange={handleOutlineCapChange}
@@ -233,7 +233,7 @@ const PictureFillSymbolPage = () => {
                 handleYOffsetChange={handleYOffsetChange}
                 handleYScaleChange={handleYScaleChange}
               />
-            </form>
+            </div>
           </CalcitePanel>
 
           <CalcitePanel>

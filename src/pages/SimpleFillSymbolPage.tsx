@@ -190,7 +190,7 @@ const SimpleFillSymbolPage = () => {
               ></CalciteSwitch>
             </CalciteLabel>
 
-            <form style={formStyles}>
+            <div style={formStyles}>
               <SimpleFillSymbolForm
                 handleColorChange={handleColorChange}
                 handleOutlineCapChange={handleOutlineCapChange}
@@ -201,7 +201,7 @@ const SimpleFillSymbolPage = () => {
                 handleOutlineWidthChange={handleOutlineWidthChange}
                 handleStyleChange={handleStyleChange}
               />
-            </form>
+            </div>
           </CalcitePanel>
 
           <CalcitePanel>
