@@ -42,20 +42,21 @@ const LineSymbolMarkerForm = ({
   return (
     <React.Fragment>
       <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteLabel layout="default" style={labelStyles}>
-          color
-          <CalciteColorPicker
-            onCalciteColorPickerChange={(event) => {
-              if (event.target.value) {
-                setColor(event.target.value.toString());
-              }
-              if (handleColorChange) {
-                handleColorChange(event.target.value as string);
-              }
-            }}
-            value={color}
-          ></CalciteColorPicker>
-        </CalciteLabel>
+        <CalciteColorPicker
+          onCalciteColorPickerChange={(event) => {
+            if (event.target.value) {
+              setColor(event.target.value.toString());
+            }
+            if (handleColorChange) {
+              handleColorChange(event.target.value as string);
+            }
+          }}
+          allowEmpty
+          hideChannels
+          hideSaved
+          scale="s"
+          value={color}
+        ></CalciteColorPicker>
       </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>

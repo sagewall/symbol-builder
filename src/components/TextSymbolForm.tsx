@@ -95,18 +95,19 @@ const TextSymbolForm = ({
       </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteLabel layout="default" style={labelStyles}>
-          color
-          <CalciteColorPicker
-            onCalciteColorPickerChange={(event) => {
-              if (event.target.value) {
-                setColor(event.target.value.toString());
-              }
-              handleColorChange(event.target.value as string);
-            }}
-            value={color}
-          ></CalciteColorPicker>
-        </CalciteLabel>
+        <CalciteColorPicker
+          onCalciteColorPickerChange={(event) => {
+            if (event.target.value) {
+              setColor(event.target.value.toString());
+            }
+            handleColorChange(event.target.value as string);
+          }}
+          allowEmpty
+          hideChannels
+          hideSaved
+          scale="s"
+          value={color}
+        ></CalciteColorPicker>
       </CalciteBlock>
 
       <CalciteBlock style={blockStyles} collapsible heading={"font"}>
@@ -120,18 +121,19 @@ const TextSymbolForm = ({
       </CalciteBlock>
 
       <CalciteBlock style={blockStyles} collapsible heading={"haloColor"}>
-        <CalciteLabel layout="default" style={labelStyles}>
-          haloColor
-          <CalciteColorPicker
-            onCalciteColorPickerChange={(event) => {
-              if (event.target.value) {
-                setHaloColor(event.target.value.toString());
-              }
-              handleHaloColorChange(event.target.value as string);
-            }}
-            value={haloColor}
-          ></CalciteColorPicker>
-        </CalciteLabel>
+        <CalciteColorPicker
+          onCalciteColorPickerChange={(event) => {
+            if (event.target.value) {
+              setHaloColor(event.target.value.toString());
+            }
+            handleHaloColorChange(event.target.value as string);
+          }}
+          allowEmpty
+          hideChannels
+          hideSaved
+          scale="s"
+          value={haloColor}
+        ></CalciteColorPicker>
       </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>
