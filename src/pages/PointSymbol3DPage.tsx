@@ -174,12 +174,7 @@ const PointSymbol3DPage = () => {
         >
           {view}
         </Suspense>
-        <CalciteShellPanel
-          slot="panel-start"
-          position="start"
-          resizable
-          widthScale="l"
-        >
+        <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
             <CalciteLabel
