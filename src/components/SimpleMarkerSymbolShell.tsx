@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 import Graphic from "@arcgis/core/Graphic";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
@@ -13,6 +12,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
@@ -36,11 +36,6 @@ const SimpleMarkerSymbolShell = () => {
       outline: simpleLineSymbol,
     })
   );
-
-  const point = new Point({
-    latitude: 40.2,
-    longitude: -105.1,
-  });
 
   const pointGraphic = new Graphic({
     geometry: point,

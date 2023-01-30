@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 import Graphic from "@arcgis/core/Graphic";
 import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
@@ -17,6 +16,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import MapView from "./MapView";
 import PointSymbol3DForm from "./PointSymbol3DForm";
@@ -41,11 +41,6 @@ const PointSymbol3DShell = () => {
       verticalOffset: symbol3DVerticalOffset,
     })
   );
-
-  const point = new Point({
-    latitude: 40.2,
-    longitude: -105.1,
-  });
 
   const pointGraphic = new Graphic({
     geometry: point,

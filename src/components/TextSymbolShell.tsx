@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 import Graphic from "@arcgis/core/Graphic";
 import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
@@ -13,6 +12,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   FontDecoration,
@@ -38,11 +38,6 @@ const TextSymbolShell = () => {
       text: "Hello World!",
     })
   );
-
-  const point = new Point({
-    latitude: 40.2,
-    longitude: -105.1,
-  });
 
   const pointGraphic = new Graphic({
     geometry: point,

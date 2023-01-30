@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import Polygon from "@arcgis/core/geometry/Polygon";
 import Graphic from "@arcgis/core/Graphic";
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
@@ -13,6 +12,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
@@ -36,16 +36,6 @@ const PictureFillSymbolShell = () => {
       url: "https://sagewall.github.io/test-images/check-mark.svg",
     })
   );
-
-  const polygon = new Polygon({
-    rings: [
-      [
-        [-105.0, 40.0],
-        [-105.1, 40.2],
-        [-105.35, 40.1],
-      ],
-    ],
-  });
 
   const polygonGraphic = new Graphic({
     geometry: polygon,

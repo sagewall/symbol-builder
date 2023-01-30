@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import Polyline from "@arcgis/core/geometry/Polyline";
 import Graphic from "@arcgis/core/Graphic";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
@@ -13,6 +12,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import { polyline } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   LineSymbolMarkerPlacementOption,
@@ -40,16 +40,6 @@ const SimpleLineSymbolShell = () => {
       color: "#007ac2",
     })
   );
-
-  const polyline = new Polyline({
-    paths: [
-      [
-        [-105.0, 40.0],
-        [-105.1, 40.2],
-        [-105.35, 40.1],
-      ],
-    ],
-  });
 
   const polylineGraphic = new Graphic({
     geometry: polyline,

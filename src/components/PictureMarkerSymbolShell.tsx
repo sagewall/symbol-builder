@@ -1,5 +1,4 @@
 import Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 import Graphic from "@arcgis/core/Graphic";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import {
@@ -11,6 +10,7 @@ import {
   CalciteSwitch,
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import MapView from "./MapView";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
@@ -24,11 +24,6 @@ const PictureMarkerSymbolShell = () => {
       url: "https://sagewall.github.io/test-images/check-mark.svg",
     })
   );
-
-  const point = new Point({
-    latitude: 40.2,
-    longitude: -105.1,
-  });
 
   const pointGraphic = new Graphic({
     geometry: point,
