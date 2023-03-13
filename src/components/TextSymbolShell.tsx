@@ -79,6 +79,24 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
+  const handleBackgroundColorChange = (currentBackgroundColor: string) => {
+    const newTextSymbol = textSymbol.clone();
+    newTextSymbol.backgroundColor = new Color(currentBackgroundColor);
+    updateGraphics(newTextSymbol);
+  };
+
+  const handleBorderLineColorChange = (currentBorderLineColor: string) => {
+    const newTextSymbol = textSymbol.clone();
+    newTextSymbol.borderLineColor = new Color(currentBorderLineColor);
+    updateGraphics(newTextSymbol);
+  };
+
+  const handleBorderLineSizeChange = (currentBorderLineSize: string) => {
+    const newTextSymbol = textSymbol.clone();
+    newTextSymbol.borderLineSize = Number(currentBorderLineSize);
+    updateGraphics(newTextSymbol);
+  };
+
   const handleColorChange = (currentColor: string) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.color = new Color(currentColor);
@@ -213,6 +231,9 @@ const TextSymbolShell = () => {
             <div style={formStyles}>
               <TextSymbolForm
                 handleAngleChange={handleAngleChange}
+                handleBackgroundColorChange={handleBackgroundColorChange}
+                handleBorderLineColorChange={handleBorderLineColorChange}
+                handleBorderLineSizeChange={handleBorderLineSizeChange}
                 handleColorChange={handleColorChange}
                 handleFontDecorationChange={handleFontDecorationChange}
                 handleFontFamilyChange={handleFontFamilyChange}

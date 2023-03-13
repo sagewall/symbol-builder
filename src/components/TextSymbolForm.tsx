@@ -22,6 +22,9 @@ import {
 
 interface Props {
   handleAngleChange: (value: number) => void;
+  handleBackgroundColorChange: (value: string) => void;
+  handleBorderLineColorChange: (value: string) => void;
+  handleBorderLineSizeChange: (value: string) => void;
   handleColorChange: (value: string) => void;
   handleFontDecorationChange: (value: FontDecoration) => void;
   handleFontFamilyChange: (value: string) => void;
@@ -42,6 +45,9 @@ interface Props {
 
 const TextSymbolForm = ({
   handleAngleChange,
+  handleBackgroundColorChange,
+  handleBorderLineColorChange,
+  handleBorderLineSizeChange,
   handleColorChange,
   handleFontDecorationChange,
   handleFontFamilyChange,
@@ -63,6 +69,9 @@ const TextSymbolForm = ({
   const verticalAlignmentOptions = ["baseline", "top", "middle", "bottom"];
 
   const [angle, setAngle] = useState(0);
+  const [backgroundColor, setBackgroundColor] = useState("#000000");
+  const [borderLineColor, setBorderLineColor] = useState("#000000");
+  const [borderLineSize, setBorderLineSize] = useState("0");
   const [color, setColor] = useState("#007ac2");
   const [haloColor, setHaloColor] = useState("#000000");
   const [haloSize, setHaloSize] = useState("0");
@@ -92,6 +101,51 @@ const TextSymbolForm = ({
           ticks={180}
           value={angle}
         ></CalciteSlider>
+      </CalciteLabel>
+
+      <CalciteBlock style={blockStyles} collapsible heading={"backgroundColor"}>
+        <CalciteColorPicker
+          onCalciteColorPickerChange={(event) => {
+            if (event.target.value) {
+              setBackgroundColor(event.target.value.toString());
+            }
+            handleBackgroundColorChange(event.target.value as string);
+          }}
+          allowEmpty
+          hideChannels
+          hideSaved
+          scale="s"
+          value={backgroundColor}
+        ></CalciteColorPicker>
+      </CalciteBlock>
+
+      <CalciteBlock style={blockStyles} collapsible heading={"borderLineColor"}>
+        <CalciteColorPicker
+          onCalciteColorPickerChange={(event) => {
+            if (event.target.value) {
+              setBorderLineColor(event.target.value.toString());
+            }
+            handleBorderLineColorChange(event.target.value as string);
+          }}
+          allowEmpty
+          hideChannels
+          hideSaved
+          scale="s"
+          value={borderLineColor}
+        ></CalciteColorPicker>
+      </CalciteBlock>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        borderLineSize
+        <CalciteInputNumber
+          label={"borderLineSize input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setBorderLineSize(event.target.value);
+            handleBorderLineSizeChange(event.target.value);
+          }}
+          value={borderLineSize}
+        ></CalciteInputNumber>
       </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"color"}>
