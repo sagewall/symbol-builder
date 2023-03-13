@@ -1,10 +1,9 @@
 import {
   CalciteBlock,
   CalciteColorPicker,
-  CalciteLabel,
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
+import { blockStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
