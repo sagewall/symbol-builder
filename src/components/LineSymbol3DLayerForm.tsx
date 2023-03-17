@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { LineSymbol3DCapOption, LineSymbol3DJoinOption } from "./lib/types";
+import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
@@ -15,6 +16,10 @@ interface Props {
   handleCapChange: (layerIndex: number, value: string) => void;
   handleJoinChange: (layerIndex: number, value: string) => void;
   handleLineSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleLineSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
     value: string
   ) => void;
@@ -26,6 +31,7 @@ const LineSymbol3DLayerForm = ({
   handleCapChange,
   handleJoinChange,
   handleLineSymbol3DLayerMaterialColorChange,
+  handleLineSymbol3DLayerPatternStyleChange,
   handleSizeChange,
 }: Props) => {
   const capOptions = ["butt", "round", "square"];
@@ -80,6 +86,13 @@ const LineSymbol3DLayerForm = ({
           layerIndex={layerIndex}
           handleColorChange={handleLineSymbol3DLayerMaterialColorChange}
         ></LineSymbol3DLayerMaterialForm>
+      </CalciteBlock>
+
+      <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
+        <LineStylePattern3DForm
+          layerIndex={layerIndex}
+          handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}
+        ></LineStylePattern3DForm>
       </CalciteBlock>
 
       <CalciteLabel layout="default" style={labelStyles}>

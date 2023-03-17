@@ -26,6 +26,20 @@ export type IconSymbol3DLayerResourcePrimitiveOption =
   | "kite"
   | "triangle";
 
+export type LineStylePattern3DStyleOption =
+  | "dash"
+  | "dash-dot"
+  | "dot"
+  | "long-dash"
+  | "long-dash-dot"
+  | "long-dash-dot-dot"
+  | "none"
+  | "short-dash"
+  | "short-dash-dot"
+  | "short-dash-dot-dot"
+  | "short-dot"
+  | "solid";
+
 export type LineSymbol3DCapOption = "butt" | "round" | "square";
 
 export type LineSymbol3DJoinOption = "miter" | "round" | "bevel";

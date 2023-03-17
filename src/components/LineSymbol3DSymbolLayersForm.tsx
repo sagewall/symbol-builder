@@ -2,10 +2,15 @@ import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
+import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles } from "./lib/styles";
-import { LineSymbol3DCapOption, LineSymbol3DJoinOption } from "./lib/types";
+import {
+  LineStylePattern3DStyleOption,
+  LineSymbol3DCapOption,
+  LineSymbol3DJoinOption,
+} from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 
 interface PageProps {
@@ -15,6 +20,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewLineSymbol3DLayer = (): LineSymbol3DLayer => {
     const newLineSymbol3DLayer = new LineSymbol3DLayer({
       material: { color: "#007ac2" },
+      pattern: new LineStylePattern3D(),
       size: 3,
     });
     return newLineSymbol3DLayer;
@@ -76,6 +82,19 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleLineSymbol3DLayerPatternStyleChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as LineSymbol3DLayer;
+    symbolLayer.pattern.style = value as LineStylePattern3DStyleOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleLineSymbol3DLayerSizeChange = (
     layerIndex: number,
     value: string
@@ -114,6 +133,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleJoinChange={handleLineSymbol3DLayerJoinChange}
                   handleLineSymbol3DLayerMaterialColorChange={
                     handleLineSymbol3DLayerMaterialColorChange
+                  }
+                  handleLineSymbol3DLayerPatternStyleChange={
+                    handleLineSymbol3DLayerPatternStyleChange
                   }
                   handleSizeChange={handleLineSymbol3DLayerSizeChange}
                 />
