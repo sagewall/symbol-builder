@@ -160,13 +160,14 @@ const PointSymbol3DShell = () => {
               layout="inline"
               style={viewSwitchLabelStyles}
             >
-              SceneView
+              2D
               <CalciteSwitch
                 ref={viewSwitchRef}
                 onCalciteSwitchChange={handleSwitchChange}
                 checked
                 disabled
               ></CalciteSwitch>
+              3D
             </CalciteLabel>
 
             <div style={formStyles}>

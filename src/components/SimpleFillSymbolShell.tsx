@@ -169,11 +169,12 @@ const SimpleFillSymbolShell = () => {
               layout="inline"
               style={viewSwitchLabelStyles}
             >
-              SceneView
+              2D
               <CalciteSwitch
                 ref={viewSwitchRef}
                 onCalciteSwitchChange={handleSwitchChange}
               ></CalciteSwitch>
+              3D
             </CalciteLabel>
 
             <div style={formStyles}>

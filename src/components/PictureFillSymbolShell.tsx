@@ -195,12 +195,13 @@ const PictureFillSymbolShell = () => {
               layout="inline"
               style={viewSwitchLabelStyles}
             >
-              MapView Only
+              2D
               <CalciteSwitch
                 disabled={true}
                 ref={viewSwitchRef}
                 onCalciteSwitchChange={handleSwitchChange}
               ></CalciteSwitch>
+              3D
             </CalciteLabel>
 
             <div style={formStyles}>
