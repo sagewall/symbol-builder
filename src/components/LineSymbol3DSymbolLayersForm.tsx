@@ -1,5 +1,6 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
+import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
@@ -7,6 +8,8 @@ import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles } from "./lib/styles";
 import {
+  LineStyleMarker3DPlacementOption,
+  LineStyleMarker3DStyleOption,
   LineStylePattern3DStyleOption,
   LineSymbol3DCapOption,
   LineSymbol3DJoinOption,
@@ -65,6 +68,60 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       layerIndex
     ) as LineSymbol3DLayer;
     symbolLayer.join = value as LineSymbol3DJoinOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerBlockToggle = (
+    layerIndex: number,
+    currentMarkerBlock: HTMLCalciteBlockElement
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as LineSymbol3DLayer;
+    if (currentMarkerBlock.open && !symbolLayer.marker) {
+      symbolLayer.marker = new LineStyleMarker3D();
+    }
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerColorChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as LineSymbol3DLayer;
+    symbolLayer.marker.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerPlacementChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as LineSymbol3DLayer;
+    symbolLayer.marker.placement = value as LineStyleMarker3DPlacementOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerStyleChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as LineSymbol3DLayer;
+    symbolLayer.marker.style = value as LineStyleMarker3DStyleOption;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -131,6 +188,18 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   layerIndex={index}
                   handleCapChange={handleLineSymbol3DLayerCapChange}
                   handleJoinChange={handleLineSymbol3DLayerJoinChange}
+                  handleLineSymbol3DLayerMarkerBlockToggle={
+                    handleLineSymbol3DLayerMarkerBlockToggle
+                  }
+                  handleLineSymbol3DLayerMarkerColorChange={
+                    handleLineSymbol3DLayerMarkerColorChange
+                  }
+                  handleLineSymbol3DLayerMarkerPlacementChange={
+                    handleLineSymbol3DLayerMarkerPlacementChange
+                  }
+                  handleLineSymbol3DLayerMarkerStyleChange={
+                    handleLineSymbol3DLayerMarkerStyleChange
+                  }
                   handleLineSymbol3DLayerMaterialColorChange={
                     handleLineSymbol3DLayerMaterialColorChange
                   }

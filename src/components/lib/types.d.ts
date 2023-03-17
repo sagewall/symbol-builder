@@ -26,6 +26,16 @@ export type IconSymbol3DLayerResourcePrimitiveOption =
   | "kite"
   | "triangle";
 
+export type LineStyleMarker3DPlacementOption = "begin" | "end" | "begin-end";
+
+export type LineStyleMarker3DStyleOption =
+  | "arrow"
+  | "circle"
+  | "square"
+  | "diamond"
+  | "cross"
+  | "x";
+
 export type LineStylePattern3DStyleOption =
   | "dash"
   | "dash-dot"

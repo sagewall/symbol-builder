@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { LineSymbol3DCapOption, LineSymbol3DJoinOption } from "./lib/types";
+import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
@@ -15,6 +16,22 @@ interface Props {
   layerIndex: number;
   handleCapChange: (layerIndex: number, value: string) => void;
   handleJoinChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMarkerBlockToggle: (
+    layerIndex: number,
+    currentMarkerBlock: HTMLCalciteBlockElement
+  ) => void;
+  handleLineSymbol3DLayerMarkerColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleLineSymbol3DLayerMarkerPlacementChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleLineSymbol3DLayerMarkerStyleChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleLineSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -30,6 +47,10 @@ const LineSymbol3DLayerForm = ({
   layerIndex,
   handleCapChange,
   handleJoinChange,
+  handleLineSymbol3DLayerMarkerBlockToggle,
+  handleLineSymbol3DLayerMarkerColorChange,
+  handleLineSymbol3DLayerMarkerPlacementChange,
+  handleLineSymbol3DLayerMarkerStyleChange,
   handleLineSymbol3DLayerMaterialColorChange,
   handleLineSymbol3DLayerPatternStyleChange,
   handleSizeChange,
@@ -80,6 +101,22 @@ const LineSymbol3DLayerForm = ({
           ))}
         </CalciteSelect>
       </CalciteLabel>
+
+      <CalciteBlock
+        style={blockStyles}
+        collapsible
+        heading={"marker"}
+        onCalciteBlockToggle={(event) => {
+          handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
+        }}
+      >
+        <LineStyleMarker3DForm
+          layerIndex={layerIndex}
+          handleColorChange={handleLineSymbol3DLayerMarkerColorChange}
+          handlePlacementChange={handleLineSymbol3DLayerMarkerPlacementChange}
+          handleStyleChange={handleLineSymbol3DLayerMarkerStyleChange}
+        ></LineStyleMarker3DForm>
+      </CalciteBlock>
 
       <CalciteBlock style={blockStyles} collapsible heading={"material"}>
         <LineSymbol3DLayerMaterialForm
