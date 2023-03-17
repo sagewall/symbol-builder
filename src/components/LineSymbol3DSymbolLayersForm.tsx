@@ -5,6 +5,7 @@ import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles } from "./lib/styles";
+import { LineSymbol3DCapOption } from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 
 interface PageProps {
@@ -32,6 +33,19 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const deleteSymbol3DLayer = (index: number) => {
     const newSymbolLayers = symbolLayers.clone();
     newSymbolLayers.removeAt(index);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerCapChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as LineSymbol3DLayer;
+    symbolLayer.cap = value as LineSymbol3DCapOption;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -83,6 +97,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 />
                 <LineSymbol3DLayerForm
                   layerIndex={index}
+                  handleCapChange={handleLineSymbol3DLayerCapChange}
                   handleLineSymbol3DLayerMaterialColorChange={
                     handleLineSymbol3DLayerMaterialColorChange
                   }

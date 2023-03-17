@@ -26,6 +26,8 @@ export type IconSymbol3DLayerResourcePrimitiveOption =
   | "kite"
   | "triangle";
 
+export type LineSymbol3DCapOption = "butt" | "round" | "square";
+
 export type ObjectSymbol3DLayerAnchorOption =
   | "center"
   | "top"

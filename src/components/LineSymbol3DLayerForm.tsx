@@ -2,13 +2,17 @@ import {
   CalciteBlock,
   CalciteInputNumber,
   CalciteLabel,
+  CalciteOption,
+  CalciteSelect,
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
+import { LineSymbol3DCapOption } from "./lib/types";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
+  handleCapChange: (layerIndex: number, value: string) => void;
   handleLineSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -18,14 +22,36 @@ interface Props {
 
 const LineSymbol3DLayerForm = ({
   layerIndex,
-  handleLineSymbol3DLayerMaterialColorChange:
-    handleLineSymbol3DLayerMaterialColorChange,
+  handleCapChange,
+  handleLineSymbol3DLayerMaterialColorChange,
   handleSizeChange,
 }: Props) => {
-  const [size, setSize] = useState("12");
+  const capOptions = ["round", "butt", "square"];
+
+  const [cap, setCap] = useState("butt");
+  const [size, setSize] = useState("3");
 
   return (
     <React.Fragment>
+      <CalciteLabel layout="default" style={labelStyles}>
+        cap
+        <CalciteSelect
+          label={"cap selection"}
+          onCalciteSelectChange={(event) => {
+            setCap(event.target.value);
+            handleCapChange(
+              layerIndex,
+              event.target.value as LineSymbol3DCapOption
+            );
+          }}
+          value={cap}
+        >
+          {capOptions.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
+
       <CalciteBlock style={blockStyles} collapsible heading={"material"}>
         <LineSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
