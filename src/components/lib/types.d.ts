@@ -28,6 +28,8 @@ export type IconSymbol3DLayerResourcePrimitiveOption =
 
 export type LineSymbol3DCapOption = "butt" | "round" | "square";
 
+export type LineSymbol3DJoinOption = "miter" | "round" | "bevel";
+
 export type ObjectSymbol3DLayerAnchorOption =
   | "center"
   | "top"

@@ -7,12 +7,13 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { LineSymbol3DCapOption } from "./lib/types";
+import { LineSymbol3DCapOption, LineSymbol3DJoinOption } from "./lib/types";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
   handleCapChange: (layerIndex: number, value: string) => void;
+  handleJoinChange: (layerIndex: number, value: string) => void;
   handleLineSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string
@@ -23,12 +24,15 @@ interface Props {
 const LineSymbol3DLayerForm = ({
   layerIndex,
   handleCapChange,
+  handleJoinChange,
   handleLineSymbol3DLayerMaterialColorChange,
   handleSizeChange,
 }: Props) => {
-  const capOptions = ["round", "butt", "square"];
+  const capOptions = ["butt", "round", "square"];
+  const joinOptions = ["miter", "round", "bevel"];
 
   const [cap, setCap] = useState("butt");
+  const [join, setJoin] = useState("miter");
   const [size, setSize] = useState("3");
 
   return (
@@ -47,6 +51,25 @@ const LineSymbol3DLayerForm = ({
           value={cap}
         >
           {capOptions.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        join
+        <CalciteSelect
+          label={"join selection"}
+          onCalciteSelectChange={(event) => {
+            setJoin(event.target.value);
+            handleJoinChange(
+              layerIndex,
+              event.target.value as LineSymbol3DJoinOption
+            );
+          }}
+          value={join}
+        >
+          {joinOptions.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
