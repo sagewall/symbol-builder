@@ -21,6 +21,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import IndexPage from "./pages";
+import LineSymbol3DPage from "./pages/line-symbol-3d";
 import PictureFillSymbolPage from "./pages/picture-fill-symbol";
 import PictureMarkerSymbolPage from "./pages/picture-marker-symbol";
 import PointSymbol3DPage from "./pages/point-symbol-3d";
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <IndexPage></IndexPage>,
+      },
+      {
+        path: "line-symbol-3d",
+        element: <LineSymbol3DPage />,
       },
       {
         path: "picture-fill-symbol",

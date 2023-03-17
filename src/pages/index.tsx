@@ -7,6 +7,9 @@ const IndexPage = () => {
       <main>
         <ul>
           <li>
+            <Link to="/line-symbol-3d/">LineSymbol3D</Link>
+          </li>
+          <li>
             <Link to="/picture-fill-symbol/">PictureFillSymbol</Link>
           </li>
           <li>
