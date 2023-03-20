@@ -7,7 +7,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { point } from "./lib/geometry";
@@ -21,20 +21,19 @@ const PictureMarkerSymbolShell = () => {
 
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
     new PictureMarkerSymbol({
-      url: "https://sagewall.github.io/test-images/check-mark.svg",
+      url: "https://sagewall.github.io/test-images/check-mark.svg"
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: pictureMarkerSymbol,
+    symbol: pictureMarkerSymbol
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
   let view = <MapView graphics={graphics} />;
@@ -96,9 +95,7 @@ const PictureMarkerSymbolShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2));
   };
 
   return (
@@ -107,11 +104,7 @@ const PictureMarkerSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}

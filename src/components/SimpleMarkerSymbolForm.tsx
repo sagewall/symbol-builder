@@ -6,7 +6,7 @@ import {
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
-  CalciteSlider,
+  CalciteSlider
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -14,7 +14,7 @@ import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-  SimpleMarkerSymbolStyleOption,
+  SimpleMarkerSymbolStyleOption
 } from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
@@ -47,17 +47,9 @@ const SimpleMarkerSymbolForm = ({
   handleSizeChange,
   handleStyleChange,
   handleXoffsetChange,
-  handleYoffsetChange,
+  handleYoffsetChange
 }: Props) => {
-  const styleOptions = [
-    "circle",
-    "square",
-    "cross",
-    "x",
-    "diamond",
-    "triangle",
-    "path",
-  ];
+  const styleOptions = ["circle", "square", "cross", "x", "diamond", "triangle", "path"];
 
   const [angle, setAngle] = useState(0);
   const [color, setColor] = useState("#007ac2");
@@ -145,9 +137,7 @@ const SimpleMarkerSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(
-              event.target.value as SimpleMarkerSymbolStyleOption
-            );
+            handleStyleChange(event.target.value as SimpleMarkerSymbolStyleOption);
           }}
           value={style}
         >

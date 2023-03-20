@@ -2,14 +2,14 @@ import {
   CalciteBlock,
   CalciteInputNumber,
   CalciteInputText,
-  CalciteLabel,
+  CalciteLabel
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
+  SimpleLineSymbolStyleOption
 } from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
@@ -42,12 +42,10 @@ const PictureFillSymbolForm = ({
   handleXOffsetChange,
   handleXScaleChange,
   handleYOffsetChange,
-  handleYScaleChange,
+  handleYScaleChange
 }: Props) => {
   const [height, setHeight] = useState("12");
-  const [url, setUrl] = useState(
-    "https://sagewall.github.io/test-images/check-mark.svg"
-  );
+  const [url, setUrl] = useState("https://sagewall.github.io/test-images/check-mark.svg");
   const [width, setWidth] = useState("12");
   const [xoffset, setXoffset] = useState("0");
   const [xscale, setXscale] = useState("1");

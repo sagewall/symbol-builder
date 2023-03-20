@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
-  width: "100%",
+  width: "100%"
 };
 
 interface SceneViewProps {
@@ -25,13 +25,7 @@ const SceneView = ({ graphics, layers }: SceneViewProps) => {
       if (viewDivRef.current) {
         const loadSceneView = async () => {
           const { createSceneView } = await import("./lib/sceneview");
-          setView(
-            await createSceneView(
-              viewDivRef.current as HTMLDivElement,
-              graphics,
-              layers
-            )
-          );
+          setView(await createSceneView(viewDivRef.current as HTMLDivElement, graphics, layers));
         };
         loadSceneView();
 

@@ -5,13 +5,13 @@ import {
   CalciteOption,
   CalciteSelect,
   CalciteSlider,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   ObjectSymbol3DLayerAnchorOption,
-  ObjectSymbol3DLayerResourcePrimitiveOption,
+  ObjectSymbol3DLayerResourcePrimitiveOption
 } from "./lib/types";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
@@ -19,33 +19,15 @@ import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
 
 interface Props {
   layerIndex: number;
-  handleAnchorChange: (
-    layerIndex: number,
-    value: ObjectSymbol3DLayerAnchorOption
-  ) => void;
-  handleObjectSymbol3DLayerAnchorPositionXChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerAnchorPositionYChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerAnchorPositionZChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
+  handleAnchorChange: (layerIndex: number, value: ObjectSymbol3DLayerAnchorOption) => void;
+  handleObjectSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
+  handleObjectSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
+  handleObjectSymbol3DLayerAnchorPositionZChange: (layerIndex: number, value: string) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleDepthChange: (layerIndex: number, value: string) => void;
   handleHeadingChange: (layerIndex: number, value: number) => void;
-  handleObjectSymbol3DLayerMaterialColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleObjectSymbol3DLayerResourceHrefChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
+  handleObjectSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleObjectSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
     value: ObjectSymbol3DLayerResourcePrimitiveOption
@@ -69,7 +51,7 @@ const ObjectSymbol3DLayerForm = ({
   handleObjectSymbol3DLayerResourcePrimitiveChange,
   handleRollChange,
   handleTiltChange,
-  handleWidthChange,
+  handleWidthChange
 }: Props) => {
   const anchorOptions = ["center", "top", "bottom", "origin", "relative"];
 
@@ -89,10 +71,7 @@ const ObjectSymbol3DLayerForm = ({
           label={"anchor selection"}
           onCalciteSelectChange={(event) => {
             setAnchor(event.target.value);
-            handleAnchorChange(
-              layerIndex,
-              event.target.value as ObjectSymbol3DLayerAnchorOption
-            );
+            handleAnchorChange(layerIndex, event.target.value as ObjectSymbol3DLayerAnchorOption);
           }}
           value={anchor}
         >
@@ -103,11 +82,7 @@ const ObjectSymbol3DLayerForm = ({
       </CalciteLabel>
 
       {anchor === "relative" && (
-        <CalciteBlock
-          style={blockStyles}
-          collapsible
-          heading={"anchorPosition"}
-        >
+        <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
           <ObjectSymbol3DLayerAnchorPositionForm
             layerIndex={layerIndex}
             handleObjectSymbol3DLayerAnchorPositionXChange={
@@ -175,9 +150,7 @@ const ObjectSymbol3DLayerForm = ({
         <ObjectSymbol3DLayerResourceForm
           layerIndex={layerIndex}
           handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
-          handlePrimitiveChange={
-            handleObjectSymbol3DLayerResourcePrimitiveChange
-          }
+          handlePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
         ></ObjectSymbol3DLayerResourceForm>
       </CalciteBlock>
 

@@ -9,7 +9,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { polyline } from "./lib/geometry";
@@ -25,14 +25,13 @@ const LineSymbol3DShell = () => {
 
   const lineGraphic = new Graphic({
     geometry: polyline,
-    symbol: lineSymbol3D,
+    symbol: lineSymbol3D
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(lineGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(true);
   let view = <MapView graphics={graphics} />;
@@ -57,9 +56,7 @@ const LineSymbol3DShell = () => {
     setGraphics(newGraphics);
   };
 
-  const updateSymbolLayers = (
-    symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>
-  ) => {
+  const updateSymbolLayers = (symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>) => {
     const newLineSymbol3D = lineSymbol3D.clone();
     newLineSymbol3D.symbolLayers.removeAll();
     newLineSymbol3D.symbolLayers.addMany(symbolLayers);
@@ -67,9 +64,7 @@ const LineSymbol3DShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(lineSymbol3D.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(lineSymbol3D.toJSON(), null, 2));
   };
 
   return (
@@ -78,11 +73,7 @@ const LineSymbol3DShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}
@@ -94,9 +85,7 @@ const LineSymbol3DShell = () => {
             </CalciteLabel>
 
             <div style={formStyles}>
-              <LineSymbol3DForm
-                updateSymbolLayers={updateSymbolLayers}
-              ></LineSymbol3DForm>
+              <LineSymbol3DForm updateSymbolLayers={updateSymbolLayers}></LineSymbol3DForm>
             </div>
           </CalcitePanel>
 

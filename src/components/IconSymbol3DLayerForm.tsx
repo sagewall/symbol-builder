@@ -3,7 +3,7 @@ import {
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
@@ -13,7 +13,7 @@ import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   IconSymbol3DLayerAnchorOption,
-  IconSymbol3DLayerResourcePrimitiveOption,
+  IconSymbol3DLayerResourcePrimitiveOption
 } from "./lib/types";
 
 interface Props {
@@ -22,30 +22,12 @@ interface Props {
     layerIndex: number,
     value: IconSymbol3DLayerAnchorOption
   ) => void;
-  handleIconSymbol3DLayerAnchorPositionXChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerAnchorPositionYChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerMaterialColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerOutlineColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerOutlineSizeChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerResourceHrefChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
+  handleIconSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
     value: IconSymbol3DLayerResourcePrimitiveOption
@@ -63,7 +45,7 @@ const IconSymbol3DLayerForm = ({
   handleIconSymbol3DLayerOutlineSizeChange,
   handleIconSymbol3DLayerResourceHrefChange,
   handleIconSymbol3DLayerResourcePrimitiveChange,
-  handleSizeChange,
+  handleSizeChange
 }: Props) => {
   const anchorOptions = [
     "center",
@@ -75,7 +57,7 @@ const IconSymbol3DLayerForm = ({
     "top-right",
     "bottom-left",
     "bottom-right",
-    "relative",
+    "relative"
   ];
 
   const [anchor, setAnchor] = useState("center");
@@ -103,11 +85,7 @@ const IconSymbol3DLayerForm = ({
       </CalciteLabel>
 
       {anchor === "relative" && (
-        <CalciteBlock
-          style={blockStyles}
-          collapsible
-          heading={"anchorPosition"}
-        >
+        <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
           <IconSymbol3DLayerAnchorPositionForm
             layerIndex={layerIndex}
             handleIconSymbol3DLayerAnchorPositionXChange={

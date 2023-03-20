@@ -9,7 +9,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { polyline } from "./lib/geometry";
@@ -19,7 +19,7 @@ import {
   LineSymbolMarkerStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
+  SimpleLineSymbolStyleOption
 } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
@@ -31,26 +31,25 @@ const SimpleLineSymbolShell = () => {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
-      width: 2,
+      width: 2
     })
   );
 
   const [lineSymbolMarker, setLineSymbolMarker] = useState(
     new LineSymbolMarker({
-      color: "#007ac2",
+      color: "#007ac2"
     })
   );
 
   const polylineGraphic = new Graphic({
     geometry: polyline,
-    symbol: simpleLineSymbol,
+    symbol: simpleLineSymbol
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polylineGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
   let view = <MapView graphics={graphics} />;
@@ -93,9 +92,7 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerBlockToggle = (
-    currentMarkerBlock: HTMLCalciteBlockElement
-  ) => {
+  const handleMarkerBlockToggle = (currentMarkerBlock: HTMLCalciteBlockElement) => {
     if (currentMarkerBlock.heading == "marker") {
       const newSimpleLineSymbol = simpleLineSymbol.clone();
       if (currentMarkerBlock.open) {
@@ -119,9 +116,7 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerPlacementChange = (
-    currentPlacementValue: LineSymbolMarkerPlacementOption
-  ) => {
+  const handleMarkerPlacementChange = (currentPlacementValue: LineSymbolMarkerPlacementOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.placement = currentPlacementValue;
@@ -131,9 +126,7 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerStyleChange = (
-    currentMarkerStyle: LineSymbolMarkerStyleOption
-  ) => {
+  const handleMarkerStyleChange = (currentMarkerStyle: LineSymbolMarkerStyleOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.style = currentMarkerStyle;
@@ -149,9 +142,7 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleStyleChange = (
-    currentStyleValue: SimpleLineSymbolStyleOption
-  ) => {
+  const handleStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     updateGraphics(newSimpleLineSymbol);
@@ -164,9 +155,7 @@ const SimpleLineSymbolShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(simpleLineSymbol.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(simpleLineSymbol.toJSON(), null, 2));
   };
 
   return (
@@ -176,11 +165,7 @@ const SimpleLineSymbolShell = () => {
           <CalcitePanel>
             <div slot="header-content">Properties </div>
 
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}

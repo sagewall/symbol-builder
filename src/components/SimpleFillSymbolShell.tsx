@@ -9,7 +9,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { polygon } from "./lib/geometry";
@@ -18,7 +18,7 @@ import {
   SimpleFillSymbolStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
+  SimpleLineSymbolStyleOption
 } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
@@ -27,27 +27,24 @@ import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 const SimpleFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol()
-  );
+  const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
 
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
     new SimpleFillSymbol({
       color: "#007ac2",
-      outline: simpleLineSymbol,
+      outline: simpleLineSymbol
     })
   );
 
   const polygonGraphic = new Graphic({
     geometry: polygon,
-    symbol: simpleFillSymbol,
+    symbol: simpleFillSymbol
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
   let view = <MapView graphics={graphics} />;
@@ -78,9 +75,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineCapChange = (
-    currentCapValue: SimpleLineSymbolCapOption
-  ) => {
+  const handleOutlineCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -100,9 +95,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineJoinChange = (
-    currentJoinValue: SimpleLineSymbolJoinOption
-  ) => {
+  const handleOutlineJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -122,9 +115,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineStyleChange = (
-    currentStyleValue: SimpleLineSymbolStyleOption
-  ) => {
+  const handleOutlineStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -144,18 +135,14 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleStyleChange = (
-    currentStyleValue: SimpleFillSymbolStyleOption
-  ) => {
+  const handleStyleChange = (currentStyleValue: SimpleFillSymbolStyleOption) => {
     const newSimpleFillSymbol = simpleFillSymbol.clone();
     newSimpleFillSymbol.style = currentStyleValue;
     updateGraphics(newSimpleFillSymbol);
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(simpleLineSymbol.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(simpleLineSymbol.toJSON(), null, 2));
   };
 
   return (
@@ -164,11 +151,7 @@ const SimpleFillSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}

@@ -39,42 +39,42 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <IndexPage></IndexPage>,
+        element: <IndexPage></IndexPage>
       },
       {
         path: "line-symbol-3d",
-        element: <LineSymbol3DPage />,
+        element: <LineSymbol3DPage />
       },
       {
         path: "picture-fill-symbol",
-        element: <PictureFillSymbolPage />,
+        element: <PictureFillSymbolPage />
       },
       {
         path: "picture-marker-symbol",
-        element: <PictureMarkerSymbolPage />,
+        element: <PictureMarkerSymbolPage />
       },
       {
         path: "point-symbol-3d",
-        element: <PointSymbol3DPage />,
+        element: <PointSymbol3DPage />
       },
       {
         path: "simple-fill-symbol",
-        element: <SimpleFillSymbolPage />,
+        element: <SimpleFillSymbolPage />
       },
       {
         path: "simple-line-symbol",
-        element: <SimpleLineSymbolPage />,
+        element: <SimpleLineSymbolPage />
       },
       {
         path: "simple-marker-symbol",
-        element: <SimpleMarkerSymbolPage />,
+        element: <SimpleMarkerSymbolPage />
       },
       {
         path: "text-symbol",
-        element: <TextSymbolPage />,
-      },
-    ],
-  },
+        element: <TextSymbolPage />
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

@@ -1,7 +1,4 @@
-import {
-  CalciteBlock,
-  CalciteColorPicker,
-} from "@esri/calcite-components-react";
+import { CalciteBlock, CalciteColorPicker } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles } from "./lib/styles";
 
@@ -10,10 +7,7 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
-const LineSymbol3DLayerMaterialForm = ({
-  layerIndex,
-  handleColorChange,
-}: Props) => {
+const LineSymbol3DLayerMaterialForm = ({ layerIndex, handleColorChange }: Props) => {
   const [color, setColor] = useState("#ff0000");
 
   return (

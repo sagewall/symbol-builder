@@ -2,7 +2,7 @@ import {
   CalciteBlock,
   CalciteColorPicker,
   CalciteInputNumber,
-  CalciteLabel,
+  CalciteLabel
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -16,7 +16,7 @@ interface Props {
 const IconSymbol3DLayerOutlineForm = ({
   layerIndex,
   handleColorChange,
-  handleSizeChange,
+  handleSizeChange
 }: Props) => {
   const [color, setColor] = useState("#ff0000");
   const [size, setSize] = useState("1.5");

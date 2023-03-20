@@ -2,7 +2,7 @@ import {
   CalciteBlock,
   CalciteColorPicker,
   CalciteInputNumber,
-  CalciteLabel,
+  CalciteLabel
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -13,11 +13,7 @@ interface Props {
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-const TextSymbol3DLayerHaloForm = ({
-  layerIndex,
-  handleColorChange,
-  handleSizeChange,
-}: Props) => {
+const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeChange }: Props) => {
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("0");
 

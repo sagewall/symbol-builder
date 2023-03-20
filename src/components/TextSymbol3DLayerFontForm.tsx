@@ -3,7 +3,7 @@ import {
   CalciteInputText,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
@@ -24,7 +24,7 @@ const FontForm = ({
   handleFamilyChange,
   handleSizeChange,
   handleStyleChange,
-  handleWeightChange,
+  handleWeightChange
 }: Props) => {
   const fontDecorationOptions = ["none", "underline", "line-through"];
   const fontStyleOptions = ["normal", "italic", "oblique"];
@@ -44,10 +44,7 @@ const FontForm = ({
           label={"font decoration selection"}
           onCalciteSelectChange={(event) => {
             setDecoration(event.target.value);
-            handleDecorationChange(
-              layerIndex,
-              event.target.value as FontDecoration
-            );
+            handleDecorationChange(layerIndex, event.target.value as FontDecoration);
           }}
           value={decoration}
         >

@@ -3,14 +3,11 @@ import {
   CalciteColorPicker,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  LineStyleMarker3DPlacementOption,
-  LineStyleMarker3DStyleOption,
-} from "./lib/types";
+import { LineStyleMarker3DPlacementOption, LineStyleMarker3DStyleOption } from "./lib/types";
 
 interface Props {
   layerIndex: number;
@@ -23,7 +20,7 @@ const LineStyleMarker3DForm = ({
   layerIndex,
   handleColorChange,
   handlePlacementChange,
-  handleStyleChange,
+  handleStyleChange
 }: Props) => {
   const placementOptions = ["begin-end", "begin", "end"];
   const styleOptions = ["arrow", "circle", "square", "diamond", "cross", "x"];
@@ -73,10 +70,7 @@ const LineStyleMarker3DForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(
-              layerIndex,
-              event.target.value as LineStyleMarker3DStyleOption
-            );
+            handleStyleChange(layerIndex, event.target.value as LineStyleMarker3DStyleOption);
           }}
           value={style}
         >

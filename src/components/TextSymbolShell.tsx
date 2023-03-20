@@ -9,7 +9,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { point } from "./lib/geometry";
@@ -19,7 +19,7 @@ import {
   FontStyle,
   FontWeight,
   HorizontalAlignment,
-  VerticalAlignment,
+  VerticalAlignment
 } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
@@ -35,20 +35,19 @@ const TextSymbolShell = () => {
       font,
       haloColor: "#ffffff",
       haloSize: 0,
-      text: "Hello World!",
+      text: "Hello World!"
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: textSymbol,
+    symbol: textSymbol
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
   let view = <MapView graphics={graphics} />;
@@ -103,9 +102,7 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontDecorationChange = (
-    currentFontDecoration: FontDecoration
-  ) => {
+  const handleFontDecorationChange = (currentFontDecoration: FontDecoration) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.decoration = currentFontDecoration as FontDecoration;
     setFont(newTextSymbol.font);
@@ -152,12 +149,9 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleHorizontalAlignmentChange = (
-    currentHorizontalAlignment: HorizontalAlignment
-  ) => {
+  const handleHorizontalAlignmentChange = (currentHorizontalAlignment: HorizontalAlignment) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.horizontalAlignment =
-      currentHorizontalAlignment as HorizontalAlignment;
+    newTextSymbol.horizontalAlignment = currentHorizontalAlignment as HorizontalAlignment;
     updateGraphics(newTextSymbol);
   };
 
@@ -185,12 +179,9 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleVerticalAlignmentChange = (
-    currentVerticalAlignment: VerticalAlignment
-  ) => {
+  const handleVerticalAlignmentChange = (currentVerticalAlignment: VerticalAlignment) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.verticalAlignment =
-      currentVerticalAlignment as VerticalAlignment;
+    newTextSymbol.verticalAlignment = currentVerticalAlignment as VerticalAlignment;
     updateGraphics(newTextSymbol);
   };
 
@@ -216,11 +207,7 @@ const TextSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}
@@ -243,9 +230,7 @@ const TextSymbolShell = () => {
                 handleFontWeightChange={handleFontWeightChange}
                 handleHaloColorChange={handleHaloColorChange}
                 handleHaloSizeChange={handleHaloSizeChange}
-                handleHorizontalAlignmentChange={
-                  handleHorizontalAlignmentChange
-                }
+                handleHorizontalAlignmentChange={handleHorizontalAlignmentChange}
                 handleKerningChange={handleKerningChange}
                 handleLineWidthChange={handleLineWidthChange}
                 handleRotatedChange={handleRotatedChange}

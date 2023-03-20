@@ -9,7 +9,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { point } from "./lib/geometry";
@@ -18,7 +18,7 @@ import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
   SimpleLineSymbolStyleOption,
-  SimpleMarkerSymbolStyleOption,
+  SimpleMarkerSymbolStyleOption
 } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
@@ -33,20 +33,19 @@ const SimpleMarkerSymbolShell = () => {
 
   const [simpleMarkerSymbol, setSimpleMarkerSymbol] = useState(
     new SimpleMarkerSymbol({
-      outline: simpleLineSymbol,
+      outline: simpleLineSymbol
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: simpleMarkerSymbol,
+    symbol: simpleMarkerSymbol
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
   let view = <MapView graphics={graphics} />;
@@ -83,9 +82,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineCapChange = (
-    currentCapValue: SimpleLineSymbolCapOption
-  ) => {
+  const handleOutlineCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -105,9 +102,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineJoinChange = (
-    currentJoinValue: SimpleLineSymbolJoinOption
-  ) => {
+  const handleOutlineJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -127,9 +122,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineStyleChange = (
-    currentStyleValue: SimpleLineSymbolStyleOption
-  ) => {
+  const handleOutlineStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -161,9 +154,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleStyleChange = (
-    currentStyleValue: SimpleMarkerSymbolStyleOption
-  ) => {
+  const handleStyleChange = (currentStyleValue: SimpleMarkerSymbolStyleOption) => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.style = currentStyleValue;
     updateGraphics(newSimpleMarkerSymbol);
@@ -182,9 +173,7 @@ const SimpleMarkerSymbolShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(simpleLineSymbol.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(simpleLineSymbol.toJSON(), null, 2));
   };
 
   return (
@@ -193,11 +182,7 @@ const SimpleMarkerSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}

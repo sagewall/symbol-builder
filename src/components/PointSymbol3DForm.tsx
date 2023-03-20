@@ -21,7 +21,7 @@ const PointSymbol3DForm = ({
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
-  updateSymbolLayers,
+  updateSymbolLayers
 }: Props) => {
   return (
     <React.Fragment>

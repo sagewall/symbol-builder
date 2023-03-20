@@ -7,7 +7,7 @@ import {
   CalciteOption,
   CalciteSelect,
   CalciteSlider,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import FontForm from "./FontForm";
@@ -17,7 +17,7 @@ import {
   FontStyle,
   FontWeight,
   HorizontalAlignment,
-  VerticalAlignment,
+  VerticalAlignment
 } from "./lib/types";
 
 interface Props {
@@ -63,7 +63,7 @@ const TextSymbolForm = ({
   handleTextChange,
   handleVerticalAlignmentChange,
   handleXOffsetChange,
-  handleYOffsetChange,
+  handleYOffsetChange
 }: Props) => {
   const horizontalAlignmentOptions = ["center", "right", "left"];
   const verticalAlignmentOptions = ["baseline", "top", "middle", "bottom"];
@@ -209,9 +209,7 @@ const TextSymbolForm = ({
           label={"horizontalAlignment selection"}
           onCalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
-            handleHorizontalAlignmentChange(
-              event.target.value as HorizontalAlignment
-            );
+            handleHorizontalAlignmentChange(event.target.value as HorizontalAlignment);
           }}
           value={horizontalAlignment}
         >
@@ -274,9 +272,7 @@ const TextSymbolForm = ({
           label={"verticalAlignment selection"}
           onCalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
-            handleVerticalAlignmentChange(
-              event.target.value as VerticalAlignment
-            );
+            handleVerticalAlignmentChange(event.target.value as VerticalAlignment);
           }}
           value={verticalAlignment}
         >

@@ -2,7 +2,7 @@ import {
   CalciteBlock,
   CalciteColorPicker,
   CalciteInputNumber,
-  CalciteLabel,
+  CalciteLabel
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -12,10 +12,7 @@ interface Props {
   handleSizeChange: (value: string) => void;
 }
 
-const PointSymbol3DCalloutForm = ({
-  handleColorChange,
-  handleSizeChange,
-}: Props) => {
+const PointSymbol3DCalloutForm = ({ handleColorChange, handleSizeChange }: Props) => {
   const [color, setColor] = useState("#007ac2");
   const [size, setSize] = useState("1");
 

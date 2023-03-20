@@ -4,7 +4,7 @@ import {
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -13,7 +13,7 @@ import {
   LineSymbolMarkerStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
+  SimpleLineSymbolStyleOption
 } from "./lib/types";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 
@@ -23,9 +23,7 @@ interface Props {
   handleJoinChange: (value: SimpleLineSymbolJoinOption) => void;
   handleMarkerBlockToggle?: (value: HTMLCalciteBlockElement) => void;
   handleMarkerColorChange?: (value: string) => void;
-  handleMarkerPlacementChange?: (
-    value: LineSymbolMarkerPlacementOption
-  ) => void;
+  handleMarkerPlacementChange?: (value: LineSymbolMarkerPlacementOption) => void;
   handleMarkerStyleChange?: (value: LineSymbolMarkerStyleOption) => void;
   handleMiterLimitChange: (value: string) => void;
   handleStyleChange: (value: SimpleLineSymbolStyleOption) => void;
@@ -44,7 +42,7 @@ const SimpleLineSymbolForm = ({
   handleMiterLimitChange,
   handleStyleChange,
   handleWidthChange,
-  showMarker,
+  showMarker
 }: Props) => {
   const capOptions = ["round", "butt", "square"];
   const joinOptions = ["round", "miter", "bevel"];
@@ -60,7 +58,7 @@ const SimpleLineSymbolForm = ({
     "short-dash",
     "short-dash-dot",
     "short-dash-dot-dot",
-    "short-dot",
+    "short-dot"
   ];
 
   const [cap, setCap] = useState("round");
@@ -162,9 +160,7 @@ const SimpleLineSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(
-              event.target.value as SimpleLineSymbolStyleOption
-            );
+            handleStyleChange(event.target.value as SimpleLineSymbolStyleOption);
           }}
           value={style}
         >

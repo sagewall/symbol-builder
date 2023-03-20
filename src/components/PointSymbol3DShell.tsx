@@ -13,7 +13,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { point } from "./lib/geometry";
@@ -25,33 +25,30 @@ import SceneView from "./SceneView";
 const PointSymbol3DShell = () => {
   const viewSwitchRef = useRef(null);
 
-  const [lineCallout3D, setLineCallout3D] = useState(
-    new LineCallout3D({ size: 1 })
-  );
+  const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
   const [symbol3DVerticalOffset, setSymbol3DVerticalOffset] = useState(
     new Symbol3DVerticalOffset({
       maxWorldLength: 100,
       minWorldLength: 0,
-      screenLength: 0,
+      screenLength: 0
     })
   );
   const [pointSymbol3D, setPointSymbol3D] = useState(
     new PointSymbol3D({
       callout: lineCallout3D,
-      verticalOffset: symbol3DVerticalOffset,
+      verticalOffset: symbol3DVerticalOffset
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: pointSymbol3D,
+    symbol: pointSymbol3D
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(true);
   let view = <MapView graphics={graphics} />;
@@ -97,9 +94,7 @@ const PointSymbol3DShell = () => {
   };
 
   const updateSymbolLayers = (
-    symbolLayers: Collection<
-      IconSymbol3DLayer | ObjectSymbol3DLayer | TextSymbol3DLayer
-    >
+    symbolLayers: Collection<IconSymbol3DLayer | ObjectSymbol3DLayer | TextSymbol3DLayer>
   ) => {
     const newPointSymbol3D = pointSymbol3D.clone();
     newPointSymbol3D.symbolLayers.removeAll();
@@ -107,9 +102,7 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleVerticalOffsetMaxWorldLengthChange = (
-    currentMaxWorldLength: string
-  ) => {
+  const handleVerticalOffsetMaxWorldLengthChange = (currentMaxWorldLength: string) => {
     const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
     newSymbol3DVerticalOffset.maxWorldLength = Number(currentMaxWorldLength);
     setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
@@ -119,9 +112,7 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleVerticalOffsetMinWorldLengthChange = (
-    currentMinWorldLength: string
-  ) => {
+  const handleVerticalOffsetMinWorldLengthChange = (currentMinWorldLength: string) => {
     const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
     newSymbol3DVerticalOffset.minWorldLength = Number(currentMinWorldLength);
     setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
@@ -131,9 +122,7 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleVerticalOffsetScreenLengthChange = (
-    currentScreenLength: string
-  ) => {
+  const handleVerticalOffsetScreenLengthChange = (currentScreenLength: string) => {
     const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
     newSymbol3DVerticalOffset.screenLength = Number(currentScreenLength);
     setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
@@ -144,9 +133,7 @@ const PointSymbol3DShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(pointSymbol3D.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(pointSymbol3D.toJSON(), null, 2));
   };
 
   return (
@@ -155,11 +142,7 @@ const PointSymbol3DShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 ref={viewSwitchRef}
@@ -174,15 +157,9 @@ const PointSymbol3DShell = () => {
               <PointSymbol3DForm
                 handleCalloutColorChange={handleCalloutColorChange}
                 handleCalloutSizeChange={handleCalloutSizeChange}
-                handleVerticalOffsetMaxWorldLengthChange={
-                  handleVerticalOffsetMaxWorldLengthChange
-                }
-                handleVerticalOffsetMinWorldLengthChange={
-                  handleVerticalOffsetMinWorldLengthChange
-                }
-                handleVerticalOffsetScreenLengthChange={
-                  handleVerticalOffsetScreenLengthChange
-                }
+                handleVerticalOffsetMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
+                handleVerticalOffsetMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}
+                handleVerticalOffsetScreenLengthChange={handleVerticalOffsetScreenLengthChange}
                 updateSymbolLayers={updateSymbolLayers}
               ></PointSymbol3DForm>
             </div>

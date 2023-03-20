@@ -3,7 +3,7 @@ import {
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -20,26 +20,11 @@ interface Props {
     layerIndex: number,
     currentMarkerBlock: HTMLCalciteBlockElement
   ) => void;
-  handleLineSymbol3DLayerMarkerColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleLineSymbol3DLayerMarkerPlacementChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleLineSymbol3DLayerMarkerStyleChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleLineSymbol3DLayerMaterialColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleLineSymbol3DLayerPatternStyleChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
+  handleLineSymbol3DLayerMarkerColorChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMarkerPlacementChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMarkerStyleChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerPatternStyleChange: (layerIndex: number, value: string) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
@@ -53,7 +38,7 @@ const LineSymbol3DLayerForm = ({
   handleLineSymbol3DLayerMarkerStyleChange,
   handleLineSymbol3DLayerMaterialColorChange,
   handleLineSymbol3DLayerPatternStyleChange,
-  handleSizeChange,
+  handleSizeChange
 }: Props) => {
   const capOptions = ["butt", "round", "square"];
   const joinOptions = ["miter", "round", "bevel"];
@@ -70,10 +55,7 @@ const LineSymbol3DLayerForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(
-              layerIndex,
-              event.target.value as LineSymbol3DCapOption
-            );
+            handleCapChange(layerIndex, event.target.value as LineSymbol3DCapOption);
           }}
           value={cap}
         >
@@ -89,10 +71,7 @@ const LineSymbol3DLayerForm = ({
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(
-              layerIndex,
-              event.target.value as LineSymbol3DJoinOption
-            );
+            handleJoinChange(layerIndex, event.target.value as LineSymbol3DJoinOption);
           }}
           value={join}
         >

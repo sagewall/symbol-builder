@@ -2,7 +2,7 @@ import {
   CalciteInputText,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
@@ -20,7 +20,7 @@ interface Props {
 const ObjectSymbol3DLayerResourceForm = ({
   layerIndex,
   handleHrefChange,
-  handlePrimitiveChange,
+  handlePrimitiveChange
 }: Props) => {
   const primitiveOptions = [
     "sphere",
@@ -29,7 +29,7 @@ const ObjectSymbol3DLayerResourceForm = ({
     "cone",
     "inverted-cone",
     "diamond",
-    "tetrahedron",
+    "tetrahedron"
   ];
 
   const [href, setHref] = useState("");

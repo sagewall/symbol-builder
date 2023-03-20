@@ -3,7 +3,7 @@ import {
   CalciteColorPicker,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -11,7 +11,7 @@ import {
   SimpleFillSymbolStyleOption,
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
+  SimpleLineSymbolStyleOption
 } from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
@@ -34,7 +34,7 @@ const SimpleFillSymbolForm = ({
   handleOutlineMiterLimitChange,
   handleOutlineStyleChange,
   handleOutlineWidthChange,
-  handleStyleChange,
+  handleStyleChange
 }: Props) => {
   const styleOptions = [
     "solid",
@@ -44,7 +44,7 @@ const SimpleFillSymbolForm = ({
     "forward-diagonal",
     "horizontal",
     "none",
-    "vertical",
+    "vertical"
   ];
 
   const [color, setColor] = useState("#007ac2");
@@ -86,9 +86,7 @@ const SimpleFillSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(
-              event.target.value as SimpleFillSymbolStyleOption
-            );
+            handleStyleChange(event.target.value as SimpleFillSymbolStyleOption);
           }}
           value={style}
         >

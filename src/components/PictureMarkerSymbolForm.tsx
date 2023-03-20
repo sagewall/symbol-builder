@@ -2,7 +2,7 @@ import {
   CalciteInputNumber,
   CalciteInputText,
   CalciteLabel,
-  CalciteSlider,
+  CalciteSlider
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
@@ -22,13 +22,11 @@ const PictureMarkerSymbolForm = ({
   handleUrlChange,
   handleWidthChange,
   handleXoffsetChange,
-  handleYoffsetChange,
+  handleYoffsetChange
 }: Props) => {
   const [angle, setAngle] = useState(0);
   const [height, setHeight] = useState("12");
-  const [url, setUrl] = useState(
-    "https://sagewall.github.io/test-images/check-mark.svg"
-  );
+  const [url, setUrl] = useState("https://sagewall.github.io/test-images/check-mark.svg");
   const [width, setWidth] = useState("12");
   const [xoffset, setXoffset] = useState("0");
   const [yoffset, setYoffset] = useState("0");

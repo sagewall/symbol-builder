@@ -9,7 +9,7 @@ import {
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import { polygon } from "./lib/geometry";
@@ -17,7 +17,7 @@ import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
   SimpleLineSymbolCapOption,
   SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
+  SimpleLineSymbolStyleOption
 } from "./lib/types";
 import MapView from "./MapView";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
@@ -26,27 +26,24 @@ import SceneView from "./SceneView";
 const PictureFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol()
-  );
+  const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
 
   const [pictureFillSymbol, setPictureFillSymbol] = useState(
     new PictureFillSymbol({
       outline: simpleLineSymbol,
-      url: "https://sagewall.github.io/test-images/check-mark.svg",
+      url: "https://sagewall.github.io/test-images/check-mark.svg"
     })
   );
 
   const polygonGraphic = new Graphic({
     geometry: polygon,
-    symbol: pictureFillSymbol,
+    symbol: pictureFillSymbol
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
   let view = <MapView graphics={graphics} />;
@@ -76,9 +73,7 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineCapChange = (
-    currentCapValue: SimpleLineSymbolCapOption
-  ) => {
+  const handleOutlineCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -98,9 +93,7 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineJoinChange = (
-    currentJoinValue: SimpleLineSymbolJoinOption
-  ) => {
+  const handleOutlineJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -120,9 +113,7 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineStyleChange = (
-    currentStyleValue: SimpleLineSymbolStyleOption
-  ) => {
+  const handleOutlineStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -179,9 +170,7 @@ const PictureFillSymbolShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(pictureFillSymbol.toJSON(), null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(pictureFillSymbol.toJSON(), null, 2));
   };
 
   return (
@@ -190,11 +179,7 @@ const PictureFillSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
               <CalciteSwitch
                 disabled={true}

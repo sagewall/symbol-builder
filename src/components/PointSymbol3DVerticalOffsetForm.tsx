@@ -1,7 +1,4 @@
-import {
-  CalciteInputNumber,
-  CalciteLabel,
-} from "@esri/calcite-components-react";
+import { CalciteInputNumber, CalciteLabel } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
@@ -13,7 +10,7 @@ interface Props {
 const PointSymbol3DVerticalOffsetForm = ({
   handleMaxWorldLengthChange,
   handleMinWorldLengthChange,
-  handleScreenLengthChange,
+  handleScreenLengthChange
 }: Props) => {
   const [maxWorldLength, setMaxWorldLength] = useState("100");
   const [minWorldLength, setMinWorldLength] = useState("0");

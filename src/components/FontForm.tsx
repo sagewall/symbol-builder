@@ -3,7 +3,7 @@ import {
   CalciteInputText,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect,
+  CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
@@ -22,7 +22,7 @@ const FontForm = ({
   handleFamilyChange,
   handleSizeChange,
   handleStyleChange,
-  handleWeightChange,
+  handleWeightChange
 }: Props) => {
   const fontDecorationOptions = ["none", "underline", "line-through"];
   const fontStyleOptions = ["normal", "italic", "oblique"];

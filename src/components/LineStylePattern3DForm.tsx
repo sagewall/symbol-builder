@@ -1,8 +1,4 @@
-import {
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect,
-} from "@esri/calcite-components-react";
+import { CalciteLabel, CalciteOption, CalciteSelect } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 import { LineStylePattern3DStyleOption } from "./lib/types";
@@ -25,7 +21,7 @@ const LineStylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
     "short-dash-dot",
     "short-dash-dot-dot",
     "short-dot",
-    "solid",
+    "solid"
   ];
 
   const [style, setStyle] = useState("solid");
@@ -38,10 +34,7 @@ const LineStylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(
-              layerIndex,
-              event.target.value as LineStylePattern3DStyleOption
-            );
+            handleStyleChange(layerIndex, event.target.value as LineStylePattern3DStyleOption);
           }}
           value={style}
         >

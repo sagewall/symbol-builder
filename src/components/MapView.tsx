@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
-  width: "100%",
+  width: "100%"
 };
 
 interface MapViewProps {
@@ -25,13 +25,7 @@ const MapView = ({ graphics, layers }: MapViewProps) => {
       if (viewDivRef.current) {
         const loadMapView = async () => {
           const { createMapView } = await import("./lib/mapview");
-          setView(
-            await createMapView(
-              viewDivRef.current as HTMLDivElement,
-              graphics,
-              layers
-            )
-          );
+          setView(await createMapView(viewDivRef.current as HTMLDivElement, graphics, layers));
         };
         loadMapView();
 
