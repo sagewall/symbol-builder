@@ -2,7 +2,8 @@ import {
   CalciteBlock,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect
+  CalciteSelect,
+  CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -17,6 +18,7 @@ interface Props {
   layerIndex: number;
   handleAnchorChange: (layerIndex: number, value: string) => void;
   handleCapChange: (layerIndex: number, value: string) => void;
+  handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleJoinChange: (layerIndex: number, value: string) => void;
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
 }
@@ -25,6 +27,7 @@ const LineSymbol3DLayerForm = ({
   layerIndex,
   handleAnchorChange,
   handleCapChange,
+  handleCastShadowsChange,
   handleJoinChange,
   handlePathSymbol3DLayerMaterialColorChange
 }: Props) => {
@@ -34,6 +37,7 @@ const LineSymbol3DLayerForm = ({
 
   const [anchor, setAnchor] = useState("center");
   const [cap, setCap] = useState("butt");
+  const [castShadows, setCastShadows] = useState(true);
   const [join, setJoin] = useState("miter");
 
   return (
@@ -68,6 +72,17 @@ const LineSymbol3DLayerForm = ({
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        castShadows
+        <CalciteSwitch
+          onCalciteSwitchChange={(event) => {
+            setCastShadows(event.target.checked);
+            handleCastShadowsChange(layerIndex, event.target.checked);
+          }}
+          value={castShadows}
+        ></CalciteSwitch>
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>

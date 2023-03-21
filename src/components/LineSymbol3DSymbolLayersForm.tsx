@@ -35,6 +35,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const createNewPathSymbol3DLayer = (): PathSymbol3DLayer => {
     const newPathSymbol3DLayer = new PathSymbol3DLayer({
+      castShadows: false,
       material: { color: "#007ac2" },
       width: 300
     });
@@ -159,6 +160,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handlePathSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.castShadows = value;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handlePathSymbol3DLayerJoinChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
@@ -224,6 +233,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 layerIndex={index}
                 handleAnchorChange={handlePathSymbol3DLayerAnchorChange}
                 handleCapChange={handlePathSymbol3DLayerCapChange}
+                handleCastShadowsChange={handlePathSymbol3DLayerCastShadowsChange}
                 handleJoinChange={handlePathSymbol3DLayerJoinChange}
                 handlePathSymbol3DLayerMaterialColorChange={
                   handlePathSymbol3DLayerMaterialColorChange
