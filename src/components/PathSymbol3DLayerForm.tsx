@@ -1,5 +1,6 @@
 import {
   CalciteBlock,
+  CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
@@ -19,6 +20,7 @@ interface Props {
   handleAnchorChange: (layerIndex: number, value: string) => void;
   handleCapChange: (layerIndex: number, value: string) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
+  handleHeightChange: (layerIndex: number, value: string) => void;
   handleJoinChange: (layerIndex: number, value: string) => void;
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
 }
@@ -28,6 +30,7 @@ const LineSymbol3DLayerForm = ({
   handleAnchorChange,
   handleCapChange,
   handleCastShadowsChange,
+  handleHeightChange,
   handleJoinChange,
   handlePathSymbol3DLayerMaterialColorChange
 }: Props) => {
@@ -38,6 +41,7 @@ const LineSymbol3DLayerForm = ({
   const [anchor, setAnchor] = useState("center");
   const [cap, setCap] = useState("butt");
   const [castShadows, setCastShadows] = useState(true);
+  const [height, setHeight] = useState("300");
   const [join, setJoin] = useState("miter");
 
   return (
@@ -83,6 +87,19 @@ const LineSymbol3DLayerForm = ({
           }}
           value={castShadows}
         ></CalciteSwitch>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        height
+        <CalciteInputNumber
+          label={"height input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setHeight(event.target.value);
+            handleHeightChange(layerIndex, event.target.value);
+          }}
+          value={height}
+        ></CalciteInputNumber>
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
