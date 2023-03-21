@@ -15,7 +15,8 @@ import {
   LineSymbol3DJoinOption,
   PathSymbol3DLayerAnchorOption,
   PathSymbol3DLayerCapOption,
-  PathSymbol3DLayerJoinOption
+  PathSymbol3DLayerJoinOption,
+  PathSymbol3DLayerProfileOption
 } from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
@@ -192,6 +193,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handlePathSymbol3DLayerProfileChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.profile = value as PathSymbol3DLayerProfileOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -247,6 +256,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 handlePathSymbol3DLayerMaterialColorChange={
                   handlePathSymbol3DLayerMaterialColorChange
                 }
+                handleProfileChange={handlePathSymbol3DLayerProfileChange}
               ></PathSymbol3DLayerForm>
             </CalciteBlock>
           );

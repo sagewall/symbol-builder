@@ -11,7 +11,8 @@ import { blockStyles, labelStyles } from "./lib/styles";
 import {
   PathSymbol3DLayerAnchorOption,
   PathSymbol3DLayerCapOption,
-  PathSymbol3DLayerJoinOption
+  PathSymbol3DLayerJoinOption,
+  PathSymbol3DLayerProfileOption
 } from "./lib/types";
 import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 
@@ -23,6 +24,7 @@ interface Props {
   handleHeightChange: (layerIndex: number, value: string) => void;
   handleJoinChange: (layerIndex: number, value: string) => void;
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleProfileChange: (layerIndex: number, value: string) => void;
 }
 
 const LineSymbol3DLayerForm = ({
@@ -32,17 +34,20 @@ const LineSymbol3DLayerForm = ({
   handleCastShadowsChange,
   handleHeightChange,
   handleJoinChange,
-  handlePathSymbol3DLayerMaterialColorChange
+  handlePathSymbol3DLayerMaterialColorChange,
+  handleProfileChange
 }: Props) => {
   const anchorOptions = ["center", "bottom", "top"];
   const capOptions = ["butt", "round", "square", "none"];
   const joinOptions = ["miter", "round", "bevel"];
+  const profileOptions = ["circle", "quad"];
 
   const [anchor, setAnchor] = useState("center");
   const [cap, setCap] = useState("butt");
   const [castShadows, setCastShadows] = useState(true);
   const [height, setHeight] = useState("300");
   const [join, setJoin] = useState("miter");
+  const [profile, setProfile] = useState("circle");
 
   return (
     <React.Fragment>
@@ -124,6 +129,22 @@ const LineSymbol3DLayerForm = ({
           handleColorChange={handlePathSymbol3DLayerMaterialColorChange}
         ></PathSymbol3DLayerMaterialForm>
       </CalciteBlock>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        profile
+        <CalciteSelect
+          label={"profile selection"}
+          onCalciteSelectChange={(event) => {
+            setProfile(event.target.value);
+            handleProfileChange(layerIndex, event.target.value as PathSymbol3DLayerProfileOption);
+          }}
+          value={profile}
+        >
+          {profileOptions.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
     </React.Fragment>
   );
 };
