@@ -13,6 +13,7 @@ import {
   LineStylePattern3DStyleOption,
   LineSymbol3DCapOption,
   LineSymbol3DJoinOption,
+  PathSymbol3DLayerAnchorOption,
   PathSymbol3DLayerCapOption,
   PathSymbol3DLayerJoinOption
 } from "./lib/types";
@@ -142,6 +143,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handlePathSymbol3DLayerAnchorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.anchor = value as PathSymbol3DLayerAnchorOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handlePathSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
@@ -213,6 +222,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
               />
               <PathSymbol3DLayerForm
                 layerIndex={index}
+                handleAnchorChange={handlePathSymbol3DLayerAnchorChange}
                 handleCapChange={handlePathSymbol3DLayerCapChange}
                 handleJoinChange={handlePathSymbol3DLayerJoinChange}
                 handlePathSymbol3DLayerMaterialColorChange={

@@ -57,6 +57,8 @@ export type ObjectSymbol3DLayerResourcePrimitiveOption =
   | "diamond"
   | "tetrahedron";
 
+export type PathSymbol3DLayerAnchorOption = "center" | "bottom" | "top";
+
 export type PathSymbol3DLayerCapOption = "butt" | "square" | "round" | "none";
 
 export type PathSymbol3DLayerJoinOption = "miter" | "bevel" | "round";
