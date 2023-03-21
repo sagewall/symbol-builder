@@ -42,6 +42,10 @@ export type LineSymbol3DCapOption = "butt" | "round" | "square";
 
 export type LineSymbol3DJoinOption = "miter" | "round" | "bevel";
 
+export type LineSymbolMarkerPlacementOption = "begin" | "end" | "begin-end";
+
+export type LineSymbolMarkerStyleOption = "arrow" | "circle" | "square" | "diamond" | "cross" | "x";
+
 export type ObjectSymbol3DLayerAnchorOption = "center" | "top" | "bottom" | "origin" | "relative";
 
 export type ObjectSymbol3DLayerResourcePrimitiveOption =
@@ -54,9 +58,18 @@ export type ObjectSymbol3DLayerResourcePrimitiveOption =
   | "tetrahedron";
 
 export type PathSymbol3DLayerCapOption = "butt" | "square" | "round" | "none";
+
 export type PathSymbol3DLayerJoinOption = "miter" | "bevel" | "round";
 
-export type VerticalAlignment = "baseline" | "top" | "middle" | "bottom";
+export type SimpleFillSymbolStyleOption =
+  | "backward-diagonal"
+  | "cross"
+  | "diagonal-cross"
+  | "forward-diagonal"
+  | "horizontal"
+  | "none"
+  | "solid"
+  | "vertical";
 
 export type SimpleLineSymbolCapOption = "butt" | "round" | "square";
 
@@ -76,18 +89,6 @@ export type SimpleLineSymbolStyleOption =
   | "short-dot"
   | "solid";
 
-export type SimpleFillSymbolStyleOption =
-  | "backward-diagonal"
-  | "cross"
-  | "diagonal-cross"
-  | "forward-diagonal"
-  | "horizontal"
-  | "none"
-  | "solid"
-  | "vertical";
-
 export type SimpleMarkerSymbolStyleOption = "circle" | "square" | "cross" | "x" | "diamond" | "triangle" | "path";
 
-export type LineSymbolMarkerPlacementOption = "begin" | "end" | "begin-end";
-
-export type LineSymbolMarkerStyleOption = "arrow" | "circle" | "square" | "diamond" | "cross" | "x";
+export type VerticalAlignment = "baseline" | "top" | "middle" | "bottom";
