@@ -65,6 +65,8 @@ export type PathSymbol3DLayerJoinOption = "miter" | "bevel" | "round";
 
 export type PathSymbol3DLayerProfileOption = "circle" | "quad";
 
+export type PathSymbol3DLayerProfileRotationOption = "all" | "heading";
+
 export type SimpleFillSymbolStyleOption =
   | "backward-diagonal"
   | "cross"

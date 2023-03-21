@@ -16,7 +16,8 @@ import {
   PathSymbol3DLayerAnchorOption,
   PathSymbol3DLayerCapOption,
   PathSymbol3DLayerJoinOption,
-  PathSymbol3DLayerProfileOption
+  PathSymbol3DLayerProfileOption,
+  PathSymbol3DLayerProfileRotationOption
 } from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
@@ -37,6 +38,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewPathSymbol3DLayer = (): PathSymbol3DLayer => {
     const newPathSymbol3DLayer = new PathSymbol3DLayer({
       castShadows: false,
+      height: 300,
       material: { color: "#007ac2" },
       width: 300
     });
@@ -201,6 +203,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handlePathSymbol3DLayerProfileRotationChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.profileRotation = value as PathSymbol3DLayerProfileRotationOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -257,6 +267,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handlePathSymbol3DLayerMaterialColorChange
                 }
                 handleProfileChange={handlePathSymbol3DLayerProfileChange}
+                handleProfileRotationChange={handlePathSymbol3DLayerProfileRotationChange}
               ></PathSymbol3DLayerForm>
             </CalciteBlock>
           );

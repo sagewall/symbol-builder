@@ -12,7 +12,8 @@ import {
   PathSymbol3DLayerAnchorOption,
   PathSymbol3DLayerCapOption,
   PathSymbol3DLayerJoinOption,
-  PathSymbol3DLayerProfileOption
+  PathSymbol3DLayerProfileOption,
+  PathSymbol3DLayerProfileRotationOption
 } from "./lib/types";
 import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 
@@ -25,6 +26,7 @@ interface Props {
   handleJoinChange: (layerIndex: number, value: string) => void;
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleProfileChange: (layerIndex: number, value: string) => void;
+  handleProfileRotationChange: (layerIndex: number, value: string) => void;
 }
 
 const LineSymbol3DLayerForm = ({
@@ -35,12 +37,14 @@ const LineSymbol3DLayerForm = ({
   handleHeightChange,
   handleJoinChange,
   handlePathSymbol3DLayerMaterialColorChange,
-  handleProfileChange
+  handleProfileChange,
+  handleProfileRotationChange
 }: Props) => {
   const anchorOptions = ["center", "bottom", "top"];
   const capOptions = ["butt", "round", "square", "none"];
   const joinOptions = ["miter", "round", "bevel"];
   const profileOptions = ["circle", "quad"];
+  const profileRotationOptions = ["all", "heading"];
 
   const [anchor, setAnchor] = useState("center");
   const [cap, setCap] = useState("butt");
@@ -48,6 +52,7 @@ const LineSymbol3DLayerForm = ({
   const [height, setHeight] = useState("300");
   const [join, setJoin] = useState("miter");
   const [profile, setProfile] = useState("circle");
+  const [profileRotation, setProfileRotation] = useState("all");
 
   return (
     <React.Fragment>
@@ -141,6 +146,25 @@ const LineSymbol3DLayerForm = ({
           value={profile}
         >
           {profileOptions.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        profileRotation
+        <CalciteSelect
+          label={"profileRotation selection"}
+          onCalciteSelectChange={(event) => {
+            setProfileRotation(event.target.value);
+            handleProfileRotationChange(
+              layerIndex,
+              event.target.value as PathSymbol3DLayerProfileRotationOption
+            );
+          }}
+          value={profileRotation}
+        >
+          {profileRotationOptions.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
