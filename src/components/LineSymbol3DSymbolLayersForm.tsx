@@ -12,9 +12,12 @@ import {
   LineStyleMarker3DStyleOption,
   LineStylePattern3DStyleOption,
   LineSymbol3DCapOption,
-  LineSymbol3DJoinOption
+  LineSymbol3DJoinOption,
+  PathSymbol3DLayerCapOption,
+  PathSymbol3DLayerJoinOption
 } from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
+import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -29,12 +32,28 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     return newLineSymbol3DLayer;
   };
 
+  const createNewPathSymbol3DLayer = (): PathSymbol3DLayer => {
+    const newPathSymbol3DLayer = new PathSymbol3DLayer({
+      material: { color: "#007ac2" },
+      width: 300
+    });
+    return newPathSymbol3DLayer;
+  };
+
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
   const addLineSymbol3DLayer = () => {
     const newSymbolLayers = symbolLayers.clone();
     const lineSymbol3DLayer = createNewLineSymbol3DLayer();
     newSymbolLayers.add(lineSymbol3DLayer);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const addPathSymbol3DLayer = () => {
+    const newSymbolLayers = symbolLayers.clone();
+    const pathSymbol3DLayer = createNewPathSymbol3DLayer();
+    newSymbolLayers.add(pathSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -123,6 +142,30 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handlePathSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.cap = value as PathSymbol3DLayerCapOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handlePathSymbol3DLayerJoinChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.join = value as PathSymbol3DLayerJoinOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handlePathSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.material.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -158,6 +201,27 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
             </CalciteBlock>
           );
         }
+
+        if (symbolLayer.type === "path") {
+          symbol3DLayerCollectionForm.push(
+            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+              <CalciteAction
+                icon="trash"
+                onClick={() => deleteSymbol3DLayer(index)}
+                slot="control"
+                text="Delete"
+              />
+              <PathSymbol3DLayerForm
+                layerIndex={index}
+                handleCapChange={handlePathSymbol3DLayerCapChange}
+                handleJoinChange={handlePathSymbol3DLayerJoinChange}
+                handlePathSymbol3DLayerMaterialColorChange={
+                  handlePathSymbol3DLayerMaterialColorChange
+                }
+              ></PathSymbol3DLayerForm>
+            </CalciteBlock>
+          );
+        }
       });
       return symbol3DLayerCollectionForm;
     }
@@ -172,6 +236,13 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           icon="plus"
           text-enabled
           text="Add LineSymbol3DLayer"
+        ></CalciteAction>
+        <CalciteAction
+          onClick={() => addPathSymbol3DLayer()}
+          slot="header-menu-actions"
+          icon="plus"
+          text-enabled
+          text="Add PathSymbol3DLayer"
         ></CalciteAction>
 
         {createSymbol3DLayerCollectionForm()}

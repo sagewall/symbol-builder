@@ -53,6 +53,9 @@ export type ObjectSymbol3DLayerResourcePrimitiveOption =
   | "diamond"
   | "tetrahedron";
 
+export type PathSymbol3DLayerCapOption = "butt" | "square" | "round" | "none";
+export type PathSymbol3DLayerJoinOption = "miter" | "bevel" | "round";
+
 export type VerticalAlignment = "baseline" | "top" | "middle" | "bottom";
 
 export type SimpleLineSymbolCapOption = "butt" | "round" | "square";
