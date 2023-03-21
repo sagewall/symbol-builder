@@ -27,6 +27,7 @@ interface Props {
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleProfileChange: (layerIndex: number, value: string) => void;
   handleProfileRotationChange: (layerIndex: number, value: string) => void;
+  handleWidthChange: (layerIndex: number, value: string) => void;
 }
 
 const LineSymbol3DLayerForm = ({
@@ -38,7 +39,8 @@ const LineSymbol3DLayerForm = ({
   handleJoinChange,
   handlePathSymbol3DLayerMaterialColorChange,
   handleProfileChange,
-  handleProfileRotationChange
+  handleProfileRotationChange,
+  handleWidthChange
 }: Props) => {
   const anchorOptions = ["center", "bottom", "top"];
   const capOptions = ["butt", "round", "square", "none"];
@@ -53,6 +55,7 @@ const LineSymbol3DLayerForm = ({
   const [join, setJoin] = useState("miter");
   const [profile, setProfile] = useState("circle");
   const [profileRotation, setProfileRotation] = useState("all");
+  const [width, setWidth] = useState("300");
 
   return (
     <React.Fragment>
@@ -168,6 +171,19 @@ const LineSymbol3DLayerForm = ({
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        width
+        <CalciteInputNumber
+          label={"width input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setWidth(event.target.value);
+            handleWidthChange(layerIndex, event.target.value);
+          }}
+          value={width}
+        ></CalciteInputNumber>
       </CalciteLabel>
     </React.Fragment>
   );

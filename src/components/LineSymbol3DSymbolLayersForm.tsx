@@ -211,6 +211,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handlePathSymbol3DLayerWidthChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
+    symbolLayer.width = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -268,6 +276,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 }
                 handleProfileChange={handlePathSymbol3DLayerProfileChange}
                 handleProfileRotationChange={handlePathSymbol3DLayerProfileRotationChange}
+                handleWidthChange={handlePathSymbol3DLayerWidthChange}
               ></PathSymbol3DLayerForm>
             </CalciteBlock>
           );
