@@ -7,7 +7,7 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { FillSymbol3DColorMixModeOption } from "./lib/types";
+import { FillSymbol3DLayerMaterialColorMixModeOption } from "./lib/types";
 
 interface Props {
   layerIndex: number;
@@ -51,7 +51,7 @@ const FillSymbol3DLayerMaterialForm = ({
             setColorMixMode(event.target.value);
             handleColorMixModeChange(
               layerIndex,
-              event.target.value as FillSymbol3DColorMixModeOption
+              event.target.value as FillSymbol3DLayerMaterialColorMixModeOption
             );
           }}
           value={colorMixMode}

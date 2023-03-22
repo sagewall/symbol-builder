@@ -1,4 +1,6 @@
-export type FillSymbol3DColorMixModeOption = "tint" | "replace" | "multiply";
+export type FillSymbol3DLayerMaterialColorMixModeOption = "tint" | "replace" | "multiply";
+
+export type FillSymbol3DLayerOutlinePatternCapOption = "butt" | "round" | "square";
 
 export type FontDecoration = "underline" | "line-through" | "none";
 
