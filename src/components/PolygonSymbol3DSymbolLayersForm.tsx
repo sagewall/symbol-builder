@@ -43,6 +43,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleFillSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    symbolLayer.castShadows = value;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleFillSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
@@ -86,6 +94,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 />
                 <FillSymbol3DLayerForm
                   layerIndex={index}
+                  handleCastShadowsChange={handleFillSymbol3DLayerCastShadowsChange}
                   handleFillSymbol3DLayerMaterialColorChange={
                     handleFillSymbol3DLayerMaterialColorChange
                   }
