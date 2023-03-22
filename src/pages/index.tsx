@@ -19,6 +19,9 @@ const IndexPage = () => {
             <Link to="/point-symbol-3d/">PointSymbol3D</Link>
           </li>
           <li>
+            <Link to="/polygon-symbol-3d/">PolygonSymbol3D</Link>
+          </li>
+          <li>
             <Link to="/simple-fill-symbol/">SimpleFillSymbol</Link>
           </li>
           <li>

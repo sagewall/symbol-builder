@@ -25,6 +25,7 @@ import LineSymbol3DPage from "./pages/line-symbol-3d";
 import PictureFillSymbolPage from "./pages/picture-fill-symbol";
 import PictureMarkerSymbolPage from "./pages/picture-marker-symbol";
 import PointSymbol3DPage from "./pages/point-symbol-3d";
+import PolygonSymbol3DPage from "./pages/polygon-symbol-3d";
 import SimpleFillSymbolPage from "./pages/simple-fill-symbol";
 import SimpleLineSymbolPage from "./pages/simple-line-symbol";
 import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "point-symbol-3d",
         element: <PointSymbol3DPage />
+      },
+      {
+        path: "polygon-symbol-3d",
+        element: <PolygonSymbol3DPage />
       },
       {
         path: "simple-fill-symbol",
