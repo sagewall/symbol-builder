@@ -6,7 +6,7 @@ import {
   CalciteSelect,
   CalciteSwitch
 } from "@esri/calcite-components-react";
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   PathSymbol3DLayerAnchorOption,
@@ -57,7 +57,7 @@ const LineSymbol3DLayerForm = ({
   const [profileRotation, setProfileRotation] = useState("all");
   const [width, setWidth] = useState("300");
 
-  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = React.createRef();
+  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
 
   useEffect(() => {
     if (castShadowsRef.current) {
