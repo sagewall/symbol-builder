@@ -11,6 +11,7 @@ import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
+import { FillSymbol3DColorMixModeOption } from "./lib/types";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -50,6 +51,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleFillSymbol3DLayerMaterialColorMixModeChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    symbolLayer.material.colorMixMode = value as FillSymbol3DColorMixModeOption;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -79,6 +88,9 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   layerIndex={index}
                   handleFillSymbol3DLayerMaterialColorChange={
                     handleFillSymbol3DLayerMaterialColorChange
+                  }
+                  handleFillSymbol3DLayerMaterialColorMixModeChange={
+                    handleFillSymbol3DLayerMaterialColorMixModeChange
                   }
                 />
               </CalciteBlock>

@@ -1,3 +1,5 @@
+export type FillSymbol3DColorMixModeOption = "tint" | "replace" | "multiply";
+
 export type FontDecoration = "underline" | "line-through" | "none";
 
 export type FontStyle = "normal" | "italic" | "oblique";
