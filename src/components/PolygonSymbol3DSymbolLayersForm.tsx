@@ -162,7 +162,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleFillSymbol3DLayerOutlineColorChange={
                     handleFillSymbol3DLayerOutlineColorChange
                   }
-                  handleFillSymbol3DLayerOutlinePatternChange={
+                  handleFillSymbol3DLayerOutlinePatternStyleChange={
                     handleFillSymbol3DLayerOutlinePatternChange
                   }
                   handleFillSymbol3DLayerOutlinePatternCapChange={

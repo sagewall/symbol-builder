@@ -11,7 +11,7 @@ interface Props {
   handleFillSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerOutlinePatternChange: (layerIndex: number, value: string) => void;
+  handleFillSymbol3DLayerOutlinePatternStyleChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlinePatternCapChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerPatternStyleChange: (layerIndex: number, value: string) => void;
@@ -23,7 +23,7 @@ const FillSymbol3DLayerForm = ({
   handleFillSymbol3DLayerMaterialColorChange,
   handleFillSymbol3DLayerMaterialColorMixModeChange,
   handleFillSymbol3DLayerOutlineColorChange,
-  handleFillSymbol3DLayerOutlinePatternChange,
+  handleFillSymbol3DLayerOutlinePatternStyleChange,
   handleFillSymbol3DLayerOutlinePatternCapChange,
   handleFillSymbol3DLayerOutlineSizeChange,
   handleFillSymbol3DLayerPatternStyleChange
@@ -64,7 +64,7 @@ const FillSymbol3DLayerForm = ({
         <FillSymbol3DLayerOutlineForm
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerOutlineColorChange}
-          handleLineSylePattern3DStyleChange={handleFillSymbol3DLayerOutlinePatternChange}
+          handleLineSylePattern3DStyleChange={handleFillSymbol3DLayerOutlinePatternStyleChange}
           handlePatternCapChange={handleFillSymbol3DLayerOutlinePatternCapChange}
           handleSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
         ></FillSymbol3DLayerOutlineForm>
