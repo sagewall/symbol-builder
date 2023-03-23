@@ -3,6 +3,7 @@ import React, { createRef, useEffect, useState } from "react";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
 import { blockStyles, labelStyles } from "./lib/styles";
+import StylePattern3DForm from "./StylePattern3DForm";
 
 interface Props {
   layerIndex: number;
@@ -13,6 +14,7 @@ interface Props {
   handleFillSymbol3DLayerOutlinePatternChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlinePatternCapChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
+  handleFillSymbol3DLayerPatternStyleChange: (layerIndex: number, value: string) => void;
 }
 
 const FillSymbol3DLayerForm = ({
@@ -23,7 +25,8 @@ const FillSymbol3DLayerForm = ({
   handleFillSymbol3DLayerOutlineColorChange,
   handleFillSymbol3DLayerOutlinePatternChange,
   handleFillSymbol3DLayerOutlinePatternCapChange,
-  handleFillSymbol3DLayerOutlineSizeChange
+  handleFillSymbol3DLayerOutlineSizeChange,
+  handleFillSymbol3DLayerPatternStyleChange
 }: Props) => {
   const [castShadows, setCastShadows] = useState(true);
 
@@ -65,6 +68,13 @@ const FillSymbol3DLayerForm = ({
           handlePatternCapChange={handleFillSymbol3DLayerOutlinePatternCapChange}
           handleSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
         ></FillSymbol3DLayerOutlineForm>
+      </CalciteBlock>
+
+      <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
+        <StylePattern3DForm
+          layerIndex={layerIndex}
+          handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
+        ></StylePattern3DForm>
       </CalciteBlock>
     </React.Fragment>
   );

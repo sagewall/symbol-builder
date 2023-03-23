@@ -6,6 +6,7 @@ import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
+import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
@@ -15,7 +16,8 @@ import { blockStyles } from "./lib/styles";
 import {
   FillSymbol3DLayerMaterialColorMixModeOption,
   FillSymbol3DLayerOutlinePatternCapOption,
-  LineStylePattern3DStyleOption
+  LineStylePattern3DStyleOption,
+  SylePattern3DOptions
 } from "./lib/types";
 
 interface PageProps {
@@ -31,7 +33,10 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         color: "#111111",
         pattern: new LineStylePattern3D(),
         size: 3
-      }
+      },
+      pattern: new StylePattern3D({
+        style: "solid"
+      })
     });
     return newFillSymbol3DLayer;
   };
@@ -112,6 +117,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleFillSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    symbolLayer.pattern.style = value as SylePattern3DOptions;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -157,6 +170,9 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   }
                   handleFillSymbol3DLayerOutlineSizeChange={
                     handleFillSymbol3DLayerOutlineSizeChange
+                  }
+                  handleFillSymbol3DLayerPatternStyleChange={
+                    handleFillSymbol3DLayerPatternStyleChange
                   }
                 />
               </CalciteBlock>

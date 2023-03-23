@@ -101,4 +101,14 @@ export type SimpleLineSymbolStyleOption =
 
 export type SimpleMarkerSymbolStyleOption = "circle" | "square" | "cross" | "x" | "diamond" | "triangle" | "path";
 
+export type SylePattern3DOptions =
+  | "backward-diagonal"
+  | "cross"
+  | "diagonal-cross"
+  | "forward-diagonal"
+  | "horizontal"
+  | "none"
+  | "solid"
+  | "vertical";
+
 export type VerticalAlignment = "baseline" | "top" | "middle" | "bottom";
