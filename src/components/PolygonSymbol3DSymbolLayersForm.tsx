@@ -17,7 +17,7 @@ import {
   FillSymbol3DLayerMaterialColorMixModeOption,
   FillSymbol3DLayerOutlinePatternCapOption,
   LineStylePattern3DStyleOption,
-  SylePattern3DOptions
+  SylePattern3DOption
 } from "./lib/types";
 
 interface PageProps {
@@ -117,10 +117,13 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerPatternStyleChange = (
+    layerIndex: number,
+    value: SylePattern3DOption
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.pattern.style = value as SylePattern3DOptions;
+    symbolLayer.pattern.style = value as SylePattern3DOption;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };

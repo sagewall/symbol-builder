@@ -19,14 +19,17 @@ import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
-  handleAnchorChange: (layerIndex: number, value: string) => void;
-  handleCapChange: (layerIndex: number, value: string) => void;
+  handleAnchorChange: (layerIndex: number, value: PathSymbol3DLayerAnchorOption) => void;
+  handleCapChange: (layerIndex: number, value: PathSymbol3DLayerCapOption) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleHeightChange: (layerIndex: number, value: string) => void;
-  handleJoinChange: (layerIndex: number, value: string) => void;
+  handleJoinChange: (layerIndex: number, value: PathSymbol3DLayerJoinOption) => void;
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
-  handleProfileChange: (layerIndex: number, value: string) => void;
-  handleProfileRotationChange: (layerIndex: number, value: string) => void;
+  handleProfileChange: (layerIndex: number, value: PathSymbol3DLayerProfileOption) => void;
+  handleProfileRotationChange: (
+    layerIndex: number,
+    value: PathSymbol3DLayerProfileRotationOption
+  ) => void;
   handleWidthChange: (layerIndex: number, value: string) => void;
 }
 

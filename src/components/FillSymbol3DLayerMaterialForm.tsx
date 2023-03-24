@@ -12,7 +12,10 @@ import { FillSymbol3DLayerMaterialColorMixModeOption } from "./lib/types";
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handleColorMixModeChange: (layerIndex: number, value: string) => void;
+  handleColorMixModeChange: (
+    layerIndex: number,
+    value: FillSymbol3DLayerMaterialColorMixModeOption
+  ) => void;
 }
 
 const FillSymbol3DLayerMaterialForm = ({

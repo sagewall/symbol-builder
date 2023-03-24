@@ -101,7 +101,7 @@ export type SimpleLineSymbolStyleOption =
 
 export type SimpleMarkerSymbolStyleOption = "circle" | "square" | "cross" | "x" | "diamond" | "triangle" | "path";
 
-export type SylePattern3DOptions =
+export type SylePattern3DOption =
   | "backward-diagonal"
   | "cross"
   | "diagonal-cross"

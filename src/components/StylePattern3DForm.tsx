@@ -1,11 +1,11 @@
 import { CalciteLabel, CalciteOption, CalciteSelect } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
-import { SylePattern3DOptions } from "./lib/types";
+import { SylePattern3DOption } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleStyleChange: (layerIndex: number, value: string) => void;
+  handleStyleChange: (layerIndex: number, value: SylePattern3DOption) => void;
 }
 
 const StylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
@@ -30,7 +30,7 @@ const StylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(layerIndex, event.target.value as SylePattern3DOptions);
+            handleStyleChange(layerIndex, event.target.value as SylePattern3DOption);
           }}
           value={style}
         >

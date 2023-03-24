@@ -8,13 +8,23 @@ import {
 } from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
+import {
+  FillSymbol3DLayerOutlinePatternCapOption,
+  LineStylePattern3DStyleOption
+} from "./lib/types";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handleLineSylePattern3DStyleChange: (layerIndex: number, value: string) => void;
-  handlePatternCapChange: (layerIndex: number, value: string) => void;
+  handleLineSylePattern3DStyleChange: (
+    layerIndex: number,
+    value: LineStylePattern3DStyleOption
+  ) => void;
+  handlePatternCapChange: (
+    layerIndex: number,
+    value: FillSymbol3DLayerOutlinePatternCapOption
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
@@ -69,7 +79,10 @@ const FillSymbol3DLayerOutlineForm = ({
           label={"patternCap selection"}
           onCalciteSelectChange={(event) => {
             setPatternCap(event.target.value);
-            handlePatternCapChange(layerIndex, event.target.value);
+            handlePatternCapChange(
+              layerIndex,
+              event.target.value as FillSymbol3DLayerOutlinePatternCapOption
+            );
           }}
           value={patternCap}
         >

@@ -12,8 +12,8 @@ import { LineStyleMarker3DPlacementOption, LineStyleMarker3DStyleOption } from "
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handlePlacementChange: (layerIndex: number, value: string) => void;
-  handleStyleChange: (layerIndex: number, value: string) => void;
+  handlePlacementChange: (layerIndex: number, value: LineStyleMarker3DPlacementOption) => void;
+  handleStyleChange: (layerIndex: number, value: LineStyleMarker3DStyleOption) => void;
 }
 
 const LineStyleMarker3DForm = ({

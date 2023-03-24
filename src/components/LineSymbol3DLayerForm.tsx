@@ -7,24 +7,39 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { LineSymbol3DCapOption, LineSymbol3DJoinOption } from "./lib/types";
+import {
+  LineStylePattern3DStyleOption,
+  LineSymbol3DCapOption,
+  LineSymbol3DJoinOption,
+  LineSymbolMarkerPlacementOption,
+  LineSymbolMarkerStyleOption
+} from "./lib/types";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
-  handleCapChange: (layerIndex: number, value: string) => void;
-  handleJoinChange: (layerIndex: number, value: string) => void;
+  handleCapChange: (layerIndex: number, value: LineSymbol3DCapOption) => void;
+  handleJoinChange: (layerIndex: number, value: LineSymbol3DJoinOption) => void;
   handleLineSymbol3DLayerMarkerBlockToggle: (
     layerIndex: number,
     currentMarkerBlock: HTMLCalciteBlockElement
   ) => void;
   handleLineSymbol3DLayerMarkerColorChange: (layerIndex: number, value: string) => void;
-  handleLineSymbol3DLayerMarkerPlacementChange: (layerIndex: number, value: string) => void;
-  handleLineSymbol3DLayerMarkerStyleChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMarkerPlacementChange: (
+    layerIndex: number,
+    value: LineSymbolMarkerPlacementOption
+  ) => void;
+  handleLineSymbol3DLayerMarkerStyleChange: (
+    layerIndex: number,
+    value: LineSymbolMarkerStyleOption
+  ) => void;
   handleLineSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
-  handleLineSymbol3DLayerPatternStyleChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerPatternStyleChange: (
+    layerIndex: number,
+    value: LineStylePattern3DStyleOption
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 

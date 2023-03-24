@@ -5,7 +5,7 @@ import { LineStylePattern3DStyleOption } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleStyleChange: (layerIndex: number, value: string) => void;
+  handleStyleChange: (layerIndex: number, value: LineStylePattern3DStyleOption) => void;
 }
 
 const LineStylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
