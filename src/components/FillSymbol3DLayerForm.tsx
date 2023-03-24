@@ -53,17 +53,19 @@ const FillSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
-        castShadows
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
-            setCastShadows(event.target.checked);
-            handleCastShadowsChange(layerIndex, event.target.checked);
-          }}
-          ref={castShadowsRef}
-          value={castShadows}
-        ></CalciteSwitch>
-      </CalciteLabel>
+      {isMeshSymbol3D && (
+        <CalciteLabel layout="default" style={labelStyles}>
+          castShadows
+          <CalciteSwitch
+            onCalciteSwitchChange={(event) => {
+              setCastShadows(event.target.checked);
+              handleCastShadowsChange(layerIndex, event.target.checked);
+            }}
+            ref={castShadowsRef}
+            value={castShadows}
+          ></CalciteSwitch>
+        </CalciteLabel>
+      )}
 
       {isMeshSymbol3D && (
         <CalciteBlock style={blockStyles} collapsible heading={"edges"}>
@@ -96,12 +98,14 @@ const FillSymbol3DLayerForm = ({
         </CalciteBlock>
       )}
 
-      <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
-        <StylePattern3DForm
-          layerIndex={layerIndex}
-          handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
-        ></StylePattern3DForm>
-      </CalciteBlock>
+      {!isMeshSymbol3D && (
+        <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
+          <StylePattern3DForm
+            layerIndex={layerIndex}
+            handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
+          ></StylePattern3DForm>
+        </CalciteBlock>
+      )}
     </React.Fragment>
   );
 };

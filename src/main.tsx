@@ -22,6 +22,7 @@ import App from "./App";
 import "./index.css";
 import IndexPage from "./pages";
 import LineSymbol3DPage from "./pages/line-symbol-3d";
+import MeshSymbol3DPage from "./pages/mesh-symbol-3d";
 import PictureFillSymbolPage from "./pages/picture-fill-symbol";
 import PictureMarkerSymbolPage from "./pages/picture-marker-symbol";
 import PointSymbol3DPage from "./pages/point-symbol-3d";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "line-symbol-3d",
         element: <LineSymbol3DPage />
+      },
+      {
+        path: "mesh-symbol-3d",
+        element: <MeshSymbol3DPage />
       },
       {
         path: "picture-fill-symbol",

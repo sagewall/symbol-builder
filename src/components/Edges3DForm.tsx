@@ -20,7 +20,7 @@ const Edges3DForm = ({
   handleExtensionLengthChange,
   handleSizeChange
 }: Props) => {
-  const [color, setColor] = useState("#007ac2");
+  const [color, setColor] = useState("#000000");
   const [extensionLength, setExtensionLength] = useState("0");
   const [size, setSize] = useState("1");
 
