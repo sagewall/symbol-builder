@@ -8,18 +8,16 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  ObjectSymbol3DLayerAnchorOption,
-  ObjectSymbol3DLayerResourcePrimitiveOption
-} from "./lib/types";
+import { ObjectSymbol3DLayerAnchor, ObjectSymbol3DLayerResourcePrimitive } from "./lib/types";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
 import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
 
 interface Props {
   layerIndex: number;
-  handleAnchorChange: (layerIndex: number, value: ObjectSymbol3DLayerAnchorOption) => void;
+  handleAnchorChange: (layerIndex: number, value: ObjectSymbol3DLayerAnchor) => void;
   handleObjectSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerAnchorPositionZChange: (layerIndex: number, value: string) => void;
@@ -30,7 +28,7 @@ interface Props {
   handleObjectSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitiveOption
+    value: ObjectSymbol3DLayerResourcePrimitive
   ) => void;
   handleRollChange: (layerIndex: number, value: number) => void;
   handleTiltChange: (layerIndex: number, value: number) => void;
@@ -53,8 +51,6 @@ const ObjectSymbol3DLayerForm = ({
   handleTiltChange,
   handleWidthChange
 }: Props) => {
-  const anchorOptions = ["center", "top", "bottom", "origin", "relative"];
-
   const [anchor, setAnchor] = useState("center");
   const [castShadows, setCastShadows] = useState(false);
   const [depth, setDepth] = useState("10");
@@ -71,11 +67,11 @@ const ObjectSymbol3DLayerForm = ({
           label={"anchor selection"}
           onCalciteSelectChange={(event) => {
             setAnchor(event.target.value);
-            handleAnchorChange(layerIndex, event.target.value as ObjectSymbol3DLayerAnchorOption);
+            handleAnchorChange(layerIndex, event.target.value as ObjectSymbol3DLayerAnchor);
           }}
           value={anchor}
         >
-          {anchorOptions.map((option, index) => (
+          {OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

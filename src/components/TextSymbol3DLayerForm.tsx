@@ -7,6 +7,7 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   FontDecoration,
@@ -55,9 +56,6 @@ const TextSymbol3DLayerForm = ({
   handleVerticalAlignmentChange,
   layerIndex
 }: Props) => {
-  const horizontalAlignmentOptions = ["center", "right", "left"];
-  const verticalAlignmentOptions = ["baseline", "top", "middle", "bottom"];
-
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [lineHeight, setLineHeight] = useState("1");
   const [size, setSize] = useState("9");
@@ -102,7 +100,7 @@ const TextSymbol3DLayerForm = ({
           }}
           value={horizontalAlignment}
         >
-          {horizontalAlignmentOptions.map((option, index) => (
+          {HORIZONTAL_ALIGNMENT_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -163,7 +161,7 @@ const TextSymbol3DLayerForm = ({
           }}
           value={verticalAlignment}
         >
-          {verticalAlignmentOptions.map((option, index) => (
+          {VERTICAL_ALIGNMENT_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

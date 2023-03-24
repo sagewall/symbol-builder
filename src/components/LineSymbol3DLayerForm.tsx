@@ -6,22 +6,17 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { CAP_OPTIONS, JOIN_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  LineStylePattern3DStyleOption,
-  LineSymbol3DCapOption,
-  LineSymbol3DJoinOption,
-  LineSymbolMarkerPlacementOption,
-  LineSymbolMarkerStyleOption
-} from "./lib/types";
+import { Join, LineStyle, LineStyleMarker3DStyle, Cap, MarkerPlacement } from "./lib/types";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
-  handleCapChange: (layerIndex: number, value: LineSymbol3DCapOption) => void;
-  handleJoinChange: (layerIndex: number, value: LineSymbol3DJoinOption) => void;
+  handleCapChange: (layerIndex: number, value: Cap) => void;
+  handleJoinChange: (layerIndex: number, value: Join) => void;
   handleLineSymbol3DLayerMarkerBlockToggle: (
     layerIndex: number,
     currentMarkerBlock: HTMLCalciteBlockElement
@@ -29,17 +24,14 @@ interface Props {
   handleLineSymbol3DLayerMarkerColorChange: (layerIndex: number, value: string) => void;
   handleLineSymbol3DLayerMarkerPlacementChange: (
     layerIndex: number,
-    value: LineSymbolMarkerPlacementOption
+    value: MarkerPlacement
   ) => void;
   handleLineSymbol3DLayerMarkerStyleChange: (
     layerIndex: number,
-    value: LineSymbolMarkerStyleOption
+    value: LineStyleMarker3DStyle
   ) => void;
   handleLineSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
-  handleLineSymbol3DLayerPatternStyleChange: (
-    layerIndex: number,
-    value: LineStylePattern3DStyleOption
-  ) => void;
+  handleLineSymbol3DLayerPatternStyleChange: (layerIndex: number, value: LineStyle) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
@@ -55,9 +47,6 @@ const LineSymbol3DLayerForm = ({
   handleLineSymbol3DLayerPatternStyleChange,
   handleSizeChange
 }: Props) => {
-  const capOptions = ["butt", "round", "square"];
-  const joinOptions = ["miter", "round", "bevel"];
-
   const [cap, setCap] = useState("butt");
   const [join, setJoin] = useState("miter");
   const [size, setSize] = useState("3");
@@ -70,11 +59,11 @@ const LineSymbol3DLayerForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(layerIndex, event.target.value as LineSymbol3DCapOption);
+            handleCapChange(layerIndex, event.target.value as Cap);
           }}
           value={cap}
         >
-          {capOptions.map((option, index) => (
+          {CAP_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -86,11 +75,11 @@ const LineSymbol3DLayerForm = ({
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(layerIndex, event.target.value as LineSymbol3DJoinOption);
+            handleJoinChange(layerIndex, event.target.value as Join);
           }}
           value={join}
         >
-          {joinOptions.map((option, index) => (
+          {JOIN_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

@@ -14,12 +14,7 @@ import {
 import React, { useRef, useState } from "react";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import {
-  SimpleLineSymbolCapOption,
-  SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption,
-  SimpleMarkerSymbolStyleOption
-} from "./lib/types";
+import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
@@ -82,7 +77,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
+  const handleOutlineCapChange = (currentCapValue: Cap) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -102,7 +97,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
+  const handleOutlineJoinChange = (currentJoinValue: Join) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -122,7 +117,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
+  const handleOutlineStyleChange = (currentStyleValue: LineStyle) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -154,7 +149,7 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: SimpleMarkerSymbolStyleOption) => {
+  const handleStyleChange = (currentStyleValue: SimpleMarkerSymbolStyle) => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.style = currentStyleValue;
     updateGraphics(newSimpleMarkerSymbol);

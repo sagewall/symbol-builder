@@ -10,18 +10,13 @@ import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositi
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
+import { ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  IconSymbol3DLayerAnchorOption,
-  IconSymbol3DLayerResourcePrimitiveOption
-} from "./lib/types";
+import { IconSymbol3DLayerAnchor, IconSymbol3DLayerResourcePrimitive } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleIconSymbol3DLayerAnchorChange: (
-    layerIndex: number,
-    value: IconSymbol3DLayerAnchorOption
-  ) => void;
+  handleIconSymbol3DLayerAnchorChange: (layerIndex: number, value: IconSymbol3DLayerAnchor) => void;
   handleIconSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
@@ -30,7 +25,7 @@ interface Props {
   handleIconSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: IconSymbol3DLayerResourcePrimitiveOption
+    value: IconSymbol3DLayerResourcePrimitive
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -47,19 +42,6 @@ const IconSymbol3DLayerForm = ({
   handleIconSymbol3DLayerResourcePrimitiveChange,
   handleSizeChange
 }: Props) => {
-  const anchorOptions = [
-    "center",
-    "left",
-    "right",
-    "top",
-    "bottom",
-    "top-left",
-    "top-right",
-    "bottom-left",
-    "bottom-right",
-    "relative"
-  ];
-
   const [anchor, setAnchor] = useState("center");
   const [size, setSize] = useState("12");
 
@@ -73,12 +55,12 @@ const IconSymbol3DLayerForm = ({
             setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
-              event.target.value as IconSymbol3DLayerAnchorOption
+              event.target.value as IconSymbol3DLayerAnchor
             );
           }}
           value={anchor}
         >
-          {anchorOptions.map((option, index) => (
+          {ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

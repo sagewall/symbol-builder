@@ -6,24 +6,20 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { FILL_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  SimpleFillSymbolStyleOption,
-  SimpleLineSymbolCapOption,
-  SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption
-} from "./lib/types";
+import { Cap, Fill, Join, LineStyle } from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (value: SimpleLineSymbolCapOption) => void;
+  handleOutlineCapChange: (value: Cap) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: SimpleLineSymbolJoinOption) => void;
+  handleOutlineJoinChange: (value: Join) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: SimpleLineSymbolStyleOption) => void;
+  handleOutlineStyleChange: (value: LineStyle) => void;
   handleOutlineWidthChange: (value: string) => void;
-  handleStyleChange: (value: SimpleFillSymbolStyleOption) => void;
+  handleStyleChange: (value: Fill) => void;
 }
 
 const SimpleFillSymbolForm = ({
@@ -36,17 +32,6 @@ const SimpleFillSymbolForm = ({
   handleOutlineWidthChange,
   handleStyleChange
 }: Props) => {
-  const styleOptions = [
-    "solid",
-    "backward-diagonal",
-    "cross",
-    "diagonal-cross",
-    "forward-diagonal",
-    "horizontal",
-    "none",
-    "vertical"
-  ];
-
   const [color, setColor] = useState("#007ac2");
   const [style, setStyle] = useState("solid");
 
@@ -86,11 +71,11 @@ const SimpleFillSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as SimpleFillSymbolStyleOption);
+            handleStyleChange(event.target.value as Fill);
           }}
           value={style}
         >
-          {styleOptions.map((option, index) => (
+          {FILL_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

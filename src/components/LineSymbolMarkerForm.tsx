@@ -6,13 +6,14 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { MARKER_PLACEMENT_OPTIONS, MARKER_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { LineSymbolMarkerPlacementOption, LineSymbolMarkerStyleOption } from "./lib/types";
+import { MarkerPlacement, LineStyleMarker3DStyle } from "./lib/types";
 
 interface Props {
   handleColorChange: ((value: string) => void) | undefined;
-  handlePlacementChange: ((value: LineSymbolMarkerPlacementOption) => void) | undefined;
-  handleStyleChange: ((value: LineSymbolMarkerStyleOption) => void) | undefined;
+  handlePlacementChange: ((value: MarkerPlacement) => void) | undefined;
+  handleStyleChange: ((value: LineStyleMarker3DStyle) => void) | undefined;
 }
 
 const LineSymbolMarkerForm = ({
@@ -20,9 +21,6 @@ const LineSymbolMarkerForm = ({
   handlePlacementChange,
   handleStyleChange
 }: Props) => {
-  const markerPlacementOptions = ["begin-end", "begin", "end"];
-  const markerStyleOptions = ["arrow", "circle", "square", "diamond", "cross", "x"];
-
   const [color, setColor] = useState("#007ac2");
   const [placement, setPlacement] = useState("begin-end");
   const [style, setStyle] = useState("arrow");
@@ -54,12 +52,12 @@ const LineSymbolMarkerForm = ({
           onCalciteSelectChange={(event) => {
             setPlacement(event.target.value);
             if (handlePlacementChange) {
-              handlePlacementChange(event.target.value as LineSymbolMarkerPlacementOption);
+              handlePlacementChange(event.target.value as MarkerPlacement);
             }
           }}
           value={placement}
         >
-          {markerPlacementOptions.map((option, index) => (
+          {MARKER_PLACEMENT_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -72,12 +70,12 @@ const LineSymbolMarkerForm = ({
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
             if (handleStyleChange) {
-              handleStyleChange(event.target.value as LineSymbolMarkerStyleOption);
+              handleStyleChange(event.target.value as LineStyleMarker3DStyle);
             }
           }}
           value={style}
         >
-          {markerStyleOptions.map((option, index) => (
+          {MARKER_STYLE_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

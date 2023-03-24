@@ -14,11 +14,7 @@ import {
 import React, { useRef, useState } from "react";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import {
-  SimpleLineSymbolCapOption,
-  SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption
-} from "./lib/types";
+import { Cap, Join, LineStyle } from "./lib/types";
 import MapView from "./MapView";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import SceneView from "./SceneView";
@@ -73,7 +69,7 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
+  const handleOutlineCapChange = (currentCapValue: Cap) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -93,7 +89,7 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
+  const handleOutlineJoinChange = (currentJoinValue: Join) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -113,7 +109,7 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
+  const handleOutlineStyleChange = (currentStyleValue: LineStyle) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);

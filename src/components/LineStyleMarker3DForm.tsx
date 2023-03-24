@@ -6,14 +6,15 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { MARKER_PLACEMENT_OPTIONS, LINE_STYLE_MARKER_3D_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { LineStyleMarker3DPlacementOption, LineStyleMarker3DStyleOption } from "./lib/types";
+import { MarkerPlacement, LineStyleMarker3DStyle } from "./lib/types";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handlePlacementChange: (layerIndex: number, value: LineStyleMarker3DPlacementOption) => void;
-  handleStyleChange: (layerIndex: number, value: LineStyleMarker3DStyleOption) => void;
+  handlePlacementChange: (layerIndex: number, value: MarkerPlacement) => void;
+  handleStyleChange: (layerIndex: number, value: LineStyleMarker3DStyle) => void;
 }
 
 const LineStyleMarker3DForm = ({
@@ -22,9 +23,6 @@ const LineStyleMarker3DForm = ({
   handlePlacementChange,
   handleStyleChange
 }: Props) => {
-  const placementOptions = ["begin-end", "begin", "end"];
-  const styleOptions = ["arrow", "circle", "square", "diamond", "cross", "x"];
-
   const [color, setColor] = useState("#007ac2");
   const [placement, setPlacement] = useState("begin-end");
   const [style, setStyle] = useState("arrow");
@@ -52,14 +50,11 @@ const LineStyleMarker3DForm = ({
           label={"placement selection"}
           onCalciteSelectChange={(event) => {
             setPlacement(event.target.value);
-            handlePlacementChange(
-              layerIndex,
-              event.target.value as LineStyleMarker3DPlacementOption
-            );
+            handlePlacementChange(layerIndex, event.target.value as MarkerPlacement);
           }}
           value={placement}
         >
-          {placementOptions.map((option, index) => (
+          {MARKER_PLACEMENT_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -70,11 +65,11 @@ const LineStyleMarker3DForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(layerIndex, event.target.value as LineStyleMarker3DStyleOption);
+            handleStyleChange(layerIndex, event.target.value as LineStyleMarker3DStyle);
           }}
           value={style}
         >
-          {styleOptions.map((option, index) => (
+          {LINE_STYLE_MARKER_3D_STYLE_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

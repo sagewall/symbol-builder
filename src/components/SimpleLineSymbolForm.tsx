@@ -7,26 +7,21 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { CAP_OPTIONS, JOIN_OPTIONS, LINE_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  LineSymbolMarkerPlacementOption,
-  LineSymbolMarkerStyleOption,
-  SimpleLineSymbolCapOption,
-  SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption
-} from "./lib/types";
+import { MarkerPlacement, LineStyleMarker3DStyle, Cap, Join, LineStyle } from "./lib/types";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 
 interface Props {
-  handleCapChange: (value: SimpleLineSymbolCapOption) => void;
+  handleCapChange: (value: Cap) => void;
   handleColorChange: (value: string) => void;
-  handleJoinChange: (value: SimpleLineSymbolJoinOption) => void;
+  handleJoinChange: (value: Join) => void;
   handleMarkerBlockToggle?: (value: HTMLCalciteBlockElement) => void;
   handleMarkerColorChange?: (value: string) => void;
-  handleMarkerPlacementChange?: (value: LineSymbolMarkerPlacementOption) => void;
-  handleMarkerStyleChange?: (value: LineSymbolMarkerStyleOption) => void;
+  handleMarkerPlacementChange?: (value: MarkerPlacement) => void;
+  handleMarkerStyleChange?: (value: LineStyleMarker3DStyle) => void;
   handleMiterLimitChange: (value: string) => void;
-  handleStyleChange: (value: SimpleLineSymbolStyleOption) => void;
+  handleStyleChange: (value: LineStyle) => void;
   handleWidthChange: (value: string) => void;
   showMarker: boolean;
 }
@@ -44,23 +39,6 @@ const SimpleLineSymbolForm = ({
   handleWidthChange,
   showMarker
 }: Props) => {
-  const capOptions = ["round", "butt", "square"];
-  const joinOptions = ["round", "miter", "bevel"];
-  const styleOptions = [
-    "solid",
-    "dash",
-    "dash-dot",
-    "dot",
-    "long-dash",
-    "long-dash-dot",
-    "long-dash-dot-dot",
-    "none",
-    "short-dash",
-    "short-dash-dot",
-    "short-dash-dot-dot",
-    "short-dot"
-  ];
-
   const [cap, setCap] = useState("round");
   const [color, setColor] = useState("#007ac2");
   const [join, setJoin] = useState("round");
@@ -100,11 +78,11 @@ const SimpleLineSymbolForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(event.target.value as SimpleLineSymbolCapOption);
+            handleCapChange(event.target.value as Cap);
           }}
           value={cap}
         >
-          {capOptions.map((option, index) => (
+          {CAP_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -130,11 +108,11 @@ const SimpleLineSymbolForm = ({
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(event.target.value as SimpleLineSymbolJoinOption);
+            handleJoinChange(event.target.value as Join);
           }}
           value={join}
         >
-          {joinOptions.map((option, index) => (
+          {JOIN_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -160,11 +138,11 @@ const SimpleLineSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as SimpleLineSymbolStyleOption);
+            handleStyleChange(event.target.value as LineStyle);
           }}
           value={style}
         >
-          {styleOptions.map((option, index) => (
+          {LINE_STYLE_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

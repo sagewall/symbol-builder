@@ -6,6 +6,7 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { FONT_DECORATION_OPTIONS, FONT_STYLE_OPTIONS, FONT_WEIGHT_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 import { FontDecoration, FontStyle, FontWeight } from "./lib/types";
 
@@ -24,10 +25,6 @@ const FontForm = ({
   handleStyleChange,
   handleWeightChange
 }: Props) => {
-  const fontDecorationOptions = ["none", "underline", "line-through"];
-  const fontStyleOptions = ["normal", "italic", "oblique"];
-  const fontWeightOptions = ["normal", "bold", "bolder", "lighter"];
-
   const [decoration, setDecoration] = useState("none");
   const [family, setFamily] = useState("serif");
   const [size, setSize] = useState("12");
@@ -46,7 +43,7 @@ const FontForm = ({
           }}
           value={decoration}
         >
-          {fontDecorationOptions.map((option, index) => (
+          {FONT_DECORATION_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -87,7 +84,7 @@ const FontForm = ({
           }}
           value={style}
         >
-          {fontStyleOptions.map((option, index) => (
+          {FONT_STYLE_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
@@ -103,7 +100,7 @@ const FontForm = ({
           }}
           value={weight}
         >
-          {fontWeightOptions.map((option, index) => (
+          {FONT_WEIGHT_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

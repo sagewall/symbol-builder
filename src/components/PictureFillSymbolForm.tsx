@@ -6,20 +6,16 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  SimpleLineSymbolCapOption,
-  SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption
-} from "./lib/types";
+import { Cap, Join, LineStyle } from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleHeightChange: (value: string) => void;
-  handleOutlineCapChange: (value: SimpleLineSymbolCapOption) => void;
+  handleOutlineCapChange: (value: Cap) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: SimpleLineSymbolJoinOption) => void;
+  handleOutlineJoinChange: (value: Join) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: SimpleLineSymbolStyleOption) => void;
+  handleOutlineStyleChange: (value: LineStyle) => void;
   handleOutlineWidthChange: (value: string) => void;
   handleUrlChange: (value: string) => void;
   handleWidthChange: (value: string) => void;

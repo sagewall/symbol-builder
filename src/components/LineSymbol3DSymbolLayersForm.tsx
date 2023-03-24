@@ -8,16 +8,15 @@ import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles } from "./lib/styles";
 import {
-  LineStyleMarker3DPlacementOption,
-  LineStyleMarker3DStyleOption,
-  LineStylePattern3DStyleOption,
-  LineSymbol3DCapOption,
-  LineSymbol3DJoinOption,
-  PathSymbol3DLayerAnchorOption,
-  PathSymbol3DLayerCapOption,
-  PathSymbol3DLayerJoinOption,
-  PathSymbol3DLayerProfileOption,
-  PathSymbol3DLayerProfileRotationOption
+  Cap,
+  Cap3D,
+  Join,
+  LineStyle,
+  MarkerPlacement,
+  LineStyleMarker3DStyle,
+  PathSymbol3DLayerAnchor,
+  Profile,
+  Rotation
 } from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
@@ -25,6 +24,7 @@ import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
+
 const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewLineSymbol3DLayer = (): LineSymbol3DLayer => {
     const newLineSymbol3DLayer = new LineSymbol3DLayer({
@@ -73,7 +73,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.cap = value as LineSymbol3DCapOption;
+    symbolLayer.cap = value as Cap;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -81,7 +81,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerJoinChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.join = value as LineSymbol3DJoinOption;
+    symbolLayer.join = value as Join;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -110,7 +110,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerPlacementChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.placement = value as LineStyleMarker3DPlacementOption;
+    symbolLayer.marker.placement = value as MarkerPlacement;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -118,7 +118,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerStyleChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.style = value as LineStyleMarker3DStyleOption;
+    symbolLayer.marker.style = value as LineStyleMarker3DStyle;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -134,7 +134,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.pattern.style = value as LineStylePattern3DStyleOption;
+    symbolLayer.pattern.style = value as LineStyle;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -150,7 +150,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerAnchorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.anchor = value as PathSymbol3DLayerAnchorOption;
+    symbolLayer.anchor = value as PathSymbol3DLayerAnchor;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -158,7 +158,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.cap = value as PathSymbol3DLayerCapOption;
+    symbolLayer.cap = value as Cap3D;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -182,7 +182,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerJoinChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.join = value as PathSymbol3DLayerJoinOption;
+    symbolLayer.join = value as Join;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -198,7 +198,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerProfileChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.profile = value as PathSymbol3DLayerProfileOption;
+    symbolLayer.profile = value as Profile;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -206,7 +206,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerProfileRotationChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.profileRotation = value as PathSymbol3DLayerProfileRotationOption;
+    symbolLayer.profileRotation = value as Rotation;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };

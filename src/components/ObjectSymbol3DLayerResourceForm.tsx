@@ -5,16 +5,14 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import { OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { ObjectSymbol3DLayerResourcePrimitiveOption } from "./lib/types";
+import { ObjectSymbol3DLayerResourcePrimitive } from "./lib/types";
 
 interface Props {
   layerIndex: number;
   handleHrefChange: (layerIndex: number, value: string) => void;
-  handlePrimitiveChange: (
-    layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitiveOption
-  ) => void;
+  handlePrimitiveChange: (layerIndex: number, value: ObjectSymbol3DLayerResourcePrimitive) => void;
 }
 
 const ObjectSymbol3DLayerResourceForm = ({
@@ -22,16 +20,6 @@ const ObjectSymbol3DLayerResourceForm = ({
   handleHrefChange,
   handlePrimitiveChange
 }: Props) => {
-  const primitiveOptions = [
-    "sphere",
-    "cylinder",
-    "cube",
-    "cone",
-    "inverted-cone",
-    "diamond",
-    "tetrahedron"
-  ];
-
   const [href, setHref] = useState("");
   const [primitive, setPrimitive] = useState("circle");
 
@@ -56,12 +44,12 @@ const ObjectSymbol3DLayerResourceForm = ({
             setPrimitive(event.target.value);
             handlePrimitiveChange(
               layerIndex,
-              event.target.value as ObjectSymbol3DLayerResourcePrimitiveOption
+              event.target.value as ObjectSymbol3DLayerResourcePrimitive
             );
           }}
           value={primitive}
         >
-          {primitiveOptions.map((option, index) => (
+          {OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

@@ -7,15 +7,13 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { FillSymbol3DLayerMaterialColorMixModeOption } from "./lib/types";
+import { ColorMixMode } from "./lib/types";
+import { COLOR_MIX_MODE_OPTIONS } from "./lib/constants";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handleColorMixModeChange: (
-    layerIndex: number,
-    value: FillSymbol3DLayerMaterialColorMixModeOption
-  ) => void;
+  handleColorMixModeChange: (layerIndex: number, value: ColorMixMode) => void;
 }
 
 const FillSymbol3DLayerMaterialForm = ({
@@ -23,8 +21,6 @@ const FillSymbol3DLayerMaterialForm = ({
   handleColorChange,
   handleColorMixModeChange
 }: Props) => {
-  const colorMixModeOptions = ["multiply", "tint", "replace"];
-
   const [color, setColor] = useState("#007ac2");
   const [colorMixMode, setColorMixMode] = useState("multiply");
 
@@ -52,14 +48,11 @@ const FillSymbol3DLayerMaterialForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setColorMixMode(event.target.value);
-            handleColorMixModeChange(
-              layerIndex,
-              event.target.value as FillSymbol3DLayerMaterialColorMixModeOption
-            );
+            handleColorMixModeChange(layerIndex, event.target.value as ColorMixMode);
           }}
           value={colorMixMode}
         >
-          {colorMixModeOptions.map((option, index) => (
+          {COLOR_MIX_MODE_OPTIONS.map((option, index) => (
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>

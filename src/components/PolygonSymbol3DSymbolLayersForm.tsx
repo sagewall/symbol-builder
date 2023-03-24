@@ -13,12 +13,7 @@ import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
-import {
-  FillSymbol3DLayerMaterialColorMixModeOption,
-  FillSymbol3DLayerOutlinePatternCapOption,
-  LineStylePattern3DStyleOption,
-  SylePattern3DOption
-} from "./lib/types";
+import { ColorMixMode, Cap, LineStyle, Fill } from "./lib/types";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -74,10 +69,13 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerMaterialColorMixModeChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerMaterialColorMixModeChange = (
+    layerIndex: number,
+    value: ColorMixMode
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.material.colorMixMode = value as FillSymbol3DLayerMaterialColorMixModeOption;
+    symbolLayer.material.colorMixMode = value as ColorMixMode;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -94,7 +92,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.outline.pattern) {
-      symbolLayer.outline.pattern.style = value as LineStylePattern3DStyleOption;
+      symbolLayer.outline.pattern.style = value as LineStyle;
     }
 
     setSymbolLayers(newSymbolLayers);
@@ -104,7 +102,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleFillSymbol3DLayerOutlinePatternCapChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.outline.patternCap = value as FillSymbol3DLayerOutlinePatternCapOption;
+    symbolLayer.outline.patternCap = value as Cap;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -117,13 +115,10 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerPatternStyleChange = (
-    layerIndex: number,
-    value: SylePattern3DOption
-  ) => {
+  const handleFillSymbol3DLayerPatternStyleChange = (layerIndex: number, value: Fill) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.pattern.style = value as SylePattern3DOption;
+    symbolLayer.pattern.style = value as Fill;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };

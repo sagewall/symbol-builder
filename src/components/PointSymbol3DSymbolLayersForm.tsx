@@ -13,10 +13,10 @@ import {
   FontStyle,
   FontWeight,
   HorizontalAlignment,
-  IconSymbol3DLayerAnchorOption,
-  IconSymbol3DLayerResourcePrimitiveOption,
-  ObjectSymbol3DLayerAnchorOption,
-  ObjectSymbol3DLayerResourcePrimitiveOption,
+  IconSymbol3DLayerAnchor,
+  IconSymbol3DLayerResourcePrimitive,
+  ObjectSymbol3DLayerAnchor,
+  ObjectSymbol3DLayerResourcePrimitive,
   VerticalAlignment
 } from "./lib/types";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
@@ -96,7 +96,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: IconSymbol3DLayerAnchorOption
+    value: IconSymbol3DLayerAnchor
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -155,7 +155,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: IconSymbol3DLayerResourcePrimitiveOption
+    value: IconSymbol3DLayerResourcePrimitive
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -174,7 +174,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: ObjectSymbol3DLayerAnchorOption
+    value: ObjectSymbol3DLayerAnchor
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -249,7 +249,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitiveOption
+    value: ObjectSymbol3DLayerResourcePrimitive
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;

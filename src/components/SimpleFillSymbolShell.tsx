@@ -14,12 +14,7 @@ import {
 import React, { useRef, useState } from "react";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import {
-  SimpleFillSymbolStyleOption,
-  SimpleLineSymbolCapOption,
-  SimpleLineSymbolJoinOption,
-  SimpleLineSymbolStyleOption
-} from "./lib/types";
+import { Fill, Cap, Join, LineStyle } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
@@ -75,7 +70,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: SimpleLineSymbolCapOption) => {
+  const handleOutlineCapChange = (currentCapValue: Cap) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -95,7 +90,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: SimpleLineSymbolJoinOption) => {
+  const handleOutlineJoinChange = (currentJoinValue: Join) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -115,7 +110,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: SimpleLineSymbolStyleOption) => {
+  const handleOutlineStyleChange = (currentStyleValue: LineStyle) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -135,7 +130,7 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: SimpleFillSymbolStyleOption) => {
+  const handleStyleChange = (currentStyleValue: Fill) => {
     const newSimpleFillSymbol = simpleFillSymbol.clone();
     newSimpleFillSymbol.style = currentStyleValue;
     updateGraphics(newSimpleFillSymbol);

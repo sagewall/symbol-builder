@@ -3,12 +3,7 @@ import React, { createRef, useEffect, useState } from "react";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  FillSymbol3DLayerMaterialColorMixModeOption,
-  FillSymbol3DLayerOutlinePatternCapOption,
-  LineStylePattern3DStyleOption,
-  SylePattern3DOption
-} from "./lib/types";
+import { ColorMixMode, Cap, LineStyle, Fill } from "./lib/types";
 import StylePattern3DForm from "./StylePattern3DForm";
 
 interface Props {
@@ -17,22 +12,13 @@ interface Props {
   handleFillSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (
     layerIndex: number,
-    value: FillSymbol3DLayerMaterialColorMixModeOption
+    value: ColorMixMode
   ) => void;
   handleFillSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerOutlinePatternStyleChange: (
-    layerIndex: number,
-    value: LineStylePattern3DStyleOption
-  ) => void;
-  handleFillSymbol3DLayerOutlinePatternCapChange: (
-    layerIndex: number,
-    value: FillSymbol3DLayerOutlinePatternCapOption
-  ) => void;
+  handleFillSymbol3DLayerOutlinePatternStyleChange: (layerIndex: number, value: LineStyle) => void;
+  handleFillSymbol3DLayerOutlinePatternCapChange: (layerIndex: number, value: Cap) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerPatternStyleChange: (
-    layerIndex: number,
-    value: SylePattern3DOption
-  ) => void;
+  handleFillSymbol3DLayerPatternStyleChange: (layerIndex: number, value: Fill) => void;
 }
 
 const FillSymbol3DLayerForm = ({
