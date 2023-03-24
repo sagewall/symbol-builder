@@ -9,11 +9,10 @@ import React, { useState } from "react";
 import { blockStyles } from "./lib/styles";
 import {
   Cap,
-  Cap3D,
   Join,
   LineStyle,
-  MarkerPlacement,
   LineStyleMarker3DStyle,
+  MarkerPlacement,
   PathSymbol3DLayerAnchor,
   Profile,
   Rotation
@@ -158,7 +157,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.cap = value as Cap3D;
+    symbolLayer.cap = value as Cap;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };

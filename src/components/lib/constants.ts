@@ -96,4 +96,4 @@ export const SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS = [
   "path"
 ] as const;
 
-export const VERTICAL_ALIGNMENT_OPTIONS = ["baseline", "top", "middle", "bottom"];
+export const VERTICAL_ALIGNMENT_OPTIONS = ["baseline", "top", "middle", "bottom"] as const;
