@@ -61,6 +61,30 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleFillSymbol3DLayerEdgesColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    symbolLayer.edges.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleFillSymbol3DLayerEdgesExtensionLengthChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    symbolLayer.edges.extensionLength = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleFillSymbol3DLayerEdgesSizeChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    symbolLayer.edges.size = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleFillSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
@@ -150,7 +174,13 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 />
                 <FillSymbol3DLayerForm
                   layerIndex={index}
+                  isMeshSymbol3D={false}
                   handleCastShadowsChange={handleFillSymbol3DLayerCastShadowsChange}
+                  handleFillSymbol3DLayerEdgesColorChange={handleFillSymbol3DLayerEdgesColorChange}
+                  handleFillSymbol3DLayerEdgesExtensionLengthChange={
+                    handleFillSymbol3DLayerEdgesExtensionLengthChange
+                  }
+                  handleFillSymbol3DLayerEdgesSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
                   handleFillSymbol3DLayerMaterialColorChange={
                     handleFillSymbol3DLayerMaterialColorChange
                   }
