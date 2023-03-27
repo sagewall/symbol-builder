@@ -97,3 +97,7 @@ export const SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS = [
 ] as const;
 
 export const VERTICAL_ALIGNMENT_OPTIONS = ["baseline", "top", "middle", "bottom"] as const;
+
+export const WATERBODY_SIZE_OPTIONS = ["small", "medium", "large"] as const;
+
+export const WAVE_STRENGTH_OPTIONS = ["calm", "rippled", "slight", "moderate"] as const;

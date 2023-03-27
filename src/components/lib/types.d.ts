@@ -63,3 +63,7 @@ export type Rotation = (typeof ROTATION_OPTIONS)[number];
 export type SimpleMarkerSymbolStyle = (typeof SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS)[number];
 
 export type VerticalAlignment = (typeof VERTICAL_ALIGNMENT_OPTIONS)[number];
+
+export type WaterbodySize = (typeof WATERBODY_SIZE_OPTIONS)[number];
+
+export type WaveStrength = (typeof WAVE_STRENGTH_OPTIONS)[number];

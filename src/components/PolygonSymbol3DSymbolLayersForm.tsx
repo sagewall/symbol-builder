@@ -34,11 +34,14 @@ import {
   MarkerPlacement,
   ObjectSymbol3DLayerAnchor,
   ObjectSymbol3DLayerResourcePrimitive,
-  VerticalAlignment
+  VerticalAlignment,
+  WaterbodySize,
+  WaveStrength
 } from "./lib/types";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
+import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -114,6 +117,11 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     return newTextSymbol3DLayer;
   };
 
+  const createNewWaterSymbol3DLayer = (): WaterSymbol3DLayer => {
+    const newWaterSymbol3DLayer = new WaterSymbol3DLayer();
+    return newWaterSymbol3DLayer;
+  };
+
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
   const addExtrudeSymbol3DLayer = () => {
@@ -160,6 +168,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newSymbolLayers = symbolLayers.clone();
     const textSymbol3DLayer = createNewTextSymbol3DLayer();
     newSymbolLayers.add(textSymbol3DLayer);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const addWaterSymbol3DLayer = () => {
+    const newSymbolLayers = symbolLayers.clone();
+    const waterSymbol3DLayer = createNewWaterSymbol3DLayer();
+    newSymbolLayers.add(waterSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -702,6 +718,38 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleWaterSymbol3DLayerColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
+    symbolLayer.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleWaterSymbol3DLayerWaterbodySizeChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
+    symbolLayer.waterbodySize = value as WaterbodySize;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleWaterSymbol3DLayerWaveDirectionChange = (layerIndex: number, value: number) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
+    symbolLayer.waveDirection = value;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleWaterSymbol3DLayerWaveStrengthChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
+    symbolLayer.waveStrength = value as WaveStrength;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -944,6 +992,26 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
               </CalciteBlock>
             );
           }
+
+          if (symbolLayer.type === "water") {
+            symbol3DLayerCollectionForm.push(
+              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <CalciteAction
+                  icon="trash"
+                  onClick={() => deleteSymbol3DLayer(index)}
+                  slot="control"
+                  text="Delete"
+                />
+                <WaterSymbol3DLayerForm
+                  layerIndex={index}
+                  handleColorChange={handleWaterSymbol3DLayerColorChange}
+                  handleWaterbodySizeChange={handleWaterSymbol3DLayerWaterbodySizeChange}
+                  handleWaveDirectionChange={handleWaterSymbol3DLayerWaveDirectionChange}
+                  handleWaveStrengthChange={handleWaterSymbol3DLayerWaveStrengthChange}
+                />
+              </CalciteBlock>
+            );
+          }
         }
       );
       return symbol3DLayerCollectionForm;
@@ -967,6 +1035,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           icon="plus"
           text-enabled
           text="Add ExtrudeSymbol3DLayer"
+        ></CalciteAction>
+
+        <CalciteAction
+          onClick={() => addWaterSymbol3DLayer()}
+          slot="header-menu-actions"
+          icon="plus"
+          text-enabled
+          text="Add WaterSymbol3DLayer"
         ></CalciteAction>
 
         <CalciteAction
