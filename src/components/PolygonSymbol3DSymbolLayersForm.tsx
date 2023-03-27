@@ -1,5 +1,6 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
+import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
@@ -11,9 +12,10 @@ import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import ExtrudeSymbol3DLayerForm from "./ExtrudeSymbol3DLayerForm";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
-import { ColorMixMode, Cap, LineStyle, Fill } from "./lib/types";
+import { Cap, ColorMixMode, Fill, LineStyle } from "./lib/types";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -36,12 +38,29 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     return newFillSymbol3DLayer;
   };
 
+  const createNewExtrudeSymbol3DLayer = (): ExtrudeSymbol3DLayer => {
+    const newExtrudeSymbol3DLayer = new ExtrudeSymbol3DLayer({
+      edges: new SolidEdges3D(),
+      material: { color: "#007ac2" },
+      size: 3000
+    });
+    return newExtrudeSymbol3DLayer;
+  };
+
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
   const addFillSymbol3DLayer = () => {
     const newSymbolLayers = symbolLayers.clone();
     const fillSymbol3DLayer = createNewFillSymbol3DLayer();
     newSymbolLayers.add(fillSymbol3DLayer);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const addExtrudeSymbol3DLayer = () => {
+    const newSymbolLayers = symbolLayers.clone();
+    const extrudeSymbol3DLayer = createNewExtrudeSymbol3DLayer();
+    newSymbolLayers.add(extrudeSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -147,6 +166,57 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleExtrudeSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
+    symbolLayer.castShadows = value;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleExtrudeSymbol3DLayerEdgesColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
+    symbolLayer.edges.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleExtrudeSymbol3DLayerEdgesExtensionLengthChange = (
+    layerIndex: number,
+    value: string
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
+    symbolLayer.edges.extensionLength = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleExtrudeSymbol3DLayerEdgesSizeChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
+    symbolLayer.edges.size = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleExtrudeSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
+    symbolLayer.material.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleExtrudeSymbol3DLayerSizeChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
+    symbolLayer.size = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -206,6 +276,36 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
               </CalciteBlock>
             );
           }
+
+          if (symbolLayer.type === "extrude") {
+            symbol3DLayerCollectionForm.push(
+              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <CalciteAction
+                  icon="trash"
+                  onClick={() => deleteSymbol3DLayer(index)}
+                  slot="control"
+                  text="Delete"
+                />
+                <ExtrudeSymbol3DLayerForm
+                  layerIndex={index}
+                  handleCastShadowsChange={handleExtrudeSymbol3DLayerCastShadowsChange}
+                  handleExtrudeSymbol3DLayerEdgesColorChange={
+                    handleExtrudeSymbol3DLayerEdgesColorChange
+                  }
+                  handleExtrudeSymbol3DLayerEdgesExtensionLengthChange={
+                    handleExtrudeSymbol3DLayerEdgesExtensionLengthChange
+                  }
+                  handleExtrudeSymbol3DLayerEdgesSizeChange={
+                    handleExtrudeSymbol3DLayerEdgesSizeChange
+                  }
+                  handleExtrudeSymbol3DLayerMaterialColorChange={
+                    handleExtrudeSymbol3DLayerMaterialColorChange
+                  }
+                  handleSizeChange={handleExtrudeSymbol3DLayerSizeChange}
+                />
+              </CalciteBlock>
+            );
+          }
         }
       );
       return symbol3DLayerCollectionForm;
@@ -221,6 +321,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           icon="plus"
           text-enabled
           text="Add FillSymbol3DLayer"
+        ></CalciteAction>
+
+        <CalciteAction
+          onClick={() => addExtrudeSymbol3DLayer()}
+          slot="header-menu-actions"
+          icon="plus"
+          text-enabled
+          text="Add ExtrudeSymbol3DLayer"
         ></CalciteAction>
 
         {createSymbol3DLayerCollectionForm()}
