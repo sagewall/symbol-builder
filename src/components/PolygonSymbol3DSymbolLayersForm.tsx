@@ -4,6 +4,7 @@ import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
+import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
@@ -15,7 +16,16 @@ import React, { useState } from "react";
 import ExtrudeSymbol3DLayerForm from "./ExtrudeSymbol3DLayerForm";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
-import { Cap, ColorMixMode, Fill, LineStyle } from "./lib/types";
+import {
+  Cap,
+  ColorMixMode,
+  Fill,
+  Join,
+  LineStyle,
+  LineStyleMarker3DStyle,
+  MarkerPlacement
+} from "./lib/types";
+import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -47,6 +57,15 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     return newExtrudeSymbol3DLayer;
   };
 
+  const createNewLineSymbol3DLayer = (): LineSymbol3DLayer => {
+    const newLineSymbol3DLayer = new LineSymbol3DLayer({
+      material: { color: "#007ac2" },
+      pattern: new LineStylePattern3D(),
+      size: 3
+    });
+    return newLineSymbol3DLayer;
+  };
+
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
   const addFillSymbol3DLayer = () => {
@@ -61,6 +80,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newSymbolLayers = symbolLayers.clone();
     const extrudeSymbol3DLayer = createNewExtrudeSymbol3DLayer();
     newSymbolLayers.add(extrudeSymbol3DLayer);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const addLineSymbol3DLayer = () => {
+    const newSymbolLayers = symbolLayers.clone();
+    const lineSymbol3DLayer = createNewLineSymbol3DLayer();
+    newSymbolLayers.add(lineSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -217,6 +244,83 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleLineSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.cap = value as Cap;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerJoinChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.join = value as Join;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerBlockToggle = (
+    layerIndex: number,
+    currentMarkerBlock: HTMLCalciteBlockElement
+  ) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    if (currentMarkerBlock.open && !symbolLayer.marker) {
+      symbolLayer.marker = new LineStyleMarker3D();
+    }
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.marker.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerPlacementChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.marker.placement = value as MarkerPlacement;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMarkerStyleChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.marker.style = value as LineStyleMarker3DStyle;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.material.color = new Color(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.pattern.style = value as LineStyle;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleLineSymbol3DLayerSizeChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
+    symbolLayer.size = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
@@ -306,6 +410,43 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
               </CalciteBlock>
             );
           }
+
+          if (symbolLayer.type === "line") {
+            symbol3DLayerCollectionForm.push(
+              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <CalciteAction
+                  icon="trash"
+                  onClick={() => deleteSymbol3DLayer(index)}
+                  slot="control"
+                  text="Delete"
+                />
+                <LineSymbol3DLayerForm
+                  layerIndex={index}
+                  handleCapChange={handleLineSymbol3DLayerCapChange}
+                  handleJoinChange={handleLineSymbol3DLayerJoinChange}
+                  handleLineSymbol3DLayerMarkerBlockToggle={
+                    handleLineSymbol3DLayerMarkerBlockToggle
+                  }
+                  handleLineSymbol3DLayerMarkerColorChange={
+                    handleLineSymbol3DLayerMarkerColorChange
+                  }
+                  handleLineSymbol3DLayerMarkerPlacementChange={
+                    handleLineSymbol3DLayerMarkerPlacementChange
+                  }
+                  handleLineSymbol3DLayerMarkerStyleChange={
+                    handleLineSymbol3DLayerMarkerStyleChange
+                  }
+                  handleLineSymbol3DLayerMaterialColorChange={
+                    handleLineSymbol3DLayerMaterialColorChange
+                  }
+                  handleLineSymbol3DLayerPatternStyleChange={
+                    handleLineSymbol3DLayerPatternStyleChange
+                  }
+                  handleSizeChange={handleLineSymbol3DLayerSizeChange}
+                />
+              </CalciteBlock>
+            );
+          }
         }
       );
       return symbol3DLayerCollectionForm;
@@ -329,6 +470,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           icon="plus"
           text-enabled
           text="Add ExtrudeSymbol3DLayer"
+        ></CalciteAction>
+
+        <CalciteAction
+          onClick={() => addLineSymbol3DLayer()}
+          slot="header-menu-actions"
+          icon="plus"
+          text-enabled
+          text="Add LineSymbol3DLayer"
         ></CalciteAction>
 
         {createSymbol3DLayerCollectionForm()}
