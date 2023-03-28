@@ -1,0 +1,189 @@
+import Collection from "@arcgis/core/core/Collection";
+import Graphic from "@arcgis/core/Graphic";
+import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
+import {
+  CalciteAction,
+  CalciteLabel,
+  CalcitePanel,
+  CalciteShell,
+  CalciteShellPanel,
+  CalciteSwitch
+} from "@esri/calcite-components-react";
+import React, { useRef, useState } from "react";
+import {
+  ESRI_ICONS_STYLE_NAME_OPTIONS,
+  ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS,
+  ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS,
+  ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS,
+  ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS,
+  ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS,
+  ESRI_RECREATION_STYLE_NAME_OPTIONS,
+  ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS,
+  ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS
+} from "./lib/constants";
+import { point } from "./lib/geometry";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
+import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
+import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
+
+const WebStyleSymbolShell = () => {
+  const viewSwitchRef = useRef(null);
+
+  const defaultWebStyleSymbol2D = new WebStyleSymbol({
+    name: "extent-hollow-gray",
+    styleName: "Esri2DPointSymbolsStyle"
+  });
+
+  const defaultWebStyleSymbol3D = new WebStyleSymbol({
+    name: "Accessibility",
+    styleName: "EsriIconsStyle"
+  });
+
+  const [webStyleSymbol, setWebStyleSymbol] = useState(defaultWebStyleSymbol2D);
+
+  const pointGraphic = new Graphic({
+    geometry: point,
+    symbol: webStyleSymbol
+  });
+
+  const graphicsCollection = new Collection();
+  graphicsCollection.add(pointGraphic);
+
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+
+  const [sceneView, setSceneView] = useState(false);
+  let view = <MapView graphics={graphics} />;
+  if (sceneView) {
+    view = <SceneView graphics={graphics} />;
+  }
+
+  const handleSwitchChange = () => {
+    if (viewSwitchRef.current) {
+      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+      (viewSwitchRef.current as HTMLCalciteSwitchElement).checked
+        ? updateGraphics(defaultWebStyleSymbol3D)
+        : updateGraphics(defaultWebStyleSymbol2D);
+    }
+  };
+
+  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol) => {
+    setWebStyleSymbol(newWebStyleSymbol);
+
+    const newPointGraphic = graphics.getItemAt(0).clone();
+    newPointGraphic.symbol = newWebStyleSymbol;
+
+    const newGraphics = new Collection();
+    newGraphics.add(newPointGraphic);
+    setGraphics(newGraphics);
+  };
+
+  const handleNameChange = (currentName: string) => {
+    const newWebStyleSymbol = webStyleSymbol.clone();
+    newWebStyleSymbol.name = currentName;
+    updateGraphics(newWebStyleSymbol);
+  };
+
+  const handleStyleNameChange = (currentStyleName: string) => {
+    const newWebStyleSymbol = new WebStyleSymbol();
+
+    switch (currentStyleName) {
+      case "EsriIconsStyle":
+        newWebStyleSymbol.name = ESRI_ICONS_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriInfrastructureStyle":
+        newWebStyleSymbol.name = ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriRealisticSignsandSignalsStyle":
+        newWebStyleSymbol.name = ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriRealisticStreetSceneStyle":
+        newWebStyleSymbol.name = ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriRealisticTransportationStyle":
+        newWebStyleSymbol.name = ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriRealisticTreesStyle":
+        newWebStyleSymbol.name = ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriRecreationStyle":
+        newWebStyleSymbol.name = ESRI_RECREATION_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriThematicShapesStyle":
+        newWebStyleSymbol.name = ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS[0];
+        break;
+
+      case "EsriThematicTreesStyle":
+        newWebStyleSymbol.name = ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS[0];
+        break;
+
+      default:
+        newWebStyleSymbol.name = ESRI_ICONS_STYLE_NAME_OPTIONS[0];
+    }
+
+    newWebStyleSymbol.styleName = currentStyleName;
+    updateGraphics(newWebStyleSymbol);
+  };
+
+  const handleCopyJSONClick = () => {
+    navigator.clipboard.writeText(JSON.stringify(webStyleSymbol.toJSON(), null, 2));
+  };
+
+  return (
+    <React.Fragment>
+      <CalciteShell style={shellStyles}>
+        <CalciteShellPanel slot="panel-start" position="start" resizable>
+          <CalcitePanel>
+            <div slot="header-content">Properties </div>
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+              2D
+              <CalciteSwitch
+                ref={viewSwitchRef}
+                onCalciteSwitchChange={handleSwitchChange}
+              ></CalciteSwitch>
+              3D
+            </CalciteLabel>
+
+            <div style={formStyles}>
+              {!sceneView ? (
+                <WebStyleSymbol2DForm
+                  handleNameChange={handleNameChange}
+                  handleStyleNameChange={handleStyleNameChange}
+                />
+              ) : (
+                <WebStyleSymbol3DForm
+                  handleNameChange={handleNameChange}
+                  handleStyleNameChange={handleStyleNameChange}
+                />
+              )}
+            </div>
+          </CalcitePanel>
+
+          <CalcitePanel>
+            <div slot="header-content">JSON</div>
+            <CalciteAction
+              icon="copy-to-clipboard"
+              label="Copy code to clipboard"
+              text="Copy JSON"
+              textEnabled
+              slot="header-actions-end"
+              onClick={handleCopyJSONClick}
+            ></CalciteAction>
+            <pre>{JSON.stringify(webStyleSymbol.toJSON(), null, 2)}</pre>
+          </CalcitePanel>
+        </CalciteShellPanel>
+        {view}
+      </CalciteShell>
+    </React.Fragment>
+  );
+};
+
+export default WebStyleSymbolShell;

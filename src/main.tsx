@@ -31,6 +31,7 @@ import SimpleFillSymbolPage from "./pages/simple-fill-symbol";
 import SimpleLineSymbolPage from "./pages/simple-line-symbol";
 import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
 import TextSymbolPage from "./pages/text-symbol";
+import WebStyleSymbolPage from "./pages/web-style-symbol";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.99/assets");
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: "text-symbol",
         element: <TextSymbolPage />
+      },
+      {
+        path: "web-style-symbol",
+        element: <WebStyleSymbolPage />
       }
     ]
   }

@@ -36,6 +36,9 @@ const IndexPage = () => {
           <li>
             <Link to="/text-symbol/">TextSymbol</Link>
           </li>
+          <li>
+            <Link to="/web-style-symbol/">WebStyleSymbol</Link>
+          </li>
         </ul>
       </main>
     </React.Fragment>
