@@ -1,4 +1,11 @@
-import { CalciteLabel, CalciteOption, CalciteSelect } from "@esri/calcite-components-react";
+import {
+  CalciteCombobox,
+  CalciteComboboxItem,
+  CalciteInputText,
+  CalciteLabel,
+  CalciteOption,
+  CalciteSelect
+} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import {
   ESRI_ICONS_STYLE_NAME_OPTIONS,
@@ -17,15 +24,20 @@ import { labelStyles } from "./lib/styles";
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
+  handleStyleUrlChange: (value: string) => void;
 }
 
-const TextSymbolForm = ({ handleNameChange, handleStyleNameChange }: Props) => {
-  const [styleName, setStyleName] = useState("EsriIconsStyle");
+const TextSymbolForm = ({
+  handleNameChange,
+  handleStyleNameChange,
+  handleStyleUrlChange
+}: Props) => {
   const [name, setName] = useState("Accessibility");
   const [names, setNames] = useState(ESRI_ICONS_STYLE_NAME_OPTIONS);
+  const [styleName, setStyleName] = useState("EsriIconsStyle");
+  const [styleUrl, setStyleUrl] = useState("");
 
   const updateNames = (styleName: string) => {
-    console.log(styleName);
     switch (styleName) {
       case "EsriIconsStyle":
         setNames(ESRI_ICONS_STYLE_NAME_OPTIONS);
@@ -82,18 +94,27 @@ const TextSymbolForm = ({ handleNameChange, handleStyleNameChange }: Props) => {
     <React.Fragment>
       <CalciteLabel layout="default" style={labelStyles}>
         name
-        <CalciteSelect
-          label={"name selection"}
-          onCalciteSelectChange={(event) => {
-            setName(event.target.value);
-            handleNameChange(event.target.value);
-          }}
-          value={name}
-        >
-          {names.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
+        <CalciteLabel layout="default" style={labelStyles}>
+          name
+          <CalciteCombobox
+            allowCustomValues={true}
+            label={"name selection"}
+            onCalciteComboboxChange={(event) => {
+              setName(event.target.value as string);
+              handleNameChange(event.target.value as string);
+            }}
+            selectionMode={"single"}
+            value={name}
+          >
+            {names.map((option, index) => (
+              <CalciteComboboxItem
+                key={index}
+                textLabel={option}
+                value={option}
+              ></CalciteComboboxItem>
+            ))}
+          </CalciteCombobox>
+        </CalciteLabel>
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
@@ -103,6 +124,7 @@ const TextSymbolForm = ({ handleNameChange, handleStyleNameChange }: Props) => {
           onCalciteSelectChange={(event) => {
             updateNames(event.target.value);
             setStyleName(event.target.value);
+            setStyleUrl("");
             handleStyleNameChange(event.target.value);
           }}
           value={styleName}
@@ -111,6 +133,18 @@ const TextSymbolForm = ({ handleNameChange, handleStyleNameChange }: Props) => {
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        styleUrl
+        <CalciteInputText
+          label={"url input"}
+          onCalciteInputTextChange={(event) => {
+            setStyleUrl(event.target.value);
+            handleStyleUrlChange(event.target.value);
+          }}
+          value={styleUrl}
+        ></CalciteInputText>
       </CalciteLabel>
     </React.Fragment>
   );

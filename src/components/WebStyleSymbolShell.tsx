@@ -133,6 +133,13 @@ const WebStyleSymbolShell = () => {
     updateGraphics(newWebStyleSymbol);
   };
 
+  const handleStyleUrlChange = (currentStyleUrl: string) => {
+    const newWebStyleSymbol = new WebStyleSymbol();
+    newWebStyleSymbol.name = "";
+    newWebStyleSymbol.styleUrl = currentStyleUrl;
+    updateGraphics(newWebStyleSymbol);
+  };
+
   const handleCopyJSONClick = () => {
     navigator.clipboard.writeText(JSON.stringify(webStyleSymbol.toJSON(), null, 2));
   };
@@ -157,11 +164,13 @@ const WebStyleSymbolShell = () => {
                 <WebStyleSymbol2DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
+                  handleStyleUrlChange={handleStyleUrlChange}
                 />
               ) : (
                 <WebStyleSymbol3DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
+                  handleStyleUrlChange={handleStyleUrlChange}
                 />
               )}
             </div>
