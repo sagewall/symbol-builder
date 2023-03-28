@@ -27,7 +27,7 @@ interface Props {
   handleStyleUrlChange: (value: string) => void;
 }
 
-const TextSymbolForm = ({
+const WebStyleSymbolForm = ({
   handleNameChange,
   handleStyleNameChange,
   handleStyleUrlChange
@@ -150,4 +150,4 @@ const TextSymbolForm = ({
   );
 };
 
-export default TextSymbolForm;
+export default WebStyleSymbolForm;
