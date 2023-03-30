@@ -133,9 +133,9 @@ const WebStyleSymbolShell = () => {
     updateGraphics(newWebStyleSymbol);
   };
 
-  const handleStyleUrlChange = (currentStyleUrl: string) => {
+  const handleCustomStyleChange = (currentStyleUrl: string, currentName: string) => {
     const newWebStyleSymbol = new WebStyleSymbol();
-    newWebStyleSymbol.name = "";
+    newWebStyleSymbol.name = currentName;
     newWebStyleSymbol.styleUrl = currentStyleUrl;
     updateGraphics(newWebStyleSymbol);
   };
@@ -164,13 +164,13 @@ const WebStyleSymbolShell = () => {
                 <WebStyleSymbol2DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
-                  handleStyleUrlChange={handleStyleUrlChange}
+                  handleCustomStyleChange={handleCustomStyleChange}
                 />
               ) : (
                 <WebStyleSymbol3DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
-                  handleStyleUrlChange={handleStyleUrlChange}
+                  handleCustomStyleChange={handleCustomStyleChange}
                 />
               )}
             </div>

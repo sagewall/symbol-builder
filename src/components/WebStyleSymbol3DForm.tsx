@@ -1,10 +1,13 @@
 import {
-  CalciteCombobox,
-  CalciteComboboxItem,
+  CalciteButton,
   CalciteInputText,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect
+  CalciteSelect,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabs,
+  CalciteTabTitle
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import {
@@ -24,18 +27,32 @@ import { labelStyles } from "./lib/styles";
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleStyleUrlChange: (value: string) => void;
+  handleCustomStyleChange: (styleUrl: string, name: string) => void;
 }
 
 const WebStyleSymbolForm = ({
   handleNameChange,
   handleStyleNameChange,
-  handleStyleUrlChange
+  handleCustomStyleChange
 }: Props) => {
+  const [customName, setCustomName] = useState("");
   const [name, setName] = useState("Accessibility");
   const [names, setNames] = useState(ESRI_ICONS_STYLE_NAME_OPTIONS);
   const [styleName, setStyleName] = useState("EsriIconsStyle");
   const [styleUrl, setStyleUrl] = useState("");
+
+  const handleSubmit = () => {
+    handleCustomStyleChange(styleUrl, customName);
+  };
+
+  const handleTabChange = (event: CustomEvent) => {
+    const tabNav = event.target as HTMLCalciteTabNavElement;
+    if (tabNav.selectedTitle.tab != "custom") {
+      setName("");
+    } else {
+      handleStyleNameChange(styleName);
+    }
+  };
 
   const updateNames = (styleName: string) => {
     switch (styleName) {
@@ -92,60 +109,74 @@ const WebStyleSymbolForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
-        name
-        <CalciteLabel layout="default" style={labelStyles}>
-          name
-          <CalciteCombobox
-            allowCustomValues={true}
-            label={"name selection"}
-            onCalciteComboboxChange={(event) => {
-              setName(event.target.value as string);
-              handleNameChange(event.target.value as string);
-            }}
-            selectionMode={"single"}
-            value={name}
-          >
-            {names.map((option, index) => (
-              <CalciteComboboxItem
-                key={index}
-                textLabel={option}
-                value={option}
-              ></CalciteComboboxItem>
-            ))}
-          </CalciteCombobox>
-        </CalciteLabel>
-      </CalciteLabel>
+      <CalciteTabs>
+        <CalciteTabNav slot="title-group" onCalciteTabChange={handleTabChange}>
+          <CalciteTabTitle tab="standard">Standard</CalciteTabTitle>
+          <CalciteTabTitle tab="custom">Custom</CalciteTabTitle>
+        </CalciteTabNav>
+        <CalciteTab tab="standard">
+          <CalciteLabel layout="default" style={labelStyles}>
+            name
+            <CalciteLabel layout="default" style={labelStyles}>
+              name
+              <CalciteSelect
+                label={"name selection"}
+                onCalciteSelectChange={(event) => {
+                  setName(event.target.value as string);
+                  handleNameChange(event.target.value as string);
+                }}
+                value={name}
+              >
+                {names.map((option, index) => (
+                  <CalciteOption key={index}>{option}</CalciteOption>
+                ))}
+              </CalciteSelect>
+            </CalciteLabel>
+          </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        styleName
-        <CalciteSelect
-          label={"styleName selection"}
-          onCalciteSelectChange={(event) => {
-            updateNames(event.target.value);
-            setStyleName(event.target.value);
-            setStyleUrl("");
-            handleStyleNameChange(event.target.value);
-          }}
-          value={styleName}
-        >
-          {WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
-      </CalciteLabel>
+          <CalciteLabel layout="default" style={labelStyles}>
+            styleName
+            <CalciteSelect
+              label={"styleName selection"}
+              onCalciteSelectChange={(event) => {
+                updateNames(event.target.value);
+                setStyleName(event.target.value);
+                setStyleUrl("");
+                handleStyleNameChange(event.target.value);
+              }}
+              value={styleName}
+            >
+              {WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS.map((option, index) => (
+                <CalciteOption key={index}>{option}</CalciteOption>
+              ))}
+            </CalciteSelect>
+          </CalciteLabel>
+        </CalciteTab>
+        <CalciteTab tab="custom">
+          <CalciteLabel layout="default" style={labelStyles}>
+            name
+            <CalciteInputText
+              label={"name input"}
+              onCalciteInputTextChange={(event) => {
+                setCustomName(event.target.value);
+              }}
+              value={customName}
+            ></CalciteInputText>
+          </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        styleUrl
-        <CalciteInputText
-          label={"url input"}
-          onCalciteInputTextChange={(event) => {
-            setStyleUrl(event.target.value);
-            handleStyleUrlChange(event.target.value);
-          }}
-          value={styleUrl}
-        ></CalciteInputText>
-      </CalciteLabel>
+          <CalciteLabel layout="default" style={labelStyles}>
+            styleUrl
+            <CalciteInputText
+              label={"url input"}
+              onCalciteInputTextChange={(event) => {
+                setStyleUrl(event.target.value);
+              }}
+              value={styleUrl}
+            ></CalciteInputText>
+          </CalciteLabel>
+          <CalciteButton onClick={() => handleSubmit()}>Submit</CalciteButton>
+        </CalciteTab>
+      </CalciteTabs>
     </React.Fragment>
   );
 };
