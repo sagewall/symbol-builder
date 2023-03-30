@@ -36,10 +36,21 @@ const WebStyleSymbol2DForm = ({
     handleCustomStyleChange(styleUrl, customName);
   };
 
+  const handleTabChange = (event: CustomEvent) => {
+    const tabNav = event.target as HTMLCalciteTabNavElement;
+    if (tabNav.selectedTitle.tab != "custom") {
+      setName("");
+    } else {
+      setStyleName("Esri2DPointSymbolsStyle");
+      setName("extent-hollow-gray");
+      handleStyleNameChange(styleName);
+    }
+  };
+
   return (
     <React.Fragment>
       <CalciteTabs>
-        <CalciteTabNav slot="title-group">
+        <CalciteTabNav slot="title-group" onCalciteTabChange={handleTabChange}>
           <CalciteTabTitle tab="standard">Standard</CalciteTabTitle>
           <CalciteTabTitle tab="custom">Custom</CalciteTabTitle>
         </CalciteTabNav>

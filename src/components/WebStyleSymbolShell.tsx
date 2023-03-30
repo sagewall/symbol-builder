@@ -1,5 +1,5 @@
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
 import {
   CalciteAction,
@@ -10,7 +10,12 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
+import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
+import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
 import {
+  ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS,
   ESRI_ICONS_STYLE_NAME_OPTIONS,
   ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS,
   ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS,
@@ -23,10 +28,6 @@ import {
 } from "./lib/constants";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
-import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
-import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -126,7 +127,7 @@ const WebStyleSymbolShell = () => {
         break;
 
       default:
-        newWebStyleSymbol.name = ESRI_ICONS_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS[0];
     }
 
     newWebStyleSymbol.styleName = currentStyleName;
