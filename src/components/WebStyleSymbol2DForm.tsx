@@ -36,19 +36,10 @@ const WebStyleSymbol2DForm = ({
     handleCustomStyleChange(styleUrl, customName);
   };
 
-  const handleTabChange = (event: CustomEvent) => {
-    // const tabNav = event.target as HTMLCalciteTabNavElement;
-    // if (tabNav.selectedTitle.tab != "custom") {
-    //   setName("");
-    // } else {
-    //   handleStyleNameChange(styleName);
-    // }
-  };
-
   return (
     <React.Fragment>
       <CalciteTabs>
-        <CalciteTabNav slot="title-group" onCalciteTabChange={handleTabChange}>
+        <CalciteTabNav slot="title-group">
           <CalciteTabTitle tab="standard">Standard</CalciteTabTitle>
           <CalciteTabTitle tab="custom">Custom</CalciteTabTitle>
         </CalciteTabNav>
