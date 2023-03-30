@@ -55,21 +55,18 @@ const WebStyleSymbol2DForm = ({
         <CalciteTab tab="standard">
           <CalciteLabel layout="default" style={labelStyles}>
             name
-            <CalciteLabel layout="default" style={labelStyles}>
-              name
-              <CalciteSelect
-                label={"name selection"}
-                onCalciteSelectChange={(event) => {
-                  setName(event.target.value as string);
-                  handleNameChange(event.target.value as string);
-                }}
-                value={name}
-              >
-                {ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS.map((option, index) => (
-                  <CalciteOption key={index}>{option}</CalciteOption>
-                ))}
-              </CalciteSelect>
-            </CalciteLabel>
+            <CalciteSelect
+              label={"name selection"}
+              onCalciteSelectChange={(event) => {
+                setName(event.target.value as string);
+                handleNameChange(event.target.value as string);
+              }}
+              value={name}
+            >
+              {ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS.map((option, index) => (
+                <CalciteOption key={index}>{option}</CalciteOption>
+              ))}
+            </CalciteSelect>
           </CalciteLabel>
 
           <CalciteLabel layout="default" style={labelStyles}>

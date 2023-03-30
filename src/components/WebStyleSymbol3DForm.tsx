@@ -117,21 +117,18 @@ const WebStyleSymbolForm = ({
         <CalciteTab tab="standard">
           <CalciteLabel layout="default" style={labelStyles}>
             name
-            <CalciteLabel layout="default" style={labelStyles}>
-              name
-              <CalciteSelect
-                label={"name selection"}
-                onCalciteSelectChange={(event) => {
-                  setName(event.target.value as string);
-                  handleNameChange(event.target.value as string);
-                }}
-                value={name}
-              >
-                {names.map((option, index) => (
-                  <CalciteOption key={index}>{option}</CalciteOption>
-                ))}
-              </CalciteSelect>
-            </CalciteLabel>
+            <CalciteSelect
+              label={"name selection"}
+              onCalciteSelectChange={(event) => {
+                setName(event.target.value as string);
+                handleNameChange(event.target.value as string);
+              }}
+              value={name}
+            >
+              {names.map((option, index) => (
+                <CalciteOption key={index}>{option}</CalciteOption>
+              ))}
+            </CalciteSelect>
           </CalciteLabel>
 
           <CalciteLabel layout="default" style={labelStyles}>
@@ -139,10 +136,9 @@ const WebStyleSymbolForm = ({
             <CalciteSelect
               label={"styleName selection"}
               onCalciteSelectChange={(event) => {
-                updateNames(event.target.value);
                 setStyleName(event.target.value);
-                setStyleUrl("");
                 handleStyleNameChange(event.target.value);
+                updateNames(event.target.value);
               }}
               value={styleName}
             >
