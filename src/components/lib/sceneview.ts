@@ -23,7 +23,7 @@ const blankBasemap = new Basemap({
 });
 
 const map = new ArcMap({
-  basemap: blankBasemap
+  basemap: "gray-vector"
 });
 
 const view = new ArcSceneView({
