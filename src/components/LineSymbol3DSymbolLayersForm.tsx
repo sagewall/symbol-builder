@@ -37,9 +37,10 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewPathSymbol3DLayer = (): PathSymbol3DLayer => {
     const newPathSymbol3DLayer = new PathSymbol3DLayer({
       castShadows: true,
-      height: 300,
+      height: 5,
       material: { color: "#007ac2" },
-      width: 300
+      profile: "quad",
+      width: 3
     });
     return newPathSymbol3DLayer;
   };

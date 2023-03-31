@@ -645,7 +645,7 @@ export const OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS = [
 
 export const PATH_SYMBOL_3D_LAYER_ANCHOR_OPTIONS = ["center", "bottom", "top"] as const;
 
-export const PROFILE_OPTIONS = ["circle", "quad"] as const;
+export const PROFILE_OPTIONS = ["quad", "circle"] as const;
 
 export const ROTATION_OPTIONS = ["all", "heading"] as const;
 

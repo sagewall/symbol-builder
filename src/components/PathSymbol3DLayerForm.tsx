@@ -46,11 +46,11 @@ const LineSymbol3DLayerForm = ({
   const [anchor, setAnchor] = useState("center");
   const [cap, setCap] = useState("butt");
   const [castShadows, setCastShadows] = useState(true);
-  const [height, setHeight] = useState("300");
+  const [height, setHeight] = useState("5");
   const [join, setJoin] = useState("miter");
-  const [profile, setProfile] = useState("circle");
+  const [profile, setProfile] = useState("quad");
   const [profileRotation, setProfileRotation] = useState("all");
-  const [width, setWidth] = useState("300");
+  const [width, setWidth] = useState("3");
 
   const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
 
