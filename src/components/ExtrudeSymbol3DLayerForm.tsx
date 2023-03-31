@@ -29,7 +29,7 @@ const FillSymbol3DLayerForm = ({
   handleSizeChange
 }: Props) => {
   const [castShadows, setCastShadows] = useState(true);
-  const [size, setSize] = useState("3000");
+  const [size, setSize] = useState("20");
 
   const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
 

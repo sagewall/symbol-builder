@@ -51,7 +51,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newExtrudeSymbol3DLayer = new ExtrudeSymbol3DLayer({
       edges: new SolidEdges3D(),
       material: { color: "#007ac2" },
-      size: 3000
+      size: 20
     });
     return newExtrudeSymbol3DLayer;
   };
