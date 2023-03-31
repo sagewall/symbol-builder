@@ -30,7 +30,7 @@ const map = new ArcMap({
 const view = new ArcMapView({
   center: point,
   map,
-  scale: 1000
+  zoom: 18
 });
 
 const localBasemapsSource = new LocalBasemapsSource({
@@ -38,9 +38,6 @@ const localBasemapsSource = new LocalBasemapsSource({
     blankBasemap,
     Basemap.fromId("satellite"),
     Basemap.fromId("hybrid"),
-    Basemap.fromId("oceans"),
-    Basemap.fromId("osm"),
-    Basemap.fromId("terrain"),
     Basemap.fromId("dark-gray-vector"),
     Basemap.fromId("gray-vector"),
     Basemap.fromId("streets-vector"),
