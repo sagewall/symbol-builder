@@ -168,7 +168,7 @@ const SimpleMarkerSymbolShell = () => {
   };
 
   const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(simpleLineSymbol.toJSON(), null, 2));
+    navigator.clipboard.writeText(JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2));
   };
 
   return (
