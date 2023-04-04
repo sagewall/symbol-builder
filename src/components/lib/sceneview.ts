@@ -29,8 +29,7 @@ const map = new ArcMap({
 const view = new ArcSceneView({
   center: point,
   map,
-  scale: 1000,
-  viewingMode: "local"
+  scale: 1000
 });
 
 const localBasemapsSource = new LocalBasemapsSource({
