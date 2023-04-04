@@ -1,12 +1,12 @@
 import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
-import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
+import Collection from "@arcgis/core/core/Collection";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
-import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
+import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
+import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
 import {
   CalciteAction,
   CalciteLabel,
@@ -16,11 +16,12 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import Header from "./Header";
 import MapView from "./MapView";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import SceneView from "./SceneView";
+import { point } from "./lib/geometry";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const PointSymbol3DShell = () => {
   const viewSwitchRef = useRef(null);
@@ -139,6 +140,7 @@ const PointSymbol3DShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="PointSymbol3D"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

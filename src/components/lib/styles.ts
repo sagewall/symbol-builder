@@ -6,6 +6,14 @@ export const formStyles = {
   padding: "1em"
 };
 
+export const headerStyles = {
+  alignItems: "center",
+  display: "flex",
+  flexgap: "1em",
+  gap: "1em",
+  paddingLeft: "1em"
+};
+
 export const iframeStyles = {
   flex: 1
 };

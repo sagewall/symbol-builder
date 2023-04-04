@@ -15,6 +15,7 @@ import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import MapView from "./MapView";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import SceneView from "./SceneView";
+import Header from "./Header";
 
 const PictureMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -101,6 +102,7 @@ const PictureMarkerSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="PictureMarkerSymbol"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

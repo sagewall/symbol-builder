@@ -1,6 +1,6 @@
 import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import {
@@ -12,12 +12,13 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
+import Header from "./Header";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
+import { point } from "./lib/geometry";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
 
 const SimpleMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -174,6 +175,7 @@ const SimpleMarkerSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="SimpleMarkerSymbol"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

@@ -1,5 +1,5 @@
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import {
@@ -11,11 +11,12 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { mesh } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import Header from "./Header";
 import MapView from "./MapView";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import SceneView from "./SceneView";
+import { mesh } from "./lib/geometry";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const MeshSymbol3DShell = () => {
   const viewSwitchRef = useRef(null);
@@ -69,6 +70,7 @@ const MeshSymbol3DShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="MeshSymbol3D"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

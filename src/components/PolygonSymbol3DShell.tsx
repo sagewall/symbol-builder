@@ -22,6 +22,7 @@ import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import MapView from "./MapView";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import SceneView from "./SceneView";
+import Header from "./Header";
 
 const PolygonSymbol3DShell = () => {
   const viewSwitchRef = useRef(null);
@@ -85,6 +86,7 @@ const PolygonSymbol3DShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="PolygonSymbol3D"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

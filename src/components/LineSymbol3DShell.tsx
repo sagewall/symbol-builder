@@ -1,5 +1,5 @@
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
@@ -12,11 +12,12 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { polyline } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import Header from "./Header";
 import LineSymbol3DForm from "./LineSymbol3DForm";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
+import { polyline } from "./lib/geometry";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const LineSymbol3DShell = () => {
   const viewSwitchRef = useRef(null);
@@ -70,6 +71,7 @@ const LineSymbol3DShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="LineSymbol3D"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

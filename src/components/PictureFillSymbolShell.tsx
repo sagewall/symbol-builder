@@ -1,6 +1,6 @@
 import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
@@ -12,12 +12,13 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle } from "./lib/types";
+import Header from "./Header";
 import MapView from "./MapView";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import SceneView from "./SceneView";
+import { polygon } from "./lib/geometry";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { Cap, Join, LineStyle } from "./lib/types";
 
 const PictureFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -172,6 +173,7 @@ const PictureFillSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="PictureFillSymbol"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

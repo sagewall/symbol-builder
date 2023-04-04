@@ -1,6 +1,6 @@
 import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import {
@@ -12,6 +12,10 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import Header from "./Header";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
+import TextSymbolForm from "./TextSymbolForm";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import {
@@ -21,9 +25,6 @@ import {
   HorizontalAlignment,
   VerticalAlignment
 } from "./lib/types";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
-import TextSymbolForm from "./TextSymbolForm";
 
 const TextSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -204,6 +205,7 @@ const TextSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="TextSymbol"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

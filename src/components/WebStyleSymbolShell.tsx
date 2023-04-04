@@ -10,6 +10,7 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
+import Header from "./Header";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
 import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
@@ -148,6 +149,7 @@ const WebStyleSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="WebStyleSymbol"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

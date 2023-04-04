@@ -18,6 +18,7 @@ import { Fill, Cap, Join, LineStyle } from "./lib/types";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
+import Header from "./Header";
 
 const SimpleFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -143,6 +144,7 @@ const SimpleFillSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
+        <Header title="SimpleFillSymbol"></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
