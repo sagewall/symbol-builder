@@ -1,7 +1,6 @@
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
-import Layer from "@arcgis/core/layers/Layer";
 import ArcMapView from "@arcgis/core/views/MapView";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -12,10 +11,9 @@ const viewStyles = {
 
 interface MapViewProps {
   graphics?: Collection<Graphic>;
-  layers?: Collection<Layer>;
 }
 
-const MapView = ({ graphics, layers }: MapViewProps) => {
+const MapView = ({ graphics }: MapViewProps) => {
   if (typeof window !== "undefined") {
     const viewDivRef = useRef(document.createElement("div"));
 
@@ -25,7 +23,7 @@ const MapView = ({ graphics, layers }: MapViewProps) => {
       if (viewDivRef.current) {
         const loadMapView = async () => {
           const { createMapView } = await import("./lib/mapview");
-          setView(await createMapView(viewDivRef.current as HTMLDivElement, graphics, layers));
+          setView(await createMapView(viewDivRef.current as HTMLDivElement, graphics));
         };
         loadMapView();
 
@@ -42,17 +40,9 @@ const MapView = ({ graphics, layers }: MapViewProps) => {
             view.graphics = graphics;
           }
         };
-
-        const loadLayers = async () => {
-          if (layers) {
-            view.map.layers = layers;
-          }
-        };
-
         loadGraphics();
-        loadLayers();
       }
-    }, [view, graphics, layers]);
+    }, [view, graphics]);
 
     return (
       <React.Fragment>

@@ -2,7 +2,6 @@ import Basemap from "@arcgis/core/Basemap";
 import Graphic from "@arcgis/core/Graphic";
 import ArcMap from "@arcgis/core/Map";
 import Collection from "@arcgis/core/core/Collection";
-import Layer from "@arcgis/core/layers/Layer";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
@@ -62,13 +61,8 @@ view.ui.add(basemapGalleryExpand, {
   position: "top-left"
 });
 
-export const createMapView = async (
-  parentElement: HTMLDivElement,
-  graphics?: Collection<Graphic>,
-  layers?: Collection<Layer>
-) => {
+export const createMapView = async (parentElement: HTMLDivElement, graphics?: Collection<Graphic>) => {
   view.container = parentElement;
   view.graphics = graphics as Collection<Graphic>;
-  map.layers = layers as Collection<Layer>;
   return view;
 };

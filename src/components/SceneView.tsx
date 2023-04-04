@@ -1,7 +1,6 @@
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
-import Layer from "@arcgis/core/layers/Layer";
 import ArcSceneView from "@arcgis/core/views/SceneView";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -12,10 +11,9 @@ const viewStyles = {
 
 interface SceneViewProps {
   graphics?: Collection<Graphic>;
-  layers?: Collection<Layer>;
 }
 
-const SceneView = ({ graphics, layers }: SceneViewProps) => {
+const SceneView = ({ graphics }: SceneViewProps) => {
   if (typeof window !== "undefined") {
     const viewDivRef = useRef(document.createElement("div"));
 
@@ -25,7 +23,7 @@ const SceneView = ({ graphics, layers }: SceneViewProps) => {
       if (viewDivRef.current) {
         const loadSceneView = async () => {
           const { createSceneView } = await import("./lib/sceneview");
-          setView(await createSceneView(viewDivRef.current as HTMLDivElement, graphics, layers));
+          setView(await createSceneView(viewDivRef.current as HTMLDivElement, graphics));
         };
         loadSceneView();
 
@@ -42,17 +40,9 @@ const SceneView = ({ graphics, layers }: SceneViewProps) => {
             view.graphics = graphics;
           }
         };
-
-        const loadLayers = async () => {
-          if (layers) {
-            view.map.layers = layers;
-          }
-        };
-
         loadGraphics();
-        loadLayers();
       }
-    }, [view, graphics, layers]);
+    }, [view, graphics]);
 
     return (
       <React.Fragment>
