@@ -1,11 +1,6 @@
-import {
-  CalciteBlock,
-  CalciteColorPicker,
-  CalciteInputNumber,
-  CalciteLabel
-} from "@esri/calcite-components-react";
+import { CalciteInput, CalciteInputNumber, CalciteLabel } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -19,21 +14,20 @@ const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeCh
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(layerIndex, event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
+
       <CalciteLabel layout="default" style={labelStyles}>
         size
         <CalciteInputNumber

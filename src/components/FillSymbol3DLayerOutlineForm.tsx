@@ -1,16 +1,15 @@
 import {
-  CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { Cap, LineStyle } from "./lib/types";
-import { CAP_OPTIONS } from "./lib/constants";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
+import { CAP_OPTIONS } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
+import { Cap, LineStyle } from "./lib/types";
 
 interface Props {
   layerIndex: number;
@@ -42,22 +41,19 @@ const FillSymbol3DLayerOutlineForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(layerIndex, event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          ref={colorRef}
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <LineStylePattern3DForm
         layerIndex={layerIndex}

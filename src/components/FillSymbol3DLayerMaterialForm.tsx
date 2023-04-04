@@ -1,14 +1,13 @@
 import {
-  CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteLabel,
   CalciteOption,
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { ColorMixMode } from "./lib/types";
 import { COLOR_MIX_MODE_OPTIONS } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
+import { ColorMixMode } from "./lib/types";
 
 interface Props {
   layerIndex: number;
@@ -26,21 +25,19 @@ const FillSymbol3DLayerMaterialForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(layerIndex, event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         colorMixMode

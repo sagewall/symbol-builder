@@ -1,15 +1,15 @@
 import {
   CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteLabel,
   CalciteOption,
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { FILL_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { Cap, Fill, Join, LineStyle } from "./lib/types";
-import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleColorChange: (value: string) => void;
@@ -37,21 +37,19 @@ const SimpleFillSymbolForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm

@@ -1,16 +1,16 @@
 import {
   CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 import { CAP_OPTIONS, JOIN_OPTIONS, LINE_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { MarkerPlacement, LineStyleMarker3DStyle, Cap, Join, LineStyle } from "./lib/types";
-import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
+import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 interface Props {
   handleCapChange: (value: Cap) => void;
@@ -87,21 +87,21 @@ const SimpleLineSymbolForm = ({
           ))}
         </CalciteSelect>
       </CalciteLabel>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
+
       <CalciteLabel layout="default" style={labelStyles}>
         join
         <CalciteSelect
@@ -132,6 +132,7 @@ const SimpleLineSymbolForm = ({
           value={miterLimit}
         ></CalciteInputNumber>
       </CalciteLabel>
+
       <CalciteLabel layout="default" style={labelStyles}>
         style
         <CalciteSelect
@@ -147,6 +148,7 @@ const SimpleLineSymbolForm = ({
           ))}
         </CalciteSelect>
       </CalciteLabel>
+
       <CalciteLabel layout="default" style={labelStyles}>
         width
         <CalciteInputNumber

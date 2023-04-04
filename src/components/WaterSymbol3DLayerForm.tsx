@@ -1,6 +1,5 @@
 import {
-  CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteLabel,
   CalciteOption,
   CalciteSelect,
@@ -8,7 +7,7 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { WATERBODY_SIZE_OPTIONS, WAVE_STRENGTH_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
+import { labelStyles } from "./lib/styles";
 import { WaterbodySize } from "./lib/types";
 
 interface Props {
@@ -33,21 +32,19 @@ const WaterSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(layerIndex, event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         waterbodySize

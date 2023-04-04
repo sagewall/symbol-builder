@@ -1,6 +1,6 @@
 import {
   CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteInputNumber,
   CalciteInputText,
   CalciteLabel,
@@ -101,37 +101,33 @@ const TextSymbolForm = ({
         ></CalciteSlider>
       </CalciteLabel>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"backgroundColor"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        backgroundColor
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setBackgroundColor(event.target.value.toString());
             }
             handleBackgroundColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={backgroundColor}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"borderLineColor"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        borderLineColor
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setBorderLineColor(event.target.value.toString());
             }
             handleBorderLineColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={borderLineColor}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         borderLineSize
@@ -146,21 +142,19 @@ const TextSymbolForm = ({
         ></CalciteInputNumber>
       </CalciteLabel>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"font"}>
         <FontForm
@@ -172,21 +166,19 @@ const TextSymbolForm = ({
         />
       </CalciteBlock>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"haloColor"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        haloColor
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setHaloColor(event.target.value.toString());
             }
             handleHaloColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={haloColor}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         haloSize

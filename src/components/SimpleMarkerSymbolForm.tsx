@@ -1,6 +1,6 @@
 import {
   CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteInputNumber,
   CalciteInputText,
   CalciteLabel,
@@ -9,10 +9,10 @@ import {
   CalciteSlider
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
+import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
-import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleAngleChange: (value: number) => void;
@@ -72,21 +72,19 @@ const SimpleMarkerSymbolForm = ({
         ></CalciteSlider>
       </CalciteLabel>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
             handleColorChange(event.target.value as string);
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm

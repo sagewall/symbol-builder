@@ -1,14 +1,13 @@
 import {
-  CalciteBlock,
-  CalciteColorPicker,
+  CalciteInput,
   CalciteLabel,
   CalciteOption,
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { MARKER_PLACEMENT_OPTIONS, MARKER_STYLE_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { MarkerPlacement, LineStyleMarker3DStyle } from "./lib/types";
+import { labelStyles } from "./lib/styles";
+import { LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 interface Props {
   handleColorChange: ((value: string) => void) | undefined;
@@ -27,9 +26,10 @@ const LineSymbolMarkerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"color"}>
-        <CalciteColorPicker
-          onCalciteColorPickerChange={(event) => {
+      <CalciteLabel layout="default" style={labelStyles}>
+        color
+        <CalciteInput
+          onCalciteInputChange={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -37,13 +37,10 @@ const LineSymbolMarkerForm = ({
               handleColorChange(event.target.value as string);
             }
           }}
-          allowEmpty
-          hideChannels
-          hideSaved
-          scale="s"
+          type="color"
           value={color}
-        ></CalciteColorPicker>
-      </CalciteBlock>
+        />
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         placement
