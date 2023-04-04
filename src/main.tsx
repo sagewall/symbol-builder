@@ -27,6 +27,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import IndexPage from "./pages";
+import CIMSymbolPage from "./pages/cim-symbol";
 import LineSymbol3DPage from "./pages/line-symbol-3d";
 import MeshSymbol3DPage from "./pages/mesh-symbol-3d";
 import PictureFillSymbolPage from "./pages/picture-fill-symbol";
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <IndexPage></IndexPage>
+      },
+      {
+        path: "cim-symbol",
+        element: <CIMSymbolPage />
       },
       {
         path: "line-symbol-3d",

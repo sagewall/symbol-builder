@@ -6,6 +6,10 @@ export const formStyles = {
   padding: "1em"
 };
 
+export const iframeStyles = {
+  flex: 1
+};
+
 export const labelStyles = {
   "--calcite-label-margin-bottom": "2em"
 };
