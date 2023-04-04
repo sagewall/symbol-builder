@@ -40,26 +40,12 @@ const MapView = ({ graphics, layers }: MapViewProps) => {
         const loadGraphics = async () => {
           if (graphics) {
             view.graphics = graphics;
-            await view.when();
-            view.goTo(graphics).catch((error) => {
-              if (error.name != "view:goto-interrupted") {
-                console.error(error);
-              }
-            });
           }
         };
 
         const loadLayers = async () => {
           if (layers) {
             view.map.layers = layers;
-            await view.when();
-            if (!graphics) {
-              view.goTo(layers).catch((error) => {
-                if (error.name != "view:goto-interrupted") {
-                  console.error(error);
-                }
-              });
-            }
           }
         };
 
