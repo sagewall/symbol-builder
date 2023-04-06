@@ -659,6 +659,157 @@ export const SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS = [
   "path"
 ] as const;
 
+export const SYMBOLS = [
+  {
+    description: "CIMSymbols are high quality, scalable, multi-layer vector symbols for features and graphics.",
+    line: true,
+    link: "/cim-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "CIMSymbol",
+    point: true,
+    polygon: true,
+    sceneView: true,
+    symbolLayers: true
+  },
+  {
+    description: "LineSymbol3D is used to render features with Polyline geometry in a 3D SceneView.",
+    line: true,
+    link: "/line-symbol-3d/",
+    mapView: false,
+    mesh: false,
+    name: "LineSymbol3D",
+    point: false,
+    polygon: false,
+    sceneView: true,
+    symbolLayers: true
+  },
+  {
+    description: "MeshSymbol3D is used to render 3D mesh features in a SceneLayer in a 3D SceneView.",
+    line: false,
+    link: "/mesh-symbol-3d/",
+    mapView: false,
+    mesh: true,
+    name: "MeshSymbol3D",
+    point: false,
+    polygon: false,
+    sceneView: true,
+    symbolLayers: true
+  },
+  {
+    description:
+      "PictureFillSymbol uses an image in a repeating pattern to symbolize polygon features in a 2D MapView.",
+    line: false,
+    link: "/picture-fill-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "PictureFillSymbol",
+    point: false,
+    polygon: true,
+    sceneView: false,
+    symbolLayers: false
+  },
+  {
+    description: "PictureMarkerSymbol renders Point graphics in either a 2D MapView or 3D SceneView using an image.",
+    line: false,
+    link: "/picture-marker-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "PictureMarkerSymbol",
+    point: true,
+    polygon: false,
+    sceneView: true,
+    symbolLayers: false
+  },
+  {
+    description: "PointSymbol3D is used to render features with Point geometry in a 3D SceneView.",
+    line: false,
+    link: "/point-symbol-3d/",
+    mapView: false,
+    mesh: false,
+    name: "PointSymbol3D",
+    point: true,
+    polygon: false,
+    sceneView: true,
+    symbolLayers: true
+  },
+  {
+    description: "PolygonSymbol3D is used to render features with Polygon geometry in a 3D SceneView.",
+    line: false,
+    link: "/polygon-symbol-3d/",
+    mapView: false,
+    mesh: false,
+    name: "PolygonSymbol3D",
+    point: false,
+    polygon: true,
+    sceneView: true,
+    symbolLayers: true
+  },
+  {
+    description: "SimpleFillSymbol is used for rendering 2D polygons in either a MapView or a SceneView.",
+    line: false,
+    link: "/simple-fill-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "SimpleFillSymbol",
+    point: false,
+    polygon: true,
+    sceneView: true,
+    symbolLayers: false
+  },
+  {
+    description: "SimpleLineSymbol is used for rendering 2D polyline geometries in a 2D MapView.",
+    line: true,
+    link: "/simple-line-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "SimpleLineSymbol",
+    point: false,
+    polygon: false,
+    sceneView: false,
+    symbolLayers: false
+  },
+  {
+    description:
+      "SimpleMarkerSymbol is used for rendering 2D Point geometries with a simple shape and color in either a MapView or a SceneView.",
+    line: false,
+    link: "/simple-marker-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "SimpleMarkerSymbol",
+    point: true,
+    polygon: false,
+    sceneView: true,
+    symbolLayers: false
+  },
+  {
+    description:
+      "Text symbols are used to define the graphic for displaying labels on a FeatureLayer, CSVLayer, Sublayer, and StreamLayer in a 2D MapView.",
+    line: false,
+    link: "/text-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "TextSymbol",
+    point: true,
+    polygon: false,
+    sceneView: false,
+    symbolLayers: false
+  },
+  {
+    description:
+      "WebStyleSymbol is a class used to conveniently create vector 2D symbols and realistic and thematic 3D symbols.",
+    line: false,
+    link: "/web-style-symbol/",
+    mapView: true,
+    mesh: false,
+    name: "WebStyleSymbol",
+    point: true,
+    polygon: false,
+    sceneView: true,
+    symbolLayers: false
+  }
+];
+
 export const VERTICAL_ALIGNMENT_OPTIONS = ["baseline", "top", "middle", "bottom"] as const;
 
 export const WATERBODY_SIZE_OPTIONS = ["small", "medium", "large"] as const;
