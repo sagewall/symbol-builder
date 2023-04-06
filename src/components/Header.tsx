@@ -11,9 +11,9 @@ const Header = ({ title }: Props) => {
     <React.Fragment>
       <header slot="header" style={headerStyles}>
         <CalciteButton
+          appearance="outline"
           iconStart="arrow-bold-left"
           id="backButton"
-          kind="neutral"
           label="back"
           name="back"
           onClick={() => {
