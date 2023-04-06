@@ -3,7 +3,7 @@ import Polygon from "@arcgis/core/geometry/Polygon";
 import Polyline from "@arcgis/core/geometry/Polyline";
 import Mesh from "@arcgis/core/geometry/Mesh";
 
-const coordinates = [
+const polygonCoordinates = [
   [
     [-117.196085314723, 34.0558472074798],
     [-117.196084527799, 34.0560069235092],
@@ -67,17 +67,41 @@ const coordinates = [
   ]
 ];
 
+const polylineCoordinates = [
+  [
+    [-117.196085314723, 34.0558472074798],
+    [-117.196084527799, 34.0560069235092],
+    [-117.196102741141, 34.0560072174863],
+    [-117.196102669276, 34.0560805383114],
+    [-117.196069526832, 34.0560814812699],
+    [-117.196070562589, 34.0561738182182],
+    [-117.196085206027, 34.0561736358784],
+    [-117.196086570568, 34.0561772156933],
+    [-117.196079843983, 34.056177281931],
+    [-117.196079951781, 34.0562404146579],
+    [-117.196086823893, 34.0562404146579],
+    [-117.196086837367, 34.0562440212627],
+    [-117.19607084466, 34.0562438746467],
+    [-117.196070592234, 34.0563438458609],
+    [-117.195829208629, 34.0563439396355],
+    [-117.1958289041, 34.0561318353886],
+    [-117.195771776638, 34.0561315659721],
+    [-117.195771513431, 34.056161504696],
+    [-117.195622899744, 34.0561626024564]
+  ]
+];
+
 export const point = new Point({
   latitude: 34.0564505,
   longitude: -117.1957098
 });
 
 export const polyline = new Polyline({
-  paths: coordinates
+  paths: polylineCoordinates
 });
 
 export const polygon = new Polygon({
-  rings: coordinates
+  rings: polygonCoordinates
 });
 
 export const mesh = Mesh.createBox(point, {
