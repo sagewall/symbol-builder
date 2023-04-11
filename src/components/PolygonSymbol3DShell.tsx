@@ -1,5 +1,5 @@
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
@@ -10,23 +10,18 @@ import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
   CalciteAction,
-  CalciteLabel,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch
+  CalciteShellPanel
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
-import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import MapView from "./MapView";
+import React, { useState } from "react";
+import Header from "./Header";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import SceneView from "./SceneView";
-import Header from "./Header";
+import { polygon } from "./lib/geometry";
+import { formStyles, shellStyles } from "./lib/styles";
 
 const PolygonSymbol3DShell = () => {
-  const viewSwitchRef = useRef(null);
-
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
 
   const polygonGraphic = new Graphic({
@@ -39,17 +34,7 @@ const PolygonSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(true);
-  let view = <MapView graphics={graphics} />;
-  if (sceneView) {
-    view = <SceneView graphics={graphics} />;
-  }
-
-  const handleSwitchChange = () => {
-    if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-    }
-  };
+  const view = <SceneView graphics={graphics} />;
 
   const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D) => {
     setPolygonSymbol3D(newPolygonSymbol3D);
@@ -90,17 +75,6 @@ const PolygonSymbol3DShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <CalciteSwitch
-                ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-                checked
-                disabled
-              ></CalciteSwitch>
-              3D
-            </CalciteLabel>
-
             <div style={formStyles}>
               <PolygonSymbol3DForm updateSymbolLayers={updateSymbolLayers}></PolygonSymbol3DForm>
             </div>

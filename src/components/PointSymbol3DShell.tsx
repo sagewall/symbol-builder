@@ -9,24 +9,20 @@ import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
 import {
   CalciteAction,
-  CalciteLabel,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch
+  CalciteShellPanel
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 
 const PointSymbol3DShell = () => {
-  const viewSwitchRef = useRef(null);
-
   const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
+
   const [symbol3DVerticalOffset, setSymbol3DVerticalOffset] = useState(
     new Symbol3DVerticalOffset({
       maxWorldLength: 100,
@@ -34,6 +30,7 @@ const PointSymbol3DShell = () => {
       screenLength: 0
     })
   );
+
   const [pointSymbol3D, setPointSymbol3D] = useState(
     new PointSymbol3D({
       callout: lineCallout3D,
@@ -51,17 +48,7 @@ const PointSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(true);
-  let view = <MapView graphics={graphics} />;
-  if (sceneView) {
-    view = <SceneView graphics={graphics} />;
-  }
-
-  const handleSwitchChange = () => {
-    if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-    }
-  };
+  const view = <SceneView graphics={graphics} />;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D) => {
     setPointSymbol3D(newPointSymbol3D);
@@ -144,17 +131,6 @@ const PointSymbol3DShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <CalciteSwitch
-                ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-                checked
-                disabled
-              ></CalciteSwitch>
-              3D
-            </CalciteLabel>
-
             <div style={formStyles}>
               <PointSymbol3DForm
                 handleCalloutColorChange={handleCalloutColorChange}

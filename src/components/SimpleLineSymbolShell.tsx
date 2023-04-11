@@ -5,24 +5,19 @@ import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteAction,
-  CalciteLabel,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch
+  CalciteShellPanel
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
-import SceneView from "./SceneView";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { polyline } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 const SimpleLineSymbolShell = () => {
-  const viewSwitchRef = useRef(null);
-
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
@@ -46,17 +41,7 @@ const SimpleLineSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
-  if (sceneView) {
-    view = <SceneView graphics={graphics} />;
-  }
-
-  const handleSwitchChange = () => {
-    if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-    }
-  };
+  const view = <MapView graphics={graphics} />;
 
   const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol) => {
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -160,16 +145,6 @@ const SimpleLineSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <CalciteSwitch
-                ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-              ></CalciteSwitch>
-              3D
-            </CalciteLabel>
-
             <div style={formStyles}>
               <SimpleLineSymbolForm
                 handleCapChange={handleCapChange}

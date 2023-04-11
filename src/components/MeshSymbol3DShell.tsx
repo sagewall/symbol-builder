@@ -4,23 +4,18 @@ import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import {
   CalciteAction,
-  CalciteLabel,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch
+  CalciteShellPanel
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import SceneView from "./SceneView";
 import { mesh } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 
 const MeshSymbol3DShell = () => {
-  const viewSwitchRef = useRef(null);
-
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
 
   const meshGraphic = new Graphic({
@@ -33,17 +28,7 @@ const MeshSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(true);
-  let view = <MapView graphics={graphics} />;
-  if (sceneView) {
-    view = <SceneView graphics={graphics} />;
-  }
-
-  const handleSwitchChange = () => {
-    if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-    }
-  };
+  const view = <SceneView graphics={graphics} />;
 
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
     setMeshSymbol3D(newMeshSymbol3D);
@@ -74,17 +59,6 @@ const MeshSymbol3DShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <CalciteSwitch
-                ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-                checked
-                disabled
-              ></CalciteSwitch>
-              3D
-            </CalciteLabel>
-
             <div style={formStyles}>
               <MeshSymbol3DForm updateSymbolLayers={updateSymbolLayers}></MeshSymbol3DForm>
             </div>

@@ -5,19 +5,16 @@ import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import {
   CalciteAction,
-  CalciteLabel,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch
+  CalciteShellPanel
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
-import SceneView from "./SceneView";
 import TextSymbolForm from "./TextSymbolForm";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 import {
   FontDecoration,
   FontStyle,
@@ -27,8 +24,6 @@ import {
 } from "./lib/types";
 
 const TextSymbolShell = () => {
-  const viewSwitchRef = useRef(null);
-
   const [font, setFont] = useState(new Font({ family: "serif" }));
 
   const [textSymbol, setTextSymbol] = useState(
@@ -50,17 +45,7 @@ const TextSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
-  if (sceneView) {
-    view = <SceneView graphics={graphics} />;
-  }
-
-  const handleSwitchChange = () => {
-    if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-    }
-  };
+  const view = <MapView graphics={graphics} />;
 
   const updateGraphics = (newTextSymbol: TextSymbol) => {
     setTextSymbol(newTextSymbol);
@@ -209,15 +194,6 @@ const TextSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <CalciteSwitch
-                ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-              ></CalciteSwitch>
-              3D
-            </CalciteLabel>
-
             <div style={formStyles}>
               <TextSymbolForm
                 handleAngleChange={handleAngleChange}

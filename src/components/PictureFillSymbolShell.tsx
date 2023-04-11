@@ -5,24 +5,19 @@ import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteAction,
-  CalciteLabel,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch
+  CalciteShellPanel
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
-import SceneView from "./SceneView";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 import { Cap, Join, LineStyle } from "./lib/types";
 
 const PictureFillSymbolShell = () => {
-  const viewSwitchRef = useRef(null);
-
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
 
   const [pictureFillSymbol, setPictureFillSymbol] = useState(
@@ -42,17 +37,7 @@ const PictureFillSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
-  if (sceneView) {
-    view = <SceneView graphics={graphics} />;
-  }
-
-  const handleSwitchChange = () => {
-    if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-    }
-  };
+  const view = <MapView graphics={graphics} />;
 
   const updateGraphics = (newPictureFillSymbol: PictureFillSymbol) => {
     setPictureFillSymbol(newPictureFillSymbol);
@@ -177,16 +162,6 @@ const PictureFillSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <CalciteSwitch
-                disabled={true}
-                ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-              ></CalciteSwitch>
-              3D
-            </CalciteLabel>
-
             <div style={formStyles}>
               <PictureFillSymbolForm
                 handleHeightChange={handleHeightChange}
