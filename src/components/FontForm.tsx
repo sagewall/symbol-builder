@@ -1,18 +1,22 @@
 import {
   CalciteInputNumber,
-  CalciteInputText,
   CalciteLabel,
   CalciteOption,
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { FONT_DECORATION_OPTIONS, FONT_STYLE_OPTIONS, FONT_WEIGHT_OPTIONS } from "./lib/constants";
+import {
+  FONT_DECORATION_OPTIONS,
+  FONT_FAMILY_OPTIONS,
+  FONT_STYLE_OPTIONS,
+  FONT_WEIGHT_OPTIONS
+} from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { FontDecoration, FontStyle, FontWeight } from "./lib/types";
+import { FontDecoration, FontFamily, FontStyle, FontWeight } from "./lib/types";
 
 interface Props {
   handleDecorationChange: (value: FontDecoration) => void;
-  handleFamilyChange: (value: string) => void;
+  handleFamilyChange: (value: FontFamily) => void;
   handleSizeChange: (value: string) => void;
   handleStyleChange: (value: FontStyle) => void;
   handleWeightChange: (value: FontWeight) => void;
@@ -26,7 +30,7 @@ const FontForm = ({
   handleWeightChange
 }: Props) => {
   const [decoration, setDecoration] = useState("none");
-  const [family, setFamily] = useState("serif");
+  const [family, setFamily] = useState("Arial");
   const [size, setSize] = useState("12");
   const [style, setStyle] = useState("normal");
   const [weight, setWeight] = useState("normal");
@@ -51,14 +55,18 @@ const FontForm = ({
 
       <CalciteLabel layout="default" style={labelStyles}>
         family
-        <CalciteInputText
-          label={"font family input"}
-          onCalciteInputTextChange={(event) => {
+        <CalciteSelect
+          label={"font family selection"}
+          onCalciteSelectChange={(event) => {
             setFamily(event.target.value);
-            handleFamilyChange(event.target.value);
+            handleFamilyChange(event.target.value as FontFamily);
           }}
           value={family}
-        ></CalciteInputText>
+        >
+          {FONT_FAMILY_OPTIONS.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>

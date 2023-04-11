@@ -15,6 +15,7 @@ import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/
 import { blockStyles, labelStyles } from "./lib/styles";
 import {
   FontDecoration,
+  FontFamily,
   FontStyle,
   FontWeight,
   HorizontalAlignment,
@@ -28,7 +29,7 @@ interface Props {
   handleBorderLineSizeChange: (value: string) => void;
   handleColorChange: (value: string) => void;
   handleFontDecorationChange: (value: FontDecoration) => void;
-  handleFontFamilyChange: (value: string) => void;
+  handleFontFamilyChange: (value: FontFamily) => void;
   handleFontSizeChange: (value: string) => void;
   handleFontStyleChange: (value: FontStyle) => void;
   handleFontWeightChange: (value: FontWeight) => void;

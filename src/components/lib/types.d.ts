@@ -32,6 +32,8 @@ export type Fill = (typeof FILL_OPTIONS)[number];
 
 export type FontDecoration = (typeof FONT_DECORATION_OPTIONS)[number];
 
+export type FontFamily = (typeof FONT_FAMILY_OPTIONS)[number];
+
 export type FontStyle = (typeof FONT_STYLE_OPTIONS)[number];
 
 export type FontWeight = (typeof FONT_WEIGHT_OPTIONS)[number];

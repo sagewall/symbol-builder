@@ -17,6 +17,7 @@ import { point } from "./lib/geometry";
 import { formStyles, shellStyles } from "./lib/styles";
 import {
   FontDecoration,
+  FontFamily,
   FontStyle,
   FontWeight,
   HorizontalAlignment,
@@ -24,7 +25,7 @@ import {
 } from "./lib/types";
 
 const TextSymbolShell = () => {
-  const [font, setFont] = useState(new Font({ family: "serif" }));
+  const [font, setFont] = useState(new Font({ family: "Arial", size: 12 }));
 
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
@@ -95,7 +96,7 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontFamilyChange = (currentFontFamily: string) => {
+  const handleFontFamilyChange = (currentFontFamily: FontFamily) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.family = currentFontFamily;
     setFont(newTextSymbol.font);

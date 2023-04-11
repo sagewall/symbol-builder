@@ -580,6 +580,53 @@ export const FILL_OPTIONS = [
 
 export const FONT_DECORATION_OPTIONS = ["none", "underline", "line-through"] as const;
 
+export const FONT_FAMILY_OPTIONS = [
+  "Abril Fatface",
+  "Alegreya",
+  "Amarante",
+  "Arial",
+  "Atomic Age",
+  "Audiowide",
+  "Avenir Next LT Pro",
+  "BellTopo Sans",
+  "Belleza",
+  "Black Ops One",
+  "Cabin Sketch",
+  "Coming Soon",
+  "FGDC GeoAge",
+  "Homemade Apple",
+  "IM FELL DW Pica PRO",
+  "Josefin Sans",
+  "Just Another Hand",
+  "Kranky",
+  "Life Savers",
+  "Loved by the King",
+  "Merriweather",
+  "Montserrat",
+  "Noto Sans",
+  "Noto Serif",
+  "Old Standard TT",
+  "Orbitron",
+  "Oregano",
+  "Oswald",
+  "Pacifico",
+  "Palatino Linotype",
+  "Playfair Display",
+  "Redressed",
+  "Risque",
+  "Roboto Condensed",
+  "Rye",
+  "Special Elite",
+  "Syncopate Bold",
+  "Syncopate",
+  "Tangerine",
+  "Ubuntu",
+  "Ubuntu Mono",
+  "UnifrakturCook",
+  "Vast Shadow",
+  "Walter Turncoat"
+] as const;
+
 export const FONT_STYLE_OPTIONS = ["normal", "italic", "oblique"] as const;
 
 export const FONT_WEIGHT_OPTIONS = ["normal", "bold", "bolder", "lighter"] as const;
