@@ -13,7 +13,7 @@ import Header from "./Header";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import SceneView from "./SceneView";
 import { mesh } from "./lib/geometry";
-import { formStyles, shellStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
 
 const MeshSymbol3DShell = () => {
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
@@ -63,7 +63,9 @@ const MeshSymbol3DShell = () => {
               <MeshSymbol3DForm updateSymbolLayers={updateSymbolLayers}></MeshSymbol3DForm>
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -74,7 +76,7 @@ const MeshSymbol3DShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(meshSymbol3D.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(meshSymbol3D.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

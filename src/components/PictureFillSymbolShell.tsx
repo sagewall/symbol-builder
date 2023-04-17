@@ -14,7 +14,7 @@ import Header from "./Header";
 import MapView from "./MapView";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
 import { Cap, Join, LineStyle } from "./lib/types";
 
 const PictureFillSymbolShell = () => {
@@ -180,7 +180,9 @@ const PictureFillSymbolShell = () => {
               />
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -191,7 +193,7 @@ const PictureFillSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

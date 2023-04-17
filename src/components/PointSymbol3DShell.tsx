@@ -18,7 +18,7 @@ import Header from "./Header";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
 
 const PointSymbol3DShell = () => {
   const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
@@ -142,7 +142,9 @@ const PointSymbol3DShell = () => {
               ></PointSymbol3DForm>
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -153,7 +155,7 @@ const PointSymbol3DShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(pointSymbol3D.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(pointSymbol3D.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

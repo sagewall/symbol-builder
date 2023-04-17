@@ -14,7 +14,7 @@ import Header from "./Header";
 import MapView from "./MapView";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { polyline } from "./lib/geometry";
-import { formStyles, shellStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
 import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 const SimpleLineSymbolShell = () => {
@@ -161,7 +161,9 @@ const SimpleLineSymbolShell = () => {
               ></SimpleLineSymbolForm>
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -172,7 +174,7 @@ const SimpleLineSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(simpleLineSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(simpleLineSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

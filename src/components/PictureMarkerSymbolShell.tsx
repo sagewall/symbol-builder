@@ -1,5 +1,5 @@
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import {
   CalciteAction,
@@ -10,12 +10,12 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import Header from "./Header";
 import MapView from "./MapView";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import SceneView from "./SceneView";
-import Header from "./Header";
+import { point } from "./lib/geometry";
+import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const PictureMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -126,7 +126,9 @@ const PictureMarkerSymbolShell = () => {
               />
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -137,7 +139,7 @@ const PictureMarkerSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

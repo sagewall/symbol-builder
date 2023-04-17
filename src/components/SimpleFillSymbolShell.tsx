@@ -1,6 +1,6 @@
 import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
 import Graphic from "@arcgis/core/Graphic";
+import Collection from "@arcgis/core/core/Collection";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
@@ -12,13 +12,13 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
-import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
-import { Fill, Cap, Join, LineStyle } from "./lib/types";
+import Header from "./Header";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
-import Header from "./Header";
+import { polygon } from "./lib/geometry";
+import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { Cap, Fill, Join, LineStyle } from "./lib/types";
 
 const SimpleFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -170,7 +170,9 @@ const SimpleFillSymbolShell = () => {
               />
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -181,7 +183,7 @@ const SimpleFillSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(simpleFillSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(simpleFillSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

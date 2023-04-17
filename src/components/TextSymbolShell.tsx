@@ -14,7 +14,7 @@ import Header from "./Header";
 import MapView from "./MapView";
 import TextSymbolForm from "./TextSymbolForm";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
 import {
   FontDecoration,
   FontFamily,
@@ -220,7 +220,9 @@ const TextSymbolShell = () => {
               />
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -231,7 +233,7 @@ const TextSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(textSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(textSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

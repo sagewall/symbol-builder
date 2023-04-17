@@ -28,7 +28,7 @@ import {
   ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS
 } from "./lib/constants";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -178,7 +178,9 @@ const WebStyleSymbolShell = () => {
               )}
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -189,7 +191,7 @@ const WebStyleSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(webStyleSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(webStyleSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

@@ -19,7 +19,7 @@ import Header from "./Header";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import SceneView from "./SceneView";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
 
 const PolygonSymbol3DShell = () => {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
@@ -79,7 +79,9 @@ const PolygonSymbol3DShell = () => {
               <PolygonSymbol3DForm updateSymbolLayers={updateSymbolLayers}></PolygonSymbol3DForm>
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -90,7 +92,7 @@ const PolygonSymbol3DShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(polygonSymbol3D.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(polygonSymbol3D.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

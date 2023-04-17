@@ -19,6 +19,10 @@ export const cardStyles = {
   width: "24em"
 };
 
+export const jsonStyles = {
+  margin: "1em"
+};
+
 export const formStyles = {
   padding: "1em"
 };

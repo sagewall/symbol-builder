@@ -17,7 +17,7 @@ import MapView from "./MapView";
 import SceneView from "./SceneView";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
 
 const SimpleMarkerSymbolShell = () => {
@@ -206,7 +206,9 @@ const SimpleMarkerSymbolShell = () => {
               />
             </div>
           </CalcitePanel>
+        </CalciteShellPanel>
 
+        <CalciteShellPanel slot="panel-end" position="end" resizable>
           <CalcitePanel>
             <div slot="header-content">JSON</div>
             <CalciteAction
@@ -217,7 +219,7 @@ const SimpleMarkerSymbolShell = () => {
               slot="header-actions-end"
               onClick={handleCopyJSONClick}
             ></CalciteAction>
-            <pre>{JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2)}</pre>
+            <pre style={jsonStyles}>{JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2)}</pre>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}
