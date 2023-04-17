@@ -54,6 +54,7 @@ const PictureMarkerSymbolForm = ({
         height
         <CalciteInputNumber
           label={"height input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setHeight(event.target.value);
             handleHeightChange(event.target.value);
@@ -78,6 +79,7 @@ const PictureMarkerSymbolForm = ({
         width
         <CalciteInputNumber
           label={"width input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setWidth(event.target.value);
             handleWidthChange(event.target.value);

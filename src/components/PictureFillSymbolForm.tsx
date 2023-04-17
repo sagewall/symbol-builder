@@ -54,6 +54,7 @@ const PictureFillSymbolForm = ({
         height
         <CalciteInputNumber
           label={"height input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setHeight(event.target.value);
             handleHeightChange(event.target.value);
@@ -90,6 +91,7 @@ const PictureFillSymbolForm = ({
         width
         <CalciteInputNumber
           label={"width input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setWidth(event.target.value);
             handleWidthChange(event.target.value);
@@ -114,6 +116,7 @@ const PictureFillSymbolForm = ({
         xscale
         <CalciteInputNumber
           label={"xscale input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setXscale(event.target.value);
             handleXScaleChange(event.target.value);
@@ -138,6 +141,7 @@ const PictureFillSymbolForm = ({
         yscale
         <CalciteInputNumber
           label={"yscale input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setYscale(event.target.value);
             handleYScaleChange(event.target.value);

@@ -36,6 +36,7 @@ const IconSymbol3DLayerOutlineForm = ({
         size
         <CalciteInputNumber
           label={"xoffset anchor position y"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);

@@ -39,6 +39,7 @@ const Edges3DForm = ({
         extensionLength
         <CalciteInputNumber
           label={"extensionLength input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setExtensionLength(event.target.value);
             handleExtensionLengthChange(layerIndex, event.target.value);
@@ -51,6 +52,7 @@ const Edges3DForm = ({
         size
         <CalciteInputNumber
           label={"size input"}
+          min={0}
           onCalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
