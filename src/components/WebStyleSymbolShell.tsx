@@ -2,12 +2,15 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
 import {
-  CalciteAction,
   CalciteLabel,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch
+  CalciteSwitch,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
@@ -15,6 +18,9 @@ import MapView from "./MapView";
 import SceneView from "./SceneView";
 import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
 import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
+import WebStyleSymbolAMDPanel from "./WebStyleSymbolAMDPanel";
+import WebStyleSymbolESMPanel from "./WebStyleSymbolESMPanel";
+import WebStyleSymbolJSONPanel from "./WebStyleSymbolJSONPanel";
 import {
   ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS,
   ESRI_ICONS_STYLE_NAME_OPTIONS,
@@ -28,7 +34,7 @@ import {
   ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS
 } from "./lib/constants";
 import { point } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -142,10 +148,6 @@ const WebStyleSymbolShell = () => {
     updateGraphics(newWebStyleSymbol);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(webStyleSymbol.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -180,19 +182,23 @@ const WebStyleSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
-          <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(webStyleSymbol.toJSON(), null, 2)}</pre>
-          </CalcitePanel>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+          <CalciteTabs>
+            <CalciteTabNav slot="title-group">
+              <CalciteTabTitle>ESM</CalciteTabTitle>
+              <CalciteTabTitle>AMD</CalciteTabTitle>
+              <CalciteTabTitle>JSON</CalciteTabTitle>
+            </CalciteTabNav>
+            <CalciteTab>
+              <WebStyleSymbolESMPanel webStyleSymbol={webStyleSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <WebStyleSymbolAMDPanel webStyleSymbol={webStyleSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <WebStyleSymbolJSONPanel webStyleSymbol={webStyleSymbol} />
+            </CalciteTab>
+          </CalciteTabs>
         </CalciteShellPanel>
         {view}
       </CalciteShell>
