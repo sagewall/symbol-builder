@@ -4,26 +4,34 @@ import Collection from "@arcgis/core/core/Collection";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
-  CalciteAction,
   CalciteLabel,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch
+  CalciteSwitch,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
+import SimpleFillSymbolAMDPanel from "./SimpleFillSymbolAMDPanel";
+import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
+import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
 import { Cap, Fill, Join, LineStyle } from "./lib/types";
 
 const SimpleFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
+  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
+    new SimpleLineSymbol({ miterLimit: 1, width: 1 })
+  );
 
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
     new SimpleFillSymbol({
@@ -137,10 +145,6 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(simpleFillSymbol.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -172,19 +176,23 @@ const SimpleFillSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
-          <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(simpleFillSymbol.toJSON(), null, 2)}</pre>
-          </CalcitePanel>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+          <CalciteTabs>
+            <CalciteTabNav slot="title-group">
+              <CalciteTabTitle>ESM</CalciteTabTitle>
+              <CalciteTabTitle>AMD</CalciteTabTitle>
+              <CalciteTabTitle>JSON</CalciteTabTitle>
+            </CalciteTabNav>
+            <CalciteTab>
+              <SimpleFillSymbolESMPanel simpleFillSymbol={simpleFillSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <SimpleFillSymbolAMDPanel simpleFillSymbol={simpleFillSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <SimpleFillSymbolJSONPanel simpleFillSymbol={simpleFillSymbol} />
+            </CalciteTab>
+          </CalciteTabs>
         </CalciteShellPanel>
         {view}
       </CalciteShell>
