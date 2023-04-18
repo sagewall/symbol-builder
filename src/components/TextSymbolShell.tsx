@@ -4,17 +4,23 @@ import Collection from "@arcgis/core/core/Collection";
 import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
+import TextSymbolAMDPanel from "./TextSymbolAMDPanel";
+import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
+import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 import {
   FontDecoration,
   FontFamily,
@@ -29,6 +35,9 @@ const TextSymbolShell = () => {
 
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
+      backgroundColor: [255, 255, 255, 0],
+      borderLineColor: [0, 0, 0, 0],
+      borderLineSize: undefined,
       font,
       haloColor: "#ffffff",
       haloSize: 0,
@@ -184,10 +193,6 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(textSymbol.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -222,19 +227,23 @@ const TextSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
-          <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(textSymbol.toJSON(), null, 2)}</pre>
-          </CalcitePanel>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+          <CalciteTabs>
+            <CalciteTabNav slot="title-group">
+              <CalciteTabTitle>ESM</CalciteTabTitle>
+              <CalciteTabTitle>AMD</CalciteTabTitle>
+              <CalciteTabTitle>JSON</CalciteTabTitle>
+            </CalciteTabNav>
+            <CalciteTab>
+              <TextSymbolESMPanel textSymbol={textSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <TextSymbolAMDPanel textSymbol={textSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <TextSymbolJSONPanel textSymbol={textSymbol} />
+            </CalciteTab>
+          </CalciteTabs>
         </CalciteShellPanel>
         {view}
       </CalciteShell>
