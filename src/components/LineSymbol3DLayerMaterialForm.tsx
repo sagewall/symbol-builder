@@ -8,7 +8,7 @@ interface Props {
 }
 
 const LineSymbol3DLayerMaterialForm = ({ layerIndex, handleColorChange }: Props) => {
-  const [color, setColor] = useState("#ff0000");
+  const [color, setColor] = useState("#007ac2");
 
   return (
     <React.Fragment>

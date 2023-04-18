@@ -93,7 +93,11 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
     if (currentMarkerBlock.open && !symbolLayer.marker) {
-      symbolLayer.marker = new LineStyleMarker3D();
+      symbolLayer.marker = new LineStyleMarker3D({
+        color: "#007ac2",
+        placement: "begin-end",
+        style: "arrow"
+      });
     }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);

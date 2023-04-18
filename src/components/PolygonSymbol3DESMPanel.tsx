@@ -84,7 +84,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "line") {
-      if (symbolLayer.material.color && symbolLayer.marker && symbolLayer.marker.color) {
+      if (symbolLayer.material.color && symbolLayer.marker) {
         codeSnippet += `
     new LineSymbol3DLayer({
       cap: "${symbolLayer.cap}",
