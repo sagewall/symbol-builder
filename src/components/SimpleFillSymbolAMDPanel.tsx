@@ -15,15 +15,15 @@ const SimpleFillSymbolESMPanel = ({ simpleFillSymbol }: Props) => {
   const codeSnippet = `
 require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
   const simpleFillSymbol = new SimpleFillSymbol({
-    color: new Color([${simpleFillSymbol.color.toRgba()}]),
-    outline: new SimpleLineSymbol({
+    color: [${simpleFillSymbol.color.toRgba()}],
+    outline: {
       cap: "${simpleFillSymbol.outline.cap}",
-      color: new Color([${simpleFillSymbol.outline.color.toRgba()}]),
+      color: [${simpleFillSymbol.outline.color.toRgba()}],
       join: "${simpleFillSymbol.outline.join}",
       miterLimit: ${simpleFillSymbol.outline.miterLimit},
       style: "${simpleFillSymbol.outline.style}",
       width: ${simpleFillSymbol.outline.width}
-    }),
+    },
     style: "${simpleFillSymbol.style}"
   });
 });`;
