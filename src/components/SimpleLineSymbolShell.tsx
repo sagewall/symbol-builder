@@ -4,24 +4,31 @@ import Collection from "@arcgis/core/core/Collection";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
+import SimpleLineSymbolAMDPanel from "./SimpleLineSymbolAMDPanel";
+import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
+import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 const SimpleLineSymbolShell = () => {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
-      width: 2
+      miterLimit: 1,
+      width: 1
     })
   );
 
@@ -134,10 +141,6 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(simpleLineSymbol.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -163,19 +166,23 @@ const SimpleLineSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
-          <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(simpleLineSymbol.toJSON(), null, 2)}</pre>
-          </CalcitePanel>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+          <CalciteTabs>
+            <CalciteTabNav slot="title-group">
+              <CalciteTabTitle>ESM</CalciteTabTitle>
+              <CalciteTabTitle>AMD</CalciteTabTitle>
+              <CalciteTabTitle>JSON</CalciteTabTitle>
+            </CalciteTabNav>
+            <CalciteTab>
+              <SimpleLineSymbolESMPanel simpleLineSymbol={simpleLineSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <SimpleLineSymbolAMDPanel simpleLineSymbol={simpleLineSymbol} />
+            </CalciteTab>
+            <CalciteTab>
+              <SimpleLineSymbolJSONPanel simpleLineSymbol={simpleLineSymbol} />
+            </CalciteTab>
+          </CalciteTabs>
         </CalciteShellPanel>
         {view}
       </CalciteShell>
