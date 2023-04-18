@@ -7,7 +7,7 @@ interface Props {
   simpleFillSymbol: SimpleFillSymbol;
 }
 
-const SimpleFillSymbolESMPanel = ({ simpleFillSymbol }: Props) => {
+const SimpleFillSymbolAMDPanel = ({ simpleFillSymbol }: Props) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(codeSnippet);
   };
@@ -47,4 +47,4 @@ require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
   );
 };
 
-export default SimpleFillSymbolESMPanel;
+export default SimpleFillSymbolAMDPanel;
