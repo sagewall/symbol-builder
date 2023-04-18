@@ -49,7 +49,7 @@ interface PageProps {
 const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewExtrudeSymbol3DLayer = (): ExtrudeSymbol3DLayer => {
     const newExtrudeSymbol3DLayer = new ExtrudeSymbol3DLayer({
-      edges: new SolidEdges3D(),
+      edges: new SolidEdges3D({ size: 1 }),
       material: { color: "#007ac2" },
       size: 20
     });
@@ -59,7 +59,8 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewFillSymbol3DLayer = (): FillSymbol3DLayer => {
     const newFillSymbol3DLayer = new FillSymbol3DLayer({
       material: {
-        color: "#007ac2"
+        color: "#007ac2",
+        colorMixMode: "multiply"
       },
       outline: {
         color: "#111111",
@@ -118,7 +119,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   };
 
   const createNewWaterSymbol3DLayer = (): WaterSymbol3DLayer => {
-    const newWaterSymbol3DLayer = new WaterSymbol3DLayer();
+    const newWaterSymbol3DLayer = new WaterSymbol3DLayer({ waveDirection: 0 });
     return newWaterSymbol3DLayer;
   };
 

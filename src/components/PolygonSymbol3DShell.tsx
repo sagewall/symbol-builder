@@ -9,17 +9,23 @@ import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
+import PolygonSymbol3DAMDPanel from "./PolygonSymbol3DAMDPanel";
+import PolygonSymbol3DESMPanel from "./PolygonSymbol3DESMPanel";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
+import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { polygon } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 
 const PolygonSymbol3DShell = () => {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
@@ -64,10 +70,6 @@ const PolygonSymbol3DShell = () => {
     updateGraphics(newPolygonSymbol3D);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(polygonSymbol3D.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -81,19 +83,23 @@ const PolygonSymbol3DShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
-          <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(polygonSymbol3D.toJSON(), null, 2)}</pre>
-          </CalcitePanel>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+          <CalciteTabs>
+            <CalciteTabNav slot="title-group">
+              <CalciteTabTitle>ESM</CalciteTabTitle>
+              <CalciteTabTitle>AMD</CalciteTabTitle>
+              <CalciteTabTitle>JSON</CalciteTabTitle>
+            </CalciteTabNav>
+            <CalciteTab>
+              <PolygonSymbol3DESMPanel polygonSymbol3D={polygonSymbol3D} />
+            </CalciteTab>
+            <CalciteTab>
+              <PolygonSymbol3DAMDPanel polygonSymbol3D={polygonSymbol3D} />
+            </CalciteTab>
+            <CalciteTab>
+              <PolygonSymbol3DJSONPanel polygonSymbol3D={polygonSymbol3D} />
+            </CalciteTab>
+          </CalciteTabs>
         </CalciteShellPanel>
         {view}
       </CalciteShell>
