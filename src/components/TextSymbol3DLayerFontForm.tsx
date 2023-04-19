@@ -28,8 +28,8 @@ const FontForm = ({
   handleWeightChange
 }: Props) => {
   const [decoration, setDecoration] = useState("none");
-  const [family, setFamily] = useState("serif");
-  const [size, setSize] = useState("12");
+  const [family, setFamily] = useState("sans-serif");
+  const [size, setSize] = useState("9");
   const [style, setStyle] = useState("normal");
   const [weight, setWeight] = useState("normal");
 

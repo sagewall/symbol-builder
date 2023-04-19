@@ -8,7 +8,7 @@ interface Props {
 }
 
 const TextSymbol3DLayerMaterialForm = ({ layerIndex, handleColorChange }: Props) => {
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("#ffffff");
 
   return (
     <React.Fragment>
