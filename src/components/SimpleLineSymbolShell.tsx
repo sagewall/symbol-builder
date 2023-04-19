@@ -167,22 +167,24 @@ const SimpleLineSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <SimpleLineSymbolESMPanel simpleLineSymbol={simpleLineSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <SimpleLineSymbolAMDPanel simpleLineSymbol={simpleLineSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <SimpleLineSymbolJSONPanel simpleLineSymbol={simpleLineSymbol} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <SimpleLineSymbolESMPanel simpleLineSymbol={simpleLineSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <SimpleLineSymbolAMDPanel simpleLineSymbol={simpleLineSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <SimpleLineSymbolJSONPanel simpleLineSymbol={simpleLineSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

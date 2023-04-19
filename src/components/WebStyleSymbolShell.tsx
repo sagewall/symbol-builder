@@ -183,22 +183,24 @@ const WebStyleSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <WebStyleSymbolESMPanel webStyleSymbol={webStyleSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <WebStyleSymbolAMDPanel webStyleSymbol={webStyleSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <WebStyleSymbolJSONPanel webStyleSymbol={webStyleSymbol} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <WebStyleSymbolESMPanel webStyleSymbol={webStyleSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <WebStyleSymbolAMDPanel webStyleSymbol={webStyleSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <WebStyleSymbolJSONPanel webStyleSymbol={webStyleSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

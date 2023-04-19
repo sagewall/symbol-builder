@@ -9,6 +9,7 @@ import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
+  CalciteInlineEditable,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
@@ -84,22 +85,24 @@ const PolygonSymbol3DShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <PolygonSymbol3DESMPanel polygonSymbol3D={polygonSymbol3D} />
-            </CalciteTab>
-            <CalciteTab>
-              <PolygonSymbol3DAMDPanel polygonSymbol3D={polygonSymbol3D} />
-            </CalciteTab>
-            <CalciteTab>
-              <PolygonSymbol3DJSONPanel polygonSymbol3D={polygonSymbol3D} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <PolygonSymbol3DESMPanel polygonSymbol3D={polygonSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <PolygonSymbol3DAMDPanel polygonSymbol3D={polygonSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <PolygonSymbol3DJSONPanel polygonSymbol3D={polygonSymbol3D} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

@@ -177,22 +177,24 @@ const SimpleFillSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <SimpleFillSymbolESMPanel simpleFillSymbol={simpleFillSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <SimpleFillSymbolAMDPanel simpleFillSymbol={simpleFillSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <SimpleFillSymbolJSONPanel simpleFillSymbol={simpleFillSymbol} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <SimpleFillSymbolESMPanel simpleFillSymbol={simpleFillSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <SimpleFillSymbolAMDPanel simpleFillSymbol={simpleFillSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <SimpleFillSymbolJSONPanel simpleFillSymbol={simpleFillSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

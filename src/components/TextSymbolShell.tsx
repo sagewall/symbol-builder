@@ -228,22 +228,24 @@ const TextSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <TextSymbolESMPanel textSymbol={textSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <TextSymbolAMDPanel textSymbol={textSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <TextSymbolJSONPanel textSymbol={textSymbol} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <TextSymbolESMPanel textSymbol={textSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <TextSymbolAMDPanel textSymbol={textSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <TextSymbolJSONPanel textSymbol={textSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

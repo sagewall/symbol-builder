@@ -211,22 +211,24 @@ const SimpleMarkerSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <SimpleMarkerSymbolESMPanel simpleMarkerSymbol={simpleMarkerSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <SimpleMarkerSymbolAMDPanel simpleMarkerSymbol={simpleMarkerSymbol} />
-            </CalciteTab>
-            <CalciteTab>
-              <SimpleMarkerSymbolJSONPanel simpleMarkerSymbol={simpleMarkerSymbol} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <SimpleMarkerSymbolESMPanel simpleMarkerSymbol={simpleMarkerSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <SimpleMarkerSymbolAMDPanel simpleMarkerSymbol={simpleMarkerSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <SimpleMarkerSymbolJSONPanel simpleMarkerSymbol={simpleMarkerSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

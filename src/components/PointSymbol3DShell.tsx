@@ -147,22 +147,24 @@ const PointSymbol3DShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs style={tabsStyles}>
-            <CalciteTabNav slot="title-group">
-              <CalciteTabTitle>ESM</CalciteTabTitle>
-              <CalciteTabTitle>AMD</CalciteTabTitle>
-              <CalciteTabTitle>JSON</CalciteTabTitle>
-            </CalciteTabNav>
-            <CalciteTab>
-              <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D} />
-            </CalciteTab>
-            <CalciteTab>
-              <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D} />
-            </CalciteTab>
-            <CalciteTab>
-              <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D} />
-            </CalciteTab>
-          </CalciteTabs>
+          <CalcitePanel>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D} />
+              </CalciteTab>
+            </CalciteTabs>
+          </CalcitePanel>
         </CalciteShellPanel>
         {view}
       </CalciteShell>
