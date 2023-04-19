@@ -8,17 +8,23 @@ import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
+import PointSymbol3DAMDPanel from "./PointSymbol3DAMDPanel";
+import PointSymbol3DESMPanel from "./PointSymbol3DESMPanel";
 import PointSymbol3DForm from "./PointSymbol3DForm";
+import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles } from "./lib/styles";
 
 const PointSymbol3DShell = () => {
   const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
@@ -120,10 +126,6 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(pointSymbol3D.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -144,19 +146,23 @@ const PointSymbol3DShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
-          <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(pointSymbol3D.toJSON(), null, 2)}</pre>
-          </CalcitePanel>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+          <CalciteTabs>
+            <CalciteTabNav slot="title-group">
+              <CalciteTabTitle>ESM</CalciteTabTitle>
+              <CalciteTabTitle>AMD</CalciteTabTitle>
+              <CalciteTabTitle>JSON</CalciteTabTitle>
+            </CalciteTabNav>
+            <CalciteTab>
+              <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D} />
+            </CalciteTab>
+            <CalciteTab>
+              <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D} />
+            </CalciteTab>
+            <CalciteTab>
+              <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D} />
+            </CalciteTab>
+          </CalciteTabs>
         </CalciteShellPanel>
         {view}
       </CalciteShell>

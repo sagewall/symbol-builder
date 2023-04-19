@@ -42,8 +42,14 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     newObjectSymbol3DLayer.anchor = "center";
     newObjectSymbol3DLayer.anchorPosition = { x: 0, y: 0, z: 0 };
     newObjectSymbol3DLayer.castShadows = false;
-    newObjectSymbol3DLayer.material = { color: new Color("red") };
+    newObjectSymbol3DLayer.depth = 10;
+    newObjectSymbol3DLayer.heading = 0;
+    newObjectSymbol3DLayer.height = 10;
+    newObjectSymbol3DLayer.material = { color: new Color("#ff0000") };
     newObjectSymbol3DLayer.resource = { href: undefined, primitive: "sphere" };
+    newObjectSymbol3DLayer.roll = 0;
+    newObjectSymbol3DLayer.tilt = 0;
+    newObjectSymbol3DLayer.width = 10;
     return newObjectSymbol3DLayer;
   };
 

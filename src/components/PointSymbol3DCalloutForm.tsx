@@ -8,7 +8,7 @@ interface Props {
 }
 
 const PointSymbol3DCalloutForm = ({ handleColorChange, handleSizeChange }: Props) => {
-  const [color, setColor] = useState("#007ac2");
+  const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("1");
 
   return (
