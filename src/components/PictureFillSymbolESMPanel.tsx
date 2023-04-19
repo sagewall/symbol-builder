@@ -13,6 +13,7 @@ const PictureFillSymbolESMPanel = ({ pictureFillSymbol }: Props) => {
   };
 
   const codeSnippet = `
+  import Color from "@arcgis/core/Color.js";
   import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
   import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
   
@@ -20,7 +21,7 @@ const PictureFillSymbolESMPanel = ({ pictureFillSymbol }: Props) => {
     height: ${pictureFillSymbol.height},
     outline: new SimpleLineSymbol({
       cap: "${pictureFillSymbol.outline.cap}",
-      color: ${JSON.stringify(pictureFillSymbol.outline.color.toJSON())},
+      color: new Color([${pictureFillSymbol.outline.color.toRgba()}]),
       join: "${pictureFillSymbol.outline.join}",
       miterLimit: ${pictureFillSymbol.outline.miterLimit},
       style: "${pictureFillSymbol.outline.style}",
