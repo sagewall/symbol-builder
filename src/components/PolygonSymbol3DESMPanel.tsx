@@ -16,17 +16,18 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
 import Color from "@arcgis/core/Color.js";
 import Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
+import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import Font from "@arcgis/core/symbols/Font.js";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
-import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
+import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
-import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
+
 
 const polygonSymbol3D = new PolygonSymbol3D({
   symbolLayers: [
