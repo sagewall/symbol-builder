@@ -9,7 +9,6 @@ import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
-  CalciteInlineEditable,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
