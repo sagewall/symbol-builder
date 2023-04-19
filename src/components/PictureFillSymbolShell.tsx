@@ -4,17 +4,23 @@ import Collection from "@arcgis/core/core/Collection";
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
+import PictureFillSymbolAMDPanel from "./PictureFillSymbolAMDPanel";
+import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
+import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 import { Cap, Join, LineStyle } from "./lib/types";
 
 const PictureFillSymbolShell = () => {
@@ -151,10 +157,6 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(pictureFillSymbol.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -182,18 +184,24 @@ const PictureFillSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(pictureFillSymbol.toJSON(), null, 2)}</pre>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <PictureFillSymbolESMPanel pictureFillSymbol={pictureFillSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <PictureFillSymbolAMDPanel pictureFillSymbol={pictureFillSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <PictureFillSymbolJSONPanel pictureFillSymbol={pictureFillSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}
