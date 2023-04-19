@@ -6,12 +6,12 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { CAP_OPTIONS, JOIN_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { Join, LineStyle, LineStyleMarker3DStyle, Cap, MarkerPlacement } from "./lib/types";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
+import { CAP_OPTIONS, JOIN_OPTIONS } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
+import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 interface Props {
   layerIndex: number;
@@ -63,9 +63,15 @@ const LineSymbol3DLayerForm = ({
           }}
           value={cap}
         >
-          {CAP_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
+          {CAP_OPTIONS.map((option, index) =>
+            option === "butt" ? (
+              <CalciteOption key={index} selected>
+                {option}
+              </CalciteOption>
+            ) : (
+              <CalciteOption key={index}>{option}</CalciteOption>
+            )
+          )}
         </CalciteSelect>
       </CalciteLabel>
 
