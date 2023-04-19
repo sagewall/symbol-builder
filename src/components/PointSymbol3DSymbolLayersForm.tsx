@@ -231,6 +231,14 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleObjectSymbol3DLayerHeightChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
+    symbolLayer.height = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleObjectSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -475,6 +483,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleCastShadowsChange={handleObjectSymbol3DLayerCastShadowsChange}
                   handleDepthChange={handleObjectSymbol3DLayerDepthChange}
                   handleHeadingChange={handleObjectSymbol3DLayerHeadingChange}
+                  handleHeightChange={handleObjectSymbol3DLayerHeightChange}
                   handleObjectSymbol3DLayerMaterialColorChange={
                     handleObjectSymbol3DLayerMaterialColorChange
                   }
