@@ -152,7 +152,31 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "object") {
-      if (symbolLayer.material.color) {
+      if (symbolLayer.material.color && symbolLayer.resource.href) {
+        codeSnippet += `
+    new ObjectSymbol3DLayer({
+      anchor: "${symbolLayer.anchor}",
+      anchorPosition: {
+        x: ${symbolLayer.anchorPosition.x},
+        y: ${symbolLayer.anchorPosition.y},
+        z: ${symbolLayer.anchorPosition.z}
+      },
+      castShadows: ${symbolLayer.castShadows},
+      depth: ${symbolLayer.depth},
+      heading: ${symbolLayer.heading},
+      height: ${symbolLayer.height},
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba()}])
+      },
+      resource: {
+        href: "${symbolLayer.resource.href}"
+      },
+      roll: ${symbolLayer.roll},
+      tilt: ${symbolLayer.tilt},
+      width: ${symbolLayer.width}
+    }),
+    `;
+      } else if (symbolLayer.material.color && symbolLayer.resource.primitive) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
@@ -170,7 +194,6 @@ const polygonSymbol3D = new PolygonSymbol3D({
       },
       resource: {
         primitive: "${symbolLayer.resource.primitive}",
-        href: "${symbolLayer.resource.href}"
       },
       roll: ${symbolLayer.roll},
       tilt: ${symbolLayer.tilt},
