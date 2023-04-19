@@ -19,6 +19,7 @@ import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
+import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
@@ -140,6 +141,35 @@ const polygonSymbol3D = new PolygonSymbol3D({
         href: "${symbolLayer.resource.href}",
       },
       size: ${symbolLayer.size}
+    }),
+    `;
+      }
+    }
+
+    if (symbolLayer.type === "object") {
+      if (symbolLayer.material.color) {
+        codeSnippet += `
+    new ObjectSymbol3DLayer({
+      anchor: "${symbolLayer.anchor}",
+      anchorPosition: {
+        x: ${symbolLayer.anchorPosition.x},
+        y: ${symbolLayer.anchorPosition.y},
+        z: ${symbolLayer.anchorPosition.z}
+      },
+      castShadows: ${symbolLayer.castShadows},
+      depth: ${symbolLayer.depth},
+      heading: ${symbolLayer.heading},
+      height: ${symbolLayer.height},
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba()}])
+      },
+      resource: {
+        primitive: "${symbolLayer.resource.primitive}",
+        href: "${symbolLayer.resource.href}"
+      },
+      roll: ${symbolLayer.roll},
+      tilt: ${symbolLayer.tilt},
+      width: ${symbolLayer.width}
     }),
     `;
       }

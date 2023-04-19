@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color";
 import Collection from "@arcgis/core/core/Collection";
-import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import Font from "@arcgis/core/symbols/Font";
@@ -8,15 +7,20 @@ import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
-import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
+import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
+import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
+import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import ExtrudeSymbol3DLayerForm from "./ExtrudeSymbol3DLayerForm";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
+import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
+import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
+import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
+import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
 import {
   Cap,
@@ -38,10 +42,6 @@ import {
   WaterbodySize,
   WaveStrength
 } from "./lib/types";
-import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
-import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
-import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
-import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -99,8 +99,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     newObjectSymbol3DLayer.anchor = "center";
     newObjectSymbol3DLayer.anchorPosition = { x: 0, y: 0, z: 0 };
     newObjectSymbol3DLayer.castShadows = false;
-    newObjectSymbol3DLayer.material = { color: new Color("red") };
+    newObjectSymbol3DLayer.depth = 10;
+    newObjectSymbol3DLayer.heading = 0;
+    newObjectSymbol3DLayer.height = 10;
+    newObjectSymbol3DLayer.material = { color: new Color("#ff0000") };
     newObjectSymbol3DLayer.resource = { href: undefined, primitive: "sphere" };
+    newObjectSymbol3DLayer.roll = 0;
+    newObjectSymbol3DLayer.tilt = 0;
+    newObjectSymbol3DLayer.width = 10;
     return newObjectSymbol3DLayer;
   };
 
@@ -551,6 +557,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleObjectSymbol3DLayerHeightChange = (layerIndex: number, value: string) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
+    symbolLayer.height = Number(value);
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleObjectSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -945,6 +959,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleCastShadowsChange={handleObjectSymbol3DLayerCastShadowsChange}
                   handleDepthChange={handleObjectSymbol3DLayerDepthChange}
                   handleHeadingChange={handleObjectSymbol3DLayerHeadingChange}
+                  handleHeightChange={handleObjectSymbol3DLayerHeightChange}
                   handleObjectSymbol3DLayerMaterialColorChange={
                     handleObjectSymbol3DLayerMaterialColorChange
                   }

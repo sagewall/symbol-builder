@@ -8,12 +8,12 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { ObjectSymbol3DLayerAnchor, ObjectSymbol3DLayerResourcePrimitive } from "./lib/types";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
 import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
+import { OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
+import { ObjectSymbol3DLayerAnchor, ObjectSymbol3DLayerResourcePrimitive } from "./lib/types";
 
 interface Props {
   layerIndex: number;
@@ -24,6 +24,7 @@ interface Props {
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleDepthChange: (layerIndex: number, value: string) => void;
   handleHeadingChange: (layerIndex: number, value: number) => void;
+  handleHeightChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerResourcePrimitiveChange: (
@@ -44,6 +45,7 @@ const ObjectSymbol3DLayerForm = ({
   handleCastShadowsChange,
   handleDepthChange,
   handleHeadingChange,
+  handleHeightChange,
   handleObjectSymbol3DLayerMaterialColorChange,
   handleObjectSymbol3DLayerResourceHrefChange,
   handleObjectSymbol3DLayerResourcePrimitiveChange,
@@ -55,6 +57,7 @@ const ObjectSymbol3DLayerForm = ({
   const [castShadows, setCastShadows] = useState(false);
   const [depth, setDepth] = useState("10");
   const [heading, setHeading] = useState(0);
+  const [height, setHeight] = useState("10");
   const [roll, setRoll] = useState(0);
   const [tilt, setTilt] = useState(0);
   const [width, setWidth] = useState("10");
@@ -133,6 +136,19 @@ const ObjectSymbol3DLayerForm = ({
           ticks={90}
           value={heading}
         ></CalciteSlider>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        height
+        <CalciteInputNumber
+          label={"height input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setHeight(event.target.value);
+            handleHeightChange(layerIndex, event.target.value);
+          }}
+          value={height}
+        ></CalciteInputNumber>
       </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"material"}>
