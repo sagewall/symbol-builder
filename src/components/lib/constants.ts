@@ -1,6 +1,6 @@
-export const CAP_OPTIONS = ["butt", "round", "square"] as const;
+export const CAP_OPTIONS = ["round", "butt", "square"] as const;
 
-export const CAP_3D_OPTIONS = ["butt", "square", "round", "none"];
+export const CAP_3D_OPTIONS = ["butt", "square", "round", "none"] as const;
 
 export const COLOR_MIX_MODE_OPTIONS = ["multiply", "tint", "replace"] as const;
 
