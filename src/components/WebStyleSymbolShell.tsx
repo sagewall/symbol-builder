@@ -34,7 +34,7 @@ import {
   ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS
 } from "./lib/constants";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -183,7 +183,7 @@ const WebStyleSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs>
+          <CalciteTabs style={tabsStyles}>
             <CalciteTabNav slot="title-group">
               <CalciteTabTitle>ESM</CalciteTabTitle>
               <CalciteTabTitle>AMD</CalciteTabTitle>

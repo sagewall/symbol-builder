@@ -45,6 +45,10 @@ export const labelStyles = {
 
 export const shellStyles = {};
 
+export const tabsStyles = {
+  alignItems: "stretch"
+};
+
 export const viewSwitchLabelStyles = {
   margin: "1.25em 1em 0 0"
 };

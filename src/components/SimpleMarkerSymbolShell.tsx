@@ -23,7 +23,7 @@ import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
 import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
 
 const SimpleMarkerSymbolShell = () => {
@@ -211,7 +211,7 @@ const SimpleMarkerSymbolShell = () => {
         </CalciteShellPanel>
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
-          <CalciteTabs>
+          <CalciteTabs style={tabsStyles}>
             <CalciteTabNav slot="title-group">
               <CalciteTabTitle>ESM</CalciteTabTitle>
               <CalciteTabTitle>AMD</CalciteTabTitle>
