@@ -78,8 +78,8 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newIconSymbol3DLayer = new IconSymbol3DLayer();
     newIconSymbol3DLayer.anchor = "center";
     newIconSymbol3DLayer.anchorPosition = { x: 0, y: 0 };
-    newIconSymbol3DLayer.material = { color: new Color("red") };
-    newIconSymbol3DLayer.outline = { color: new Color("black"), size: 1.5 };
+    newIconSymbol3DLayer.material = { color: new Color("#ff0000") };
+    newIconSymbol3DLayer.outline = { color: new Color("#000000"), size: 1.5 };
     newIconSymbol3DLayer.resource = { href: undefined, primitive: "circle" };
     newIconSymbol3DLayer.size = 12;
     return newIconSymbol3DLayer;

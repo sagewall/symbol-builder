@@ -16,6 +16,7 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
 import Color from "@arcgis/core/Color.js";
 import Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
 import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
+import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
@@ -109,7 +110,35 @@ const polygonSymbol3D = new PolygonSymbol3D({
       material: {
         color: new Color([${symbolLayer.material.color.toRgba()}]),
       },
-      pattern: new LineStylePattern3D({}),
+      pattern: new LineStylePattern3D({
+        style: "${symbolLayer.pattern.style}"
+      }),
+      size: ${symbolLayer.size}
+    }),
+    `;
+      }
+    }
+
+    if (symbolLayer.type === "icon") {
+      if (symbolLayer.material.color && symbolLayer.outline.color) {
+        codeSnippet += `
+    new IconSymbol3DLayer({
+      anchor: "${symbolLayer.anchor}",
+      anchorPosition: {
+        x: ${symbolLayer.anchorPosition.x},
+        y: ${symbolLayer.anchorPosition.y}
+      },
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba()}])
+      },
+      outline: {
+        color: new Color([${symbolLayer.outline.color.toRgba()}]),
+        size: ${symbolLayer.outline.size}
+      },
+      resource: {
+        primitive: "${symbolLayer.resource.primitive}",
+        href: "${symbolLayer.resource.href}",
+      },
       size: ${symbolLayer.size}
     }),
     `;

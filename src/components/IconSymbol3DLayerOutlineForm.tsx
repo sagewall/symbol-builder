@@ -13,7 +13,7 @@ const IconSymbol3DLayerOutlineForm = ({
   handleColorChange,
   handleSizeChange
 }: Props) => {
-  const [color, setColor] = useState("#ff0000");
+  const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("1.5");
 
   return (
