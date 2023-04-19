@@ -2,20 +2,26 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import {
-  CalciteAction,
   CalciteLabel,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
-  CalciteSwitch
+  CalciteSwitch,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
+import PictureMarkerSymbolAMDPanel from "./PictureMarkerSymbolAMDPanel";
+import PictureMarkerSymbolESMPanel from "./PictureMarkerSymbolESMPanel";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
+import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
 import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles, viewSwitchLabelStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
 
 const PictureMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -95,10 +101,6 @@ const PictureMarkerSymbolShell = () => {
     updateGraphics(newPictureMarkerSymbol);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -128,18 +130,24 @@ const PictureMarkerSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)}</pre>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <PictureMarkerSymbolESMPanel pictureMarkerSymbol={pictureMarkerSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <PictureMarkerSymbolAMDPanel pictureMarkerSymbol={pictureMarkerSymbol} />
+              </CalciteTab>
+              <CalciteTab>
+                <PictureMarkerSymbolJSONPanel pictureMarkerSymbol={pictureMarkerSymbol} />
+              </CalciteTab>
+            </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}
