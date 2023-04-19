@@ -7,7 +7,7 @@ interface Props {
   textSymbol: TextSymbol;
 }
 
-const TextSymbolESMPanel = ({ textSymbol }: Props) => {
+const TextSymbolAMDPanel = ({ textSymbol }: Props) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(codeSnippet);
   };
@@ -59,4 +59,4 @@ require(["esri/symbols/TextSymbol"], (TextSymbol) => {
   );
 };
 
-export default TextSymbolESMPanel;
+export default TextSymbolAMDPanel;

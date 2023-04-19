@@ -7,7 +7,7 @@ interface Props {
   webStyleSymbol: WebStyleSymbol;
 }
 
-const WebStyleSymbolESMPanel = ({ webStyleSymbol }: Props) => {
+const WebStyleSymbolAMDPanel = ({ webStyleSymbol }: Props) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(codeSnippet);
   };
@@ -51,4 +51,4 @@ require(["esri/symbols/WebStyleSymbol"], (WebStyleSymbol) => {
   );
 };
 
-export default WebStyleSymbolESMPanel;
+export default WebStyleSymbolAMDPanel;

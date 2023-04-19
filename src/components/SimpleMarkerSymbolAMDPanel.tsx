@@ -7,7 +7,7 @@ interface Props {
   simpleMarkerSymbol: SimpleMarkerSymbol;
 }
 
-const SimpleMarkerSymbolESMPanel = ({ simpleMarkerSymbol }: Props) => {
+const SimpleMarkerSymbolAMDPanel = ({ simpleMarkerSymbol }: Props) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(codeSnippet);
   };
@@ -52,4 +52,4 @@ require(["esri/symbols/SimpleMarkerSymbol"], (SimpleMarkerSymbol) => {
   );
 };
 
-export default SimpleMarkerSymbolESMPanel;
+export default SimpleMarkerSymbolAMDPanel;

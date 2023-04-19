@@ -7,7 +7,7 @@ interface Props {
   simpleLineSymbol: SimpleLineSymbol;
 }
 
-const SimpleLineSymbolESMPanel = ({ simpleLineSymbol }: Props) => {
+const SimpleLineSymbolAMDPanel = ({ simpleLineSymbol }: Props) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(codeSnippet);
   };
@@ -64,4 +64,4 @@ require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
   );
 };
 
-export default SimpleLineSymbolESMPanel;
+export default SimpleLineSymbolAMDPanel;
