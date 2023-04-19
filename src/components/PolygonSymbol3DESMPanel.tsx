@@ -102,7 +102,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
       material: {
         color: new Color([${symbolLayer.material.color.toRgba()}]),
       },
-      pattern: new LineStylePattern3D({}),
+      pattern: new LineStylePattern3D({
+        style: "${symbolLayer.pattern.style}"
+      }),
       size: ${symbolLayer.size}
     }),
     `;
