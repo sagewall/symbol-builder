@@ -81,9 +81,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
       codeSnippet += `
     new WaterSymbol3DLayer({
       color: new Color([${symbolLayer.color.toRgba()}]),
-      waterbodySize: ${symbolLayer.waterbodySize},
+      waterbodySize: "${symbolLayer.waterbodySize}",
       waveDirection: ${symbolLayer.waveDirection},
-      waveStrength: ${symbolLayer.waveStrength}
+      waveStrength: "${symbolLayer.waveStrength}"
     }),
     `;
     }
