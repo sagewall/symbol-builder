@@ -4,17 +4,23 @@ import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
+import LineSymbol3DAMDPanel from "./LineSymbol3DAMDPanel";
+import LineSymbol3DESMPanel from "./LineSymbol3DESMPanel";
 import LineSymbol3DForm from "./LineSymbol3DForm";
+import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { polyline } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
 const LineSymbol3DShell = () => {
   const [lineSymbol3D, setLineSymbol3D] = useState(new LineSymbol3D());
@@ -49,10 +55,6 @@ const LineSymbol3DShell = () => {
     updateGraphics(newLineSymbol3D);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(lineSymbol3D.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -66,18 +68,24 @@ const LineSymbol3DShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(lineSymbol3D.toJSON(), null, 2)}</pre>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <LineSymbol3DAMDPanel lineSymbol3D={lineSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D} />
+              </CalciteTab>
+            </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}
