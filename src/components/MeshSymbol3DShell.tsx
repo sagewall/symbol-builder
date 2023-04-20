@@ -3,17 +3,23 @@ import Collection from "@arcgis/core/core/Collection";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import {
-  CalciteAction,
   CalcitePanel,
   CalciteShell,
-  CalciteShellPanel
+  CalciteShellPanel,
+  CalciteTab,
+  CalciteTabNav,
+  CalciteTabTitle,
+  CalciteTabs
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
+import MeshSymbol3DAMDPanel from "./MeshSymbol3DAMDPanel";
+import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
+import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { mesh } from "./lib/geometry";
-import { formStyles, jsonStyles, shellStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
 const MeshSymbol3DShell = () => {
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
@@ -48,10 +54,6 @@ const MeshSymbol3DShell = () => {
     updateGraphics(newMeshSymbol3D);
   };
 
-  const handleCopyJSONClick = () => {
-    navigator.clipboard.writeText(JSON.stringify(meshSymbol3D.toJSON(), null, 2));
-  };
-
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -65,18 +67,24 @@ const MeshSymbol3DShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable>
+        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <div slot="header-content">JSON</div>
-            <CalciteAction
-              icon="copy-to-clipboard"
-              label="Copy code to clipboard"
-              text="Copy JSON"
-              textEnabled
-              slot="header-actions-end"
-              onClick={handleCopyJSONClick}
-            ></CalciteAction>
-            <pre style={jsonStyles}>{JSON.stringify(meshSymbol3D.toJSON(), null, 2)}</pre>
+            <CalciteTabs style={tabsStyles}>
+              <CalciteTabNav slot="title-group">
+                <CalciteTabTitle>ESM</CalciteTabTitle>
+                <CalciteTabTitle>AMD</CalciteTabTitle>
+                <CalciteTabTitle>JSON</CalciteTabTitle>
+              </CalciteTabNav>
+              <CalciteTab>
+                <MeshSymbol3DESMPanel meshSymbol3D={meshSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <MeshSymbol3DAMDPanel meshSymbol3D={meshSymbol3D} />
+              </CalciteTab>
+              <CalciteTab>
+                <MeshSymbol3DJSONPanel meshSymbol3D={meshSymbol3D} />
+              </CalciteTab>
+            </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
         {view}

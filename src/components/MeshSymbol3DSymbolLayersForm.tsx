@@ -19,7 +19,9 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       material: {
         color: "#007ac2"
       },
-      edges: new SolidEdges3D(),
+      edges: new SolidEdges3D({
+        color: "#000000"
+      }),
       pattern: new StylePattern3D({
         style: "solid"
       })
