@@ -17,7 +17,8 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const createNewFillSymbol3DLayer = (): FillSymbol3DLayer => {
     const newFillSymbol3DLayer = new FillSymbol3DLayer({
       material: {
-        color: "#007ac2"
+        color: "#007ac2",
+        colorMixMode: "multiply"
       },
       edges: new SolidEdges3D({
         color: "#000000"
