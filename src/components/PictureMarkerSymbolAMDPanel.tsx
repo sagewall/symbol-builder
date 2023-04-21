@@ -17,9 +17,10 @@ require(["esri/symbols/PictureMarkerSymbol"], (PictureMarkerSymbol) => {
   const pictureMarkerSymbol = new PictureMarkerSymbol({
     angle: ${pictureMarkerSymbol.angle},
     height: ${pictureMarkerSymbol.height},
-    type: "${pictureMarkerSymbol.type}",
     url: "${pictureMarkerSymbol.url}",
-    width: ${pictureMarkerSymbol.width}
+    width: ${pictureMarkerSymbol.width},
+    xoffset: ${pictureMarkerSymbol.xoffset},
+    yoffset: ${pictureMarkerSymbol.yoffset}
   });
 });`;
 
