@@ -32,7 +32,32 @@ const pointSymbol3D = new PointSymbol3D({
 
   pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material.color && symbolLayer.outline.color) {
+      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.resource.href) {
+        codeSnippet += `
+    new IconSymbol3DLayer({
+      anchor: "${symbolLayer.anchor}",
+      anchorPosition: {
+        x: ${symbolLayer.anchorPosition.x},
+        y: ${symbolLayer.anchorPosition.y}
+      },
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba()}])
+      },
+      outline: {
+        color: new Color([${symbolLayer.outline.color.toRgba()}]),
+        size: ${symbolLayer.outline.size}
+      },
+      resource: {
+        href: "${symbolLayer.resource.href}",
+      },
+      size: ${symbolLayer.size}
+    }),
+    `;
+      } else if (
+        symbolLayer.material.color &&
+        symbolLayer.outline.color &&
+        symbolLayer.resource.primitive
+      ) {
         codeSnippet += `
     new IconSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
@@ -49,7 +74,6 @@ const pointSymbol3D = new PointSymbol3D({
       },
       resource: {
         primitive: "${symbolLayer.resource.primitive}",
-        href: "${symbolLayer.resource.href}",
       },
       size: ${symbolLayer.size}
     }),
