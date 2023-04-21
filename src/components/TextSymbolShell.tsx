@@ -21,14 +21,6 @@ import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
-import {
-  FontDecoration,
-  FontFamily,
-  FontStyle,
-  FontWeight,
-  HorizontalAlignment,
-  VerticalAlignment
-} from "./lib/types";
 
 const TextSymbolShell = () => {
   const [font, setFont] = useState(new Font({ family: "Arial", size: 12 }));
@@ -98,14 +90,16 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontDecorationChange = (currentFontDecoration: FontDecoration) => {
+  const handleFontDecorationChange = (
+    currentFontDecoration: InstanceType<typeof Font>["decoration"]
+  ) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.font.decoration = currentFontDecoration as FontDecoration;
+    newTextSymbol.font.decoration = currentFontDecoration;
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontFamilyChange = (currentFontFamily: FontFamily) => {
+  const handleFontFamilyChange = (currentFontFamily: InstanceType<typeof Font>["family"]) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.family = currentFontFamily;
     setFont(newTextSymbol.font);
@@ -119,16 +113,16 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontStyleChange = (currentFontStyle: FontStyle) => {
+  const handleFontStyleChange = (currentFontStyle: InstanceType<typeof Font>["style"]) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.font.style = currentFontStyle as FontStyle;
+    newTextSymbol.font.style = currentFontStyle;
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontWeightChange = (currentFontWeight: FontWeight) => {
+  const handleFontWeightChange = (currentFontWeight: InstanceType<typeof Font>["weight"]) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.font.weight = currentFontWeight as FontWeight;
+    newTextSymbol.font.weight = currentFontWeight;
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
@@ -145,9 +139,11 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleHorizontalAlignmentChange = (currentHorizontalAlignment: HorizontalAlignment) => {
+  const handleHorizontalAlignmentChange = (
+    currentHorizontalAlignment: InstanceType<typeof TextSymbol>["horizontalAlignment"]
+  ) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.horizontalAlignment = currentHorizontalAlignment as HorizontalAlignment;
+    newTextSymbol.horizontalAlignment = currentHorizontalAlignment;
     updateGraphics(newTextSymbol);
   };
 
@@ -175,9 +171,11 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleVerticalAlignmentChange = (currentVerticalAlignment: VerticalAlignment) => {
+  const handleVerticalAlignmentChange = (
+    currentVerticalAlignment: InstanceType<typeof TextSymbol>["verticalAlignment"]
+  ) => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.verticalAlignment = currentVerticalAlignment as VerticalAlignment;
+    newTextSymbol.verticalAlignment = currentVerticalAlignment;
     updateGraphics(newTextSymbol);
   };
 

@@ -1,11 +1,12 @@
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import { CalciteBlock, CalciteLabel, CalciteSwitch } from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { ColorMixMode, Cap, LineStyle, Fill } from "./lib/types";
 import StylePattern3DForm from "./StylePattern3DForm";
+import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -17,13 +18,22 @@ interface Props {
   handleFillSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (
     layerIndex: number,
-    value: ColorMixMode
+    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
   ) => void;
   handleFillSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerOutlinePatternStyleChange: (layerIndex: number, value: LineStyle) => void;
-  handleFillSymbol3DLayerOutlinePatternCapChange: (layerIndex: number, value: Cap) => void;
+  handleFillSymbol3DLayerOutlinePatternStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineStylePattern3D>["style"]
+  ) => void;
+  handleFillSymbol3DLayerOutlinePatternCapChange: (
+    layerIndex: number,
+    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+  ) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerPatternStyleChange: (layerIndex: number, value: Fill) => void;
+  handleFillSymbol3DLayerPatternStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof FillSymbol3DLayer>["pattern"]["style"]
+  ) => void;
 }
 
 const FillSymbol3DLayerForm = ({

@@ -1,12 +1,15 @@
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import { CalciteLabel, CalciteOption, CalciteSelect } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { LINE_STYLE_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { LineStyle } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleStyleChange: (layerIndex: number, value: LineStyle) => void;
+  handleStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineStylePattern3D>["style"]
+  ) => void;
 }
 
 const LineStylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
@@ -20,7 +23,10 @@ const LineStylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(layerIndex, event.target.value as LineStyle);
+            handleStyleChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof LineStylePattern3D>["style"]
+            );
           }}
           value={style}
         >

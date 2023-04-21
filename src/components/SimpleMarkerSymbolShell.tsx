@@ -24,7 +24,6 @@ import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
 
 const SimpleMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -84,7 +83,9 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: Cap) => {
+  const handleOutlineCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -104,7 +105,9 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: Join) => {
+  const handleOutlineJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -124,7 +127,9 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: LineStyle) => {
+  const handleOutlineStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -156,7 +161,9 @@ const SimpleMarkerSymbolShell = () => {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: SimpleMarkerSymbolStyle) => {
+  const handleStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleMarkerSymbol>["style"]
+  ) => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.style = currentStyleValue;
     updateGraphics(newSimpleMarkerSymbol);

@@ -1,3 +1,5 @@
+import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteBlock,
   CalciteInput,
@@ -10,18 +12,17 @@ import React, { useState } from "react";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 import { CAP_OPTIONS, JOIN_OPTIONS, LINE_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 interface Props {
-  handleCapChange: (value: Cap) => void;
+  handleCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
   handleColorChange: (value: string) => void;
-  handleJoinChange: (value: Join) => void;
+  handleJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
   handleMarkerBlockToggle?: (value: HTMLCalciteBlockElement) => void;
   handleMarkerColorChange?: (value: string) => void;
-  handleMarkerPlacementChange?: (value: MarkerPlacement) => void;
-  handleMarkerStyleChange?: (value: LineStyleMarker3DStyle) => void;
+  handleMarkerPlacementChange?: (value: InstanceType<typeof LineSymbolMarker>["placement"]) => void;
+  handleMarkerStyleChange?: (value: InstanceType<typeof LineSymbolMarker>["style"]) => void;
   handleMiterLimitChange: (value: string) => void;
-  handleStyleChange: (value: LineStyle) => void;
+  handleStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleWidthChange: (value: string) => void;
   showMarker: boolean;
 }
@@ -78,7 +79,7 @@ const SimpleLineSymbolForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(event.target.value as Cap);
+            handleCapChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["cap"]);
           }}
           value={cap}
         >
@@ -108,7 +109,7 @@ const SimpleLineSymbolForm = ({
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(event.target.value as Join);
+            handleJoinChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["join"]);
           }}
           value={join}
         >
@@ -139,7 +140,7 @@ const SimpleLineSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as LineStyle);
+            handleStyleChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["style"]);
           }}
           value={style}
         >

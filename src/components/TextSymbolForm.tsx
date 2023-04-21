@@ -1,3 +1,5 @@
+import type Font from "@arcgis/core/symbols/Font";
+import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import {
   CalciteBlock,
   CalciteInput,
@@ -13,14 +15,6 @@ import React, { useState } from "react";
 import FontForm from "./FontForm";
 import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  FontDecoration,
-  FontFamily,
-  FontStyle,
-  FontWeight,
-  HorizontalAlignment,
-  VerticalAlignment
-} from "./lib/types";
 
 interface Props {
   handleAngleChange: (value: number) => void;
@@ -28,19 +22,23 @@ interface Props {
   handleBorderLineColorChange: (value: string) => void;
   handleBorderLineSizeChange: (value: string) => void;
   handleColorChange: (value: string) => void;
-  handleFontDecorationChange: (value: FontDecoration) => void;
-  handleFontFamilyChange: (value: FontFamily) => void;
+  handleFontDecorationChange: (value: InstanceType<typeof Font>["decoration"]) => void;
+  handleFontFamilyChange: (value: InstanceType<typeof Font>["family"]) => void;
   handleFontSizeChange: (value: string) => void;
-  handleFontStyleChange: (value: FontStyle) => void;
-  handleFontWeightChange: (value: FontWeight) => void;
+  handleFontStyleChange: (value: InstanceType<typeof Font>["style"]) => void;
+  handleFontWeightChange: (value: InstanceType<typeof Font>["weight"]) => void;
   handleHaloColorChange: (value: string) => void;
   handleHaloSizeChange: (value: string) => void;
-  handleHorizontalAlignmentChange: (value: HorizontalAlignment) => void;
+  handleHorizontalAlignmentChange: (
+    value: InstanceType<typeof TextSymbol>["horizontalAlignment"]
+  ) => void;
   handleKerningChange: (value: boolean) => void;
   handleLineWidthChange: (value: string) => void;
   handleRotatedChange: (value: boolean) => void;
   handleTextChange: (value: string) => void;
-  handleVerticalAlignmentChange: (value: VerticalAlignment) => void;
+  handleVerticalAlignmentChange: (
+    value: InstanceType<typeof TextSymbol>["verticalAlignment"]
+  ) => void;
   handleXOffsetChange: (value: string) => void;
   handleYOffsetChange: (value: string) => void;
 }
@@ -200,7 +198,9 @@ const TextSymbolForm = ({
           label={"horizontalAlignment selection"}
           onCalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
-            handleHorizontalAlignmentChange(event.target.value as HorizontalAlignment);
+            handleHorizontalAlignmentChange(
+              event.target.value as InstanceType<typeof TextSymbol>["horizontalAlignment"]
+            );
           }}
           value={horizontalAlignment}
         >
@@ -263,7 +263,9 @@ const TextSymbolForm = ({
           label={"verticalAlignment selection"}
           onCalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
-            handleVerticalAlignmentChange(event.target.value as VerticalAlignment);
+            handleVerticalAlignmentChange(
+              event.target.value as InstanceType<typeof TextSymbol>["verticalAlignment"]
+            );
           }}
           value={verticalAlignment}
         >

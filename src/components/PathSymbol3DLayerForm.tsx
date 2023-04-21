@@ -1,3 +1,4 @@
+import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import {
   CalciteBlock,
   CalciteInputNumber,
@@ -7,6 +8,7 @@ import {
   CalciteSwitch
 } from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
+import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 import {
   CAP_3D_OPTIONS,
   JOIN_OPTIONS,
@@ -15,19 +17,32 @@ import {
   ROTATION_OPTIONS
 } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { PathSymbol3DLayerAnchor, Cap3D, Join, Profile, Rotation } from "./lib/types";
-import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
-  handleAnchorChange: (layerIndex: number, value: PathSymbol3DLayerAnchor) => void;
-  handleCapChange: (layerIndex: number, value: Cap3D) => void;
+  handleAnchorChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["anchor"]
+  ) => void;
+  handleCapChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["cap"]
+  ) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleHeightChange: (layerIndex: number, value: string) => void;
-  handleJoinChange: (layerIndex: number, value: Join) => void;
+  handleJoinChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["join"]
+  ) => void;
   handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
-  handleProfileChange: (layerIndex: number, value: Profile) => void;
-  handleProfileRotationChange: (layerIndex: number, value: Rotation) => void;
+  handleProfileChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["profile"]
+  ) => void;
+  handleProfileRotationChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["profileRotation"]
+  ) => void;
   handleWidthChange: (layerIndex: number, value: string) => void;
 }
 
@@ -68,7 +83,10 @@ const LineSymbol3DLayerForm = ({
           label={"anchor selection"}
           onCalciteSelectChange={(event) => {
             setAnchor(event.target.value);
-            handleAnchorChange(layerIndex, event.target.value as PathSymbol3DLayerAnchor);
+            handleAnchorChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof PathSymbol3DLayer>["anchor"]
+            );
           }}
           value={anchor}
         >
@@ -84,7 +102,10 @@ const LineSymbol3DLayerForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(layerIndex, event.target.value as Cap3D);
+            handleCapChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof PathSymbol3DLayer>["cap"]
+            );
           }}
           value={cap}
         >
@@ -125,7 +146,10 @@ const LineSymbol3DLayerForm = ({
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(layerIndex, event.target.value as Join);
+            handleJoinChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof PathSymbol3DLayer>["join"]
+            );
           }}
           value={join}
         >
@@ -148,7 +172,10 @@ const LineSymbol3DLayerForm = ({
           label={"profile selection"}
           onCalciteSelectChange={(event) => {
             setProfile(event.target.value);
-            handleProfileChange(layerIndex, event.target.value as Profile);
+            handleProfileChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof PathSymbol3DLayer>["profile"]
+            );
           }}
           value={profile}
         >
@@ -164,7 +191,10 @@ const LineSymbol3DLayerForm = ({
           label={"profileRotation selection"}
           onCalciteSelectChange={(event) => {
             setProfileRotation(event.target.value);
-            handleProfileRotationChange(layerIndex, event.target.value as Rotation);
+            handleProfileRotationChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof PathSymbol3DLayer>["profileRotation"]
+            );
           }}
           value={profileRotation}
         >

@@ -1,3 +1,4 @@
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import {
   CalciteBlock,
   CalciteInputNumber,
@@ -12,11 +13,13 @@ import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
 import { ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { IconSymbol3DLayerAnchor, IconSymbol3DLayerResourcePrimitive } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleIconSymbol3DLayerAnchorChange: (layerIndex: number, value: IconSymbol3DLayerAnchor) => void;
+  handleIconSymbol3DLayerAnchorChange: (
+    layerIndex: number,
+    value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
+  ) => void;
   handleIconSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
@@ -25,7 +28,7 @@ interface Props {
   handleIconSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: IconSymbol3DLayerResourcePrimitive
+    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -55,7 +58,7 @@ const IconSymbol3DLayerForm = ({
             setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
-              event.target.value as IconSymbol3DLayerAnchor
+              event.target.value as InstanceType<typeof IconSymbol3DLayer>["anchor"]
             );
           }}
           value={anchor}

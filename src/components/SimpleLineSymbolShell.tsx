@@ -21,7 +21,6 @@ import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
-import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 const SimpleLineSymbolShell = () => {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -61,7 +60,7 @@ const SimpleLineSymbolShell = () => {
     setGraphics(newGraphics);
   };
 
-  const handleCapChange = (currentCapValue: Cap) => {
+  const handleCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     updateGraphics(newSimpleLineSymbol);
@@ -73,7 +72,7 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleJoinChange = (currentJoinValue: Join) => {
+  const handleJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     updateGraphics(newSimpleLineSymbol);
@@ -103,7 +102,9 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerPlacementChange = (currentPlacementValue: MarkerPlacement) => {
+  const handleMarkerPlacementChange = (
+    currentPlacementValue: InstanceType<typeof LineSymbolMarker>["placement"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.placement = currentPlacementValue;
@@ -113,7 +114,9 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerStyleChange = (currentMarkerStyle: LineStyleMarker3DStyle) => {
+  const handleMarkerStyleChange = (
+    currentMarkerStyle: InstanceType<typeof LineSymbolMarker>["style"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.style = currentMarkerStyle;
@@ -129,7 +132,7 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: LineStyle) => {
+  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     updateGraphics(newSimpleLineSymbol);

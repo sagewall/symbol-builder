@@ -1,3 +1,4 @@
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import {
   CalciteInputText,
   CalciteLabel,
@@ -7,12 +8,14 @@ import {
 import React, { useState } from "react";
 import { ICON_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { IconSymbol3DLayerResourcePrimitive } from "./lib/types";
 
 interface Props {
   layerIndex: number;
   handleHrefChange: (layerIndex: number, value: string) => void;
-  handlePrimitiveChange: (layerIndex: number, value: IconSymbol3DLayerResourcePrimitive) => void;
+  handlePrimitiveChange: (
+    layerIndex: number,
+    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
+  ) => void;
 }
 
 const IconSymbol3DLayerResourceForm = ({
@@ -44,7 +47,7 @@ const IconSymbol3DLayerResourceForm = ({
             setPrimitive(event.target.value);
             handlePrimitiveChange(
               layerIndex,
-              event.target.value as IconSymbol3DLayerResourcePrimitive
+              event.target.value as InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
             );
           }}
           value={primitive}

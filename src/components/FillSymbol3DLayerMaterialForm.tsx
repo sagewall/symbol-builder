@@ -1,3 +1,4 @@
+import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import {
   CalciteInput,
   CalciteLabel,
@@ -7,12 +8,14 @@ import {
 import React, { useState } from "react";
 import { COLOR_MIX_MODE_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { ColorMixMode } from "./lib/types";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handleColorMixModeChange: (layerIndex: number, value: ColorMixMode) => void;
+  handleColorMixModeChange: (
+    layerIndex: number,
+    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
+  ) => void;
 }
 
 const FillSymbol3DLayerMaterialForm = ({
@@ -45,7 +48,12 @@ const FillSymbol3DLayerMaterialForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setColorMixMode(event.target.value);
-            handleColorMixModeChange(layerIndex, event.target.value as ColorMixMode);
+            handleColorMixModeChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof FillSymbol3DLayer
+              >["material"]["colorMixMode"]
+            );
           }}
           value={colorMixMode}
         >

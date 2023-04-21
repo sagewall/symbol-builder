@@ -1,3 +1,5 @@
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import {
   CalciteInput,
   CalciteInputNumber,
@@ -9,13 +11,18 @@ import React, { createRef, useEffect, useState } from "react";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import { CAP_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { Cap, LineStyle } from "./lib/types";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handleLineSylePattern3DStyleChange: (layerIndex: number, value: LineStyle) => void;
-  handlePatternCapChange: (layerIndex: number, value: Cap) => void;
+  handleLineSylePattern3DStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineStylePattern3D>["style"]
+  ) => void;
+  handlePatternCapChange: (
+    layerIndex: number,
+    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
@@ -66,7 +73,10 @@ const FillSymbol3DLayerOutlineForm = ({
           label={"patternCap selection"}
           onCalciteSelectChange={(event) => {
             setPatternCap(event.target.value);
-            handlePatternCapChange(layerIndex, event.target.value as Cap);
+            handlePatternCapChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+            );
           }}
           ref={patternCapRef}
           value={patternCap}

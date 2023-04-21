@@ -1,3 +1,4 @@
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteBlock,
   CalciteInputNumber,
@@ -5,17 +6,16 @@ import {
   CalciteLabel
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { blockStyles, labelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle } from "./lib/types";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
+import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   handleHeightChange: (value: string) => void;
-  handleOutlineCapChange: (value: Cap) => void;
+  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: Join) => void;
+  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: LineStyle) => void;
+  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleOutlineWidthChange: (value: string) => void;
   handleUrlChange: (value: string) => void;
   handleWidthChange: (value: string) => void;

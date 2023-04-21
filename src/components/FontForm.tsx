@@ -1,3 +1,4 @@
+import type Font from "@arcgis/core/symbols/Font";
 import {
   CalciteInputNumber,
   CalciteLabel,
@@ -12,14 +13,13 @@ import {
   FONT_WEIGHT_OPTIONS
 } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { FontDecoration, FontFamily, FontStyle, FontWeight } from "./lib/types";
 
 interface Props {
-  handleDecorationChange: (value: FontDecoration) => void;
-  handleFamilyChange: (value: FontFamily) => void;
+  handleDecorationChange: (value: InstanceType<typeof Font>["decoration"]) => void;
+  handleFamilyChange: (value: InstanceType<typeof Font>["family"]) => void;
   handleSizeChange: (value: string) => void;
-  handleStyleChange: (value: FontStyle) => void;
-  handleWeightChange: (value: FontWeight) => void;
+  handleStyleChange: (value: InstanceType<typeof Font>["style"]) => void;
+  handleWeightChange: (value: InstanceType<typeof Font>["weight"]) => void;
 }
 
 const FontForm = ({
@@ -43,7 +43,7 @@ const FontForm = ({
           label={"font decoration selection"}
           onCalciteSelectChange={(event) => {
             setDecoration(event.target.value);
-            handleDecorationChange(event.target.value as FontDecoration);
+            handleDecorationChange(event.target.value as InstanceType<typeof Font>["decoration"]);
           }}
           value={decoration}
         >
@@ -59,7 +59,7 @@ const FontForm = ({
           label={"font family selection"}
           onCalciteSelectChange={(event) => {
             setFamily(event.target.value);
-            handleFamilyChange(event.target.value as FontFamily);
+            handleFamilyChange(event.target.value as InstanceType<typeof Font>["family"]);
           }}
           value={family}
         >
@@ -88,7 +88,7 @@ const FontForm = ({
           label={"font style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as FontStyle);
+            handleStyleChange(event.target.value as InstanceType<typeof Font>["style"]);
           }}
           value={style}
         >
@@ -104,7 +104,7 @@ const FontForm = ({
           label={"font weight selection"}
           onCalciteSelectChange={(event) => {
             setWeight(event.target.value);
-            handleWeightChange(event.target.value as FontWeight);
+            handleWeightChange(event.target.value as InstanceType<typeof Font>["weight"]);
           }}
           value={weight}
         >

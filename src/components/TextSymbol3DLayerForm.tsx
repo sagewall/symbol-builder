@@ -1,3 +1,5 @@
+import type Font from "@arcgis/core/symbols/Font";
+import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import {
   CalciteBlock,
   CalciteInputNumber,
@@ -7,36 +9,44 @@ import {
   CalciteSelect
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
-import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
-import {
-  FontDecoration,
-  FontStyle,
-  FontWeight,
-  HorizontalAlignment,
-  VerticalAlignment
-} from "./lib/types";
 import TextSymbol3DLayerBackgroundForm from "./TextSymbol3DLayerBackgroundForm";
 import TextSymbol3DLayerFontForm from "./TextSymbol3DLayerFontForm";
 import TextSymbol3DLayerHaloForm from "./TextSymbol3DLayerHaloForm";
 import TextSymbol3DLayerMaterialForm from "./TextSymbol3DLayerMaterialForm";
+import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleTextSymbol3DLayerBackgroundColorChange: (layerIndex: number, value: string) => void;
-  handleTextSymbol3DLayerFontDecorationChange: (layerIndex: number, value: FontDecoration) => void;
+  handleTextSymbol3DLayerFontDecorationChange: (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["decoration"]
+  ) => void;
   handleTextSymbol3DLayerFontFamilyChange: (layerIndex: number, value: string) => void;
   handleTextSymbol3DLayerFontSizeChange: (layerIndex: number, value: string) => void;
-  handleTextSymbol3DLayerFontStyleChange: (layerIndex: number, value: FontStyle) => void;
-  handleTextSymbol3DLayerFontWeightChange: (layerIndex: number, value: FontWeight) => void;
+  handleTextSymbol3DLayerFontStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["style"]
+  ) => void;
+  handleTextSymbol3DLayerFontWeightChange: (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["weight"]
+  ) => void;
   handleTextSymbol3DLayerHaloColorChange: (layerIndex: number, value: string) => void;
   handleTextSymbol3DLayerHaloSizeChange: (layerIndex: number, value: string) => void;
-  handleHorizontalAlignmentChange: (layerIndex: number, value: HorizontalAlignment) => void;
+  handleHorizontalAlignmentChange: (
+    layerIndex: number,
+    value: InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
+  ) => void;
   handleLineHeightChange: (layerIndex: number, value: string) => void;
   handleTextSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
   handleTextChange: (layerIndex: number, value: string) => void;
-  handleVerticalAlignmentChange: (layerIndex: number, value: VerticalAlignment) => void;
+  handleVerticalAlignmentChange: (
+    layerIndex: number,
+    value: InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
+  ) => void;
 }
 
 const TextSymbol3DLayerForm = ({
@@ -96,7 +106,10 @@ const TextSymbol3DLayerForm = ({
           label={"horizontalAlignment selection"}
           onCalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
-            handleHorizontalAlignmentChange(layerIndex, event.target.value as HorizontalAlignment);
+            handleHorizontalAlignmentChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
+            );
           }}
           value={horizontalAlignment}
         >
@@ -157,7 +170,10 @@ const TextSymbol3DLayerForm = ({
           label={"verticalAlignment selection"}
           onCalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
-            handleVerticalAlignmentChange(layerIndex, event.target.value as VerticalAlignment);
+            handleVerticalAlignmentChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
+            );
           }}
           value={verticalAlignment}
         >

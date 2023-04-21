@@ -1,3 +1,6 @@
+import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import {
   CalciteBlock,
   CalciteInputNumber,
@@ -11,12 +14,17 @@ import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 import { CAP_OPTIONS, JOIN_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle, LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleCapChange: (layerIndex: number, value: Cap) => void;
-  handleJoinChange: (layerIndex: number, value: Join) => void;
+  handleCapChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineSymbol3DLayer>["cap"]
+  ) => void;
+  handleJoinChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineSymbol3DLayer>["join"]
+  ) => void;
   handleLineSymbol3DLayerMarkerBlockToggle: (
     layerIndex: number,
     currentMarkerBlock: HTMLCalciteBlockElement
@@ -24,14 +32,17 @@ interface Props {
   handleLineSymbol3DLayerMarkerColorChange: (layerIndex: number, value: string) => void;
   handleLineSymbol3DLayerMarkerPlacementChange: (
     layerIndex: number,
-    value: MarkerPlacement
+    value: InstanceType<typeof LineStyleMarker3D>["placement"]
   ) => void;
   handleLineSymbol3DLayerMarkerStyleChange: (
     layerIndex: number,
-    value: LineStyleMarker3DStyle
+    value: InstanceType<typeof LineStyleMarker3D>["style"]
   ) => void;
   handleLineSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
-  handleLineSymbol3DLayerPatternStyleChange: (layerIndex: number, value: LineStyle) => void;
+  handleLineSymbol3DLayerPatternStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineStylePattern3D>["style"]
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
@@ -59,7 +70,10 @@ const LineSymbol3DLayerForm = ({
           label={"cap selection"}
           onCalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(layerIndex, event.target.value as Cap);
+            handleCapChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof LineSymbol3DLayer>["cap"]
+            );
           }}
           value={cap}
         >
@@ -81,7 +95,10 @@ const LineSymbol3DLayerForm = ({
           label={"join selection"}
           onCalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(layerIndex, event.target.value as Join);
+            handleJoinChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof LineSymbol3DLayer>["join"]
+            );
           }}
           value={join}
         >

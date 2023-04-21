@@ -1,3 +1,4 @@
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import {
   CalciteBlock,
   CalciteInputNumber,
@@ -13,11 +14,13 @@ import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
 import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
 import { OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { ObjectSymbol3DLayerAnchor, ObjectSymbol3DLayerResourcePrimitive } from "./lib/types";
 
 interface Props {
   layerIndex: number;
-  handleAnchorChange: (layerIndex: number, value: ObjectSymbol3DLayerAnchor) => void;
+  handleAnchorChange: (
+    layerIndex: number,
+    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
+  ) => void;
   handleObjectSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerAnchorPositionZChange: (layerIndex: number, value: string) => void;
@@ -29,7 +32,7 @@ interface Props {
   handleObjectSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitive
+    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
   ) => void;
   handleRollChange: (layerIndex: number, value: number) => void;
   handleTiltChange: (layerIndex: number, value: number) => void;
@@ -70,7 +73,10 @@ const ObjectSymbol3DLayerForm = ({
           label={"anchor selection"}
           onCalciteSelectChange={(event) => {
             setAnchor(event.target.value);
-            handleAnchorChange(layerIndex, event.target.value as ObjectSymbol3DLayerAnchor);
+            handleAnchorChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
+            );
           }}
           value={anchor}
         >

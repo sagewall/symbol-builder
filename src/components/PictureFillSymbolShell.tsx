@@ -21,7 +21,6 @@ import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
-import { Cap, Join, LineStyle } from "./lib/types";
 
 const PictureFillSymbolShell = () => {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
@@ -61,7 +60,9 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: Cap) => {
+  const handleOutlineCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -81,7 +82,9 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: Join) => {
+  const handleOutlineJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -101,7 +104,9 @@ const PictureFillSymbolShell = () => {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: LineStyle) => {
+  const handleOutlineStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);

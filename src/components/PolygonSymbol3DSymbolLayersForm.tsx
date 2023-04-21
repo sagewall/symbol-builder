@@ -22,26 +22,6 @@ import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
-import {
-  Cap,
-  ColorMixMode,
-  Fill,
-  FontDecoration,
-  FontStyle,
-  FontWeight,
-  HorizontalAlignment,
-  IconSymbol3DLayerAnchor,
-  IconSymbol3DLayerResourcePrimitive,
-  Join,
-  LineStyle,
-  LineStyleMarker3DStyle,
-  MarkerPlacement,
-  ObjectSymbol3DLayerAnchor,
-  ObjectSymbol3DLayerResourcePrimitive,
-  VerticalAlignment,
-  WaterbodySize,
-  WaveStrength
-} from "./lib/types";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -287,11 +267,11 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleFillSymbol3DLayerMaterialColorMixModeChange = (
     layerIndex: number,
-    value: ColorMixMode
+    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.material.colorMixMode = value as ColorMixMode;
+    symbolLayer.material.colorMixMode = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -308,17 +288,20 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.outline.pattern) {
-      symbolLayer.outline.pattern.style = value as LineStyle;
+      symbolLayer.outline.pattern.style = value as InstanceType<typeof LineStylePattern3D>["style"];
     }
 
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerOutlinePatternCapChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerOutlinePatternCapChange = (
+    layerIndex: number,
+    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.outline.patternCap = value as Cap;
+    symbolLayer.outline.patternCap = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -331,17 +314,20 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerPatternStyleChange = (layerIndex: number, value: Fill) => {
+  const handleFillSymbol3DLayerPatternStyleChange = (
+    layerIndex: number,
+    value: InstanceType<typeof StylePattern3D>["style"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
-    symbolLayer.pattern.style = value as Fill;
+    symbolLayer.pattern.style = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const handleIconSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: IconSymbol3DLayerAnchor
+    value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -400,7 +386,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: IconSymbol3DLayerResourcePrimitive
+    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -417,18 +403,24 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleLineSymbol3DLayerCapChange = (layerIndex: number, value: string) => {
+  const handleLineSymbol3DLayerCapChange = (
+    layerIndex: number,
+    value: InstanceType<typeof LineSymbol3DLayer>["cap"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.cap = value as Cap;
+    symbolLayer.cap = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleLineSymbol3DLayerJoinChange = (layerIndex: number, value: string) => {
+  const handleLineSymbol3DLayerJoinChange = (
+    layerIndex: number,
+    value: InstanceType<typeof LineSymbol3DLayer>["join"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.join = value as Join;
+    symbolLayer.join = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -458,18 +450,24 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleLineSymbol3DLayerMarkerPlacementChange = (layerIndex: number, value: string) => {
+  const handleLineSymbol3DLayerMarkerPlacementChange = (
+    layerIndex: number,
+    value: InstanceType<typeof LineStyleMarker3D>["placement"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.placement = value as MarkerPlacement;
+    symbolLayer.marker.placement = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleLineSymbol3DLayerMarkerStyleChange = (layerIndex: number, value: string) => {
+  const handleLineSymbol3DLayerMarkerStyleChange = (
+    layerIndex: number,
+    value: InstanceType<typeof LineStyleMarker3D>["style"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.style = value as LineStyleMarker3DStyle;
+    symbolLayer.marker.style = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -482,10 +480,13 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleLineSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
+  const handleLineSymbol3DLayerPatternStyleChange = (
+    layerIndex: number,
+    value: InstanceType<typeof LineStylePattern3D>["style"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.pattern.style = value as LineStyle;
+    symbolLayer.pattern.style = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -500,7 +501,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: ObjectSymbol3DLayerAnchor
+    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -583,7 +584,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitive
+    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -626,7 +627,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerFontDecorationChange = (
     layerIndex: number,
-    value: FontDecoration
+    value: InstanceType<typeof Font>["decoration"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
@@ -651,18 +652,24 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerFontStyleChange = (layerIndex: number, value: FontStyle) => {
+  const handleTextSymbol3DLayerFontStyleChange = (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["style"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.style = value as FontStyle;
+    symbolLayer.font.style = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerFontWeightChange = (layerIndex: number, value: FontWeight) => {
+  const handleTextSymbol3DLayerFontWeightChange = (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["weight"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.weight = value as FontWeight;
+    symbolLayer.font.weight = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -685,7 +692,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerHorizontalAlignmentChange = (
     layerIndex: number,
-    value: HorizontalAlignment
+    value: InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
@@ -728,7 +735,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerVerticalAlignmentChange = (
     layerIndex: number,
-    value: VerticalAlignment
+    value: InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
@@ -745,10 +752,13 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleWaterSymbol3DLayerWaterbodySizeChange = (layerIndex: number, value: string) => {
+  const handleWaterSymbol3DLayerWaterbodySizeChange = (
+    layerIndex: number,
+    value: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
-    symbolLayer.waterbodySize = value as WaterbodySize;
+    symbolLayer.waterbodySize = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -761,10 +771,13 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleWaterSymbol3DLayerWaveStrengthChange = (layerIndex: number, value: string) => {
+  const handleWaterSymbol3DLayerWaveStrengthChange = (
+    layerIndex: number,
+    value: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
-    symbolLayer.waveStrength = value as WaveStrength;
+    symbolLayer.waveStrength = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };

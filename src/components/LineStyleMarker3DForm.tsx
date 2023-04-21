@@ -1,3 +1,4 @@
+import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import {
   CalciteInput,
   CalciteLabel,
@@ -7,13 +8,18 @@ import {
 import React, { useState } from "react";
 import { LINE_STYLE_MARKER_3D_STYLE_OPTIONS, MARKER_PLACEMENT_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import { LineStyleMarker3DStyle, MarkerPlacement } from "./lib/types";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
-  handlePlacementChange: (layerIndex: number, value: MarkerPlacement) => void;
-  handleStyleChange: (layerIndex: number, value: LineStyleMarker3DStyle) => void;
+  handlePlacementChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineStyleMarker3D>["placement"]
+  ) => void;
+  handleStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineStyleMarker3D>["style"]
+  ) => void;
 }
 
 const LineStyleMarker3DForm = ({
@@ -48,7 +54,10 @@ const LineStyleMarker3DForm = ({
           label={"placement selection"}
           onCalciteSelectChange={(event) => {
             setPlacement(event.target.value);
-            handlePlacementChange(layerIndex, event.target.value as MarkerPlacement);
+            handlePlacementChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof LineStyleMarker3D>["placement"]
+            );
           }}
           value={placement}
         >
@@ -64,7 +73,10 @@ const LineStyleMarker3DForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(layerIndex, event.target.value as LineStyleMarker3DStyle);
+            handleStyleChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof LineStyleMarker3D>["style"]
+            );
           }}
           value={style}
         >

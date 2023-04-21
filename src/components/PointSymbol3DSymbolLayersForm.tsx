@@ -7,20 +7,9 @@ import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
-import { blockStyles } from "./lib/styles";
-import {
-  FontDecoration,
-  FontStyle,
-  FontWeight,
-  HorizontalAlignment,
-  IconSymbol3DLayerAnchor,
-  IconSymbol3DLayerResourcePrimitive,
-  ObjectSymbol3DLayerAnchor,
-  ObjectSymbol3DLayerResourcePrimitive,
-  VerticalAlignment
-} from "./lib/types";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
+import { blockStyles } from "./lib/styles";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -102,7 +91,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: IconSymbol3DLayerAnchor
+    value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -161,7 +150,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: IconSymbol3DLayerResourcePrimitive
+    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -180,7 +169,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: ObjectSymbol3DLayerAnchor
+    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -263,7 +252,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: ObjectSymbol3DLayerResourcePrimitive
+    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -306,7 +295,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerFontDecorationChange = (
     layerIndex: number,
-    value: FontDecoration
+    value: InstanceType<typeof Font>["decoration"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
@@ -331,18 +320,24 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerFontStyleChange = (layerIndex: number, value: FontStyle) => {
+  const handleTextSymbol3DLayerFontStyleChange = (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["style"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.style = value as FontStyle;
+    symbolLayer.font.style = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerFontWeightChange = (layerIndex: number, value: FontWeight) => {
+  const handleTextSymbol3DLayerFontWeightChange = (
+    layerIndex: number,
+    value: InstanceType<typeof Font>["weight"]
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.weight = value as FontWeight;
+    symbolLayer.font.weight = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -365,7 +360,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerHorizontalAlignmentChange = (
     layerIndex: number,
-    value: HorizontalAlignment
+    value: InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
@@ -408,7 +403,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleTextSymbol3DLayerVerticalAlignmentChange = (
     layerIndex: number,
-    value: VerticalAlignment
+    value: InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;

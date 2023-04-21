@@ -1,3 +1,5 @@
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import {
   CalciteBlock,
   CalciteInput,
@@ -12,20 +14,19 @@ import React, { useState } from "react";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { Cap, Join, LineStyle, SimpleMarkerSymbolStyle } from "./lib/types";
 
 interface Props {
   handleAngleChange: (value: number) => void;
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (value: Cap) => void;
+  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: Join) => void;
+  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: LineStyle) => void;
+  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleOutlineWidthChange: (value: string) => void;
   handlePathChange: (value: string) => void;
   handleSizeChange: (value: string) => void;
-  handleStyleChange: (value: SimpleMarkerSymbolStyle) => void;
+  handleStyleChange: (value: InstanceType<typeof SimpleMarkerSymbol>["style"]) => void;
   handleXoffsetChange: (value: string) => void;
   handleYoffsetChange: (value: string) => void;
 }
@@ -129,7 +130,9 @@ const SimpleMarkerSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as SimpleMarkerSymbolStyle);
+            handleStyleChange(
+              event.target.value as InstanceType<typeof SimpleMarkerSymbol>["style"]
+            );
           }}
           value={style}
         >

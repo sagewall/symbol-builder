@@ -1,3 +1,5 @@
+import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
   CalciteBlock,
   CalciteInput,
@@ -9,17 +11,16 @@ import React, { useState } from "react";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { FILL_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
-import { Cap, Fill, Join, LineStyle } from "./lib/types";
 
 interface Props {
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (value: Cap) => void;
+  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: Join) => void;
+  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: LineStyle) => void;
+  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleOutlineWidthChange: (value: string) => void;
-  handleStyleChange: (value: Fill) => void;
+  handleStyleChange: (value: InstanceType<typeof SimpleFillSymbol>["style"]) => void;
 }
 
 const SimpleFillSymbolForm = ({
@@ -69,7 +70,7 @@ const SimpleFillSymbolForm = ({
           label={"style selection"}
           onCalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as Fill);
+            handleStyleChange(event.target.value as InstanceType<typeof SimpleFillSymbol>["style"]);
           }}
           value={style}
         >
