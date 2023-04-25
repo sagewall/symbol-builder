@@ -1,6 +1,22 @@
-export const CAP_OPTIONS = ["round", "butt", "square"];
+import type Font from "@arcgis/core/symbols/Font";
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
+import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
+import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
+import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
+import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
+import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
+import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
+import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
 
-export const CAP_3D_OPTIONS = ["butt", "square", "round", "none"];
+export const CAP_OPTIONS: InstanceType<typeof SimpleLineSymbol>["cap"][] = ["round", "butt", "square"];
+
+export const CAP_3D_OPTIONS: InstanceType<typeof PathSymbol3DLayer>["cap"][] = ["butt", "square", "round", "none"];
 
 export const COLOR_MIX_MODE_OPTIONS = ["multiply", "tint", "replace"];
 
@@ -567,7 +583,9 @@ export const ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS = [
   "Hamamelis"
 ];
 
-export const FILL_OPTIONS = [
+export const FILL_OPTIONS:
+  | InstanceType<typeof SimpleFillSymbol>["style"][]
+  | InstanceType<typeof StylePattern3D>["style"][] = [
   "solid",
   "backward-diagonal",
   "cross",
@@ -578,7 +596,7 @@ export const FILL_OPTIONS = [
   "vertical"
 ];
 
-export const FONT_DECORATION_OPTIONS = ["none", "underline", "line-through"];
+export const FONT_DECORATION_OPTIONS: InstanceType<typeof Font>["decoration"][] = ["none", "underline", "line-through"];
 
 export const FONT_FAMILY_OPTIONS = [
   "Abril Fatface",
@@ -627,13 +645,15 @@ export const FONT_FAMILY_OPTIONS = [
   "Walter Turncoat"
 ];
 
-export const FONT_STYLE_OPTIONS = ["normal", "italic", "oblique"];
+export const FONT_STYLE_OPTIONS: InstanceType<typeof Font>["style"][] = ["normal", "italic", "oblique"];
 
-export const FONT_WEIGHT_OPTIONS = ["normal", "bold", "bolder", "lighter"];
+export const FONT_WEIGHT_OPTIONS: InstanceType<typeof Font>["weight"][] = ["normal", "bold", "bolder", "lighter"];
 
-export const HORIZONTAL_ALIGNMENT_OPTIONS = ["center", "right", "left"];
+export const HORIZONTAL_ALIGNMENT_OPTIONS:
+  | InstanceType<typeof TextSymbol>["horizontalAlignment"][]
+  | InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"][] = ["center", "right", "left"];
 
-export const ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS = [
+export const ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS: InstanceType<typeof IconSymbol3DLayer>["anchor"][] = [
   "center",
   "left",
   "right",
@@ -646,13 +666,27 @@ export const ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS = [
   "relative"
 ];
 
-export const ICON_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS = ["circle", "square", "cross", "x", "kite", "triangle"];
+export const ICON_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS: InstanceType<
+  typeof IconSymbol3DLayer
+>["resource"]["primitive"][] = ["circle", "square", "cross", "x", "kite", "triangle"];
 
-export const JOIN_OPTIONS = ["miter", "round", "bevel"];
+export const JOIN_OPTIONS:
+  | InstanceType<typeof SimpleLineSymbol>["join"][]
+  | InstanceType<typeof PathSymbol3DLayer>["join"][]
+  | InstanceType<typeof LineSymbol3DLayer>["join"][] = ["miter", "round", "bevel"];
 
-export const LINE_STYLE_MARKER_3D_STYLE_OPTIONS = ["arrow", "circle", "square", "diamond", "cross", "x"];
+export const LINE_STYLE_MARKER_3D_STYLE_OPTIONS: InstanceType<typeof LineStyleMarker3D>["style"][] = [
+  "arrow",
+  "circle",
+  "square",
+  "diamond",
+  "cross",
+  "x"
+];
 
-export const LINE_STYLE_OPTIONS = [
+export const LINE_STYLE_OPTIONS:
+  | InstanceType<typeof SimpleLineSymbol>["style"][]
+  | InstanceType<typeof LineStylePattern3D>["style"][] = [
   "solid",
   "dash",
   "dash-dot",
@@ -667,29 +701,50 @@ export const LINE_STYLE_OPTIONS = [
   "short-dot"
 ];
 
-export const MARKER_PLACEMENT_OPTIONS = ["begin", "end", "begin-end"];
+export const MARKER_PLACEMENT_OPTIONS:
+  | InstanceType<typeof LineSymbolMarker>["placement"][]
+  | InstanceType<typeof LineStyleMarker3D>["placement"][] = ["begin", "end", "begin-end"];
 
-export const MARKER_STYLE_OPTIONS = ["arrow", "circle", "square", "diamond", "cross", "x"];
-
-export const OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS = ["center", "top", "bottom", "origin", "relative"];
-
-export const OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS = [
-  "sphere",
-  "cylinder",
-  "cube",
-  "cone",
-  "inverted-cone",
+export const MARKER_STYLE_OPTIONS: InstanceType<typeof LineSymbolMarker>["style"][] = [
+  "arrow",
+  "circle",
+  "square",
   "diamond",
-  "tetrahedron"
+  "cross",
+  "x"
 ];
 
-export const PATH_SYMBOL_3D_LAYER_ANCHOR_OPTIONS = ["center", "bottom", "top"];
+export const OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS: InstanceType<typeof ObjectSymbol3DLayer>["anchor"][] = [
+  "center",
+  "top",
+  "bottom",
+  "origin",
+  "relative"
+];
 
-export const PROFILE_OPTIONS = ["quad", "circle"];
+export const OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS: InstanceType<
+  typeof ObjectSymbol3DLayer
+>["resource"]["primitive"][] = ["sphere", "cylinder", "cube", "cone", "inverted-cone", "diamond", "tetrahedron"];
 
-export const ROTATION_OPTIONS = ["all", "heading"];
+export const PATH_SYMBOL_3D_LAYER_ANCHOR_OPTIONS: InstanceType<typeof PathSymbol3DLayer>["anchor"][] = [
+  "center",
+  "bottom",
+  "top"
+];
 
-export const SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS = ["circle", "square", "cross", "x", "diamond", "triangle", "path"];
+export const PROFILE_OPTIONS: InstanceType<typeof PathSymbol3DLayer>["profile"][] = ["quad", "circle"];
+
+export const ROTATION_OPTIONS: InstanceType<typeof PathSymbol3DLayer>["profileRotation"][] = ["all", "heading"];
+
+export const SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS: InstanceType<typeof SimpleMarkerSymbol>["style"][] = [
+  "circle",
+  "square",
+  "cross",
+  "x",
+  "diamond",
+  "triangle",
+  "path"
+];
 
 export const SYMBOLS = [
   {
@@ -842,11 +897,22 @@ export const SYMBOLS = [
   }
 ];
 
-export const VERTICAL_ALIGNMENT_OPTIONS = ["baseline", "top", "middle", "bottom"];
+export const VERTICAL_ALIGNMENT_OPTIONS:
+  | InstanceType<typeof TextSymbol>["verticalAlignment"][]
+  | InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"][] = ["baseline", "top", "middle", "bottom"];
 
-export const WATERBODY_SIZE_OPTIONS = ["small", "medium", "large"];
+export const WATERBODY_SIZE_OPTIONS: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"][] = [
+  "small",
+  "medium",
+  "large"
+];
 
-export const WAVE_STRENGTH_OPTIONS = ["calm", "rippled", "slight", "moderate"];
+export const WAVE_STRENGTH_OPTIONS: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"][] = [
+  "calm",
+  "rippled",
+  "slight",
+  "moderate"
+];
 
 export const WEB_STYLE_SYMBOLS_2D_STYLE_OPTIONS = ["Esri2DPointSymbolsStyle"];
 
