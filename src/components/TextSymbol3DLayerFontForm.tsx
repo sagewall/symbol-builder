@@ -22,7 +22,7 @@ interface Props {
   handleWeightChange: (layerIndex: number, value: InstanceType<typeof Font>["weight"]) => void;
 }
 
-const FontForm = ({
+const TextSymbol3DLayerFontForm = ({
   layerIndex,
   handleDecorationChange,
   handleFamilyChange,
@@ -120,4 +120,4 @@ const FontForm = ({
   );
 };
 
-export default FontForm;
+export default TextSymbol3DLayerFontForm;
