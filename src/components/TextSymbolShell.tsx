@@ -21,9 +21,10 @@ import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
+import { FontData } from "./lib/types";
 
 const TextSymbolShell = () => {
-  const [font, setFont] = useState(new Font({ family: "Arial", size: 12 }));
+  const [font, setFont] = useState(new Font({ family: "Abril Fatface", size: 12 }));
 
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
@@ -90,6 +91,16 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
+  const handleFontChange = (currentFontData: string) => {
+    const currentFontDataObject = JSON.parse(currentFontData) as FontData;
+    const newTextSymbol = textSymbol.clone();
+    newTextSymbol.font.family = currentFontDataObject.font.family;
+    newTextSymbol.font.style = currentFontDataObject.font.style;
+    newTextSymbol.font.weight = currentFontDataObject.font.weight;
+    setFont(newTextSymbol.font);
+    updateGraphics(newTextSymbol);
+  };
+
   const handleFontDecorationChange = (
     currentFontDecoration: InstanceType<typeof Font>["decoration"]
   ) => {
@@ -99,30 +110,9 @@ const TextSymbolShell = () => {
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontFamilyChange = (currentFontFamily: InstanceType<typeof Font>["family"]) => {
-    const newTextSymbol = textSymbol.clone();
-    newTextSymbol.font.family = currentFontFamily;
-    setFont(newTextSymbol.font);
-    updateGraphics(newTextSymbol);
-  };
-
   const handleFontSizeChange = (currentFontSize: string) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.size = Number(currentFontSize);
-    setFont(newTextSymbol.font);
-    updateGraphics(newTextSymbol);
-  };
-
-  const handleFontStyleChange = (currentFontStyle: InstanceType<typeof Font>["style"]) => {
-    const newTextSymbol = textSymbol.clone();
-    newTextSymbol.font.style = currentFontStyle;
-    setFont(newTextSymbol.font);
-    updateGraphics(newTextSymbol);
-  };
-
-  const handleFontWeightChange = (currentFontWeight: InstanceType<typeof Font>["weight"]) => {
-    const newTextSymbol = textSymbol.clone();
-    newTextSymbol.font.weight = currentFontWeight;
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
@@ -205,11 +195,9 @@ const TextSymbolShell = () => {
                 handleBorderLineColorChange={handleBorderLineColorChange}
                 handleBorderLineSizeChange={handleBorderLineSizeChange}
                 handleColorChange={handleColorChange}
+                handleFontChange={handleFontChange}
                 handleFontDecorationChange={handleFontDecorationChange}
-                handleFontFamilyChange={handleFontFamilyChange}
                 handleFontSizeChange={handleFontSizeChange}
-                handleFontStyleChange={handleFontStyleChange}
-                handleFontWeightChange={handleFontWeightChange}
                 handleHaloColorChange={handleHaloColorChange}
                 handleHaloSizeChange={handleHaloSizeChange}
                 handleHorizontalAlignmentChange={handleHorizontalAlignmentChange}

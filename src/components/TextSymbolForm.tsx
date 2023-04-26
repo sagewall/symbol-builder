@@ -22,11 +22,9 @@ interface Props {
   handleBorderLineColorChange: (value: string) => void;
   handleBorderLineSizeChange: (value: string) => void;
   handleColorChange: (value: string) => void;
+  handleFontChange: (value: string) => void;
   handleFontDecorationChange: (value: InstanceType<typeof Font>["decoration"]) => void;
-  handleFontFamilyChange: (value: InstanceType<typeof Font>["family"]) => void;
   handleFontSizeChange: (value: string) => void;
-  handleFontStyleChange: (value: InstanceType<typeof Font>["style"]) => void;
-  handleFontWeightChange: (value: InstanceType<typeof Font>["weight"]) => void;
   handleHaloColorChange: (value: string) => void;
   handleHaloSizeChange: (value: string) => void;
   handleHorizontalAlignmentChange: (
@@ -49,11 +47,9 @@ const TextSymbolForm = ({
   handleBorderLineColorChange,
   handleBorderLineSizeChange,
   handleColorChange,
+  handleFontChange,
   handleFontDecorationChange,
-  handleFontFamilyChange,
   handleFontSizeChange,
-  handleFontStyleChange,
-  handleFontWeightChange,
   handleHaloColorChange,
   handleHaloSizeChange,
   handleHorizontalAlignmentChange,
@@ -66,11 +62,11 @@ const TextSymbolForm = ({
   handleYOffsetChange
 }: Props) => {
   const [angle, setAngle] = useState(0);
-  const [backgroundColor, setBackgroundColor] = useState("#000000");
+  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [borderLineColor, setBorderLineColor] = useState("#000000");
   const [borderLineSize, setBorderLineSize] = useState("0");
-  const [color, setColor] = useState("#007ac2");
-  const [haloColor, setHaloColor] = useState("#000000");
+  const [color, setColor] = useState("#000000");
+  const [haloColor, setHaloColor] = useState("#ffffff");
   const [haloSize, setHaloSize] = useState("0");
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [kerning, setKerning] = useState(true);
@@ -158,10 +154,8 @@ const TextSymbolForm = ({
       <CalciteBlock style={blockStyles} collapsible heading={"font"}>
         <FontForm
           handleDecorationChange={handleFontDecorationChange}
-          handleFamilyChange={handleFontFamilyChange}
+          handleFontChange={handleFontChange}
           handleSizeChange={handleFontSizeChange}
-          handleStyleChange={handleFontStyleChange}
-          handleWeightChange={handleFontWeightChange}
         />
       </CalciteBlock>
 

@@ -13,6 +13,7 @@ import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
+import fontData from "./esri-labeling-page-data.json";
 
 export const CAP_OPTIONS: InstanceType<typeof SimpleLineSymbol>["cap"][] = ["round", "butt", "square"];
 
@@ -597,6 +598,8 @@ export const FILL_OPTIONS:
 ];
 
 export const FONT_DECORATION_OPTIONS: InstanceType<typeof Font>["decoration"][] = ["none", "underline", "line-through"];
+
+export const FONTS = fontData;
 
 export const FONT_FAMILY_OPTIONS = [
   "Abril Fatface",
