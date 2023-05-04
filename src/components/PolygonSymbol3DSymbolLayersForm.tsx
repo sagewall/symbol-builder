@@ -12,7 +12,12 @@ import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
-import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
+import {
+  CalciteAction,
+  CalciteBlock,
+  CalciteChip,
+  CalciteTooltip
+} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import ExtrudeSymbol3DLayerForm from "./ExtrudeSymbol3DLayerForm";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
@@ -21,7 +26,7 @@ import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
-import { blockStyles } from "./lib/styles";
+import { blockStyles, chipStyles } from "./lib/styles";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -1054,10 +1059,21 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   return (
     <React.Fragment>
       <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <CalciteChip
+          id="information-chip"
+          icon="information"
+          slot="control"
+          value="Information"
+          style={chipStyles}
+        ></CalciteChip>
+        <CalciteTooltip label="information" reference-element={"information-chip"}>
+          <span>Add symbol layer by opening the dropdown menu on the right</span>
+        </CalciteTooltip>
+
         <CalciteAction
           onClick={() => addFillSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="polygon"
           text-enabled
           text="Add FillSymbol3DLayer"
         ></CalciteAction>
@@ -1065,7 +1081,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <CalciteAction
           onClick={() => addExtrudeSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="polygon"
           text-enabled
           text="Add ExtrudeSymbol3DLayer"
         ></CalciteAction>
@@ -1073,7 +1089,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <CalciteAction
           onClick={() => addWaterSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="polygon"
           text-enabled
           text="Add WaterSymbol3DLayer"
         ></CalciteAction>
@@ -1081,7 +1097,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <CalciteAction
           onClick={() => addLineSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="line"
           text-enabled
           text="Add LineSymbol3DLayer"
         ></CalciteAction>
@@ -1089,7 +1105,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <CalciteAction
           onClick={() => addIconSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="point"
           text-enabled
           text="Add IconSymbol3DLayer"
         ></CalciteAction>
@@ -1097,7 +1113,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <CalciteAction
           onClick={() => addObjectSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="point"
           text-enabled
           text="Add ObjectSymbol3DLayer"
         ></CalciteAction>
@@ -1105,7 +1121,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <CalciteAction
           onClick={() => addTextSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="text"
           text-enabled
           text="Add TextSymbol3DLayer"
         ></CalciteAction>

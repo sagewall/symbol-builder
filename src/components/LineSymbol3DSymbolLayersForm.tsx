@@ -4,11 +4,16 @@ import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
+import {
+  CalciteAction,
+  CalciteBlock,
+  CalciteChip,
+  CalciteTooltip
+} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
-import { blockStyles } from "./lib/styles";
+import { blockStyles, chipStyles } from "./lib/styles";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -285,17 +290,29 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   return (
     <React.Fragment>
       <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <CalciteChip
+          id="information-chip"
+          icon="information"
+          slot="control"
+          value="Information"
+          style={chipStyles}
+        ></CalciteChip>
+        <CalciteTooltip label="information" reference-element={"information-chip"}>
+          <span>Add symbol layer by opening the dropdown menu on the right</span>
+        </CalciteTooltip>
+
         <CalciteAction
           onClick={() => addLineSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="line"
           text-enabled
           text="Add LineSymbol3DLayer"
         ></CalciteAction>
+
         <CalciteAction
           onClick={() => addPathSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="line"
           text-enabled
           text="Add PathSymbol3DLayer"
         ></CalciteAction>

@@ -4,12 +4,17 @@ import Font from "@arcgis/core/symbols/Font";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
-import { CalciteAction, CalciteBlock } from "@esri/calcite-components-react";
+import {
+  CalciteAction,
+  CalciteBlock,
+  CalciteChip,
+  CalciteTooltip
+} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
-import { blockStyles } from "./lib/styles";
+import { blockStyles, chipStyles } from "./lib/styles";
 
 interface PageProps {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -545,27 +550,41 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   return (
     <React.Fragment>
       <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <CalciteChip
+          id="information-chip"
+          icon="information"
+          slot="control"
+          value="Information"
+          style={chipStyles}
+        ></CalciteChip>
+        <CalciteTooltip label="information" reference-element={"information-chip"}>
+          <span>Add symbol layer by opening the dropdown menu on the right</span>
+        </CalciteTooltip>
+
         <CalciteAction
           onClick={() => addIconSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="point"
           text-enabled
           text="Add IconSymbol3DLayer"
         ></CalciteAction>
+
         <CalciteAction
           onClick={() => addObjectSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="point"
           text-enabled
           text="Add ObjectSymbol3DLayer"
         ></CalciteAction>
+
         <CalciteAction
           onClick={() => addTextSymbol3DLayer()}
           slot="header-menu-actions"
-          icon="plus"
+          icon="text"
           text-enabled
           text="Add TextSymbol3DLayer"
         ></CalciteAction>
+
         {createSymbol3DLayerCollectionForm()}
       </CalciteBlock>
     </React.Fragment>

@@ -19,6 +19,10 @@ export const cardStyles = {
   width: "24em"
 };
 
+export const chipStyles = {
+  alignSelf: "center"
+};
+
 export const jsonStyles = {
   margin: "1em"
 };
