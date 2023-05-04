@@ -40,7 +40,7 @@ const SceneView = ({ graphics }: SceneViewProps) => {
             view.graphics = graphics;
             await view.when();
             view.goTo(graphics).catch((error) => {
-              if (error.name != "AbortError") {
+              if (error.name !== "AbortError") {
                 console.error(error);
               }
             });

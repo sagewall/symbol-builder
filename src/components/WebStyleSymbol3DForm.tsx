@@ -47,7 +47,7 @@ const WebStyleSymbolForm = ({
 
   const handleTabChange = (event: CustomEvent) => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
-    if (tabNav.selectedTitle.tab != "custom") {
+    if (tabNav.selectedTitle.tab !== "custom") {
       setName("");
     } else {
       handleStyleNameChange(styleName);
