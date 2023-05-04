@@ -25,9 +25,9 @@ const PictureMarkerSymbolForm = ({
   handleYoffsetChange
 }: Props) => {
   const [angle, setAngle] = useState(0);
-  const [height, setHeight] = useState("12");
-  const [url, setUrl] = useState("https://sagewall.github.io/test-images/check-mark.svg");
-  const [width, setWidth] = useState("12");
+  const [height, setHeight] = useState("100");
+  const [url, setUrl] = useState("https://sagewall.github.io/test-images/globie.png");
+  const [width, setWidth] = useState("100");
   const [xoffset, setXoffset] = useState("0");
   const [yoffset, setYoffset] = useState("0");
 

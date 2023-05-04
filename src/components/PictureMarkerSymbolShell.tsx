@@ -28,7 +28,9 @@ const PictureMarkerSymbolShell = () => {
 
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
     new PictureMarkerSymbol({
-      url: "https://sagewall.github.io/test-images/check-mark.svg"
+      height: 100,
+      url: "https://sagewall.github.io/test-images/globie.png",
+      width: 100
     })
   );
 

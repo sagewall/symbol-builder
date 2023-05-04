@@ -40,9 +40,9 @@ const PictureFillSymbolForm = ({
   handleYOffsetChange,
   handleYScaleChange
 }: Props) => {
-  const [height, setHeight] = useState("12");
-  const [url, setUrl] = useState("https://sagewall.github.io/test-images/check-mark.svg");
-  const [width, setWidth] = useState("12");
+  const [height, setHeight] = useState("75");
+  const [url, setUrl] = useState("https://sagewall.github.io/test-images/globie.png");
+  const [width, setWidth] = useState("75");
   const [xoffset, setXoffset] = useState("0");
   const [xscale, setXscale] = useState("1");
   const [yoffset, setYoffset] = useState("0");

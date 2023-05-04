@@ -27,8 +27,10 @@ const PictureFillSymbolShell = () => {
 
   const [pictureFillSymbol, setPictureFillSymbol] = useState(
     new PictureFillSymbol({
+      height: 75,
       outline: simpleLineSymbol,
-      url: "https://sagewall.github.io/test-images/check-mark.svg"
+      url: "https://sagewall.github.io/test-images/globie.png",
+      width: 75
     })
   );
 
