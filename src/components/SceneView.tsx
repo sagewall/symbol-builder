@@ -1,8 +1,8 @@
+import Graphic from "@arcgis/core/Graphic";
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import Collection from "@arcgis/core/core/Collection";
-import Graphic from "@arcgis/core/Graphic";
 import ArcSceneView from "@arcgis/core/views/SceneView";
-import React, { useEffect, useRef, useState } from "react";
+import React, { createElement, useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
@@ -14,50 +14,46 @@ interface SceneViewProps {
 }
 
 const SceneView = ({ graphics }: SceneViewProps) => {
-  if (typeof window !== "undefined") {
-    const viewDivRef = useRef(document.createElement("div"));
+  const isSSR = typeof window === "undefined";
 
-    const [view, setView] = useState<ArcSceneView | null>(null);
+  const viewDivRef = useRef(createElement("div") as unknown as HTMLDivElement);
 
-    useEffect(() => {
-      if (viewDivRef.current) {
-        const loadSceneView = async () => {
-          const { createSceneView } = await import("./lib/sceneview");
-          setView(await createSceneView(viewDivRef.current as HTMLDivElement, graphics));
-        };
-        loadSceneView();
+  const [view, setView] = useState<ArcSceneView | null>(null);
 
-        return () => {
-          view && view.destroy();
-        };
-      }
-    }, []);
+  useEffect(() => {
+    if (viewDivRef.current) {
+      const loadSceneView = async () => {
+        const { createSceneView } = await import("./lib/sceneview");
+        setView(await createSceneView(viewDivRef.current as HTMLDivElement, graphics));
+      };
+      loadSceneView();
 
-    useEffect(() => {
-      if (view) {
-        const loadGraphics = async () => {
-          if (graphics) {
-            view.graphics = graphics;
-            await view.when();
-            view.goTo(graphics).catch((error) => {
-              if (error.name !== "AbortError") {
-                console.error(error);
-              }
-            });
-          }
-        };
-        loadGraphics();
-      }
-    }, [view, graphics]);
+      return () => {
+        view && view.destroy();
+      };
+    }
+  }, []);
 
-    return (
-      <React.Fragment>
-        <div style={viewStyles} ref={viewDivRef}></div>
-      </React.Fragment>
-    );
-  } else {
-    return <React.Fragment />;
-  }
+  useEffect(() => {
+    if (view) {
+      const loadGraphics = async () => {
+        if (graphics) {
+          view.graphics = graphics;
+          await view.when();
+          view.goTo(graphics).catch((error) => {
+            if (error.name !== "AbortError") {
+              console.error(error);
+            }
+          });
+        }
+      };
+      loadGraphics();
+    }
+  }, [view, graphics]);
+
+  return (
+    <React.Fragment>{!isSSR && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
+  );
 };
 
 export default SceneView;
