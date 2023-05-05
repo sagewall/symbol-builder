@@ -52,9 +52,7 @@ const MapView = ({ graphics }: MapViewProps) => {
   }, [view, graphics]);
 
   return (
-    <React.Suspense fallback={<div />}>
-      {!isSSR && <div style={viewStyles} ref={viewDivRef}></div>}
-    </React.Suspense>
+    <React.Fragment>{!isSSR && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
   );
 };
 

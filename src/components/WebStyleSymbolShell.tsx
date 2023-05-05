@@ -14,6 +14,8 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
+import MapView from "./MapView";
+import SceneView from "./SceneView";
 import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
 import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
 import WebStyleSymbolAMDPanel from "./WebStyleSymbolAMDPanel";
@@ -34,11 +36,7 @@ import {
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
 
-const MapViewLazy = React.lazy(() => import("./MapView"));
-const SceneViewLazy = React.lazy(() => import("./SceneView"));
-
 const WebStyleSymbolShell = () => {
-  const isSSR = typeof window === "undefined";
   const viewSwitchRef = useRef(null);
 
   const defaultWebStyleSymbol2D = new WebStyleSymbol({
@@ -64,9 +62,9 @@ const WebStyleSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapViewLazy graphics={graphics} />;
+  let view = <MapView graphics={graphics} />;
   if (sceneView) {
-    view = <SceneViewLazy graphics={graphics} />;
+    view = <SceneView graphics={graphics} />;
   }
 
   const handleSwitchChange = () => {
@@ -204,7 +202,7 @@ const WebStyleSymbolShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

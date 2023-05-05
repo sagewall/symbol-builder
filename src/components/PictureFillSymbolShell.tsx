@@ -14,6 +14,7 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
+import MapView from "./MapView";
 import PictureFillSymbolAMDPanel from "./PictureFillSymbolAMDPanel";
 import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
@@ -21,11 +22,7 @@ import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
-const MapViewLazy = React.lazy(() => import("./MapView"));
-
 const PictureFillSymbolShell = () => {
-  const isSSR = typeof window === "undefined";
-
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
 
   const [pictureFillSymbol, setPictureFillSymbol] = useState(
@@ -47,7 +44,7 @@ const PictureFillSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapViewLazy graphics={graphics} />;
+  const view = <MapView graphics={graphics} />;
 
   const updateGraphics = (newPictureFillSymbol: PictureFillSymbol) => {
     setPictureFillSymbol(newPictureFillSymbol);
@@ -214,7 +211,7 @@ const PictureFillSymbolShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

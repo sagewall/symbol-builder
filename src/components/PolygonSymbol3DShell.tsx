@@ -23,14 +23,11 @@ import PolygonSymbol3DAMDPanel from "./PolygonSymbol3DAMDPanel";
 import PolygonSymbol3DESMPanel from "./PolygonSymbol3DESMPanel";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
+import SceneView from "./SceneView";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
-const SceneViewLazy = React.lazy(() => import("./SceneView"));
-
 const PolygonSymbol3DShell = () => {
-  const isSSR = typeof window === "undefined";
-
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
 
   const polygonGraphic = new Graphic({
@@ -43,7 +40,7 @@ const PolygonSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneViewLazy graphics={graphics} />;
+  const view = <SceneView graphics={graphics} />;
 
   const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D) => {
     setPolygonSymbol3D(newPolygonSymbol3D);
@@ -106,7 +103,7 @@ const PolygonSymbol3DShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

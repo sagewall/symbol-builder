@@ -18,14 +18,11 @@ import LineSymbol3DAMDPanel from "./LineSymbol3DAMDPanel";
 import LineSymbol3DESMPanel from "./LineSymbol3DESMPanel";
 import LineSymbol3DForm from "./LineSymbol3DForm";
 import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
+import SceneView from "./SceneView";
 import { polyline } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
-const SceneViewLazy = React.lazy(() => import("./SceneView"));
-
 const LineSymbol3DShell = () => {
-  const isSSR = typeof window === "undefined";
-
   const [lineSymbol3D, setLineSymbol3D] = useState(new LineSymbol3D());
 
   const lineGraphic = new Graphic({
@@ -38,7 +35,7 @@ const LineSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneViewLazy graphics={graphics} />;
+  const view = <SceneView graphics={graphics} />;
 
   const updateGraphics = (newLineSymbol3D: LineSymbol3D) => {
     setLineSymbol3D(newLineSymbol3D);
@@ -91,7 +88,7 @@ const LineSymbol3DShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
+        {view}
       </CalciteShell>
     </React.Fragment>
   );

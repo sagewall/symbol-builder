@@ -14,6 +14,7 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
+import MapView from "./MapView";
 import SimpleLineSymbolAMDPanel from "./SimpleLineSymbolAMDPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
@@ -21,11 +22,7 @@ import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
-const MapViewLazy = React.lazy(() => import("./MapView"));
-
 const SimpleLineSymbolShell = () => {
-  const isSSR = typeof window === "undefined";
-
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
@@ -50,7 +47,7 @@ const SimpleLineSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapViewLazy graphics={graphics} />;
+  const view = <MapView graphics={graphics} />;
 
   const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol) => {
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -192,7 +189,7 @@ const SimpleLineSymbolShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
+        {view}
       </CalciteShell>
     </React.Fragment>
   );
