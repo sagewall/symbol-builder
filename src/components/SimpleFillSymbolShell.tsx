@@ -16,8 +16,6 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
 import SimpleFillSymbolAMDPanel from "./SimpleFillSymbolAMDPanel";
 import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
@@ -25,7 +23,11 @@ import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
 
+const MapViewLazy = React.lazy(() => import("./MapView"));
+const SceneViewLazy = React.lazy(() => import("./SceneView"));
+
 const SimpleFillSymbolShell = () => {
+  const isSSR = typeof window === "undefined";
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -50,9 +52,9 @@ const SimpleFillSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapViewLazy graphics={graphics} />;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneViewLazy graphics={graphics} />;
   }
 
   const handleSwitchChange = () => {
@@ -201,7 +203,7 @@ const SimpleFillSymbolShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {view}
+        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
       </CalciteShell>
     </React.Fragment>
   );

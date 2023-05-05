@@ -17,11 +17,13 @@ import MeshSymbol3DAMDPanel from "./MeshSymbol3DAMDPanel";
 import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
-import SceneView from "./SceneView";
 import { mesh } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
+const SceneViewLazy = React.lazy(() => import("./SceneView"));
+
 const MeshSymbol3DShell = () => {
+  const isSSR = typeof window === "undefined";
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
 
   const meshGraphic = new Graphic({
@@ -34,7 +36,7 @@ const MeshSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneViewLazy graphics={graphics} />;
 
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
     setMeshSymbol3D(newMeshSymbol3D);
@@ -87,7 +89,7 @@ const MeshSymbol3DShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {view}
+        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
       </CalciteShell>
     </React.Fragment>
   );

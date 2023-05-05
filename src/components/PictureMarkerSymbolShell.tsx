@@ -14,16 +14,18 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
 import PictureMarkerSymbolAMDPanel from "./PictureMarkerSymbolAMDPanel";
 import PictureMarkerSymbolESMPanel from "./PictureMarkerSymbolESMPanel";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
-import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles, viewSwitchLabelStyles } from "./lib/styles";
 
+const MapViewLazy = React.lazy(() => import("./MapView"));
+const SceneViewLazy = React.lazy(() => import("./SceneView"));
+
 const PictureMarkerSymbolShell = () => {
+  const isSSR = typeof window === "undefined";
   const viewSwitchRef = useRef(null);
 
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
@@ -45,9 +47,9 @@ const PictureMarkerSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapViewLazy graphics={graphics} />;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneViewLazy graphics={graphics} />;
   }
 
   const handleSwitchChange = () => {
@@ -152,7 +154,7 @@ const PictureMarkerSymbolShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {view}
+        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
       </CalciteShell>
     </React.Fragment>
   );

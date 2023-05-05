@@ -1,7 +1,7 @@
 import { CalciteShell } from "@esri/calcite-components-react";
 import React from "react";
-import { iframeStyles, shellStyles } from "./lib/styles";
 import Header from "./Header";
+import { iframeStyles, shellStyles } from "./lib/styles";
 
 const CIMSymbolShell = () => {
   return (

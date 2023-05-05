@@ -22,11 +22,13 @@ import PointSymbol3DAMDPanel from "./PointSymbol3DAMDPanel";
 import PointSymbol3DESMPanel from "./PointSymbol3DESMPanel";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
-import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 
+const SceneViewLazy = React.lazy(() => import("./SceneView"));
+
 const PointSymbol3DShell = () => {
+  const isSSR = typeof window === "undefined";
   const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
 
   const [symbol3DVerticalOffset, setSymbol3DVerticalOffset] = useState(
@@ -54,7 +56,7 @@ const PointSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneViewLazy graphics={graphics} />;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D) => {
     setPointSymbol3D(newPointSymbol3D);
@@ -166,7 +168,7 @@ const PointSymbol3DShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {view}
+        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
       </CalciteShell>
     </React.Fragment>
   );

@@ -14,7 +14,6 @@ import {
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
 import TextSymbolAMDPanel from "./TextSymbolAMDPanel";
 import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
@@ -23,7 +22,11 @@ import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
 import { FontData } from "./lib/types";
 
+const MapViewLazy = React.lazy(() => import("./MapView"));
+
 const TextSymbolShell = () => {
+  const isSSR = typeof window === "undefined";
+
   const [font, setFont] = useState(new Font({ family: "Abril Fatface", size: 12 }));
 
   const [textSymbol, setTextSymbol] = useState(
@@ -48,7 +51,7 @@ const TextSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapView graphics={graphics} />;
+  const view = <MapViewLazy graphics={graphics} />;
 
   const updateGraphics = (newTextSymbol: TextSymbol) => {
     setTextSymbol(newTextSymbol);
@@ -233,7 +236,7 @@ const TextSymbolShell = () => {
             </CalciteTabs>
           </CalcitePanel>
         </CalciteShellPanel>
-        {view}
+        {!isSSR && <React.Suspense fallback={<div />}>{view}</React.Suspense>}
       </CalciteShell>
     </React.Fragment>
   );
