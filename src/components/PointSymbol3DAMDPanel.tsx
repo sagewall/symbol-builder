@@ -1,4 +1,4 @@
-import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
+import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
 import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
 import React from "react";
 import { jsonStyles } from "./lib/styles";

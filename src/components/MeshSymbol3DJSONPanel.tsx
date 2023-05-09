@@ -1,4 +1,4 @@
-import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D";
+import type MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D";
 import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
 import React from "react";
 import { jsonStyles } from "./lib/styles";

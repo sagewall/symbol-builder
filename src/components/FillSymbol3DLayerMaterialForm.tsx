@@ -1,4 +1,4 @@
-import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import {
   CalciteInput,
   CalciteLabel,

@@ -1,4 +1,4 @@
-import TextSymbol from "@arcgis/core/symbols/TextSymbol";
+import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
 import React from "react";
 import { jsonStyles } from "./lib/styles";

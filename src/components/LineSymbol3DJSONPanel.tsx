@@ -1,4 +1,4 @@
-import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
+import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
 import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
 import React from "react";
 import { jsonStyles } from "./lib/styles";

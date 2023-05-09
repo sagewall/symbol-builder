@@ -1,4 +1,4 @@
-import Collection from "@arcgis/core/core/Collection";
+import type Collection from "@arcgis/core/core/Collection";
 import { CalciteBlock } from "@esri/calcite-components-react";
 import React from "react";
 import { blockStyles } from "./lib/styles";

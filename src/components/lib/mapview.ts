@@ -1,7 +1,7 @@
 import Basemap from "@arcgis/core/Basemap";
-import Graphic from "@arcgis/core/Graphic";
+import type Graphic from "@arcgis/core/Graphic";
 import ArcMap from "@arcgis/core/Map";
-import Collection from "@arcgis/core/core/Collection";
+import type Collection from "@arcgis/core/core/Collection";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";

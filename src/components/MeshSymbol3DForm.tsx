@@ -1,4 +1,4 @@
-import Collection from "@arcgis/core/core/Collection";
+import type Collection from "@arcgis/core/core/Collection";
 import React from "react";
 import MeshSymbol3DSymbolLayersForm from "./MeshSymbol3DSymbolLayersForm";
 

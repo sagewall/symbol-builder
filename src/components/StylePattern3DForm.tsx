@@ -1,4 +1,4 @@
-import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
+import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
 import { CalciteLabel, CalciteOption, CalciteSelect } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { FILL_OPTIONS } from "./lib/constants";

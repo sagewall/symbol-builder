@@ -1,4 +1,4 @@
-import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
+import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
   CalciteInput,
   CalciteLabel,

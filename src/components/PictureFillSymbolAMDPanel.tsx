@@ -1,4 +1,4 @@
-import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
+import type PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
 import React from "react";
 import { jsonStyles } from "./lib/styles";

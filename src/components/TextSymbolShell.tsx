@@ -21,7 +21,7 @@ import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
 import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
-import { FontData } from "./lib/types";
+import type { FontData } from "./lib/types";
 
 const TextSymbolShell = () => {
   const [font, setFont] = useState(new Font({ family: "Abril Fatface", size: 12 }));

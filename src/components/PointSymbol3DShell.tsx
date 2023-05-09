@@ -1,10 +1,10 @@
 import Color from "@arcgis/core/Color";
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
-import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
-import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
+import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
 import {

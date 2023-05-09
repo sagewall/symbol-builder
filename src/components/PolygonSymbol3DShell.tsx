@@ -1,13 +1,13 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
-import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
-import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
-import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
+import type ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
-import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
-import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
+import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
+import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
   CalcitePanel,
   CalciteShell,

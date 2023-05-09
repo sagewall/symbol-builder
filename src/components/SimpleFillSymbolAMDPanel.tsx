@@ -1,4 +1,4 @@
-import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
+import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
 import React from "react";
 import { jsonStyles } from "./lib/styles";

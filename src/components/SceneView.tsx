@@ -1,7 +1,7 @@
-import Graphic from "@arcgis/core/Graphic";
+import type Graphic from "@arcgis/core/Graphic";
 import "@arcgis/core/assets/esri/themes/light/main.css";
-import Collection from "@arcgis/core/core/Collection";
-import ArcSceneView from "@arcgis/core/views/SceneView";
+import type Collection from "@arcgis/core/core/Collection";
+import type ArcSceneView from "@arcgis/core/views/SceneView";
 import React, { createElement, useEffect, useRef, useState } from "react";
 
 const viewStyles = {

@@ -1,8 +1,8 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
-import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
-import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
+import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import {
   CalcitePanel,
   CalciteShell,

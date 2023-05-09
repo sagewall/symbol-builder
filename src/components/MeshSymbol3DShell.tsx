@@ -1,6 +1,6 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
-import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import {
   CalcitePanel,
