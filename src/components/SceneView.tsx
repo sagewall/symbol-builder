@@ -2,7 +2,7 @@ import type Graphic from "@arcgis/core/Graphic";
 import "@arcgis/core/assets/esri/themes/light/main.css";
 import type Collection from "@arcgis/core/core/Collection";
 import type ArcSceneView from "@arcgis/core/views/SceneView";
-import React, { createElement, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
@@ -16,7 +16,7 @@ interface SceneViewProps {
 const SceneView = ({ graphics }: SceneViewProps) => {
   const isSSR = typeof window === "undefined";
 
-  const viewDivRef = useRef(createElement("div") as unknown as HTMLDivElement);
+  const viewDivRef = useRef<HTMLDivElement>(null);
 
   const [view, setView] = useState<ArcSceneView | null>(null);
 
