@@ -20,5 +20,10 @@
   ],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
