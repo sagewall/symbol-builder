@@ -205,13 +205,13 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     <React.Fragment>
       <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
         <CalciteChip
-          id="information-chip"
-          icon="information"
+          id="add-layer-chip"
+          icon="add-layer"
           slot="control"
           value="Information"
           style={chipStyles}
         ></CalciteChip>
-        <CalciteTooltip label="information" reference-element={"information-chip"}>
+        <CalciteTooltip label="add-layer" reference-element={"add-layer-chip"}>
           <span>Add symbol layer by opening the dropdown menu on the right</span>
         </CalciteTooltip>
 
