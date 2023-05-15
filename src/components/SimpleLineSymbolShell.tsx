@@ -20,7 +20,7 @@ import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
-import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
 const SimpleLineSymbolShell = () => {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -171,8 +171,8 @@ const SimpleLineSymbolShell = () => {
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <CalciteTabs style={tabsStyles}>
-              <CalciteTabNav slot="title-group">
+            <CalciteTabs>
+              <CalciteTabNav slot="title-group" style={tabNavStyles}>
                 <CalciteTabTitle>ESM</CalciteTabTitle>
                 <CalciteTabTitle>AMD</CalciteTabTitle>
                 <CalciteTabTitle>JSON</CalciteTabTitle>

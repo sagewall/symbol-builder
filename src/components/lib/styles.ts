@@ -49,8 +49,8 @@ export const labelStyles = {
 
 export const shellStyles = {};
 
-export const tabsStyles = {
-  alignItems: "stretch"
+export const tabNavStyles = {
+  paddingLeft: "0.75em"
 };
 
 export const viewSwitchLabelStyles = {

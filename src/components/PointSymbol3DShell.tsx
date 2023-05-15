@@ -24,7 +24,7 @@ import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
 const PointSymbol3DShell = () => {
   const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
@@ -148,8 +148,8 @@ const PointSymbol3DShell = () => {
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <CalciteTabs style={tabsStyles}>
-              <CalciteTabNav slot="title-group">
+            <CalciteTabs>
+              <CalciteTabNav slot="title-group" style={tabNavStyles}>
                 <CalciteTabTitle>ESM</CalciteTabTitle>
                 <CalciteTabTitle>AMD</CalciteTabTitle>
                 <CalciteTabTitle>JSON</CalciteTabTitle>

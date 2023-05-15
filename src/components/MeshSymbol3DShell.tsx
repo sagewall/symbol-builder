@@ -19,7 +19,7 @@ import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { mesh } from "./lib/geometry";
-import { formStyles, shellStyles, tabsStyles } from "./lib/styles";
+import { formStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
 const MeshSymbol3DShell = () => {
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
@@ -69,8 +69,8 @@ const MeshSymbol3DShell = () => {
 
         <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
           <CalcitePanel>
-            <CalciteTabs style={tabsStyles}>
-              <CalciteTabNav slot="title-group">
+            <CalciteTabs>
+              <CalciteTabNav slot="title-group" style={tabNavStyles}>
                 <CalciteTabTitle>ESM</CalciteTabTitle>
                 <CalciteTabTitle>AMD</CalciteTabTitle>
                 <CalciteTabTitle>JSON</CalciteTabTitle>
