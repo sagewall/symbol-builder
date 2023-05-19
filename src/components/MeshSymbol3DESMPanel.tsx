@@ -14,7 +14,7 @@ const MeshSymbol3DESMPanel = ({ meshSymbol3D }: Props) => {
 
   let codeSnippet = `
 import Color from "@arcgis/core/Color.js";
-import Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
+import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
@@ -30,7 +30,7 @@ const meshSymbol3D = new MeshSymbol3D({
         codeSnippet += `
     new FillSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
-      edges: new Edges3D({
+      edges: new SolidEdges3D({
         color: new Color([${symbolLayer.edges.color.toRgba()}]),
         extensionLength: ${symbolLayer.edges.extensionLength},
         size: ${symbolLayer.edges.size}
