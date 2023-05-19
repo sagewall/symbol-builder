@@ -12,23 +12,108 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
     navigator.clipboard.writeText(codeSnippet);
   };
 
-  let codeSnippet = `
-import Color from "@arcgis/core/Color.js";
-import Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
-import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
-import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
-import Font from "@arcgis/core/symbols/Font.js";
-import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
-import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
-import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
-import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
-import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
-import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
-import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
-import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
-import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
+  let colorImport = false;
+  let extrudeSymbol3DLayerImport = false;
+  let fillSymbol3DLayerImport = false;
+  let fontImport = false;
+  let iconSymbol3DLayerImport = false;
+  let lineStyleMarker3DImport = false;
+  let lineSymbol3DLayerImport = false;
+  let objectSymbol3DLayerImport = false;
+  const polygonSymbol3DImport = true;
+  let textSymbol3DLayerImport = false;
+  let waterSymbol3DLayerImport = false;
+  let lineStylePattern3DImport = false;
+  let solidEdges3DImport = false;
+  let stylePattern3DImport = false;
 
+  polygonSymbol3D.symbolLayers.forEach((symbolLayer) => {
+    if (symbolLayer.type === "fill") {
+      colorImport = true;
+      fillSymbol3DLayerImport = true;
+      lineStylePattern3DImport = true;
+      stylePattern3DImport = true;
+    }
 
+    if (symbolLayer.type === "extrude") {
+      colorImport = true;
+      solidEdges3DImport = true;
+      extrudeSymbol3DLayerImport = true;
+    }
+
+    if (symbolLayer.type === "water") {
+      colorImport = true;
+      waterSymbol3DLayerImport = true;
+    }
+
+    if (symbolLayer.type === "line") {
+      colorImport = true;
+      lineSymbol3DLayerImport = true;
+      lineStylePattern3DImport = true;
+      if (symbolLayer.marker) {
+        lineStyleMarker3DImport = true;
+      }
+    }
+
+    if (symbolLayer.type === "icon") {
+      colorImport = true;
+      iconSymbol3DLayerImport = true;
+    }
+
+    if (symbolLayer.type === "object") {
+      colorImport = true;
+      objectSymbol3DLayerImport = true;
+    }
+
+    if (symbolLayer.type === "text") {
+      colorImport = true;
+      fontImport = true;
+      textSymbol3DLayerImport = true;
+    }
+  });
+
+  let codeSnippet = `\n`;
+  colorImport && (codeSnippet += `import Color from "@arcgis/core/Color.js";\n`);
+
+  extrudeSymbol3DLayerImport &&
+    (codeSnippet += `import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";\n`);
+
+  fillSymbol3DLayerImport &&
+    (codeSnippet += `import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";\n`);
+
+  fontImport && (codeSnippet += `import Font from "@arcgis/core/symbols/Font.js";\n`);
+
+  iconSymbol3DLayerImport &&
+    (codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`);
+
+  lineStyleMarker3DImport &&
+    (codeSnippet += `import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";\n`);
+
+  lineSymbol3DLayerImport &&
+    (codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`);
+
+  objectSymbol3DLayerImport &&
+    (codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`);
+
+  polygonSymbol3DImport &&
+    (codeSnippet += `import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";\n`);
+
+  textSymbol3DLayerImport &&
+    (codeSnippet += `import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";\n`);
+
+  waterSymbol3DLayerImport &&
+    (codeSnippet += `import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";\n`);
+
+  lineStylePattern3DImport &&
+    (codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`);
+
+  solidEdges3DImport &&
+    (codeSnippet += `import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";\n`);
+
+  stylePattern3DImport &&
+    (codeSnippet += `import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";\n`);
+
+  codeSnippet += `
 const polygonSymbol3D = new PolygonSymbol3D({
   symbolLayers: [
 `;
@@ -63,7 +148,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         codeSnippet += `
     new ExtrudeSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
-      edges: new Edges3D({
+      edges: new SolidEdges3D({
         color: new Color([${symbolLayer.edges.color.toRgba()}]),
         extensionLength: ${symbolLayer.edges.extensionLength},
         size: ${symbolLayer.edges.size}
@@ -140,11 +225,23 @@ const polygonSymbol3D = new PolygonSymbol3D({
       outline: {
         color: new Color([${symbolLayer.outline.color.toRgba()}]),
         size: ${symbolLayer.outline.size}
-      },
+      },`;
+
+        if (!symbolLayer.resource.href) {
+          codeSnippet += `
       resource: {
         primitive: "${symbolLayer.resource.primitive}",
+      },`;
+        }
+
+        if (symbolLayer.resource.href) {
+          codeSnippet += `
+      resource: {
         href: "${symbolLayer.resource.href}",
-      },
+      },`;
+        }
+
+        codeSnippet += `
       size: ${symbolLayer.size}
     }),
     `;
