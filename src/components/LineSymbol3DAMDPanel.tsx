@@ -13,7 +13,7 @@ const LineSymbol3DAMDPanel = ({ lineSymbol3D }: Props) => {
   };
 
   let codeSnippet = `
-  require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
+require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
 
   const lineSymbol3D = new LineSymbol3D({
     symbolLayers: [

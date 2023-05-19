@@ -13,7 +13,7 @@ const MeshSymbol3DAMDPanel = ({ meshSymbol3D }: Props) => {
   };
 
   let codeSnippet = `
-  require(["esri/symbols/MeshSymbol3D"], (MeshSymbol3D) => {
+require(["esri/symbols/MeshSymbol3D"], (MeshSymbol3D) => {
 
   const meshSymbol3D = new MeshSymbol3D({
     symbolLayers: [

@@ -13,7 +13,7 @@ const PolygonSymbol3DAMDPanel = ({ polygonSymbol3D }: Props) => {
   };
 
   let codeSnippet = `
-  require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
+require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
 
   const polygonSymbol3D = new PolygonSymbol3D({
     symbolLayers: [

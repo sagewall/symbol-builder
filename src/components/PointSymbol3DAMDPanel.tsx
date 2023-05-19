@@ -13,7 +13,7 @@ const PointSymbol3DAMDPanel = ({ pointSymbol3D }: Props) => {
   };
 
   let codeSnippet = `
-  require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
+require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
 
   const pointSymbol3D = new PointSymbol3D({
     callout: {
