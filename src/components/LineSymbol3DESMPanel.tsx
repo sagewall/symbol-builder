@@ -12,13 +12,38 @@ const LineSymbol3DESMPanel = ({ lineSymbol3D }: Props) => {
     navigator.clipboard.writeText(codeSnippet);
   };
 
-  let codeSnippet = `
-import Color from "@arcgis/core/Color.js";
-import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
-import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
-import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
-import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
+  let colorImport = false;
+  const lineSymbol3DImport = true;
+  let lineSymbol3DLayerImport = false;
+  let pathSymbol3DLayerImport = false;
+  let lineStylePattern3DImport = false;
 
+  lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
+    if (symbolLayer.type === "line") {
+      colorImport = true;
+      lineSymbol3DLayerImport = true;
+      lineStylePattern3DImport = true;
+    }
+
+    if (symbolLayer.type === "path") {
+      colorImport = true;
+      pathSymbol3DLayerImport = true;
+    }
+  });
+
+  let codeSnippet = `\n`;
+
+  colorImport && (codeSnippet += `import Color from "@arcgis/core/Color.js";\n`);
+  lineSymbol3DImport &&
+    (codeSnippet += `import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";\n`);
+  lineSymbol3DLayerImport &&
+    (codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`);
+  pathSymbol3DLayerImport &&
+    (codeSnippet += `import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";\n`);
+  lineStylePattern3DImport &&
+    (codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`);
+
+  codeSnippet += `
 const lineSymbol3D = new LineSymbol3D({
   symbolLayers: [
 `;
