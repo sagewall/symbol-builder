@@ -12,16 +12,50 @@ const PointSymbol3DESMPanel = ({ pointSymbol3D }: Props) => {
     navigator.clipboard.writeText(codeSnippet);
   };
 
-  let codeSnippet = `
-import Color from "@arcgis/core/Color.js";
-import Font from "@arcgis/core/symbols/Font.js";
-import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
-import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
-import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
-import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
-import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D.js";
-import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";
+  let colorImport = false;
+  let fontImport = false;
+  let iconSymbol3DLayerImport = false;
+  let objectSymbol3DLayerImport = false;
+  const pointSymbol3DImport = true;
+  let textSymbol3DLayerImport = false;
+  const lineCallout3DImport = true;
+  const symbol3DVerticalOffsetImport = true;
 
+  pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
+    if (symbolLayer.type === "icon") {
+      colorImport = true;
+      iconSymbol3DLayerImport = true;
+    }
+
+    if (symbolLayer.type === "object") {
+      colorImport = true;
+      objectSymbol3DLayerImport = true;
+    }
+
+    if (symbolLayer.type === "text") {
+      colorImport = true;
+      fontImport = true;
+      textSymbol3DLayerImport = true;
+    }
+  });
+
+  let codeSnippet = `\n`;
+  colorImport && (codeSnippet += `import Color from "@arcgis/core/Color.js";\n`);
+  fontImport && (codeSnippet += `import Font from "@arcgis/core/symbols/Font.js";\n`);
+  iconSymbol3DLayerImport &&
+    (codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`);
+  objectSymbol3DLayerImport &&
+    (codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`);
+  pointSymbol3DImport &&
+    (codeSnippet += `import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";\n`);
+  textSymbol3DLayerImport &&
+    (codeSnippet += `import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";\n`);
+  lineCallout3DImport &&
+    (codeSnippet += `import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D.js";\n`);
+  symbol3DVerticalOffsetImport &&
+    (codeSnippet += `import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";\n`);
+
+  codeSnippet += `
 const pointSymbol3D = new PointSymbol3D({
   callout: new LineCallout3D({
     color: new Color([${pointSymbol3D.callout.color.toRgba()}]),
