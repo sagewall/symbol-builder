@@ -46,66 +46,69 @@ import WebStyleSymbolPage from "./pages/web-style-symbol";
 
 setAssetPath("https://js.arcgis.com/calcite-components/1.0.0-beta.99/assets");
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <IndexPage></IndexPage>
-      },
-      {
-        path: "cim-symbol",
-        element: <CIMSymbolPage />
-      },
-      {
-        path: "line-symbol-3d",
-        element: <LineSymbol3DPage />
-      },
-      {
-        path: "mesh-symbol-3d",
-        element: <MeshSymbol3DPage />
-      },
-      {
-        path: "picture-fill-symbol",
-        element: <PictureFillSymbolPage />
-      },
-      {
-        path: "picture-marker-symbol",
-        element: <PictureMarkerSymbolPage />
-      },
-      {
-        path: "point-symbol-3d",
-        element: <PointSymbol3DPage />
-      },
-      {
-        path: "polygon-symbol-3d",
-        element: <PolygonSymbol3DPage />
-      },
-      {
-        path: "simple-fill-symbol",
-        element: <SimpleFillSymbolPage />
-      },
-      {
-        path: "simple-line-symbol",
-        element: <SimpleLineSymbolPage />
-      },
-      {
-        path: "simple-marker-symbol",
-        element: <SimpleMarkerSymbolPage />
-      },
-      {
-        path: "text-symbol",
-        element: <TextSymbolPage />
-      },
-      {
-        path: "web-style-symbol",
-        element: <WebStyleSymbolPage />
-      }
-    ]
-  }
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          path: "/",
+          element: <IndexPage></IndexPage>
+        },
+        {
+          path: "cim-symbol",
+          element: <CIMSymbolPage />
+        },
+        {
+          path: "line-symbol-3d",
+          element: <LineSymbol3DPage />
+        },
+        {
+          path: "mesh-symbol-3d",
+          element: <MeshSymbol3DPage />
+        },
+        {
+          path: "picture-fill-symbol",
+          element: <PictureFillSymbolPage />
+        },
+        {
+          path: "picture-marker-symbol",
+          element: <PictureMarkerSymbolPage />
+        },
+        {
+          path: "point-symbol-3d",
+          element: <PointSymbol3DPage />
+        },
+        {
+          path: "polygon-symbol-3d",
+          element: <PolygonSymbol3DPage />
+        },
+        {
+          path: "simple-fill-symbol",
+          element: <SimpleFillSymbolPage />
+        },
+        {
+          path: "simple-line-symbol",
+          element: <SimpleLineSymbolPage />
+        },
+        {
+          path: "simple-marker-symbol",
+          element: <SimpleMarkerSymbolPage />
+        },
+        {
+          path: "text-symbol",
+          element: <TextSymbolPage />
+        },
+        {
+          path: "web-style-symbol",
+          element: <WebStyleSymbolPage />
+        }
+      ]
+    }
+  ],
+  { basename: "/symbol-builder/" }
+);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
