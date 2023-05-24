@@ -29,7 +29,7 @@ const TextSymbolShell = () => {
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
       backgroundColor: [255, 255, 255, 0],
-      borderLineColor: [0, 0, 0, 0],
+      borderLineColor: [255, 255, 255, 0],
       borderLineSize: undefined,
       font,
       haloColor: "#ffffff",
