@@ -34,6 +34,7 @@ const TextSymbolShell = () => {
       font,
       haloColor: "#ffffff",
       haloSize: 0,
+      kerning: false,
       text: "Hello World!"
     })
   );
