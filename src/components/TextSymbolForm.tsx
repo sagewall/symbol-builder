@@ -99,7 +99,7 @@ const TextSymbolForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         backgroundColor
         <CalciteInput
-          onCalciteInputChange={(event) => {
+          onCalciteInputInput={(event) => {
             if (event.target.value) {
               setBackgroundColor(event.target.value.toString());
             }
@@ -113,7 +113,7 @@ const TextSymbolForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         borderLineColor
         <CalciteInput
-          onCalciteInputChange={(event) => {
+          onCalciteInputInput={(event) => {
             if (event.target.value) {
               setBorderLineColor(event.target.value.toString());
             }
@@ -140,7 +140,7 @@ const TextSymbolForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         color
         <CalciteInput
-          onCalciteInputChange={(event) => {
+          onCalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -162,7 +162,7 @@ const TextSymbolForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         haloColor
         <CalciteInput
-          onCalciteInputChange={(event) => {
+          onCalciteInputInput={(event) => {
             if (event.target.value) {
               setHaloColor(event.target.value.toString());
             }

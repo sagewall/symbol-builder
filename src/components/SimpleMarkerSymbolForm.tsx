@@ -76,7 +76,7 @@ const SimpleMarkerSymbolForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         color
         <CalciteInput
-          onCalciteInputChange={(event) => {
+          onCalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
