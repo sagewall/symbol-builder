@@ -8,6 +8,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { SYMBOLS } from "../components/lib/constants";
 import { cardContainerStyles, cardFooterStyles, cardStyles } from "../components/lib/styles";
+import Header from "../components/Header";
 
 const cards = SYMBOLS.map((symbol) => {
   return (
@@ -122,6 +123,7 @@ const IndexPage = () => {
   return (
     <React.Fragment>
       <CalciteShell>
+        <Header title="Symbol Builder"></Header>
         <div id="cardContainer" style={cardContainerStyles}>
           {cards}
         </div>
