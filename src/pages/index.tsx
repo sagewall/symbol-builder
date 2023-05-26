@@ -123,7 +123,7 @@ const IndexPage = () => {
   return (
     <React.Fragment>
       <CalciteShell>
-        <Header title="Symbol Builder"></Header>
+        <Header title="Symbol Builder Gallery"></Header>
         <div id="cardContainer" style={cardContainerStyles}>
           {cards}
         </div>
