@@ -10,6 +10,12 @@ Made with [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/l
 npm run dev
 ```
 
+**Check for errors**
+
+```
+npm run lint
+```
+
 **Build for production**
 
 ```
