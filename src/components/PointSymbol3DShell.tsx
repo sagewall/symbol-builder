@@ -129,7 +129,7 @@ const PointSymbol3DShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Header title="PointSymbol3D"></Header>
+        <Header title="PointSymbol3D" backButton></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

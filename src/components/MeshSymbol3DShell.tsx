@@ -57,7 +57,7 @@ const MeshSymbol3DShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Header title="MeshSymbol3D"></Header>
+        <Header title="MeshSymbol3D" backButton></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

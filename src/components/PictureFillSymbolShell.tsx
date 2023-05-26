@@ -167,7 +167,7 @@ const PictureFillSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Header title="PictureFillSymbol"></Header>
+        <Header title="PictureFillSymbol" backButton></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

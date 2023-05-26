@@ -185,7 +185,7 @@ const TextSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Header title="TextSymbol"></Header>
+        <Header title="TextSymbol" backButton></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

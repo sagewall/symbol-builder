@@ -151,7 +151,7 @@ const WebStyleSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Header title="WebStyleSymbol"></Header>
+        <Header title="WebStyleSymbol" backButton></Header>
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>

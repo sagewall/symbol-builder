@@ -7,7 +7,7 @@ const CIMSymbolShell = () => {
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
-        <Header title="CIMSymbol"></Header>
+        <Header title="CIMSymbol" backButton></Header>
         <iframe
           src="https://esri.github.io/cim-symbol-builder-js/"
           style={iframeStyles}
