@@ -35,7 +35,7 @@ const SimpleFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol({ miterLimit: 1, width: 1 })
+    new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 })
   );
 
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
