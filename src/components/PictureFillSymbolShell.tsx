@@ -20,7 +20,7 @@ import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
 const PictureFillSymbolShell = () => {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
@@ -191,7 +191,13 @@ const PictureFillSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+        <CalciteShellPanel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+          widthScale="l"
+        >
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>

@@ -21,7 +21,13 @@ import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
 import SceneView from "./SceneView";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles
+} from "./lib/styles";
 
 const PictureMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -132,7 +138,13 @@ const PictureMarkerSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+        <CalciteShellPanel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+          widthScale="l"
+        >
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>

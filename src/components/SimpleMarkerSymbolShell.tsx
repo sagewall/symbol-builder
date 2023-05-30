@@ -23,7 +23,13 @@ import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles
+} from "./lib/styles";
 
 const SimpleMarkerSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -217,7 +223,13 @@ const SimpleMarkerSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+        <CalciteShellPanel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+          widthScale="l"
+        >
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>

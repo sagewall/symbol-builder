@@ -20,7 +20,7 @@ import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
-import { formStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 import type { FontData } from "./lib/types";
 
 const TextSymbolShell = () => {
@@ -214,7 +214,13 @@ const TextSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+        <CalciteShellPanel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+          widthScale="l"
+        >
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>

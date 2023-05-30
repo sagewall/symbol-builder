@@ -49,6 +49,10 @@ export const labelStyles = {
 
 export const shellStyles = {};
 
+export const shellPanelStyles = {
+  "--calcite-shell-panel-min-width": "16.5em"
+};
+
 export const tabNavStyles = {
   paddingLeft: "0.75em"
 };

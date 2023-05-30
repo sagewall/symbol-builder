@@ -25,7 +25,7 @@ import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
 import SceneView from "./SceneView";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
 const PolygonSymbol3DShell = () => {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
@@ -83,7 +83,13 @@ const PolygonSymbol3DShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+        <CalciteShellPanel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+          widthScale="l"
+        >
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>

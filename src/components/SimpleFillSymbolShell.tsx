@@ -23,7 +23,13 @@ import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles
+} from "./lib/styles";
 
 const SimpleFillSymbolShell = () => {
   const viewSwitchRef = useRef(null);
@@ -181,7 +187,13 @@ const SimpleFillSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable widthScale="l">
+        <CalciteShellPanel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+          widthScale="l"
+        >
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>
