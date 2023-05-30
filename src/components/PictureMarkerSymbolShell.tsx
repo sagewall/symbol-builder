@@ -138,13 +138,7 @@ const PictureMarkerSymbolShell = () => {
           </CalcitePanel>
         </CalciteShellPanel>
 
-        <CalciteShellPanel
-          slot="panel-end"
-          position="end"
-          resizable
-          style={shellPanelStyles}
-          widthScale="l"
-        >
+        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
           <CalcitePanel>
             <CalciteTabs>
               <CalciteTabNav slot="title-group" style={tabNavStyles}>
