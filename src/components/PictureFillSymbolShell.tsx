@@ -23,7 +23,13 @@ import { polygon } from "./lib/geometry";
 import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
 const PictureFillSymbolShell = () => {
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(new SimpleLineSymbol());
+  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
+    new SimpleLineSymbol({
+      color: "#007ac2",
+      miterLimit: 1,
+      width: 1
+    })
+  );
 
   const [pictureFillSymbol, setPictureFillSymbol] = useState(
     new PictureFillSymbol({
