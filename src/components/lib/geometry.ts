@@ -91,6 +91,14 @@ const polylineCoordinates = [
   ]
 ];
 
+const targetCoordinates = [
+  [
+    [-117.1960853, 34.0558472],
+    [-117.1957098, 34.0564505],
+    [-117.1953048, 34.055865]
+  ]
+];
+
 export const point = new Point({
   latitude: 34.0564505,
   longitude: -117.1957098
@@ -110,4 +118,8 @@ export const mesh = Mesh.createBox(point, {
     height: 5,
     depth: 5
   }
+});
+
+export const targetGeometry = new Polygon({
+  rings: targetCoordinates
 });
