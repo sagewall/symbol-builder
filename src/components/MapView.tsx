@@ -39,12 +39,6 @@ const MapView = ({ graphics }: MapViewProps) => {
       const loadGraphics = async () => {
         if (graphics) {
           view.graphics = graphics;
-          await view.when();
-          view.goTo(graphics).catch((error) => {
-            if (error.name !== "AbortError") {
-              console.error(error);
-            }
-          });
         }
       };
       loadGraphics();

@@ -1,13 +1,14 @@
 import Basemap from "@arcgis/core/Basemap";
 import type Graphic from "@arcgis/core/Graphic";
 import ArcMap from "@arcgis/core/Map";
+import Viewpoint from "@arcgis/core/Viewpoint";
 import type Collection from "@arcgis/core/core/Collection";
 import VectorTileLayer from "@arcgis/core/layers/VectorTileLayer";
 import ArcMapView from "@arcgis/core/views/MapView";
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
 import LocalBasemapsSource from "@arcgis/core/widgets/BasemapGallery/support/LocalBasemapsSource";
 import Expand from "@arcgis/core/widgets/Expand";
-import { point } from "./geometry";
+import { polygon } from "./geometry";
 
 const blankBasemapVectorTileLayer = new VectorTileLayer({
   portalItem: {
@@ -26,10 +27,13 @@ const map = new ArcMap({
   basemap: "gray-vector"
 });
 
+const viewpoint = new Viewpoint({
+  targetGeometry: polygon.extent.expand(1.5)
+});
+
 const view = new ArcMapView({
-  center: point,
   map,
-  zoom: 18
+  viewpoint
 });
 
 const localBasemapsSource = new LocalBasemapsSource({
