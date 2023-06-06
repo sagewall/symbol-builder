@@ -4,25 +4,36 @@ import Collection from "@arcgis/core/core/Collection";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import {
+  CalciteLabel,
   CalcitePanel,
   CalciteShell,
   CalciteShellPanel,
+  CalciteSwitch,
   CalciteTab,
   CalciteTabNav,
   CalciteTabTitle,
   CalciteTabs
 } from "@esri/calcite-components-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
+import SceneView from "./SceneView";
 import SimpleLineSymbolAMDPanel from "./SimpleLineSymbolAMDPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles
+} from "./lib/styles";
 
 const SimpleLineSymbolShell = () => {
+  const viewSwitchRef = useRef(null);
+
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
@@ -47,7 +58,17 @@ const SimpleLineSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapView graphics={graphics} />;
+  const [sceneView, setSceneView] = useState(false);
+  let view = <MapView graphics={graphics} />;
+  if (sceneView) {
+    view = <SceneView graphics={graphics} />;
+  }
+
+  const handleSwitchChange = () => {
+    if (viewSwitchRef.current) {
+      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+    }
+  };
 
   const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol) => {
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -151,6 +172,15 @@ const SimpleLineSymbolShell = () => {
         <CalciteShellPanel slot="panel-start" position="start" resizable>
           <CalcitePanel>
             <div slot="header-content">Properties </div>
+            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+              2D
+              <CalciteSwitch
+                ref={viewSwitchRef}
+                onCalciteSwitchChange={handleSwitchChange}
+              ></CalciteSwitch>
+              3D
+            </CalciteLabel>
+
             <div style={formStyles}>
               <SimpleLineSymbolForm
                 handleCapChange={handleCapChange}
