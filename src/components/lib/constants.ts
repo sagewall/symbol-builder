@@ -856,7 +856,7 @@ export const SYMBOLS = [
     name: "SimpleLineSymbol",
     point: false,
     polygon: false,
-    sceneView: false,
+    sceneView: true,
     symbolLayers: false
   },
   {
