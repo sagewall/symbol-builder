@@ -20,7 +20,7 @@ const IconSymbol3DLayerForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         x
         <CalciteInputNumber
-          label={"xoffset anchor position x"}
+          label={"x anchor position"}
           onCalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, x: event.target.value });
             handleIconSymbol3DLayerAnchorPositionXChange(layerIndex, event.target.value);
@@ -32,7 +32,7 @@ const IconSymbol3DLayerForm = ({
       <CalciteLabel layout="default" style={labelStyles}>
         y
         <CalciteInputNumber
-          label={"xoffset anchor position y"}
+          label={"y anchor position"}
           onCalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, y: event.target.value });
             handleIconSymbol3DLayerAnchorPositionYChange(layerIndex, event.target.value);

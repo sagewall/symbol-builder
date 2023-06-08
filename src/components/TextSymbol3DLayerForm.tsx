@@ -74,6 +74,18 @@ const TextSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
+      <CalciteLabel layout="default" style={labelStyles}>
+        text
+        <CalciteInputText
+          label={"text input"}
+          onCalciteInputTextChange={(event) => {
+            setText(event.target.value);
+            handleTextChange(layerIndex, event.target.value);
+          }}
+          value={text}
+        ></CalciteInputText>
+      </CalciteLabel>
+
       <CalciteBlock style={blockStyles} collapsible heading={"background"}>
         <TextSymbol3DLayerBackgroundForm
           layerIndex={layerIndex}
@@ -120,6 +132,25 @@ const TextSymbol3DLayerForm = ({
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
+        verticalAlignment
+        <CalciteSelect
+          label={"verticalAlignment selection"}
+          onCalciteSelectChange={(event) => {
+            setVerticalAlignment(event.target.value);
+            handleVerticalAlignmentChange(
+              layerIndex,
+              event.target.value as InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
+            );
+          }}
+          value={verticalAlignment}
+        >
+          {VERTICAL_ALIGNMENT_OPTIONS.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
         lineHeight
         <CalciteInputNumber
           label={"lineHeight input"}
@@ -150,37 +181,6 @@ const TextSymbol3DLayerForm = ({
           }}
           value={size}
         ></CalciteInputNumber>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
-        text
-        <CalciteInputText
-          label={"text input"}
-          onCalciteInputTextChange={(event) => {
-            setText(event.target.value);
-            handleTextChange(layerIndex, event.target.value);
-          }}
-          value={text}
-        ></CalciteInputText>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
-        verticalAlignment
-        <CalciteSelect
-          label={"verticalAlignment selection"}
-          onCalciteSelectChange={(event) => {
-            setVerticalAlignment(event.target.value);
-            handleVerticalAlignmentChange(
-              layerIndex,
-              event.target.value as InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
-            );
-          }}
-          value={verticalAlignment}
-        >
-          {VERTICAL_ALIGNMENT_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
       </CalciteLabel>
     </React.Fragment>
   );

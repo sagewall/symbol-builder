@@ -128,23 +128,6 @@ const ObjectSymbol3DLayerForm = ({
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
-        heading
-        <CalciteSlider
-          labelHandles={true}
-          labelTicks={true}
-          max={360}
-          min={0}
-          onCalciteSliderChange={(event) => {
-            setHeading(event.target.value as number);
-            handleHeadingChange(layerIndex, event.target.value as number);
-          }}
-          step={1}
-          ticks={90}
-          value={heading}
-        ></CalciteSlider>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
         height
         <CalciteInputNumber
           label={"height input"}
@@ -154,6 +137,19 @@ const ObjectSymbol3DLayerForm = ({
             handleHeightChange(layerIndex, event.target.value);
           }}
           value={height}
+        ></CalciteInputNumber>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        width
+        <CalciteInputNumber
+          label={"width input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setWidth(event.target.value);
+            handleWidthChange(layerIndex, event.target.value);
+          }}
+          value={width}
         ></CalciteInputNumber>
       </CalciteLabel>
 
@@ -171,6 +167,23 @@ const ObjectSymbol3DLayerForm = ({
           handlePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
         ></ObjectSymbol3DLayerResourceForm>
       </CalciteBlock>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        heading
+        <CalciteSlider
+          labelHandles={true}
+          labelTicks={true}
+          max={360}
+          min={0}
+          onCalciteSliderChange={(event) => {
+            setHeading(event.target.value as number);
+            handleHeadingChange(layerIndex, event.target.value as number);
+          }}
+          step={1}
+          ticks={90}
+          value={heading}
+        ></CalciteSlider>
+      </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
         roll
@@ -204,19 +217,6 @@ const ObjectSymbol3DLayerForm = ({
           ticks={90}
           value={tilt}
         ></CalciteSlider>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
-        width
-        <CalciteInputNumber
-          label={"width input"}
-          min={0}
-          onCalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
-            handleWidthChange(layerIndex, event.target.value);
-          }}
-          value={width}
-        ></CalciteInputNumber>
       </CalciteLabel>
     </React.Fragment>
   );
