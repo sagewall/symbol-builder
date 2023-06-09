@@ -64,18 +64,6 @@ const PictureMarkerSymbolForm = ({
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
-        url
-        <CalciteInputText
-          label={"url input"}
-          onCalciteInputTextChange={(event) => {
-            setUrl(event.target.value);
-            handleUrlChange(event.target.value);
-          }}
-          value={url}
-        ></CalciteInputText>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
         width
         <CalciteInputNumber
           label={"width input"}
@@ -86,6 +74,18 @@ const PictureMarkerSymbolForm = ({
           }}
           value={width}
         ></CalciteInputNumber>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        url
+        <CalciteInputText
+          label={"url input"}
+          onCalciteInputTextChange={(event) => {
+            setUrl(event.target.value);
+            handleUrlChange(event.target.value);
+          }}
+          value={url}
+        ></CalciteInputText>
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>

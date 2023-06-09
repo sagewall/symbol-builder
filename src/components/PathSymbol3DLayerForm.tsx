@@ -141,6 +141,19 @@ const LineSymbol3DLayerForm = ({
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
+        width
+        <CalciteInputNumber
+          label={"width input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setWidth(event.target.value);
+            handleWidthChange(layerIndex, event.target.value);
+          }}
+          value={width}
+        ></CalciteInputNumber>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
         join
         <CalciteSelect
           label={"join selection"}
@@ -202,19 +215,6 @@ const LineSymbol3DLayerForm = ({
             <CalciteOption key={index}>{option}</CalciteOption>
           ))}
         </CalciteSelect>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
-        width
-        <CalciteInputNumber
-          label={"width input"}
-          min={0}
-          onCalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
-            handleWidthChange(layerIndex, event.target.value);
-          }}
-          value={width}
-        ></CalciteInputNumber>
       </CalciteLabel>
     </React.Fragment>
   );

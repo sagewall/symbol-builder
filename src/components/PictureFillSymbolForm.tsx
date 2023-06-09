@@ -63,6 +63,19 @@ const PictureFillSymbolForm = ({
         ></CalciteInputNumber>
       </CalciteLabel>
 
+      <CalciteLabel layout="default" style={labelStyles}>
+        width
+        <CalciteInputNumber
+          label={"width input"}
+          min={0}
+          onCalciteInputNumberChange={(event) => {
+            setWidth(event.target.value);
+            handleWidthChange(event.target.value);
+          }}
+          value={width}
+        ></CalciteInputNumber>
+      </CalciteLabel>
+
       <CalciteBlock style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm
           handleCapChange={handleOutlineCapChange}
@@ -88,19 +101,6 @@ const PictureFillSymbolForm = ({
       </CalciteLabel>
 
       <CalciteLabel layout="default" style={labelStyles}>
-        width
-        <CalciteInputNumber
-          label={"width input"}
-          min={0}
-          onCalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
-            handleWidthChange(event.target.value);
-          }}
-          value={width}
-        ></CalciteInputNumber>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
         xoffset
         <CalciteInputNumber
           label={"xoffset input"}
@@ -109,6 +109,18 @@ const PictureFillSymbolForm = ({
             handleXOffsetChange(event.target.value);
           }}
           value={xoffset}
+        ></CalciteInputNumber>
+      </CalciteLabel>
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        yoffset
+        <CalciteInputNumber
+          label={"yoffset input"}
+          onCalciteInputNumberChange={(event) => {
+            setYoffset(event.target.value);
+            handleYOffsetChange(event.target.value);
+          }}
+          value={yoffset}
         ></CalciteInputNumber>
       </CalciteLabel>
 
@@ -122,18 +134,6 @@ const PictureFillSymbolForm = ({
             handleXScaleChange(event.target.value);
           }}
           value={xscale}
-        ></CalciteInputNumber>
-      </CalciteLabel>
-
-      <CalciteLabel layout="default" style={labelStyles}>
-        yoffset
-        <CalciteInputNumber
-          label={"yoffset input"}
-          onCalciteInputNumberChange={(event) => {
-            setYoffset(event.target.value);
-            handleYOffsetChange(event.target.value);
-          }}
-          value={yoffset}
         ></CalciteInputNumber>
       </CalciteLabel>
 
