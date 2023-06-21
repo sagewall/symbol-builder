@@ -1,5 +1,4 @@
 import type Graphic from "@arcgis/core/Graphic";
-import "@arcgis/core/assets/esri/themes/light/main.css";
 import type Collection from "@arcgis/core/core/Collection";
 import type ArcMapView from "@arcgis/core/views/MapView";
 import React, { useEffect, useRef, useState } from "react";

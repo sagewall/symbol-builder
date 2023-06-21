@@ -1,4 +1,4 @@
-import "@arcgis/core/assets/esri/themes/dark/main.css";
+import "@arcgis/core/assets/esri/themes/light/main.css";
 import "@esri/calcite-components/dist/calcite/calcite.css";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
 import "@esri/calcite-components/dist/components/calcite-action";
