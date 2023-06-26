@@ -72,7 +72,6 @@ const SimpleMarkerSymbolForm = ({
           value={angle}
         ></CalciteSlider>
       </CalciteLabel>
-
       <CalciteLabel layout="default" style={labelStyles}>
         color
         <CalciteInput
@@ -86,7 +85,6 @@ const SimpleMarkerSymbolForm = ({
           value={color}
         />
       </CalciteLabel>
-
       <CalciteBlock style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm
           handleCapChange={handleOutlineCapChange}
@@ -99,19 +97,6 @@ const SimpleMarkerSymbolForm = ({
           solidOnly={true}
         />
       </CalciteBlock>
-
-      <CalciteLabel layout="default" style={labelStyles}>
-        path
-        <CalciteInputText
-          label={"path input"}
-          onCalciteInputTextChange={(event) => {
-            setPath(event.target.value);
-            handlePathChange(event.target.value);
-          }}
-          value={path}
-        ></CalciteInputText>
-      </CalciteLabel>
-
       <CalciteLabel layout="default" style={labelStyles}>
         size
         <CalciteInputNumber
@@ -124,7 +109,6 @@ const SimpleMarkerSymbolForm = ({
           value={size}
         ></CalciteInputNumber>
       </CalciteLabel>
-
       <CalciteLabel layout="default" style={labelStyles}>
         style
         <CalciteSelect
@@ -142,7 +126,19 @@ const SimpleMarkerSymbolForm = ({
           ))}
         </CalciteSelect>
       </CalciteLabel>
-
+      {style === "path" && (
+        <CalciteLabel layout="default" style={labelStyles}>
+          path
+          <CalciteInputText
+            label={"path input"}
+            onCalciteInputTextChange={(event) => {
+              setPath(event.target.value);
+              handlePathChange(event.target.value);
+            }}
+            value={path}
+          ></CalciteInputText>
+        </CalciteLabel>
+      )}
       <CalciteLabel layout="default" style={labelStyles}>
         xoffset
         <CalciteInputNumber
@@ -154,7 +150,6 @@ const SimpleMarkerSymbolForm = ({
           value={xoffset}
         ></CalciteInputNumber>
       </CalciteLabel>
-
       <CalciteLabel layout="default" style={labelStyles}>
         yoffset
         <CalciteInputNumber
