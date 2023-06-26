@@ -25,6 +25,7 @@ interface Props {
   handleStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleWidthChange: (value: string) => void;
   showMarker: boolean;
+  solidOnly: boolean;
 }
 
 const SimpleLineSymbolForm = ({
@@ -38,7 +39,8 @@ const SimpleLineSymbolForm = ({
   handleMiterLimitChange,
   handleStyleChange,
   handleWidthChange,
-  showMarker
+  showMarker,
+  solidOnly
 }: Props) => {
   const [cap, setCap] = useState("round");
   const [color, setColor] = useState("#007ac2");
@@ -48,6 +50,8 @@ const SimpleLineSymbolForm = ({
   const [width, setWidth] = useState("1");
 
   let markerBlock;
+  let styleBlock;
+
   if (showMarker) {
     markerBlock = (
       <CalciteBlock
@@ -69,6 +73,28 @@ const SimpleLineSymbolForm = ({
     );
   } else {
     markerBlock = <React.Fragment />;
+  }
+
+  if (solidOnly) {
+    styleBlock = <React.Fragment />;
+  } else {
+    styleBlock = (
+      <CalciteLabel layout="default" style={labelStyles}>
+        style
+        <CalciteSelect
+          label={"style selection"}
+          onCalciteSelectChange={(event) => {
+            setStyle(event.target.value);
+            handleStyleChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["style"]);
+          }}
+          value={style}
+        >
+          {LINE_STYLE_OPTIONS.map((option, index) => (
+            <CalciteOption key={index}>{option}</CalciteOption>
+          ))}
+        </CalciteSelect>
+      </CalciteLabel>
+    );
   }
 
   return (
@@ -134,21 +160,7 @@ const SimpleLineSymbolForm = ({
         ></CalciteInputNumber>
       </CalciteLabel>
 
-      <CalciteLabel layout="default" style={labelStyles}>
-        style
-        <CalciteSelect
-          label={"style selection"}
-          onCalciteSelectChange={(event) => {
-            setStyle(event.target.value);
-            handleStyleChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["style"]);
-          }}
-          value={style}
-        >
-          {LINE_STYLE_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
-          ))}
-        </CalciteSelect>
-      </CalciteLabel>
+      {styleBlock}
 
       <CalciteLabel layout="default" style={labelStyles}>
         width

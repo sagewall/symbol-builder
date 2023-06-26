@@ -96,6 +96,7 @@ const SimpleMarkerSymbolForm = ({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
+          solidOnly={true}
         />
       </CalciteBlock>
 

@@ -85,6 +85,7 @@ const PictureFillSymbolForm = ({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
+          solidOnly={false}
         />
       </CalciteBlock>
 

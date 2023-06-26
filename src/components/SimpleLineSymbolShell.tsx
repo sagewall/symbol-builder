@@ -194,6 +194,7 @@ const SimpleLineSymbolShell = () => {
                 handleStyleChange={handleStyleChange}
                 handleWidthChange={handleWidthChange}
                 showMarker={true}
+                solidOnly={false}
               ></SimpleLineSymbolForm>
             </div>
           </CalcitePanel>

@@ -61,6 +61,7 @@ const SimpleFillSymbolForm = ({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
+          solidOnly={false}
         />
       </CalciteBlock>
 
