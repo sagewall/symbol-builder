@@ -218,6 +218,7 @@ const SimpleMarkerSymbolShell = () => {
                 handleStyleChange={handleStyleChange}
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
+                sceneView={sceneView}
               />
             </div>
           </CalcitePanel>
