@@ -29,6 +29,7 @@ interface Props {
   handleStyleChange: (value: InstanceType<typeof SimpleMarkerSymbol>["style"]) => void;
   handleXoffsetChange: (value: string) => void;
   handleYoffsetChange: (value: string) => void;
+  sceneView: boolean;
 }
 
 const SimpleMarkerSymbolForm = ({
@@ -44,7 +45,8 @@ const SimpleMarkerSymbolForm = ({
   handleSizeChange,
   handleStyleChange,
   handleXoffsetChange,
-  handleYoffsetChange
+  handleYoffsetChange,
+  sceneView
 }: Props) => {
   const [angle, setAngle] = useState(0);
   const [color, setColor] = useState("#007ac2");
@@ -94,7 +96,7 @@ const SimpleMarkerSymbolForm = ({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
-          solidOnly={true}
+          solidOnly={sceneView}
         />
       </CalciteBlock>
       <CalciteLabel layout="default" style={labelStyles}>
