@@ -44,7 +44,7 @@ import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
 import TextSymbolPage from "./pages/text-symbol";
 import WebStyleSymbolPage from "./pages/web-style-symbol";
 
-setAssetPath("https://js.arcgis.com/calcite-components/1.8.0/assets");
+setAssetPath("https://js.arcgis.com/calcite-components/1.9.2/assets");
 
 const router = createBrowserRouter(
   [
