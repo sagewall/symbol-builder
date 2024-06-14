@@ -107,7 +107,7 @@ const router = createBrowserRouter(
       ]
     }
   ],
-  { basename: "/symbol-builder/" }
+  { basename: import.meta.env.VITE_BASE_NAME }
 );
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

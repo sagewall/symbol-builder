@@ -6,6 +6,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  VITE_BASE_NAME: /symbol-builder/
+
 permissions:
   contents: read
   pages: write
