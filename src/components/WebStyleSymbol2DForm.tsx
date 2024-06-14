@@ -1,3 +1,4 @@
+import esriRequest from "@arcgis/core/request";
 import {
   CalciteInputText,
   CalciteLabel,
@@ -18,13 +19,16 @@ import {
 } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 import type { GroupItem, WebStyleStymbolItem } from "./lib/types";
-import esriRequest from "@arcgis/core/request";
 
 interface Props {
   groupItems: GroupItem[];
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (styleUrl: string, name: string) => void;
+  handleCustomStyleChange: (
+    styleUrl: string,
+    name: string,
+    itemType: "pointSymbol" | "lineSymbol" | "polygonSymbol"
+  ) => void;
 }
 
 const WebStyleSymbol2DForm = ({
@@ -71,7 +75,8 @@ const WebStyleSymbol2DForm = ({
         setPointWebStyleSymbolItems(pointItems);
         handleCustomStyleChange(
           `https://www.arcgis.com/sharing/rest/content/items/${groupItem.id}/data`,
-          pointItems[0].name
+          pointItems[0].name,
+          "pointSymbol"
         );
       } else {
         setPointWebStyleSymbolItems([]);
@@ -116,7 +121,7 @@ const WebStyleSymbol2DForm = ({
 
     if (pointItems.length > 0) {
       setPointWebStyleSymbolItems(pointItems);
-      handleCustomStyleChange(url, pointItems[0].name);
+      handleCustomStyleChange(url, pointItems[0].name, "pointSymbol");
     }
 
     const lineItems = items
@@ -200,7 +205,7 @@ const WebStyleSymbol2DForm = ({
                     label={item.name}
                     onClick={(event) => {
                       const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                      handleCustomStyleChange(styleUrl, newName);
+                      handleCustomStyleChange(styleUrl, newName, "pointSymbol");
                     }}
                   >
                     <img
@@ -219,10 +224,10 @@ const WebStyleSymbol2DForm = ({
                   <CalciteListItem
                     key={index}
                     label={item.name}
-                    // onClick={(event) => {
-                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    //   handleCustomStyleChange(styleUrl, newName);
-                    // }}
+                    onClick={(event) => {
+                      const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                      handleCustomStyleChange(styleUrl, newName, "lineSymbol");
+                    }}
                   >
                     <img
                       alt={item.name}
@@ -240,10 +245,10 @@ const WebStyleSymbol2DForm = ({
                   <CalciteListItem
                     key={index}
                     label={item.name}
-                    // onClick={(event) => {
-                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    //   handleCustomStyleChange(styleUrl, newName);
-                    // }}
+                    onClick={(event) => {
+                      const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                      handleCustomStyleChange(styleUrl, newName, "polygonSymbol");
+                    }}
                   >
                     <img
                       alt={item.name}
@@ -311,7 +316,7 @@ const WebStyleSymbol2DForm = ({
                     label={item.name}
                     onClick={(event) => {
                       const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                      handleCustomStyleChange(styleUrl, newName);
+                      handleCustomStyleChange(styleUrl, newName, "pointSymbol");
                     }}
                   >
                     <img
@@ -330,10 +335,10 @@ const WebStyleSymbol2DForm = ({
                   <CalciteListItem
                     key={index}
                     label={item.name}
-                    // onClick={(event) => {
-                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    //   handleCustomStyleChange(styleUrl, newName);
-                    // }}
+                    onClick={(event) => {
+                      const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                      handleCustomStyleChange(styleUrl, newName, "lineSymbol");
+                    }}
                   >
                     <img
                       alt={item.name}
@@ -351,10 +356,10 @@ const WebStyleSymbol2DForm = ({
                   <CalciteListItem
                     key={index}
                     label={item.name}
-                    // onClick={(event) => {
-                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    //   handleCustomStyleChange(styleUrl, newName);
-                    // }}
+                    onClick={(event) => {
+                      const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                      handleCustomStyleChange(styleUrl, newName, "polygonSymbol");
+                    }}
                   >
                     <img
                       alt={item.name}

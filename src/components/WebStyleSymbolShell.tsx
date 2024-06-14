@@ -151,11 +151,26 @@ const WebStyleSymbolShell = () => {
     updateGraphics(newWebStyleSymbol);
   };
 
-  const handleCustomStyleChange = (currentStyleUrl: string, currentName: string) => {
+  const handleCustomStyleChange = (
+    currentStyleUrl: string,
+    currentName: string,
+    itemType: "pointSymbol" | "lineSymbol" | "polygonSymbol"
+  ) => {
     const newWebStyleSymbol = new WebStyleSymbol();
     newWebStyleSymbol.name = currentName;
     newWebStyleSymbol.styleUrl = currentStyleUrl;
-    updateGraphics(newWebStyleSymbol);
+
+    if (itemType === "pointSymbol") {
+      updateGraphics(newWebStyleSymbol);
+    }
+
+    if (itemType === "lineSymbol") {
+      console.log("lineSymbol", newWebStyleSymbol);
+    }
+
+    if (itemType === "polygonSymbol") {
+      console.log("polygonSymbol", newWebStyleSymbol);
+    }
   };
 
   const requestGroupItems = async (itemId: string) => {

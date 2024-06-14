@@ -31,7 +31,11 @@ import type { WebStyleStymbolItem } from "./lib/types";
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (styleUrl: string, name: string) => void;
+  handleCustomStyleChange: (
+    styleUrl: string,
+    name: string,
+    itemType: "pointSymbol" | "lineSymbol" | "polygonSymbol"
+  ) => void;
 }
 
 const WebStyleSymbolForm = ({
@@ -61,7 +65,7 @@ const WebStyleSymbolForm = ({
 
     if (pointItems.length > 0) {
       setPointWebStyleSymbolItems(pointItems);
-      handleCustomStyleChange(url, pointItems[0].name);
+      handleCustomStyleChange(url, pointItems[0].name, "pointSymbol");
     }
   }
 
@@ -197,7 +201,7 @@ const WebStyleSymbolForm = ({
                   description={item.title}
                   onClick={(event) => {
                     const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    handleCustomStyleChange(styleUrl, newName);
+                    handleCustomStyleChange(styleUrl, newName, "pointSymbol");
                   }}
                 >
                   <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
