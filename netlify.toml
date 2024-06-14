@@ -5,12 +5,11 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Server = "Atari 2600"
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Feature-Policy = "payment 'self'; geolocation 'self';"
+    Referrer-Policy = "same-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "same-origin"
-    Feature-Policy = "payment 'self'; geolocation 'self';"
 
 [[redirects]]
   from = "/*"
