@@ -1,5 +1,6 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
+import esriRequest from "@arcgis/core/request";
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
 import {
   CalciteLabel,
@@ -12,7 +13,7 @@ import {
   CalciteTabTitle,
   CalciteTabs
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
@@ -41,13 +42,15 @@ import {
   tabNavStyles,
   viewSwitchLabelStyles
 } from "./lib/styles";
+import type { GroupItem } from "./lib/types";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
   const defaultWebStyleSymbol2D = new WebStyleSymbol({
-    name: "extent-hollow-gray",
-    styleName: "Esri2DPointSymbolsStyle"
+    name: "Armadillo",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
   });
 
   const defaultWebStyleSymbol3D = new WebStyleSymbol({
@@ -55,6 +58,7 @@ const WebStyleSymbolShell = () => {
     styleName: "EsriIconsStyle"
   });
 
+  const [groupItems, setGroupItems] = useState([]);
   const [webStyleSymbol, setWebStyleSymbol] = useState(defaultWebStyleSymbol2D);
 
   const pointGraphic = new Graphic({
@@ -154,6 +158,23 @@ const WebStyleSymbolShell = () => {
     updateGraphics(newWebStyleSymbol);
   };
 
+  const requestGroupItems = async (itemId: string) => {
+    const response = await esriRequest(
+      `https://www.arcgis.com/sharing/rest/content/groups/${itemId}?f=pjson`,
+      {
+        responseType: "json"
+      }
+    );
+    const sortedGroupItems = response.data.items.sort((a: GroupItem, b: GroupItem) =>
+      a.title.localeCompare(b.title)
+    );
+    setGroupItems(sortedGroupItems);
+  };
+
+  useEffect(() => {
+    requestGroupItems("7687bc306b8048a48efd92b3a6da9d88");
+  }, []);
+
   return (
     <React.Fragment>
       <CalciteShell style={shellStyles}>
@@ -173,6 +194,7 @@ const WebStyleSymbolShell = () => {
             <div style={formStyles}>
               {!sceneView ? (
                 <WebStyleSymbol2DForm
+                  groupItems={groupItems}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
                   handleCustomStyleChange={handleCustomStyleChange}

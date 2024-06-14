@@ -1,7 +1,10 @@
+import esriRequest from "@arcgis/core/request";
 import {
-  CalciteButton,
   CalciteInputText,
   CalciteLabel,
+  CalciteList,
+  CalciteListItem,
+  CalciteListItemGroup,
   CalciteOption,
   CalciteSelect,
   CalciteTab,
@@ -23,6 +26,7 @@ import {
   WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS
 } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
+import type { WebStyleStymbolItem } from "./lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
@@ -35,22 +39,47 @@ const WebStyleSymbolForm = ({
   handleStyleNameChange,
   handleCustomStyleChange
 }: Props) => {
-  const [customName, setCustomName] = useState("");
   const [name, setName] = useState("Accessibility");
   const [names, setNames] = useState(ESRI_ICONS_STYLE_NAME_OPTIONS);
+  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<WebStyleStymbolItem[]>(
+    []
+  );
   const [styleName, setStyleName] = useState("EsriIconsStyle");
   const [styleUrl, setStyleUrl] = useState("");
 
-  const handleSubmit = () => {
-    handleCustomStyleChange(styleUrl, customName);
-  };
+  async function getStyleItemDataFromUrl(url: string) {
+    const response = await esriRequest(url, {
+      responseType: "json"
+    });
+    const items = response.data.items;
+
+    const pointItems = items
+      .filter((item: WebStyleStymbolItem) => item.itemType === "pointSymbol")
+      .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
+        return a.name.localeCompare(b.name);
+      });
+
+    if (pointItems.length > 0) {
+      setPointWebStyleSymbolItems(pointItems);
+
+      handleCustomStyleChange(url, pointItems[0].name);
+    }
+  }
 
   const handleTabChange = (event: CustomEvent) => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
-    if (tabNav.selectedTitle.tab !== "custom") {
-      setName("");
-    } else {
+    if (tabNav.selectedTitle.tab === "standard") {
+      setStyleName("EsriIconsStyle");
+      setName("Accessibility");
       handleStyleNameChange(styleName);
+    } else {
+      setName("");
+      setStyleUrl(
+        "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data"
+      );
+      getStyleItemDataFromUrl(
+        "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data"
+      );
     }
   };
 
@@ -150,27 +179,33 @@ const WebStyleSymbolForm = ({
         </CalciteTab>
         <CalciteTab tab="custom">
           <CalciteLabel layout="default" style={labelStyles}>
-            name
-            <CalciteInputText
-              label={"name input"}
-              onCalciteInputTextChange={(event) => {
-                setCustomName(event.target.value);
-              }}
-              value={customName}
-            ></CalciteInputText>
-          </CalciteLabel>
-
-          <CalciteLabel layout="default" style={labelStyles}>
             styleUrl
             <CalciteInputText
               label={"url input"}
               onCalciteInputTextChange={(event) => {
                 setStyleUrl(event.target.value);
+                getStyleItemDataFromUrl(event.target.value);
               }}
               value={styleUrl}
             ></CalciteInputText>
           </CalciteLabel>
-          <CalciteButton onClick={() => handleSubmit()}>Submit</CalciteButton>
+          <CalciteList label="Point WebStyleSymbols">
+            <CalciteListItemGroup heading="Point Symbols">
+              {pointWebStyleSymbolItems.map((item, index) => (
+                <CalciteListItem
+                  key={index}
+                  label={item.name}
+                  description={item.title}
+                  onClick={(event) => {
+                    const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                    handleCustomStyleChange(styleUrl, newName);
+                  }}
+                >
+                  <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
+                </CalciteListItem>
+              ))}
+            </CalciteListItemGroup>
+          </CalciteList>
         </CalciteTab>
       </CalciteTabs>
     </React.Fragment>
