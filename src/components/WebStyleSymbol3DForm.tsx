@@ -68,8 +68,8 @@ const WebStyleSymbolForm = ({
   const handleTabChange = (event: CustomEvent) => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
     if (tabNav.selectedTitle.tab === "standard") {
-      setStyleName("EsriIconsStyle");
       setName("Accessibility");
+      setStyleName("EsriIconsStyle");
       handleStyleNameChange(styleName);
     } else {
       setName("");

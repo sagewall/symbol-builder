@@ -160,12 +160,14 @@ const WebStyleSymbol2DForm = ({
   const handleTabChange = (event: CustomEvent) => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
     if (tabNav.selectedTitle.tab === "standard") {
-      setStyleName("Esri2DPointSymbolsStyle");
       setName("extent-hollow-gray");
+      setStyleName("Esri2DPointSymbolsStyle");
       handleStyleNameChange(styleName);
     } else {
-      setName("");
       setAgolStyle("Animals");
+      setName("");
+      setLineWebStyleSymbolItems([]);
+      setPolygonWebStyleSymbolItems([]);
       setStyleUrl(
         "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
       );
