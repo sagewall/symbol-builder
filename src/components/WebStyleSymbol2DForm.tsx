@@ -34,10 +34,14 @@ const WebStyleSymbol2DForm = ({
   handleCustomStyleChange
 }: Props) => {
   const [agolStyle, setAgolStyle] = useState("Animals");
+  const [lineWebStyleSymbolItems, setLineWebStyleSymbolItems] = useState<WebStyleStymbolItem[]>([]);
   const [name, setName] = useState("");
   const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<WebStyleStymbolItem[]>(
     []
   );
+  const [polygonWebStyleSymbolItems, setPolygonWebStyleSymbolItems] = useState<
+    WebStyleStymbolItem[]
+  >([]);
   const [styleName, setStyleName] = useState("Esri2DPointSymbolsStyle");
   const [styleUrl, setStyleUrl] = useState(
     "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
@@ -65,13 +69,36 @@ const WebStyleSymbol2DForm = ({
 
       if (pointItems.length > 0) {
         setPointWebStyleSymbolItems(pointItems);
-
         handleCustomStyleChange(
           `https://www.arcgis.com/sharing/rest/content/items/${groupItem.id}/data`,
           pointItems[0].name
         );
       } else {
         setPointWebStyleSymbolItems([]);
+      }
+
+      const lineItems = items
+        .filter((item: WebStyleStymbolItem) => item.itemType === "lineSymbol")
+        .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
+          return a.name.localeCompare(b.name);
+        });
+
+      if (lineItems.length > 0) {
+        setLineWebStyleSymbolItems(lineItems);
+      } else {
+        setLineWebStyleSymbolItems([]);
+      }
+
+      const polygonItems = items
+        .filter((item: WebStyleStymbolItem) => item.itemType === "polygonSymbol")
+        .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
+          return a.name.localeCompare(b.name);
+        });
+
+      if (polygonItems.length > 0) {
+        setPolygonWebStyleSymbolItems(polygonItems);
+      } else {
+        setPolygonWebStyleSymbolItems([]);
       }
     }
   }
@@ -81,7 +108,6 @@ const WebStyleSymbol2DForm = ({
       responseType: "json"
     });
     const items = response.data.items;
-
     const pointItems = items
       .filter((item: WebStyleStymbolItem) => item.itemType === "pointSymbol")
       .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
@@ -90,8 +116,27 @@ const WebStyleSymbol2DForm = ({
 
     if (pointItems.length > 0) {
       setPointWebStyleSymbolItems(pointItems);
-
       handleCustomStyleChange(url, pointItems[0].name);
+    }
+
+    const lineItems = items
+      .filter((item: WebStyleStymbolItem) => item.itemType === "lineSymbol")
+      .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
+        return a.name.localeCompare(b.name);
+      });
+
+    if (lineItems.length > 0) {
+      setLineWebStyleSymbolItems(lineItems);
+    }
+
+    const polygonItems = items
+      .filter((item: WebStyleStymbolItem) => item.itemType === "polygonSymbol")
+      .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
+        return a.name.localeCompare(b.name);
+      });
+
+    if (polygonItems.length > 0) {
+      setPolygonWebStyleSymbolItems(polygonItems);
     }
   }
 
@@ -147,24 +192,68 @@ const WebStyleSymbol2DForm = ({
             </CalciteSelect>
           </CalciteLabel>
           <CalciteList label="Point WebStyleSymbols">
-            <CalciteListItemGroup heading="Point Symbols">
-              {pointWebStyleSymbolItems.map((item, index) => (
-                <CalciteListItem
-                  key={index}
-                  label={item.name}
-                  onClick={(event) => {
-                    const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    handleCustomStyleChange(styleUrl, newName);
-                  }}
-                >
-                  <img
-                    alt={item.name}
-                    slot="content-start"
-                    src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
-                  />
-                </CalciteListItem>
-              ))}
-            </CalciteListItemGroup>
+            {pointWebStyleSymbolItems.length > 0 && (
+              <CalciteListItemGroup heading="Point Symbols">
+                {pointWebStyleSymbolItems.map((item, index) => (
+                  <CalciteListItem
+                    key={index}
+                    label={item.name}
+                    onClick={(event) => {
+                      const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                      handleCustomStyleChange(styleUrl, newName);
+                    }}
+                  >
+                    <img
+                      alt={item.name}
+                      slot="content-start"
+                      src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                    />
+                  </CalciteListItem>
+                ))}
+              </CalciteListItemGroup>
+            )}
+
+            {lineWebStyleSymbolItems.length > 0 && (
+              <CalciteListItemGroup heading="Line Symbols">
+                {lineWebStyleSymbolItems.map((item, index) => (
+                  <CalciteListItem
+                    key={index}
+                    label={item.name}
+                    // onClick={(event) => {
+                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                    //   handleCustomStyleChange(styleUrl, newName);
+                    // }}
+                  >
+                    <img
+                      alt={item.name}
+                      slot="content-start"
+                      src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                    />
+                  </CalciteListItem>
+                ))}
+              </CalciteListItemGroup>
+            )}
+
+            {polygonWebStyleSymbolItems.length > 0 && (
+              <CalciteListItemGroup heading="Polygon Symbols">
+                {polygonWebStyleSymbolItems.map((item, index) => (
+                  <CalciteListItem
+                    key={index}
+                    label={item.name}
+                    // onClick={(event) => {
+                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                    //   handleCustomStyleChange(styleUrl, newName);
+                    // }}
+                  >
+                    <img
+                      alt={item.name}
+                      slot="content-start"
+                      src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                    />
+                  </CalciteListItem>
+                ))}
+              </CalciteListItemGroup>
+            )}
           </CalciteList>
         </CalciteTab>
         <CalciteTab tab="standard">
@@ -214,25 +303,68 @@ const WebStyleSymbol2DForm = ({
             ></CalciteInputText>
           </CalciteLabel>
           <CalciteList label="Point WebStyleSymbols">
-            <CalciteListItemGroup heading="Point Symbols">
-              {pointWebStyleSymbolItems.map((item, index) => (
-                <CalciteListItem
-                  key={index}
-                  label={item.name}
-                  description={item.title}
-                  onClick={(event) => {
-                    const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    handleCustomStyleChange(styleUrl, newName);
-                  }}
-                >
-                  <img
-                    alt={item.name}
-                    slot="content-start"
-                    src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
-                  />
-                </CalciteListItem>
-              ))}
-            </CalciteListItemGroup>
+            {pointWebStyleSymbolItems.length > 0 && (
+              <CalciteListItemGroup heading="Point Symbols">
+                {pointWebStyleSymbolItems.map((item, index) => (
+                  <CalciteListItem
+                    key={index}
+                    label={item.name}
+                    onClick={(event) => {
+                      const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                      handleCustomStyleChange(styleUrl, newName);
+                    }}
+                  >
+                    <img
+                      alt={item.name}
+                      slot="content-start"
+                      src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                    />
+                  </CalciteListItem>
+                ))}
+              </CalciteListItemGroup>
+            )}
+
+            {lineWebStyleSymbolItems.length > 0 && (
+              <CalciteListItemGroup heading="Line Symbols">
+                {lineWebStyleSymbolItems.map((item, index) => (
+                  <CalciteListItem
+                    key={index}
+                    label={item.name}
+                    // onClick={(event) => {
+                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                    //   handleCustomStyleChange(styleUrl, newName);
+                    // }}
+                  >
+                    <img
+                      alt={item.name}
+                      slot="content-start"
+                      src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                    />
+                  </CalciteListItem>
+                ))}
+              </CalciteListItemGroup>
+            )}
+
+            {polygonWebStyleSymbolItems.length > 0 && (
+              <CalciteListItemGroup heading="Polygon Symbols">
+                {polygonWebStyleSymbolItems.map((item, index) => (
+                  <CalciteListItem
+                    key={index}
+                    label={item.name}
+                    // onClick={(event) => {
+                    //   const newName = (event.target as HTMLCalciteListItemElement).label as string;
+                    //   handleCustomStyleChange(styleUrl, newName);
+                    // }}
+                  >
+                    <img
+                      alt={item.name}
+                      slot="content-start"
+                      src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                    />
+                  </CalciteListItem>
+                ))}
+              </CalciteListItemGroup>
+            )}
           </CalciteList>
         </CalciteTab>
       </CalciteTabs>

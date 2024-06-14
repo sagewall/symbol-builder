@@ -61,7 +61,6 @@ const WebStyleSymbolForm = ({
 
     if (pointItems.length > 0) {
       setPointWebStyleSymbolItems(pointItems);
-
       handleCustomStyleChange(url, pointItems[0].name);
     }
   }
