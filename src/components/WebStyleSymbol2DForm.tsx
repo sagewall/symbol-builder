@@ -86,6 +86,14 @@ const WebStyleSymbol2DForm = ({
 
       if (lineItems.length > 0) {
         setLineWebStyleSymbolItems(lineItems);
+
+        if (pointItems.length === 0 && lineItems.length > 0) {
+          handleCustomStyleChange(
+            `https://www.arcgis.com/sharing/rest/content/items/${groupItem.id}/data`,
+            lineItems[0].name,
+            "lineSymbol"
+          );
+        }
       } else {
         setLineWebStyleSymbolItems([]);
       }
@@ -98,6 +106,14 @@ const WebStyleSymbol2DForm = ({
 
       if (polygonItems.length > 0) {
         setPolygonWebStyleSymbolItems(polygonItems);
+
+        if (pointItems.length === 0 && lineItems.length === 0 && polygonItems.length > 0) {
+          handleCustomStyleChange(
+            `https://www.arcgis.com/sharing/rest/content/items/${groupItem.id}/data`,
+            polygonItems[0].name,
+            "polygonSymbol"
+          );
+        }
       } else {
         setPolygonWebStyleSymbolItems([]);
       }
