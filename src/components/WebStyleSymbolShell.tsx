@@ -34,7 +34,7 @@ import {
   ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS,
   ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS
 } from "./lib/constants";
-import { point } from "./lib/geometry";
+import { point, polyline, polygon } from "./lib/geometry";
 import {
   formStyles,
   shellPanelStyles,
@@ -53,6 +53,18 @@ const WebStyleSymbolShell = () => {
       "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
   });
 
+  const defaultPolygonWebStyleSymbol2D = new WebStyleSymbol({
+    name: "A Crosshatch",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/807adef8568448318173798e15954ee5/data"
+  });
+
+  const defaultPolylineWebStyleSymbol2D = new WebStyleSymbol({
+    name: "Aqueduct",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/971bd7dfb0684860957ab7844a245bc1/data"
+  });
+
   const defaultWebStyleSymbol3D = new WebStyleSymbol({
     name: "Accessibility",
     styleName: "EsriIconsStyle"
@@ -60,10 +72,26 @@ const WebStyleSymbolShell = () => {
 
   const [groupItems, setGroupItems] = useState([]);
   const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
+  const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(
+    defaultPolygonWebStyleSymbol2D
+  );
+  const [polylineWebStyleSymbol, setPolylineWebStyleSymbol] = useState(
+    defaultPolylineWebStyleSymbol2D
+  );
 
   const pointGraphic = new Graphic({
     geometry: point,
     symbol: pointWebStyleSymbol
+  });
+
+  const polygonGraphic = new Graphic({
+    geometry: polygon,
+    symbol: polygonWebStyleSymbol
+  });
+
+  const polylineGraphic = new Graphic({
+    geometry: polyline,
+    symbol: polylineWebStyleSymbol
   });
 
   const graphicsCollection = new Collection();
@@ -90,7 +118,7 @@ const WebStyleSymbolShell = () => {
     if (itemType === "pointSymbol") {
       setPointWebStyleSymbol(newWebStyleSymbol);
 
-      const newPointGraphic = graphics.getItemAt(0).clone();
+      const newPointGraphic = pointGraphic.clone();
       newPointGraphic.symbol = newWebStyleSymbol;
 
       const newGraphics = new Collection();
@@ -99,7 +127,25 @@ const WebStyleSymbolShell = () => {
     }
 
     if (itemType === "lineSymbol") {
-      console.log(newWebStyleSymbol, "lineSymbol");
+      setPolylineWebStyleSymbol(newWebStyleSymbol);
+
+      const newPolylineGraphic = polylineGraphic.clone();
+      newPolylineGraphic.symbol = newWebStyleSymbol;
+
+      const newGraphics = new Collection();
+      newGraphics.add(newPolylineGraphic);
+      setGraphics(newGraphics);
+    }
+
+    if (itemType === "polygonSymbol") {
+      setPolygonWebStyleSymbol(newWebStyleSymbol);
+
+      const newPolygonGraphic = polygonGraphic.clone();
+      newPolygonGraphic.symbol = newWebStyleSymbol;
+
+      const newGraphics = new Collection();
+      newGraphics.add(newPolygonGraphic);
+      setGraphics(newGraphics);
     }
   };
 
@@ -171,11 +217,11 @@ const WebStyleSymbolShell = () => {
     }
 
     if (itemType === "lineSymbol") {
-      console.log(newWebStyleSymbol, "lineSymbol");
+      updateGraphics(newWebStyleSymbol, "lineSymbol");
     }
 
     if (itemType === "polygonSymbol") {
-      console.log(newWebStyleSymbol, "polygonSymbol");
+      updateGraphics(newWebStyleSymbol, "polygonSymbol");
     }
   };
 
@@ -186,9 +232,9 @@ const WebStyleSymbolShell = () => {
         responseType: "json"
       }
     );
-    const sortedGroupItems = response.data.items.sort((a: GroupItem, b: GroupItem) =>
-      a.title.localeCompare(b.title)
-    );
+    const sortedGroupItems = response.data.items
+      .filter((item: GroupItem) => item.type === "Style")
+      .sort((a: GroupItem, b: GroupItem) => a.title.localeCompare(b.title));
     setGroupItems(sortedGroupItems);
   };
 
