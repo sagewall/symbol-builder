@@ -26,16 +26,12 @@ import {
   WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS
 } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import type { WebStyleStymbolItem } from "./lib/types";
+import type { ItemType, WebStyleStymbolItem } from "./lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (
-    styleUrl: string,
-    name: string,
-    itemType: "pointSymbol" | "lineSymbol" | "polygonSymbol"
-  ) => void;
+  handleCustomStyleChange: (styleUrl: string, name: string, itemType: ItemType) => void;
 }
 
 const WebStyleSymbolForm = ({

@@ -42,12 +42,12 @@ import {
   tabNavStyles,
   viewSwitchLabelStyles
 } from "./lib/styles";
-import type { GroupItem } from "./lib/types";
+import type { GroupItem, ItemType } from "./lib/types";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
-  const defaultWebStyleSymbol2D = new WebStyleSymbol({
+  const defaultPointWebStyleSymbol2D = new WebStyleSymbol({
     name: "Armadillo",
     styleUrl:
       "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
@@ -59,11 +59,11 @@ const WebStyleSymbolShell = () => {
   });
 
   const [groupItems, setGroupItems] = useState([]);
-  const [webStyleSymbol, setWebStyleSymbol] = useState(defaultWebStyleSymbol2D);
+  const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: webStyleSymbol
+    symbol: pointWebStyleSymbol
   });
 
   const graphicsCollection = new Collection();
@@ -81,26 +81,32 @@ const WebStyleSymbolShell = () => {
     if (viewSwitchRef.current) {
       setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
       (viewSwitchRef.current as HTMLCalciteSwitchElement).checked
-        ? updateGraphics(defaultWebStyleSymbol3D)
-        : updateGraphics(defaultWebStyleSymbol2D);
+        ? updateGraphics(defaultWebStyleSymbol3D, "pointSymbol")
+        : updateGraphics(defaultPointWebStyleSymbol2D, "pointSymbol");
     }
   };
 
-  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol) => {
-    setWebStyleSymbol(newWebStyleSymbol);
+  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol, itemType: ItemType) => {
+    if (itemType === "pointSymbol") {
+      setPointWebStyleSymbol(newWebStyleSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newWebStyleSymbol;
+      const newPointGraphic = graphics.getItemAt(0).clone();
+      newPointGraphic.symbol = newWebStyleSymbol;
 
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
+      const newGraphics = new Collection();
+      newGraphics.add(newPointGraphic);
+      setGraphics(newGraphics);
+    }
+
+    if (itemType === "lineSymbol") {
+      console.log(newWebStyleSymbol, "lineSymbol");
+    }
   };
 
   const handleNameChange = (currentName: string) => {
-    const newWebStyleSymbol = webStyleSymbol.clone();
+    const newWebStyleSymbol = pointWebStyleSymbol.clone();
     newWebStyleSymbol.name = currentName;
-    updateGraphics(newWebStyleSymbol);
+    updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
   const handleStyleNameChange = (currentStyleName: string) => {
@@ -148,28 +154,28 @@ const WebStyleSymbolShell = () => {
     }
 
     newWebStyleSymbol.styleName = currentStyleName;
-    updateGraphics(newWebStyleSymbol);
+    updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
   const handleCustomStyleChange = (
     currentStyleUrl: string,
     currentName: string,
-    itemType: "pointSymbol" | "lineSymbol" | "polygonSymbol"
+    itemType: ItemType
   ) => {
     const newWebStyleSymbol = new WebStyleSymbol();
     newWebStyleSymbol.name = currentName;
     newWebStyleSymbol.styleUrl = currentStyleUrl;
 
     if (itemType === "pointSymbol") {
-      updateGraphics(newWebStyleSymbol);
+      updateGraphics(newWebStyleSymbol, "pointSymbol");
     }
 
     if (itemType === "lineSymbol") {
-      console.log("lineSymbol", newWebStyleSymbol);
+      console.log(newWebStyleSymbol, "lineSymbol");
     }
 
     if (itemType === "polygonSymbol") {
-      console.log("polygonSymbol", newWebStyleSymbol);
+      console.log(newWebStyleSymbol, "polygonSymbol");
     }
   };
 
@@ -234,13 +240,13 @@ const WebStyleSymbolShell = () => {
                 <CalciteTabTitle>JSON</CalciteTabTitle>
               </CalciteTabNav>
               <CalciteTab>
-                <WebStyleSymbolESMPanel webStyleSymbol={webStyleSymbol} />
+                <WebStyleSymbolESMPanel webStyleSymbol={pointWebStyleSymbol} />
               </CalciteTab>
               <CalciteTab>
-                <WebStyleSymbolAMDPanel webStyleSymbol={webStyleSymbol} />
+                <WebStyleSymbolAMDPanel webStyleSymbol={pointWebStyleSymbol} />
               </CalciteTab>
               <CalciteTab>
-                <WebStyleSymbolJSONPanel webStyleSymbol={webStyleSymbol} />
+                <WebStyleSymbolJSONPanel webStyleSymbol={pointWebStyleSymbol} />
               </CalciteTab>
             </CalciteTabs>
           </CalcitePanel>

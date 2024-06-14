@@ -18,17 +18,13 @@ import {
   WEB_STYLE_SYMBOLS_2D_STYLE_OPTIONS
 } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import type { GroupItem, WebStyleStymbolItem } from "./lib/types";
+import type { GroupItem, ItemType, WebStyleStymbolItem } from "./lib/types";
 
 interface Props {
   groupItems: GroupItem[];
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (
-    styleUrl: string,
-    name: string,
-    itemType: "pointSymbol" | "lineSymbol" | "polygonSymbol"
-  ) => void;
+  handleCustomStyleChange: (styleUrl: string, name: string, itemType: ItemType) => void;
 }
 
 const WebStyleSymbol2DForm = ({
