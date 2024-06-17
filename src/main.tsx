@@ -14,7 +14,6 @@ import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-list";
 import "@esri/calcite-components/dist/components/calcite-list-item";
-import "@esri/calcite-components/dist/components/calcite-list-item-group";
 import "@esri/calcite-components/dist/components/calcite-loader";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";

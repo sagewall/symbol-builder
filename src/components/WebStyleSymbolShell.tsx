@@ -70,6 +70,7 @@ const WebStyleSymbolShell = () => {
     styleName: "EsriIconsStyle"
   });
 
+  const [currentWebStyleSymbol, setCurrentWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
   const [groupItems, setGroupItems] = useState([]);
   const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
   const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(
@@ -117,6 +118,7 @@ const WebStyleSymbolShell = () => {
   const updateGraphics = (newWebStyleSymbol: WebStyleSymbol, itemType: ItemType) => {
     if (itemType === "pointSymbol") {
       setPointWebStyleSymbol(newWebStyleSymbol);
+      setCurrentWebStyleSymbol(newWebStyleSymbol);
 
       const newPointGraphic = pointGraphic.clone();
       newPointGraphic.symbol = newWebStyleSymbol;
@@ -128,6 +130,7 @@ const WebStyleSymbolShell = () => {
 
     if (itemType === "lineSymbol") {
       setPolylineWebStyleSymbol(newWebStyleSymbol);
+      setCurrentWebStyleSymbol(newWebStyleSymbol);
 
       const newPolylineGraphic = polylineGraphic.clone();
       newPolylineGraphic.symbol = newWebStyleSymbol;
@@ -139,6 +142,7 @@ const WebStyleSymbolShell = () => {
 
     if (itemType === "polygonSymbol") {
       setPolygonWebStyleSymbol(newWebStyleSymbol);
+      setCurrentWebStyleSymbol(newWebStyleSymbol);
 
       const newPolygonGraphic = polygonGraphic.clone();
       newPolygonGraphic.symbol = newWebStyleSymbol;
@@ -286,13 +290,13 @@ const WebStyleSymbolShell = () => {
                 <CalciteTabTitle>JSON</CalciteTabTitle>
               </CalciteTabNav>
               <CalciteTab>
-                <WebStyleSymbolESMPanel webStyleSymbol={pointWebStyleSymbol} />
+                <WebStyleSymbolESMPanel webStyleSymbol={currentWebStyleSymbol} />
               </CalciteTab>
               <CalciteTab>
-                <WebStyleSymbolAMDPanel webStyleSymbol={pointWebStyleSymbol} />
+                <WebStyleSymbolAMDPanel webStyleSymbol={currentWebStyleSymbol} />
               </CalciteTab>
               <CalciteTab>
-                <WebStyleSymbolJSONPanel webStyleSymbol={pointWebStyleSymbol} />
+                <WebStyleSymbolJSONPanel webStyleSymbol={currentWebStyleSymbol} />
               </CalciteTab>
             </CalciteTabs>
           </CalcitePanel>

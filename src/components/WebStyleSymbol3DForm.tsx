@@ -4,7 +4,6 @@ import {
   CalciteLabel,
   CalciteList,
   CalciteListItem,
-  CalciteListItemGroup,
   CalciteOption,
   CalciteSelect,
   CalciteTab,
@@ -188,22 +187,27 @@ const WebStyleSymbolForm = ({
               value={styleUrl}
             ></CalciteInputText>
           </CalciteLabel>
-          <CalciteList label="Point WebStyleSymbols">
-            <CalciteListItemGroup heading="Point Symbols">
-              {pointWebStyleSymbolItems.map((item, index) => (
-                <CalciteListItem
-                  key={index}
-                  label={item.name}
-                  description={item.title}
-                  onClick={(event) => {
-                    const newName = (event.target as HTMLCalciteListItemElement).label as string;
-                    handleCustomStyleChange(styleUrl, newName, "pointSymbol");
-                  }}
-                >
-                  <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
-                </CalciteListItem>
-              ))}
-            </CalciteListItemGroup>
+          <CalciteList filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
+            {pointWebStyleSymbolItems.length > 0 && (
+              <CalciteListItem label="Point Symbols" open>
+                <CalciteList>
+                  {pointWebStyleSymbolItems.map((item, index) => (
+                    <CalciteListItem
+                      key={index}
+                      label={item.name}
+                      onClick={(event) => {
+                        const newName = (event.target as HTMLCalciteListItemElement)
+                          .label as string;
+                        handleCustomStyleChange(styleUrl, newName, "pointSymbol");
+                      }}
+                      value={item.name}
+                    >
+                      <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
+                    </CalciteListItem>
+                  ))}
+                </CalciteList>
+              </CalciteListItem>
+            )}
           </CalciteList>
         </CalciteTab>
       </CalciteTabs>
