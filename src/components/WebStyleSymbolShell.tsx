@@ -1,5 +1,6 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
+import esriRequest from "@arcgis/core/request";
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
 import {
   CalciteLabel,
@@ -12,7 +13,7 @@ import {
   CalciteTabTitle,
   CalciteTabs
 } from "@esri/calcite-components-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
 import SceneView from "./SceneView";
@@ -33,7 +34,7 @@ import {
   ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS,
   ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS
 } from "./lib/constants";
-import { point } from "./lib/geometry";
+import { point, polyline, polygon } from "./lib/geometry";
 import {
   formStyles,
   shellPanelStyles,
@@ -41,13 +42,27 @@ import {
   tabNavStyles,
   viewSwitchLabelStyles
 } from "./lib/styles";
+import type { GroupItem, ItemType } from "./lib/types";
 
 const WebStyleSymbolShell = () => {
   const viewSwitchRef = useRef(null);
 
-  const defaultWebStyleSymbol2D = new WebStyleSymbol({
-    name: "extent-hollow-gray",
-    styleName: "Esri2DPointSymbolsStyle"
+  const defaultPointWebStyleSymbol2D = new WebStyleSymbol({
+    name: "Armadillo",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
+  });
+
+  const defaultPolygonWebStyleSymbol2D = new WebStyleSymbol({
+    name: "A Crosshatch",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/807adef8568448318173798e15954ee5/data"
+  });
+
+  const defaultPolylineWebStyleSymbol2D = new WebStyleSymbol({
+    name: "Aqueduct",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/971bd7dfb0684860957ab7844a245bc1/data"
   });
 
   const defaultWebStyleSymbol3D = new WebStyleSymbol({
@@ -55,11 +70,29 @@ const WebStyleSymbolShell = () => {
     styleName: "EsriIconsStyle"
   });
 
-  const [webStyleSymbol, setWebStyleSymbol] = useState(defaultWebStyleSymbol2D);
+  const [currentWebStyleSymbol, setCurrentWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
+  const [groupItems, setGroupItems] = useState([]);
+  const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
+  const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(
+    defaultPolygonWebStyleSymbol2D
+  );
+  const [polylineWebStyleSymbol, setPolylineWebStyleSymbol] = useState(
+    defaultPolylineWebStyleSymbol2D
+  );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: webStyleSymbol
+    symbol: pointWebStyleSymbol
+  });
+
+  const polygonGraphic = new Graphic({
+    geometry: polygon,
+    symbol: polygonWebStyleSymbol
+  });
+
+  const polylineGraphic = new Graphic({
+    geometry: polyline,
+    symbol: polylineWebStyleSymbol
   });
 
   const graphicsCollection = new Collection();
@@ -77,26 +110,53 @@ const WebStyleSymbolShell = () => {
     if (viewSwitchRef.current) {
       setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
       (viewSwitchRef.current as HTMLCalciteSwitchElement).checked
-        ? updateGraphics(defaultWebStyleSymbol3D)
-        : updateGraphics(defaultWebStyleSymbol2D);
+        ? updateGraphics(defaultWebStyleSymbol3D, "pointSymbol")
+        : updateGraphics(defaultPointWebStyleSymbol2D, "pointSymbol");
     }
   };
 
-  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol) => {
-    setWebStyleSymbol(newWebStyleSymbol);
+  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol, itemType: ItemType) => {
+    if (itemType === "pointSymbol") {
+      setPointWebStyleSymbol(newWebStyleSymbol);
+      setCurrentWebStyleSymbol(newWebStyleSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newWebStyleSymbol;
+      const newPointGraphic = pointGraphic.clone();
+      newPointGraphic.symbol = newWebStyleSymbol;
 
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
+      const newGraphics = new Collection();
+      newGraphics.add(newPointGraphic);
+      setGraphics(newGraphics);
+    }
+
+    if (itemType === "lineSymbol") {
+      setPolylineWebStyleSymbol(newWebStyleSymbol);
+      setCurrentWebStyleSymbol(newWebStyleSymbol);
+
+      const newPolylineGraphic = polylineGraphic.clone();
+      newPolylineGraphic.symbol = newWebStyleSymbol;
+
+      const newGraphics = new Collection();
+      newGraphics.add(newPolylineGraphic);
+      setGraphics(newGraphics);
+    }
+
+    if (itemType === "polygonSymbol") {
+      setPolygonWebStyleSymbol(newWebStyleSymbol);
+      setCurrentWebStyleSymbol(newWebStyleSymbol);
+
+      const newPolygonGraphic = polygonGraphic.clone();
+      newPolygonGraphic.symbol = newWebStyleSymbol;
+
+      const newGraphics = new Collection();
+      newGraphics.add(newPolygonGraphic);
+      setGraphics(newGraphics);
+    }
   };
 
   const handleNameChange = (currentName: string) => {
-    const newWebStyleSymbol = webStyleSymbol.clone();
+    const newWebStyleSymbol = pointWebStyleSymbol.clone();
     newWebStyleSymbol.name = currentName;
-    updateGraphics(newWebStyleSymbol);
+    updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
   const handleStyleNameChange = (currentStyleName: string) => {
@@ -144,15 +204,47 @@ const WebStyleSymbolShell = () => {
     }
 
     newWebStyleSymbol.styleName = currentStyleName;
-    updateGraphics(newWebStyleSymbol);
+    updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
-  const handleCustomStyleChange = (currentStyleUrl: string, currentName: string) => {
+  const handleCustomStyleChange = (
+    currentStyleUrl: string,
+    currentName: string,
+    itemType: ItemType
+  ) => {
     const newWebStyleSymbol = new WebStyleSymbol();
     newWebStyleSymbol.name = currentName;
     newWebStyleSymbol.styleUrl = currentStyleUrl;
-    updateGraphics(newWebStyleSymbol);
+
+    if (itemType === "pointSymbol") {
+      updateGraphics(newWebStyleSymbol, "pointSymbol");
+    }
+
+    if (itemType === "lineSymbol") {
+      updateGraphics(newWebStyleSymbol, "lineSymbol");
+    }
+
+    if (itemType === "polygonSymbol") {
+      updateGraphics(newWebStyleSymbol, "polygonSymbol");
+    }
   };
+
+  const requestGroupItems = async (itemId: string) => {
+    const response = await esriRequest(
+      `https://www.arcgis.com/sharing/rest/content/groups/${itemId}?f=pjson`,
+      {
+        responseType: "json"
+      }
+    );
+    const sortedGroupItems = response.data.items
+      .filter((item: GroupItem) => item.type === "Style")
+      .sort((a: GroupItem, b: GroupItem) => a.title.localeCompare(b.title));
+    setGroupItems(sortedGroupItems);
+  };
+
+  useEffect(() => {
+    requestGroupItems("7687bc306b8048a48efd92b3a6da9d88");
+  }, []);
 
   return (
     <React.Fragment>
@@ -173,6 +265,7 @@ const WebStyleSymbolShell = () => {
             <div style={formStyles}>
               {!sceneView ? (
                 <WebStyleSymbol2DForm
+                  groupItems={groupItems}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
                   handleCustomStyleChange={handleCustomStyleChange}
@@ -197,13 +290,13 @@ const WebStyleSymbolShell = () => {
                 <CalciteTabTitle>JSON</CalciteTabTitle>
               </CalciteTabNav>
               <CalciteTab>
-                <WebStyleSymbolESMPanel webStyleSymbol={webStyleSymbol} />
+                <WebStyleSymbolESMPanel webStyleSymbol={currentWebStyleSymbol} />
               </CalciteTab>
               <CalciteTab>
-                <WebStyleSymbolAMDPanel webStyleSymbol={webStyleSymbol} />
+                <WebStyleSymbolAMDPanel webStyleSymbol={currentWebStyleSymbol} />
               </CalciteTab>
               <CalciteTab>
-                <WebStyleSymbolJSONPanel webStyleSymbol={webStyleSymbol} />
+                <WebStyleSymbolJSONPanel webStyleSymbol={currentWebStyleSymbol} />
               </CalciteTab>
             </CalciteTabs>
           </CalcitePanel>

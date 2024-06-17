@@ -161,41 +161,47 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       const symbol3DLayerCollectionForm: JSX.Element[] = [];
 
       symbolLayers.map((symbolLayer: FillSymbol3DLayer, index: number) => {
-        symbol3DLayerCollectionForm.push(
-          <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-            <CalciteAction
-              icon="trash"
-              onClick={() => deleteSymbol3DLayer(index)}
-              slot="control"
-              text="Delete"
-            />
-            <FillSymbol3DLayerForm
-              layerIndex={index}
-              isMeshSymbol3D={true}
-              handleCastShadowsChange={handleFillSymbol3DLayerCastShadowsChange}
-              handleFillSymbol3DLayerEdgesColorChange={handleFillSymbol3DLayerEdgesColorChange}
-              handleFillSymbol3DLayerEdgesExtensionLengthChange={
-                handleFillSymbol3DLayerEdgesExtensionLengthChange
-              }
-              handleFillSymbol3DLayerEdgesSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
-              handleFillSymbol3DLayerMaterialColorChange={
-                handleFillSymbol3DLayerMaterialColorChange
-              }
-              handleFillSymbol3DLayerMaterialColorMixModeChange={
-                handleFillSymbol3DLayerMaterialColorMixModeChange
-              }
-              handleFillSymbol3DLayerOutlineColorChange={handleFillSymbol3DLayerOutlineColorChange}
-              handleFillSymbol3DLayerOutlinePatternStyleChange={
-                handleFillSymbol3DLayerOutlinePatternChange
-              }
-              handleFillSymbol3DLayerOutlinePatternCapChange={
-                handleFillSymbol3DLayerOutlinePatternCapChange
-              }
-              handleFillSymbol3DLayerOutlineSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
-              handleFillSymbol3DLayerPatternStyleChange={handleFillSymbol3DLayerPatternStyleChange}
-            />
-          </CalciteBlock>
-        );
+        if (symbolLayer.type === "fill") {
+          symbol3DLayerCollectionForm.push(
+            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+              <CalciteAction
+                icon="trash"
+                onClick={() => deleteSymbol3DLayer(index)}
+                slot="control"
+                text="Delete"
+              />
+              <FillSymbol3DLayerForm
+                layerIndex={index}
+                isMeshSymbol3D={true}
+                handleCastShadowsChange={handleFillSymbol3DLayerCastShadowsChange}
+                handleFillSymbol3DLayerEdgesColorChange={handleFillSymbol3DLayerEdgesColorChange}
+                handleFillSymbol3DLayerEdgesExtensionLengthChange={
+                  handleFillSymbol3DLayerEdgesExtensionLengthChange
+                }
+                handleFillSymbol3DLayerEdgesSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
+                handleFillSymbol3DLayerMaterialColorChange={
+                  handleFillSymbol3DLayerMaterialColorChange
+                }
+                handleFillSymbol3DLayerMaterialColorMixModeChange={
+                  handleFillSymbol3DLayerMaterialColorMixModeChange
+                }
+                handleFillSymbol3DLayerOutlineColorChange={
+                  handleFillSymbol3DLayerOutlineColorChange
+                }
+                handleFillSymbol3DLayerOutlinePatternStyleChange={
+                  handleFillSymbol3DLayerOutlinePatternChange
+                }
+                handleFillSymbol3DLayerOutlinePatternCapChange={
+                  handleFillSymbol3DLayerOutlinePatternCapChange
+                }
+                handleFillSymbol3DLayerOutlineSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
+                handleFillSymbol3DLayerPatternStyleChange={
+                  handleFillSymbol3DLayerPatternStyleChange
+                }
+              />
+            </CalciteBlock>
+          );
+        }
       });
       return symbol3DLayerCollectionForm;
     }

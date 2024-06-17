@@ -12,3 +12,24 @@ export type FontOptions = {
   style: InstanceType<typeof Font>["style"];
   weight: InstanceType<typeof Font>["weight"];
 };
+
+export type ItemType = "pointSymbol" | "lineSymbol" | "polygonSymbol";
+
+export type GroupItem = {
+  access: string;
+  id: string;
+  snippet: string;
+  thumbnail: string;
+  title: string;
+  type: string;
+};
+
+export type WebStyleStymbolItem = {
+  cimRef: string;
+  dimensionality: string;
+  formats: string[];
+  itemType: ItemType;
+  name: string;
+  thumbnail: { href: string };
+  title: string;
+};
