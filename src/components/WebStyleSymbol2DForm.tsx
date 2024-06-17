@@ -4,7 +4,6 @@ import {
   CalciteLabel,
   CalciteList,
   CalciteListItem,
-  CalciteListItemGroup,
   CalciteOption,
   CalciteSelect,
   CalciteTab,
