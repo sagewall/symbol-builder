@@ -107,6 +107,7 @@ const SimpleLineSymbolShell = () => {
         setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
         updateGraphics(newSimpleLineSymbol);
       } else {
+        //@ts-expect-error marker symbol can to be null
         newSimpleLineSymbol.marker = null;
         updateGraphics(newSimpleLineSymbol);
       }
