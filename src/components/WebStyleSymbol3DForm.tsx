@@ -196,8 +196,10 @@ const WebStyleSymbolForm = ({
                       key={index}
                       label={item.name}
                       onClick={(event) => {
-                        const newName = (event.target as HTMLCalciteListItemElement)
-                          .label as string;
+                        const newName =
+                          (event.target as HTMLCalciteListItemElement).label === undefined
+                            ? (event.target as HTMLImageElement).alt
+                            : (event.target as HTMLCalciteListItemElement).label;
                         handleCustomStyleChange(styleUrl, newName, "pointSymbol");
                       }}
                       value={item.name}
