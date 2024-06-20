@@ -6,9 +6,9 @@ import {
 } from "@esri/calcite-components-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import Header from "../components/Header";
 import { SYMBOLS } from "../components/lib/constants";
 import { cardContainerStyles, cardFooterStyles, cardStyles } from "../components/lib/styles";
-import Header from "../components/Header";
 
 const cards = SYMBOLS.map((symbol) => {
   return (

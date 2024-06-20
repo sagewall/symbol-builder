@@ -32,10 +32,6 @@ export const formStyles = {
 };
 
 export const headerStyles = {
-  alignItems: "center",
-  display: "flex",
-  flexgap: "1em",
-  gap: "1em",
   paddingLeft: "1em"
 };
 

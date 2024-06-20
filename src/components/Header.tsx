@@ -1,6 +1,6 @@
+import { CalciteButton, CalciteNavigation, CalciteTooltip } from "@esri/calcite-components-react";
 import React from "react";
 import { headerStyles } from "./lib/styles";
-import { CalciteButton, CalciteTooltip } from "@esri/calcite-components-react";
 
 interface Props {
   title: string;
@@ -10,11 +10,10 @@ interface Props {
 const Header = ({ title, backButton }: Props) => {
   return (
     <React.Fragment>
-      <header slot="header" style={headerStyles}>
+      <CalciteNavigation slot="header">
         {backButton && (
           <React.Fragment>
             <CalciteButton
-              appearance="outline"
               iconStart="arrow-bold-left"
               id="backButton"
               label="back"
@@ -22,12 +21,15 @@ const Header = ({ title, backButton }: Props) => {
               onClick={() => {
                 history.back();
               }}
+              slot="content-start"
             ></CalciteButton>
             <CalciteTooltip referenceElement="backButton">Back</CalciteTooltip>
           </React.Fragment>
         )}
-        <h3>{title}</h3>
-      </header>
+        <h3 slot="content-start" style={headerStyles}>
+          {title}
+        </h3>
+      </CalciteNavigation>
     </React.Fragment>
   );
 };
