@@ -3,10 +3,8 @@ import Collection from "@arcgis/core/core/Collection";
 import type ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
-import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import {
   CalcitePanel,
@@ -58,10 +56,8 @@ const PolygonSymbol3DShell = () => {
       | FillSymbol3DLayer
       | ExtrudeSymbol3DLayer
       | WaterSymbol3DLayer
-      | LineSymbol3DLayer
       | IconSymbol3DLayer
       | ObjectSymbol3DLayer
-      | TextSymbol3DLayer
     >
   ) => {
     const newPolygonSymbol3D = polygonSymbol3D.clone();

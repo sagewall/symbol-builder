@@ -15,13 +15,9 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
   let colorImport = false;
   let extrudeSymbol3DLayerImport = false;
   let fillSymbol3DLayerImport = false;
-  let fontImport = false;
   let iconSymbol3DLayerImport = false;
-  let lineStyleMarker3DImport = false;
-  let lineSymbol3DLayerImport = false;
   let objectSymbol3DLayerImport = false;
   const polygonSymbol3DImport = true;
-  let textSymbol3DLayerImport = false;
   let waterSymbol3DLayerImport = false;
   let lineStylePattern3DImport = false;
   let solidEdges3DImport = false;
@@ -46,15 +42,6 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
       waterSymbol3DLayerImport = true;
     }
 
-    if (symbolLayer.type === "line") {
-      colorImport = true;
-      lineSymbol3DLayerImport = true;
-      lineStylePattern3DImport = true;
-      if (symbolLayer.marker) {
-        lineStyleMarker3DImport = true;
-      }
-    }
-
     if (symbolLayer.type === "icon") {
       colorImport = true;
       iconSymbol3DLayerImport = true;
@@ -63,12 +50,6 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
     if (symbolLayer.type === "object") {
       colorImport = true;
       objectSymbol3DLayerImport = true;
-    }
-
-    if (symbolLayer.type === "text") {
-      colorImport = true;
-      fontImport = true;
-      textSymbol3DLayerImport = true;
     }
   });
 
@@ -81,25 +62,14 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
   fillSymbol3DLayerImport &&
     (codeSnippet += `import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";\n`);
 
-  fontImport && (codeSnippet += `import Font from "@arcgis/core/symbols/Font.js";\n`);
-
   iconSymbol3DLayerImport &&
     (codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`);
-
-  lineStyleMarker3DImport &&
-    (codeSnippet += `import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";\n`);
-
-  lineSymbol3DLayerImport &&
-    (codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`);
 
   objectSymbol3DLayerImport &&
     (codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`);
 
   polygonSymbol3DImport &&
     (codeSnippet += `import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";\n`);
-
-  textSymbol3DLayerImport &&
-    (codeSnippet += `import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";\n`);
 
   waterSymbol3DLayerImport &&
     (codeSnippet += `import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";\n`);
@@ -171,43 +141,6 @@ const polygonSymbol3D = new PolygonSymbol3D({
       waveStrength: "${symbolLayer.waveStrength}"
     }),
     `;
-    }
-
-    if (symbolLayer.type === "line") {
-      if (symbolLayer.material.color && symbolLayer.marker) {
-        codeSnippet += `
-    new LineSymbol3DLayer({
-      cap: "${symbolLayer.cap}",
-      join: "${symbolLayer.join}",
-      marker: new LineStyleMarker3D({
-        color: new Color([${symbolLayer.marker.color.toRgba()}]),
-        placement: "${symbolLayer.marker.placement}",
-        style: "${symbolLayer.marker.style}"
-      }),
-      material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
-      },
-      pattern: new LineStylePattern3D({
-        style: "${symbolLayer.pattern.style}"
-      }),
-      size: ${symbolLayer.size}
-    }),
-    `;
-      } else if (symbolLayer.material.color) {
-        codeSnippet += `
-    new LineSymbol3DLayer({
-      cap: "${symbolLayer.cap}",
-      join: "${symbolLayer.join}",
-      material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
-      },
-      pattern: new LineStylePattern3D({
-        style: "${symbolLayer.pattern.style}"
-      }),
-      size: ${symbolLayer.size}
-    }),
-    `;
-      }
     }
 
     if (symbolLayer.type === "icon") {
@@ -295,37 +228,6 @@ const polygonSymbol3D = new PolygonSymbol3D({
       roll: ${symbolLayer.roll},
       tilt: ${symbolLayer.tilt},
       width: ${symbolLayer.width}
-    }),
-    `;
-      }
-    }
-
-    if (symbolLayer.type === "text") {
-      if (symbolLayer.background.color && symbolLayer.halo.color && symbolLayer.material.color) {
-        codeSnippet += `
-    new TextSymbol3DLayer({
-      background: {
-        color: new Color([${symbolLayer.background.color.toRgba()}]),
-      },
-      font: new Font({
-        decoration: "${symbolLayer.font.decoration}",
-        family: "${symbolLayer.font.family}",
-        size: ${symbolLayer.font.size},
-        style: "${symbolLayer.font.style}",
-        weight: "${symbolLayer.font.weight}"
-      }),
-      halo: {
-        color: new Color([${symbolLayer.halo.color.toRgba()}]),
-        size: ${symbolLayer.halo.size}
-      },
-      horizontalAlignment: "${symbolLayer.horizontalAlignment}",
-      lineHeight: ${symbolLayer.lineHeight},
-      material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
-      },
-      size: ${symbolLayer.size},
-      text: "${symbolLayer.text}",
-      verticalAlignment: "${symbolLayer.verticalAlignment}"
     }),
     `;
       }

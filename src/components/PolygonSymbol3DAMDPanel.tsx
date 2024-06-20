@@ -80,48 +80,6 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
       `;
     }
 
-    if (symbolLayer.type === "line") {
-      if (symbolLayer.material.color && symbolLayer.marker) {
-        codeSnippet += `
-      {
-        type: "line",
-        cap: "${symbolLayer.cap}",
-        join: "${symbolLayer.join}",
-        marker: {
-          type: "style",
-          color: [${symbolLayer.marker.color.toRgba()}],
-          placement: "${symbolLayer.marker.placement}",
-          style: "${symbolLayer.marker.style}"
-        },
-        material: {
-          color: [${symbolLayer.material.color.toRgba()}],
-        },
-        pattern: {
-          type: "style",
-          style: "${symbolLayer.pattern.style}"
-        },
-        size: ${symbolLayer.size}
-      },
-      `;
-      } else if (symbolLayer.material.color) {
-        codeSnippet += `
-      {
-        type: "line",
-        cap: "${symbolLayer.cap}",
-        join: "${symbolLayer.join}",
-        material: {
-          color: [${symbolLayer.material.color.toRgba()}],
-        },
-        pattern: {
-          type: "style",
-          style: "${symbolLayer.pattern.style}"
-        },
-        size: ${symbolLayer.size}
-      },
-      `;
-      }
-    }
-
     if (symbolLayer.type === "icon") {
       if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.resource.href) {
         codeSnippet += `
@@ -223,38 +181,6 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
         roll: ${symbolLayer.roll},
         tilt: ${symbolLayer.tilt},
         width: ${symbolLayer.width}
-      },
-      `;
-      }
-    }
-
-    if (symbolLayer.type === "text") {
-      if (symbolLayer.background.color && symbolLayer.halo.color && symbolLayer.material.color) {
-        codeSnippet += `
-      {
-        type: "text",
-        background: {
-          color: [${symbolLayer.background.color.toRgba()}],
-        },
-        font: {
-          decoration: "${symbolLayer.font.decoration}",
-          family: "${symbolLayer.font.family}",
-          size: ${symbolLayer.font.size},
-          style: "${symbolLayer.font.style}",
-          weight: "${symbolLayer.font.weight}"
-        },
-        halo: {
-          color: [${symbolLayer.halo.color.toRgba()}],
-          size: ${symbolLayer.halo.size}
-        },
-        horizontalAlignment: "${symbolLayer.horizontalAlignment}",
-        lineHeight: ${symbolLayer.lineHeight},
-        material: {
-          color: [${symbolLayer.material.color.toRgba()}],
-        },
-        size: ${symbolLayer.size},
-        text: "${symbolLayer.text}",
-        verticalAlignment: "${symbolLayer.verticalAlignment}"
       },
       `;
       }
