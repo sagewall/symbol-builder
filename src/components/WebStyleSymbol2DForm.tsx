@@ -51,6 +51,10 @@ const WebStyleSymbol2DForm = ({
   }, [groupItems]);
 
   const getStyleItemDataFromItem = async (groupItem: GroupItem) => {
+    setPointWebStyleSymbolItems([]);
+    setLineWebStyleSymbolItems([]);
+    setPolygonWebStyleSymbolItems([]);
+
     const styleItem = groupItems.find((styleItem) => styleItem.title === groupItem.title);
     if (styleItem && styleItem.id) {
       const response = await esriRequest(
