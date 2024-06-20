@@ -93,6 +93,10 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         placement: "begin-end",
         style: "arrow"
       });
+    } else {
+      // @ts-expect-error strictNullChecks
+      symbolLayer.marker = null;
+      updateSymbolLayers(newSymbolLayers);
     }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
