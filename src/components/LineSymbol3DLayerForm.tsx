@@ -112,7 +112,10 @@ const LineSymbol3DLayerForm = ({
         style={blockStyles}
         collapsible
         heading={"marker"}
-        onCalciteBlockToggle={(event) => {
+        onCalciteBlockClose={(event) => {
+          handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
+        }}
+        onCalciteBlockOpen={(event) => {
           handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
         }}
       >

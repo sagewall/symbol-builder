@@ -65,7 +65,12 @@ const SimpleLineSymbolForm = ({
         style={blockStyles}
         collapsible
         heading={"marker"}
-        onCalciteBlockToggle={(event) => {
+        onCalciteBlockClose={(event) => {
+          if (handleMarkerBlockToggle) {
+            handleMarkerBlockToggle(event.target);
+          }
+        }}
+        onCalciteBlockOpen={(event) => {
           if (handleMarkerBlockToggle) {
             handleMarkerBlockToggle(event.target);
           }
