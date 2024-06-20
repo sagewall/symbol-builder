@@ -42,12 +42,32 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
+  const [lineStyleMarker3Ds, setLineStyleMarker3Ds] = useState(
+    new Collection([
+      new LineStyleMarker3D({
+        color: "#007ac2",
+        placement: "begin-end",
+        style: "arrow"
+      })
+    ])
+  );
+
   const addLineSymbol3DLayer = () => {
     const newSymbolLayers = symbolLayers.clone();
     const lineSymbol3DLayer = createNewLineSymbol3DLayer();
     newSymbolLayers.add(lineSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
+
+    const newLineStyleMarker3Ds = lineStyleMarker3Ds.clone();
+    newLineStyleMarker3Ds.add(
+      new LineStyleMarker3D({
+        color: "#007ac2",
+        placement: "begin-end",
+        style: "arrow"
+      })
+    );
+    setLineStyleMarker3Ds(newLineStyleMarker3Ds);
   };
 
   const addPathSymbol3DLayer = () => {
@@ -88,12 +108,12 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
     if (currentMarkerBlock.open && !symbolLayer.marker) {
-      symbolLayer.marker = new LineStyleMarker3D({
-        color: "#007ac2",
-        placement: "begin-end",
-        style: "arrow"
-      });
+      symbolLayer.marker = lineStyleMarker3Ds.getItemAt(layerIndex);
     } else {
+      const newLineStyleMarker3Ds = lineStyleMarker3Ds.clone();
+      newLineStyleMarker3Ds.removeAt(layerIndex);
+      newLineStyleMarker3Ds.add(symbolLayer.marker as LineStyleMarker3D, layerIndex);
+      setLineStyleMarker3Ds(newLineStyleMarker3Ds);
       // @ts-expect-error strictNullChecks
       symbolLayer.marker = null;
       updateSymbolLayers(newSymbolLayers);
