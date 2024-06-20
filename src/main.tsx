@@ -2,6 +2,7 @@ import "@arcgis/core/assets/esri/themes/light/main.css";
 import "@esri/calcite-components/dist/calcite/calcite.css";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
 import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-alert";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-button";
 import "@esri/calcite-components/dist/components/calcite-card";

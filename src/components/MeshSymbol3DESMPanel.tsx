@@ -1,6 +1,6 @@
 import type MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D";
-import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
-import React from "react";
+import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
+import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
 interface Props {
@@ -8,8 +8,11 @@ interface Props {
 }
 
 const MeshSymbol3DESMPanel = ({ meshSymbol3D }: Props) => {
-  const handleCopyClick = () => {
-    navigator.clipboard.writeText(codeSnippet);
+  const alertRef = useRef<HTMLCalciteAlertElement>(null);
+
+  const handleCopyClick = async () => {
+    await navigator.clipboard.writeText(codeSnippet);
+    alertRef.current && (alertRef.current.open = true);
   };
 
   let codeSnippet = `
@@ -67,6 +70,16 @@ const meshSymbol3D = new MeshSymbol3D({
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </CalcitePanel>
+      <CalciteAlert
+        autoClose
+        autoCloseDuration="fast"
+        icon="copy-to-clipboard"
+        kind="success"
+        label="Copied to clipboard"
+        ref={alertRef}
+      >
+        <div slot="message">Copied to clipboard</div>
+      </CalciteAlert>
     </React.Fragment>
   );
 };

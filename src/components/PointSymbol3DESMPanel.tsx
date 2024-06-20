@@ -1,6 +1,6 @@
 import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
-import { CalciteAction, CalcitePanel } from "@esri/calcite-components-react";
-import React from "react";
+import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
+import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
 interface Props {
@@ -8,8 +8,11 @@ interface Props {
 }
 
 const PointSymbol3DESMPanel = ({ pointSymbol3D }: Props) => {
-  const handleCopyClick = () => {
-    navigator.clipboard.writeText(codeSnippet);
+  const alertRef = useRef<HTMLCalciteAlertElement>(null);
+
+  const handleCopyClick = async () => {
+    await navigator.clipboard.writeText(codeSnippet);
+    alertRef.current && (alertRef.current.open = true);
   };
 
   let colorImport = false;
@@ -223,6 +226,16 @@ const pointSymbol3D = new PointSymbol3D({
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </CalcitePanel>
+      <CalciteAlert
+        autoClose
+        autoCloseDuration="fast"
+        icon="copy-to-clipboard"
+        kind="success"
+        label="Copied to clipboard"
+        ref={alertRef}
+      >
+        <div slot="message">Copied to clipboard</div>
+      </CalciteAlert>
     </React.Fragment>
   );
 };
