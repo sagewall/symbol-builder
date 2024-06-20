@@ -226,7 +226,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const createSymbol3DLayerCollectionForm = () => {
     if (symbolLayers.length > 0) {
-      const symbol3DLayerCollectionForm: JSX.Element[] = [];
+      const symbol3DLayerCollectionForm: React.JSX.Element[] = [];
 
       symbolLayers.map((symbolLayer: LineSymbol3DLayer | PathSymbol3DLayer, index: number) => {
         if (symbolLayer.type === "line") {
