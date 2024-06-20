@@ -723,7 +723,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           value="Information"
           style={chipStyles}
         ></CalciteChip>
-        <CalciteTooltip label="add-layer" reference-element={"add-layer-chip"}>
+        <CalciteTooltip reference-element={"add-layer-chip"}>
           <span>Add symbol layer by opening the dropdown menu on the right</span>
         </CalciteTooltip>
 

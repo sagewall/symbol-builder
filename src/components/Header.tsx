@@ -23,9 +23,7 @@ const Header = ({ title, backButton }: Props) => {
                 history.back();
               }}
             ></CalciteButton>
-            <CalciteTooltip label="back" referenceElement="backButton">
-              Back
-            </CalciteTooltip>
+            <CalciteTooltip referenceElement="backButton">Back</CalciteTooltip>
           </React.Fragment>
         )}
         <h3>{title}</h3>

@@ -24,10 +24,7 @@ const cards = SYMBOLS.map((symbol) => {
               icon="layers"
               scale="s"
             />
-            <CalciteTooltip
-              label="symbol layers"
-              reference-element={`${symbol.name}-symbol-layers-chip`}
-            >
+            <CalciteTooltip reference-element={`${symbol.name}-symbol-layers-chip`}>
               <span>Symbol Layers</span>
             </CalciteTooltip>
           </React.Fragment>
@@ -41,7 +38,7 @@ const cards = SYMBOLS.map((symbol) => {
               icon="point"
               scale="s"
             />
-            <CalciteTooltip label="point" reference-element={`${symbol.name}-point-chip`}>
+            <CalciteTooltip reference-element={`${symbol.name}-point-chip`}>
               <span>Point</span>
             </CalciteTooltip>
           </React.Fragment>
@@ -55,7 +52,7 @@ const cards = SYMBOLS.map((symbol) => {
               icon="line"
               scale="s"
             />
-            <CalciteTooltip label="line" reference-element={`${symbol.name}-line-chip`}>
+            <CalciteTooltip reference-element={`${symbol.name}-line-chip`}>
               <span>Line</span>
             </CalciteTooltip>
           </React.Fragment>
@@ -69,7 +66,7 @@ const cards = SYMBOLS.map((symbol) => {
               icon="polygon"
               scale="s"
             />
-            <CalciteTooltip label="polygon" reference-element={`${symbol.name}-polygon-chip`}>
+            <CalciteTooltip reference-element={`${symbol.name}-polygon-chip`}>
               <span>Polygon</span>
             </CalciteTooltip>
           </React.Fragment>
@@ -83,7 +80,7 @@ const cards = SYMBOLS.map((symbol) => {
               icon="cube"
               scale="s"
             />
-            <CalciteTooltip label="mesh" reference-element={`${symbol.name}-mesh-chip`}>
+            <CalciteTooltip reference-element={`${symbol.name}-mesh-chip`}>
               <span>Mesh</span>
             </CalciteTooltip>
           </React.Fragment>
@@ -92,7 +89,7 @@ const cards = SYMBOLS.map((symbol) => {
         {symbol.mapView && (
           <React.Fragment>
             <CalciteChip id={`${symbol.name}-map-chip`} value="2D" icon="map" scale="s" />
-            <CalciteTooltip label="2D Map View" reference-element={`${symbol.name}-map-chip`}>
+            <CalciteTooltip reference-element={`${symbol.name}-map-chip`}>
               <span>2D Map View</span>
             </CalciteTooltip>
           </React.Fragment>
@@ -106,7 +103,7 @@ const cards = SYMBOLS.map((symbol) => {
               icon="globe"
               scale="s"
             ></CalciteChip>
-            <CalciteTooltip label="3D Scene View" reference-element={`${symbol.name}-scene-chip`}>
+            <CalciteTooltip reference-element={`${symbol.name}-scene-chip`}>
               <span>3D Scene View</span>
             </CalciteTooltip>
           </React.Fragment>
