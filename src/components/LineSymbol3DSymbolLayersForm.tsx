@@ -81,6 +81,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const deleteSymbol3DLayer = (index: number) => {
     const newSymbolLayers = symbolLayers.clone();
     newSymbolLayers.removeAt(index);
+    lineStyleMarker3Ds.removeAt(index);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -252,12 +253,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         if (symbolLayer.type === "line") {
           symbol3DLayerCollectionForm.push(
             <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-              <CalciteAction
-                icon="trash"
-                onClick={() => deleteSymbol3DLayer(index)}
-                slot="control"
-                text="Delete"
-              />
+              {index === symbolLayers.length - 1 && (
+                <CalciteAction
+                  icon="trash"
+                  onClick={() => deleteSymbol3DLayer(index)}
+                  slot="control"
+                  text="Delete"
+                />
+              )}
               <LineSymbol3DLayerForm
                 layerIndex={index}
                 handleCapChange={handleLineSymbol3DLayerCapChange}

@@ -536,12 +536,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           if (symbolLayer.type === "extrude") {
             symbol3DLayerCollectionForm.push(
               <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-                <CalciteAction
-                  icon="trash"
-                  onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
-                  text="Delete"
-                />
+                {index === symbolLayers.length - 1 && (
+                  <CalciteAction
+                    icon="trash"
+                    onClick={() => deleteSymbol3DLayer(index)}
+                    slot="control"
+                    text="Delete"
+                  />
+                )}
                 <ExtrudeSymbol3DLayerForm
                   layerIndex={index}
                   handleCastShadowsChange={handleExtrudeSymbol3DLayerCastShadowsChange}
