@@ -36,7 +36,7 @@ const SceneView = ({ graphics }: SceneViewProps) => {
     const { view } = event.target;
     if (view) {
       view.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
-      view.scale = 2257;
+      view.zoom = 18;
       setView(view);
     }
   };
