@@ -1,11 +1,7 @@
 import type Graphic from "@arcgis/core/Graphic";
 import type Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
 import type ArcSceneView from "@arcgis/core/views/SceneView";
-import type { ArcgisSceneCustomEvent } from "@arcgis/map-components";
-import { ArcgisPlacement, ArcgisScene } from "@arcgis/map-components-react";
-import { CalciteAction } from "@esri/calcite-components-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
   height: "100%",
@@ -19,7 +15,23 @@ interface SceneViewProps {
 const SceneView = ({ graphics }: SceneViewProps) => {
   const isSSR = typeof window === "undefined";
 
+  const viewDivRef = useRef<HTMLDivElement>(null);
+
   const [view, setView] = useState<ArcSceneView | null>(null);
+
+  useEffect(() => {
+    if (viewDivRef.current) {
+      const loadSceneView = async () => {
+        const { createSceneView } = await import("./lib/sceneview");
+        setView(await createSceneView(viewDivRef.current as HTMLDivElement, graphics));
+      };
+      loadSceneView();
+
+      return () => {
+        view && view.destroy();
+      };
+    }
+  }, []);
 
   useEffect(() => {
     if (view) {
@@ -32,39 +44,8 @@ const SceneView = ({ graphics }: SceneViewProps) => {
     }
   }, [view, graphics]);
 
-  const handleArcgisViewReadyChange = (event: ArcgisSceneCustomEvent<void>) => {
-    const { view } = event.target;
-    if (view) {
-      view.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
-      view.zoom = 18;
-      setView(view);
-    }
-  };
-
   return (
-    <React.Fragment>
-      {!isSSR && (
-        <ArcgisScene
-          basemap="gray-vector"
-          onArcgisViewReadyChange={(event) => {
-            handleArcgisViewReadyChange(event);
-          }}
-          style={viewStyles}
-        >
-          <ArcgisPlacement position="top-right">
-            <CalciteAction
-              icon="zoom-to-object"
-              scale="s"
-              text="Zoom to Graphics"
-              textEnabled
-              onClick={() => {
-                view?.goTo(view.graphics);
-              }}
-            ></CalciteAction>
-          </ArcgisPlacement>
-        </ArcgisScene>
-      )}
-    </React.Fragment>
+    <React.Fragment>{!isSSR && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
   );
 };
 
