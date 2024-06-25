@@ -888,13 +888,13 @@ export const SYMBOLS = [
   {
     description:
       "WebStyleSymbol is a class used to conveniently create vector 2D symbols and realistic and thematic 3D symbols.",
-    line: false,
+    line: true,
     link: "/web-style-symbol/",
     mapView: true,
     mesh: false,
     name: "WebStyleSymbol",
     point: true,
-    polygon: false,
+    polygon: true,
     sceneView: true,
     symbolLayers: false
   }
