@@ -13,10 +13,9 @@ interface MapViewProps {
 }
 
 const MapView = ({ graphics }: MapViewProps) => {
-  const isSSR = typeof window === "undefined";
-
   const viewDivRef = useRef<HTMLDivElement>(null);
 
+  const [mounted, setMounted] = useState(true);
   const [view, setView] = useState<ArcMapView | null>(null);
 
   useEffect(() => {
@@ -34,6 +33,10 @@ const MapView = ({ graphics }: MapViewProps) => {
   }, []);
 
   useEffect(() => {
+    setMounted(true);
+  }, [view]);
+
+  useEffect(() => {
     if (view) {
       const loadGraphics = async () => {
         if (graphics) {
@@ -45,7 +48,7 @@ const MapView = ({ graphics }: MapViewProps) => {
   }, [view, graphics]);
 
   return (
-    <React.Fragment>{!isSSR && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
+    <React.Fragment>{mounted && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
   );
 };
 

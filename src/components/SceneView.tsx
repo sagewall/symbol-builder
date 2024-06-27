@@ -13,10 +13,9 @@ interface SceneViewProps {
 }
 
 const SceneView = ({ graphics }: SceneViewProps) => {
-  const isSSR = typeof window === "undefined";
-
   const viewDivRef = useRef<HTMLDivElement>(null);
 
+  const [mounted, setMounted] = useState(true);
   const [view, setView] = useState<ArcSceneView | null>(null);
 
   useEffect(() => {
@@ -34,6 +33,10 @@ const SceneView = ({ graphics }: SceneViewProps) => {
   }, []);
 
   useEffect(() => {
+    setMounted(true);
+  }, [view]);
+
+  useEffect(() => {
     if (view) {
       const loadGraphics = async () => {
         if (graphics) {
@@ -45,7 +48,7 @@ const SceneView = ({ graphics }: SceneViewProps) => {
   }, [view, graphics]);
 
   return (
-    <React.Fragment>{!isSSR && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
+    <React.Fragment>{mounted && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
   );
 };
 
