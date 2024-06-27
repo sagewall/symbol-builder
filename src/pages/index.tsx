@@ -97,12 +97,7 @@ const cards = SYMBOLS.map((symbol) => {
 
         {symbol.sceneView && (
           <React.Fragment>
-            <CalciteChip
-              id={`${symbol.name}-scene-chip`}
-              value="3D"
-              icon="globe"
-              scale="s"
-            ></CalciteChip>
+            <CalciteChip id={`${symbol.name}-scene-chip`} value="3D" icon="globe" scale="s" />
             <CalciteTooltip reference-element={`${symbol.name}-scene-chip`}>
               <span>3D Scene View</span>
             </CalciteTooltip>
