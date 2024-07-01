@@ -1,4 +1,5 @@
 import react from "@vitejs/plugin-react";
+import { bundleStats } from "rollup-plugin-bundle-stats";
 import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, loadEnv } from "vite";
 
@@ -10,12 +11,16 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 2500
     },
     plugins: [
+      bundleStats({
+        baseline: true
+      }),
       react(),
       visualizer({
-        template: "treemap",
-        open: true,
+        brotliSize: true,
+        filename: "./dist/stats.html",
         gzipSize: true,
-        filename: "analyze.html"
+        open: true,
+        template: "sunburst"
       })
     ]
   };
