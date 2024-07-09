@@ -24,12 +24,6 @@ const SceneView = ({ graphics }: SceneViewProps) => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (arcgisScene.current && graphics) {
-      arcgisScene.current.graphics = graphics;
-    }
-  }, [graphics]);
-
   const handleArcgisViewReadyChange = (event: ArcgisSceneCustomEvent<void>) => {
     event.target.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
     event.target.view.zoom = 17;
@@ -40,7 +34,8 @@ const SceneView = ({ graphics }: SceneViewProps) => {
       {mounted && (
         <ArcgisScene
           basemap="gray-vector"
-          ground="world-elevation"
+          graphics={graphics}
+          // ground="world-elevation"
           onArcgisViewReadyChange={(event) => {
             handleArcgisViewReadyChange(event);
           }}

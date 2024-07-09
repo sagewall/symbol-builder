@@ -24,12 +24,6 @@ const MapView = ({ graphics }: MapViewProps) => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (arcgisMap.current && graphics) {
-      arcgisMap.current.graphics = graphics;
-    }
-  }, [graphics]);
-
   const handleArcgisViewReadyChange = (event: ArcgisMapCustomEvent<void>) => {
     event.target.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
     event.target.zoom = 18;
@@ -40,6 +34,7 @@ const MapView = ({ graphics }: MapViewProps) => {
       {mounted && (
         <ArcgisMap
           basemap="gray-vector"
+          graphics={graphics}
           onArcgisViewReadyChange={(event) => {
             handleArcgisViewReadyChange(event);
           }}
