@@ -1,4 +1,7 @@
 import "@arcgis/core/assets/esri/themes/light/main.css";
+import "@arcgis/map-components/dist/components/arcgis-map";
+import "@arcgis/map-components/dist/components/arcgis-placement";
+import "@arcgis/map-components/dist/components/arcgis-scene";
 import "@esri/calcite-components/dist/calcite/calcite.css";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
 import "@esri/calcite-components/dist/components/calcite-action";
@@ -48,7 +51,7 @@ import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
 import TextSymbolPage from "./pages/text-symbol";
 import WebStyleSymbolPage from "./pages/web-style-symbol";
 
-setAssetPath("https://js.arcgis.com/calcite-components/2.8.5/assets");
+setAssetPath("https://js.arcgis.com/calcite-components/2.13.1/assets");
 
 const router = createBrowserRouter(
   [

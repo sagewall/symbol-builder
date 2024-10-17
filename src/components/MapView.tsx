@@ -1,6 +1,9 @@
 import type Graphic from "@arcgis/core/Graphic";
 import type Collection from "@arcgis/core/core/Collection";
-import type ArcMapView from "@arcgis/core/views/MapView";
+import Point from "@arcgis/core/geometry/Point";
+import type { ArcgisMapCustomEvent } from "@arcgis/map-components";
+import { ArcgisMap, ArcgisPlacement } from "@arcgis/map-components-react";
+import { CalciteAction } from "@esri/calcite-components-react";
 import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
@@ -13,42 +16,45 @@ interface MapViewProps {
 }
 
 const MapView = ({ graphics }: MapViewProps) => {
-  const viewDivRef = useRef<HTMLDivElement>(null);
-
   const [mounted, setMounted] = useState(true);
-  const [view, setView] = useState<ArcMapView | null>(null);
 
-  useEffect(() => {
-    if (viewDivRef.current) {
-      const loadMapView = async () => {
-        const { createMapView } = await import("./lib/mapview");
-        setView(await createMapView(viewDivRef.current as HTMLDivElement, graphics));
-      };
-      loadMapView();
-
-      return () => {
-        view && view.destroy();
-      };
-    }
-  }, []);
+  const arcgisMap = useRef<HTMLArcgisMapElement>(null);
 
   useEffect(() => {
     setMounted(true);
-  }, [view]);
+  }, []);
 
-  useEffect(() => {
-    if (view) {
-      const loadGraphics = async () => {
-        if (graphics) {
-          view.graphics = graphics;
-        }
-      };
-      loadGraphics();
-    }
-  }, [view, graphics]);
+  const handleArcgisViewReadyChange = (event: ArcgisMapCustomEvent<void>) => {
+    event.target.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
+    event.target.zoom = 18;
+  };
 
   return (
-    <React.Fragment>{mounted && <div style={viewStyles} ref={viewDivRef}></div>}</React.Fragment>
+    <React.Fragment>
+      {mounted && (
+        <ArcgisMap
+          basemap="gray-vector"
+          graphics={graphics}
+          onArcgisViewReadyChange={(event) => {
+            handleArcgisViewReadyChange(event);
+          }}
+          ref={arcgisMap}
+          style={viewStyles}
+        >
+          <ArcgisPlacement position="top-right">
+            <CalciteAction
+              icon="zoom-to-object"
+              scale="s"
+              text="Zoom to Graphics"
+              textEnabled
+              onClick={() => {
+                arcgisMap.current?.goTo(arcgisMap.current.graphics);
+              }}
+            ></CalciteAction>
+          </ArcgisPlacement>
+        </ArcgisMap>
+      )}
+    </React.Fragment>
   );
 };
 

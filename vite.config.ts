@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   return {
     base: env.VITE_BASE_NAME,
     build: {
-      chunkSizeWarningLimit: 2500
+      chunkSizeWarningLimit: 2600
     },
     plugins: [
       bundleStats({
