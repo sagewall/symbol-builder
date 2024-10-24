@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@arcgis/map-components-react": "^4.31.0-next.129",
+    "@arcgis/map-components-react": "^4.31.0-next.137",
     "@esri/calcite-components-react": "^2.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

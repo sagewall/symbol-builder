@@ -113,6 +113,14 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleIconSymbol3DLayerAngleChange = (layerIndex: number, value: number) => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
+    symbolLayer.angle = value;
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleIconSymbol3DLayerAnchorPositionYChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -443,6 +451,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleIconSymbol3DLayerAnchorPositionXChange={
                     handleIconSymbol3DLayerAnchorPositionXChange
                   }
+                  handleIconSymbol3DLayerAngleChange={handleIconSymbol3DLayerAngleChange}
                   handleIconSymbol3DLayerAnchorPositionYChange={
                     handleIconSymbol3DLayerAnchorPositionYChange
                   }

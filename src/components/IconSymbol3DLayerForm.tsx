@@ -4,7 +4,8 @@ import {
   CalciteInputNumber,
   CalciteLabel,
   CalciteOption,
-  CalciteSelect
+  CalciteSelect,
+  CalciteSlider
 } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
@@ -21,6 +22,7 @@ interface Props {
     value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
   ) => void;
   handleIconSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerAngleChange: (layerIndex: number, value: number) => void;
   handleIconSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
@@ -37,6 +39,7 @@ const IconSymbol3DLayerForm = ({
   layerIndex,
   handleIconSymbol3DLayerAnchorChange,
   handleIconSymbol3DLayerAnchorPositionXChange,
+  handleIconSymbol3DLayerAngleChange,
   handleIconSymbol3DLayerAnchorPositionYChange,
   handleIconSymbol3DLayerMaterialColorChange,
   handleIconSymbol3DLayerOutlineColorChange,
@@ -46,6 +49,7 @@ const IconSymbol3DLayerForm = ({
   handleSizeChange
 }: Props) => {
   const [anchor, setAnchor] = useState("center");
+  const [angle, setAngle] = useState(0);
   const [size, setSize] = useState("12");
 
   return (
@@ -82,6 +86,23 @@ const IconSymbol3DLayerForm = ({
           ></IconSymbol3DLayerAnchorPositionForm>
         </CalciteBlock>
       )}
+
+      <CalciteLabel layout="default" style={labelStyles}>
+        angle
+        <CalciteSlider
+          labelHandles={true}
+          labelTicks={true}
+          max={360}
+          min={0}
+          onCalciteSliderChange={(event) => {
+            setAngle(event.target.value as number);
+            handleIconSymbol3DLayerAngleChange(layerIndex, event.target.value as number);
+          }}
+          step={1}
+          ticks={180}
+          value={angle}
+        ></CalciteSlider>
+      </CalciteLabel>
 
       <CalciteBlock style={blockStyles} collapsible heading={"material"}>
         <IconSymbol3DLayerMaterialForm
