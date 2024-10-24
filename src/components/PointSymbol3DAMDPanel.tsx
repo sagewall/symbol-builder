@@ -64,6 +64,7 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
           x: ${symbolLayer.anchorPosition.x},
           y: ${symbolLayer.anchorPosition.y}
         },
+        angle: ${symbolLayer.angle},
         material: {
           color: [${symbolLayer.material.color.toRgba()}]
         },

@@ -77,6 +77,7 @@ const pointSymbol3D = new PointSymbol3D({
         x: ${symbolLayer.anchorPosition.x},
         y: ${symbolLayer.anchorPosition.y}
       },
+      angle: ${symbolLayer.angle},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba()}])
       },
@@ -102,6 +103,7 @@ const pointSymbol3D = new PointSymbol3D({
         x: ${symbolLayer.anchorPosition.x},
         y: ${symbolLayer.anchorPosition.y}
       },
+      angle: ${symbolLayer.angle},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba()}])
       },
