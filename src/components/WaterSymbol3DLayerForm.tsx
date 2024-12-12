@@ -1,11 +1,4 @@
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
-import {
-  CalciteInput,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect,
-  CalciteSlider
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { WATERBODY_SIZE_OPTIONS, WAVE_STRENGTH_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
@@ -38,10 +31,10 @@ const WaterSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -50,13 +43,13 @@ const WaterSymbol3DLayerForm = ({
           type="color"
           value={color}
         />
-      </CalciteLabel>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         waterbodySize
-        <CalciteSelect
+        <calcite-select
           label={"waterbodySize selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setWaterbodySize(event.target.value);
             handleWaterbodySizeChange(
               layerIndex,
@@ -67,38 +60,38 @@ const WaterSymbol3DLayerForm = ({
         >
           {WATERBODY_SIZE_OPTIONS.map((option, index) =>
             option === "medium" ? (
-              <CalciteOption key={index} selected>
+              <calcite-option key={index} selected>
                 {option}
-              </CalciteOption>
+              </calcite-option>
             ) : (
-              <CalciteOption key={index}>{option}</CalciteOption>
+              <calcite-option key={index}>{option}</calcite-option>
             )
           )}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         waveDirection
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setWaveDirection(event.target.value as number);
             handleWaveDirectionChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={180}
           value={waveDirection}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         waveStrength
-        <CalciteSelect
+        <calcite-select
           label={"waveStrength selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setWaveStrength(event.target.value);
             handleWaveStrengthChange(
               layerIndex,
@@ -109,15 +102,15 @@ const WaterSymbol3DLayerForm = ({
         >
           {WAVE_STRENGTH_OPTIONS.map((option, index) =>
             option === "moderate" ? (
-              <CalciteOption key={index} selected>
+              <calcite-option key={index} selected>
                 {option}
-              </CalciteOption>
+              </calcite-option>
             ) : (
-              <CalciteOption key={index}>{option}</CalciteOption>
+              <calcite-option key={index}>{option}</calcite-option>
             )
           )}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
     </React.Fragment>
   );
 };

@@ -1,16 +1,4 @@
 import esriRequest from "@arcgis/core/request";
-import {
-  CalciteInputText,
-  CalciteLabel,
-  CalciteList,
-  CalciteListItem,
-  CalciteOption,
-  CalciteSelect,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabs,
-  CalciteTabTitle
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import {
   ESRI_ICONS_STYLE_NAME_OPTIONS,
@@ -136,33 +124,33 @@ const WebStyleSymbolForm = ({
 
   return (
     <React.Fragment>
-      <CalciteTabs>
-        <CalciteTabNav slot="title-group" onCalciteTabChange={handleTabChange}>
-          <CalciteTabTitle tab="standard">Standard</CalciteTabTitle>
-          <CalciteTabTitle tab="custom">Custom</CalciteTabTitle>
-        </CalciteTabNav>
-        <CalciteTab tab="standard">
-          <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-tabs>
+        <calcite-tab-nav slot="title-group" oncalciteTabChange={handleTabChange}>
+          <calcite-tab-title tab="standard">Standard</calcite-tab-title>
+          <calcite-tab-title tab="custom">Custom</calcite-tab-title>
+        </calcite-tab-nav>
+        <calcite-tab tab="standard">
+          <calcite-label layout="default" style={labelStyles}>
             name
-            <CalciteSelect
+            <calcite-select
               label={"name selection"}
-              onCalciteSelectChange={(event) => {
+              oncalciteSelectChange={(event) => {
                 setName(event.target.value as string);
                 handleNameChange(event.target.value as string);
               }}
               value={name}
             >
               {names.map((option, index) => (
-                <CalciteOption key={index}>{option}</CalciteOption>
+                <calcite-option key={index}>{option}</calcite-option>
               ))}
-            </CalciteSelect>
-          </CalciteLabel>
+            </calcite-select>
+          </calcite-label>
 
-          <CalciteLabel layout="default" style={labelStyles}>
+          <calcite-label layout="default" style={labelStyles}>
             styleName
-            <CalciteSelect
+            <calcite-select
               label={"styleName selection"}
-              onCalciteSelectChange={(event) => {
+              oncalciteSelectChange={(event) => {
                 setStyleName(event.target.value);
                 handleStyleNameChange(event.target.value);
                 updateNames(event.target.value);
@@ -170,29 +158,29 @@ const WebStyleSymbolForm = ({
               value={styleName}
             >
               {WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS.map((option, index) => (
-                <CalciteOption key={index}>{option}</CalciteOption>
+                <calcite-option key={index}>{option}</calcite-option>
               ))}
-            </CalciteSelect>
-          </CalciteLabel>
-        </CalciteTab>
-        <CalciteTab tab="custom">
-          <CalciteLabel layout="default" style={labelStyles}>
+            </calcite-select>
+          </calcite-label>
+        </calcite-tab>
+        <calcite-tab tab="custom">
+          <calcite-label layout="default" style={labelStyles}>
             styleUrl
-            <CalciteInputText
+            <calcite-input-text
               label={"url input"}
-              onCalciteInputTextChange={(event) => {
+              oncalciteInputTextChange={(event) => {
                 setStyleUrl(event.target.value);
                 getStyleItemDataFromUrl(event.target.value);
               }}
               value={styleUrl}
-            ></CalciteInputText>
-          </CalciteLabel>
-          <CalciteList filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
+            ></calcite-input-text>
+          </calcite-label>
+          <calcite-list filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
             {pointWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Point Symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Point Symbols" open>
+                <calcite-list>
                   {pointWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -205,14 +193,14 @@ const WebStyleSymbolForm = ({
                       value={item.name}
                     >
                       <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
-          </CalciteList>
-        </CalciteTab>
-      </CalciteTabs>
+          </calcite-list>
+        </calcite-tab>
+      </calcite-tabs>
     </React.Fragment>
   );
 };

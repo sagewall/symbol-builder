@@ -6,15 +6,6 @@ import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
-import {
-  CalcitePanel,
-  CalciteShell,
-  CalciteShellPanel,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabTitle,
-  CalciteTabs
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import PolygonSymbol3DAMDPanel from "./PolygonSymbol3DAMDPanel";
@@ -68,39 +59,39 @@ const PolygonSymbol3DShell = () => {
 
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="PolygonSymbol3D" backButton></Header>
-        <CalciteShellPanel slot="panel-start" position="start" resizable>
-          <CalcitePanel>
+        <calcite-shell-panel slot="panel-start" position="start" resizable>
+          <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <PolygonSymbol3DForm updateSymbolLayers={updateSymbolLayers}></PolygonSymbol3DForm>
             </div>
-          </CalcitePanel>
-        </CalciteShellPanel>
+          </calcite-panel>
+        </calcite-shell-panel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <CalcitePanel>
-            <CalciteTabs>
-              <CalciteTabNav slot="title-group" style={tabNavStyles}>
-                <CalciteTabTitle>ESM</CalciteTabTitle>
-                <CalciteTabTitle>AMD</CalciteTabTitle>
-                <CalciteTabTitle>JSON</CalciteTabTitle>
-              </CalciteTabNav>
-              <CalciteTab>
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+          <calcite-panel>
+            <calcite-tabs>
+              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+                <calcite-tab-title>ESM</calcite-tab-title>
+                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>JSON</calcite-tab-title>
+              </calcite-tab-nav>
+              <calcite-tab>
                 <PolygonSymbol3DESMPanel polygonSymbol3D={polygonSymbol3D} />
-              </CalciteTab>
-              <CalciteTab>
+              </calcite-tab>
+              <calcite-tab>
                 <PolygonSymbol3DAMDPanel polygonSymbol3D={polygonSymbol3D} />
-              </CalciteTab>
-              <CalciteTab>
+              </calcite-tab>
+              <calcite-tab>
                 <PolygonSymbol3DJSONPanel polygonSymbol3D={polygonSymbol3D} />
-              </CalciteTab>
-            </CalciteTabs>
-          </CalcitePanel>
-        </CalciteShellPanel>
+              </calcite-tab>
+            </calcite-tabs>
+          </calcite-panel>
+        </calcite-shell-panel>
         {view}
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

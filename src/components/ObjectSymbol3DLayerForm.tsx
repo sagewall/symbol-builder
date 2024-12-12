@@ -1,13 +1,4 @@
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect,
-  CalciteSlider,
-  CalciteSwitch
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
@@ -67,11 +58,11 @@ const ObjectSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         anchor
-        <CalciteSelect
+        <calcite-select
           label={"anchor selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setAnchor(event.target.value);
             handleAnchorChange(
               layerIndex,
@@ -81,13 +72,13 @@ const ObjectSymbol3DLayerForm = ({
           value={anchor}
         >
           {OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
       {anchor === "relative" && (
-        <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
+        <calcite-block style={blockStyles} collapsible heading={"anchorPosition"}>
           <ObjectSymbol3DLayerAnchorPositionForm
             layerIndex={layerIndex}
             handleObjectSymbol3DLayerAnchorPositionXChange={
@@ -100,124 +91,124 @@ const ObjectSymbol3DLayerForm = ({
               handleObjectSymbol3DLayerAnchorPositionZChange
             }
           ></ObjectSymbol3DLayerAnchorPositionForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         castShadows
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
+        <calcite-switch
+          oncalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
           value={castShadows}
-        ></CalciteSwitch>
-      </CalciteLabel>
+        ></calcite-switch>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         depth
-        <CalciteInputNumber
+        <calcite-input-number
           label={"depth input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setDepth(event.target.value);
             handleDepthChange(layerIndex, event.target.value);
           }}
           value={depth}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         height
-        <CalciteInputNumber
+        <calcite-input-number
           label={"height input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setHeight(event.target.value);
             handleHeightChange(layerIndex, event.target.value);
           }}
           value={height}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         width
-        <CalciteInputNumber
+        <calcite-input-number
           label={"width input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setWidth(event.target.value);
             handleWidthChange(layerIndex, event.target.value);
           }}
           value={width}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <ObjectSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleObjectSymbol3DLayerMaterialColorChange}
         ></ObjectSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"resource"}>
+      <calcite-block style={blockStyles} collapsible heading={"resource"}>
         <ObjectSymbol3DLayerResourceForm
           layerIndex={layerIndex}
           handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
           handlePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
         ></ObjectSymbol3DLayerResourceForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         heading
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setHeading(event.target.value as number);
             handleHeadingChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={90}
           value={heading}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         roll
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setRoll(event.target.value as number);
             handleRollChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={90}
           value={roll}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         tilt
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setTilt(event.target.value as number);
             handleTiltChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={90}
           value={tilt}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
     </React.Fragment>
   );
 };

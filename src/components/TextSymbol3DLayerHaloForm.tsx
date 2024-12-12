@@ -1,4 +1,3 @@
-import { CalciteInput, CalciteInputNumber, CalciteLabel } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
@@ -14,10 +13,10 @@ const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeCh
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -26,20 +25,20 @@ const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeCh
           type="color"
           value={color}
         />
-      </CalciteLabel>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

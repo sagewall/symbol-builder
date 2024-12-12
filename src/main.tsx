@@ -9,16 +9,14 @@ import "@esri/calcite-components/dist/components/calcite-alert";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-button";
 import "@esri/calcite-components/dist/components/calcite-card";
+import "@esri/calcite-components/dist/components/calcite-card-group";
 import "@esri/calcite-components/dist/components/calcite-chip";
-import "@esri/calcite-components/dist/components/calcite-combobox";
-import "@esri/calcite-components/dist/components/calcite-combobox-item";
 import "@esri/calcite-components/dist/components/calcite-input";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-list";
 import "@esri/calcite-components/dist/components/calcite-list-item";
-import "@esri/calcite-components/dist/components/calcite-loader";
 import "@esri/calcite-components/dist/components/calcite-navigation";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-panel";
@@ -51,7 +49,9 @@ import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
 import TextSymbolPage from "./pages/text-symbol";
 import WebStyleSymbolPage from "./pages/web-style-symbol";
 
-setAssetPath("https://js.arcgis.com/calcite-components/2.13.2/assets");
+setAssetPath(
+  "https://cdn.jsdelivr.net/npm/@esri/calcite-components@3.0.0-next.106/dist/calcite/assets"
+);
 
 const router = createBrowserRouter(
   [

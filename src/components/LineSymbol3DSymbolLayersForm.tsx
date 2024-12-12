@@ -4,12 +4,6 @@ import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import {
-  CalciteAction,
-  CalciteBlock,
-  CalciteChip,
-  CalciteTooltip
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
@@ -252,9 +246,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       symbolLayers.map((symbolLayer: LineSymbol3DLayer | PathSymbol3DLayer, index: number) => {
         if (symbolLayer.type === "line") {
           symbol3DLayerCollectionForm.push(
-            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+            <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
               {index === symbolLayers.length - 1 && (
-                <CalciteAction
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
@@ -279,14 +273,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 }
                 handleSizeChange={handleLineSymbol3DLayerSizeChange}
               />
-            </CalciteBlock>
+            </calcite-block>
           );
         }
 
         if (symbolLayer.type === "path") {
           symbol3DLayerCollectionForm.push(
-            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-              <CalciteAction
+            <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+              <calcite-action
                 icon="trash"
                 onClick={() => deleteSymbol3DLayer(index)}
                 slot="control"
@@ -306,7 +300,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 handleProfileRotationChange={handlePathSymbol3DLayerProfileRotationChange}
                 handleWidthChange={handlePathSymbol3DLayerWidthChange}
               ></PathSymbol3DLayerForm>
-            </CalciteBlock>
+            </calcite-block>
           );
         }
       });
@@ -316,36 +310,36 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
-        <CalciteChip
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
           slot="control"
           value="Information"
           style={chipStyles}
-        ></CalciteChip>
-        <CalciteTooltip reference-element={"add-layer-chip"}>
+        ></calcite-chip>
+        <calcite-tooltip reference-element={"add-layer-chip"}>
           <span>Add symbol layer by opening the dropdown menu on the right</span>
-        </CalciteTooltip>
+        </calcite-tooltip>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addLineSymbol3DLayer()}
           slot="header-menu-actions"
           icon="line"
           text-enabled
           text="Add LineSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addPathSymbol3DLayer()}
           slot="header-menu-actions"
           icon="line"
           text-enabled
           text="Add PathSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
         {createSymbol3DLayerCollectionForm()}
-      </CalciteBlock>
+      </calcite-block>
     </React.Fragment>
   );
 };

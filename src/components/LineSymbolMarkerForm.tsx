@@ -1,10 +1,4 @@
 import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
-import {
-  CalciteInput,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { MARKER_PLACEMENT_OPTIONS, MARKER_STYLE_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
@@ -28,10 +22,10 @@ const LineSymbolMarkerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -42,13 +36,13 @@ const LineSymbolMarkerForm = ({
           type="color"
           value={color}
         />
-      </CalciteLabel>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         placement
-        <CalciteSelect
+        <calcite-select
           label={"marker placement selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setPlacement(event.target.value);
             if (handlePlacementChange) {
               handlePlacementChange(
@@ -59,16 +53,16 @@ const LineSymbolMarkerForm = ({
           value={placement}
         >
           {MARKER_PLACEMENT_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         style
-        <CalciteSelect
+        <calcite-select
           label={"marker style selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
             if (handleStyleChange) {
               handleStyleChange(
@@ -79,10 +73,10 @@ const LineSymbolMarkerForm = ({
           value={style}
         >
           {MARKER_STYLE_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
     </React.Fragment>
   );
 };

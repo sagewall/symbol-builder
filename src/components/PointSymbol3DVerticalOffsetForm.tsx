@@ -1,4 +1,3 @@
-import { CalciteInputNumber, CalciteLabel } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
@@ -18,44 +17,44 @@ const PointSymbol3DVerticalOffsetForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         maxWorldLength
-        <CalciteInputNumber
+        <calcite-input-number
           label={"maxWorldLength input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setMaxWorldLength(event.target.value);
             handleMaxWorldLengthChange(event.target.value);
           }}
           value={maxWorldLength}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         minWorldLength
-        <CalciteInputNumber
+        <calcite-input-number
           label={"minWorldLength input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setMinWorldLength(event.target.value);
             handleMinWorldLengthChange(event.target.value);
           }}
           value={minWorldLength}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         screenLength
-        <CalciteInputNumber
+        <calcite-input-number
           label={"screenLength input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setScreenLength(event.target.value);
             handleScreenLengthChange(event.target.value);
           }}
           value={screenLength}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

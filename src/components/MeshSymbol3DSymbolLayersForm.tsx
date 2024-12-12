@@ -4,12 +4,6 @@ import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
-import {
-  CalciteAction,
-  CalciteBlock,
-  CalciteChip,
-  CalciteTooltip
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import { blockStyles, chipStyles } from "./lib/styles";
@@ -163,9 +157,9 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       symbolLayers.map((symbolLayer: FillSymbol3DLayer, index: number) => {
         if (symbolLayer.type === "fill") {
           symbol3DLayerCollectionForm.push(
-            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+            <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
               {index === symbolLayers.length - 1 && (
-                <CalciteAction
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
@@ -201,7 +195,7 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleFillSymbol3DLayerPatternStyleChange
                 }
               />
-            </CalciteBlock>
+            </calcite-block>
           );
         }
       });
@@ -211,28 +205,28 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
-        <CalciteChip
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
           slot="control"
           value="Information"
           style={chipStyles}
-        ></CalciteChip>
-        <CalciteTooltip reference-element={"add-layer-chip"}>
+        ></calcite-chip>
+        <calcite-tooltip reference-element={"add-layer-chip"}>
           <span>Add symbol layer by opening the dropdown menu on the right</span>
-        </CalciteTooltip>
+        </calcite-tooltip>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addFillSymbol3DLayer()}
           slot="header-menu-actions"
           icon="cube"
           text-enabled
           text="Add FillSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
         {createSymbol3DLayerCollectionForm()}
-      </CalciteBlock>
+      </calcite-block>
     </React.Fragment>
   );
 };

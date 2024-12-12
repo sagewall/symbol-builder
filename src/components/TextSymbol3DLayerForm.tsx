@@ -1,13 +1,5 @@
 import type Font from "@arcgis/core/symbols/Font";
 import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteInputText,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import TextSymbol3DLayerBackgroundForm from "./TextSymbol3DLayerBackgroundForm";
 import TextSymbol3DLayerFontForm from "./TextSymbol3DLayerFontForm";
@@ -74,26 +66,26 @@ const TextSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         text
-        <CalciteInputText
+        <calcite-input-text
           label={"text input"}
-          onCalciteInputTextChange={(event) => {
+          oncalciteInputTextChange={(event) => {
             setText(event.target.value);
             handleTextChange(layerIndex, event.target.value);
           }}
           value={text}
-        ></CalciteInputText>
-      </CalciteLabel>
+        ></calcite-input-text>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"background"}>
+      <calcite-block style={blockStyles} collapsible heading={"background"}>
         <TextSymbol3DLayerBackgroundForm
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
         ></TextSymbol3DLayerBackgroundForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"font"}>
+      <calcite-block style={blockStyles} collapsible heading={"font"}>
         <TextSymbol3DLayerFontForm
           layerIndex={layerIndex}
           handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
@@ -102,21 +94,21 @@ const TextSymbol3DLayerForm = ({
           handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
           handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
         />
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"halo"}>
+      <calcite-block style={blockStyles} collapsible heading={"halo"}>
         <TextSymbol3DLayerHaloForm
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerHaloColorChange}
           handleSizeChange={handleTextSymbol3DLayerHaloSizeChange}
         ></TextSymbol3DLayerHaloForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         horizontalAlignment
-        <CalciteSelect
+        <calcite-select
           label={"horizontalAlignment selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
               layerIndex,
@@ -126,16 +118,16 @@ const TextSymbol3DLayerForm = ({
           value={horizontalAlignment}
         >
           {HORIZONTAL_ALIGNMENT_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         verticalAlignment
-        <CalciteSelect
+        <calcite-select
           label={"verticalAlignment selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
               layerIndex,
@@ -145,43 +137,43 @@ const TextSymbol3DLayerForm = ({
           value={verticalAlignment}
         >
           {VERTICAL_ALIGNMENT_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         lineHeight
-        <CalciteInputNumber
+        <calcite-input-number
           label={"lineHeight input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setLineHeight(event.target.value);
             handleLineHeightChange(layerIndex, event.target.value);
           }}
           value={lineHeight}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <TextSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
         ></TextSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

@@ -3,17 +3,6 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import {
-  CalciteLabel,
-  CalcitePanel,
-  CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabTitle,
-  CalciteTabs
-} from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
@@ -158,19 +147,19 @@ const SimpleFillSymbolShell = () => {
 
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="SimpleFillSymbol" backButton></Header>
-        <CalciteShellPanel slot="panel-start" position="start" resizable>
-          <CalcitePanel>
+        <calcite-shell-panel slot="panel-start" position="start" resizable>
+          <calcite-panel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
-              <CalciteSwitch
+              <calcite-switch
                 ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-              ></CalciteSwitch>
+                oncalciteSwitchChange={handleSwitchChange}
+              ></calcite-switch>
               3D
-            </CalciteLabel>
+            </calcite-label>
 
             <div style={formStyles}>
               <SimpleFillSymbolForm
@@ -184,31 +173,31 @@ const SimpleFillSymbolShell = () => {
                 handleStyleChange={handleStyleChange}
               />
             </div>
-          </CalcitePanel>
-        </CalciteShellPanel>
+          </calcite-panel>
+        </calcite-shell-panel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <CalcitePanel>
-            <CalciteTabs>
-              <CalciteTabNav slot="title-group" style={tabNavStyles}>
-                <CalciteTabTitle>ESM</CalciteTabTitle>
-                <CalciteTabTitle>AMD</CalciteTabTitle>
-                <CalciteTabTitle>JSON</CalciteTabTitle>
-              </CalciteTabNav>
-              <CalciteTab>
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+          <calcite-panel>
+            <calcite-tabs>
+              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+                <calcite-tab-title>ESM</calcite-tab-title>
+                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>JSON</calcite-tab-title>
+              </calcite-tab-nav>
+              <calcite-tab>
                 <SimpleFillSymbolESMPanel simpleFillSymbol={simpleFillSymbol} />
-              </CalciteTab>
-              <CalciteTab>
+              </calcite-tab>
+              <calcite-tab>
                 <SimpleFillSymbolAMDPanel simpleFillSymbol={simpleFillSymbol} />
-              </CalciteTab>
-              <CalciteTab>
+              </calcite-tab>
+              <calcite-tab>
                 <SimpleFillSymbolJSONPanel simpleFillSymbol={simpleFillSymbol} />
-              </CalciteTab>
-            </CalciteTabs>
-          </CalcitePanel>
-        </CalciteShellPanel>
+              </calcite-tab>
+            </calcite-tabs>
+          </calcite-panel>
+        </calcite-shell-panel>
         {view}
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

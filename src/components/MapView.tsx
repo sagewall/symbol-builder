@@ -2,8 +2,6 @@ import type Graphic from "@arcgis/core/Graphic";
 import type Collection from "@arcgis/core/core/Collection";
 import Point from "@arcgis/core/geometry/Point";
 import type { ArcgisMapCustomEvent } from "@arcgis/map-components";
-import { ArcgisMap, ArcgisPlacement } from "@arcgis/map-components-react";
-import { CalciteAction } from "@esri/calcite-components-react";
 import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
@@ -32,17 +30,17 @@ const MapView = ({ graphics }: MapViewProps) => {
   return (
     <React.Fragment>
       {mounted && (
-        <ArcgisMap
+        <arcgis-map
           basemap="gray-vector"
           graphics={graphics}
-          onArcgisViewReadyChange={(event) => {
+          onarcgisViewReadyChange={(event) => {
             handleArcgisViewReadyChange(event);
           }}
           ref={arcgisMap}
           style={viewStyles}
         >
-          <ArcgisPlacement position="top-right">
-            <CalciteAction
+          <arcgis-placement position="top-right">
+            <calcite-action
               icon="zoom-to-object"
               scale="s"
               text="Zoom to Graphics"
@@ -50,9 +48,9 @@ const MapView = ({ graphics }: MapViewProps) => {
               onClick={() => {
                 arcgisMap.current?.goTo(arcgisMap.current.graphics);
               }}
-            ></CalciteAction>
-          </ArcgisPlacement>
-        </ArcgisMap>
+            ></calcite-action>
+          </arcgis-placement>
+        </arcgis-map>
       )}
     </React.Fragment>
   );

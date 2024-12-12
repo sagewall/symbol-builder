@@ -1,12 +1,5 @@
 import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import {
-  CalciteBlock,
-  CalciteInput,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import { FILL_OPTIONS } from "./lib/constants";
@@ -38,10 +31,10 @@ const SimpleFillSymbolForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -50,9 +43,9 @@ const SimpleFillSymbolForm = ({
           type="color"
           value={color}
         />
-      </CalciteLabel>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"outline:"}>
+      <calcite-block style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm
           handleCapChange={handleOutlineCapChange}
           handleColorChange={handleOutlineColorChange}
@@ -63,23 +56,23 @@ const SimpleFillSymbolForm = ({
           showMarker={false}
           solidOnly={false}
         />
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         style
-        <CalciteSelect
+        <calcite-select
           label={"style selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
             handleStyleChange(event.target.value as InstanceType<typeof SimpleFillSymbol>["style"]);
           }}
           value={style}
         >
           {FILL_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
     </React.Fragment>
   );
 };

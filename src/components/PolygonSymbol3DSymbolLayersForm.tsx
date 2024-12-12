@@ -8,12 +8,6 @@ import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
-import {
-  CalciteAction,
-  CalciteBlock,
-  CalciteChip,
-  CalciteTooltip
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import ExtrudeSymbol3DLayerForm from "./ExtrudeSymbol3DLayerForm";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
@@ -535,9 +529,9 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         ) => {
           if (symbolLayer.type === "extrude") {
             symbol3DLayerCollectionForm.push(
-              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 {index === symbolLayers.length - 1 && (
-                  <CalciteAction
+                  <calcite-action
                     icon="trash"
                     onClick={() => deleteSymbol3DLayer(index)}
                     slot="control"
@@ -561,14 +555,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   }
                   handleSizeChange={handleExtrudeSymbol3DLayerSizeChange}
                 />
-              </CalciteBlock>
+              </calcite-block>
             );
           }
 
           if (symbolLayer.type === "fill") {
             symbol3DLayerCollectionForm.push(
-              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-                <CalciteAction
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
@@ -605,14 +599,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                     handleFillSymbol3DLayerPatternStyleChange
                   }
                 />
-              </CalciteBlock>
+              </calcite-block>
             );
           }
 
           if (symbolLayer.type === "icon") {
             symbol3DLayerCollectionForm.push(
-              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-                <CalciteAction
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
@@ -644,14 +638,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   }
                   handleSizeChange={handleIconSymbol3DLayerSizeChange}
                 />
-              </CalciteBlock>
+              </calcite-block>
             );
           }
 
           if (symbolLayer.type === "object") {
             symbol3DLayerCollectionForm.push(
-              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-                <CalciteAction
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
@@ -686,14 +680,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleTiltChange={handleObjectSymbol3DLayerTiltChange}
                   handleWidthChange={handleObjectSymbol3DLayerWidthChange}
                 ></ObjectSymbol3DLayerForm>
-              </CalciteBlock>
+              </calcite-block>
             );
           }
 
           if (symbolLayer.type === "water") {
             symbol3DLayerCollectionForm.push(
-              <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-                <CalciteAction
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
@@ -706,7 +700,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleWaveDirectionChange={handleWaterSymbol3DLayerWaveDirectionChange}
                   handleWaveStrengthChange={handleWaterSymbol3DLayerWaveStrengthChange}
                 />
-              </CalciteBlock>
+              </calcite-block>
             );
           }
         }
@@ -717,59 +711,59 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
-        <CalciteChip
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
           slot="control"
           value="Information"
           style={chipStyles}
-        ></CalciteChip>
-        <CalciteTooltip reference-element={"add-layer-chip"}>
+        ></calcite-chip>
+        <calcite-tooltip reference-element={"add-layer-chip"}>
           <span>Add symbol layer by opening the dropdown menu on the right</span>
-        </CalciteTooltip>
+        </calcite-tooltip>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addFillSymbol3DLayer()}
           slot="header-menu-actions"
           icon="polygon"
           text-enabled
           text="Add FillSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addExtrudeSymbol3DLayer()}
           slot="header-menu-actions"
           icon="polygon"
           text-enabled
           text="Add ExtrudeSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addWaterSymbol3DLayer()}
           slot="header-menu-actions"
           icon="polygon"
           text-enabled
           text="Add WaterSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addIconSymbol3DLayer()}
           slot="header-menu-actions"
           icon="point"
           text-enabled
           text="Add IconSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addObjectSymbol3DLayer()}
           slot="header-menu-actions"
           icon="point"
           text-enabled
           text="Add ObjectSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
         {createSymbol3DLayerCollectionForm()}
-      </CalciteBlock>
+      </calcite-block>
     </React.Fragment>
   );
 };

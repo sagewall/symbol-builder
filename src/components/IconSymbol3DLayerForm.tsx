@@ -1,12 +1,4 @@
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect,
-  CalciteSlider
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
@@ -54,11 +46,11 @@ const IconSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         anchor
-        <CalciteSelect
+        <calcite-select
           label={"anchor selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
@@ -68,13 +60,13 @@ const IconSymbol3DLayerForm = ({
           value={anchor}
         >
           {ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
       {anchor === "relative" && (
-        <CalciteBlock style={blockStyles} collapsible heading={"anchorPosition"}>
+        <calcite-block style={blockStyles} collapsible heading={"anchorPosition"}>
           <IconSymbol3DLayerAnchorPositionForm
             layerIndex={layerIndex}
             handleIconSymbol3DLayerAnchorPositionXChange={
@@ -84,61 +76,61 @@ const IconSymbol3DLayerForm = ({
               handleIconSymbol3DLayerAnchorPositionYChange
             }
           ></IconSymbol3DLayerAnchorPositionForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         angle
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setAngle(event.target.value as number);
             handleIconSymbol3DLayerAngleChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={180}
           value={angle}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <IconSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
         ></IconSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"outline"}>
+      <calcite-block style={blockStyles} collapsible heading={"outline"}>
         <IconSymbol3DLayerOutlineForm
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
           handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
         ></IconSymbol3DLayerOutlineForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"resource"}>
+      <calcite-block style={blockStyles} collapsible heading={"resource"}>
         <IconSymbol3DLayerResourceForm
           layerIndex={layerIndex}
           handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
           handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
         ></IconSymbol3DLayerResourceForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

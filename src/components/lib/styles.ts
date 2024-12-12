@@ -6,16 +6,7 @@ export const cardFooterStyles = {
   flexFlow: "row"
 };
 
-export const cardContainerStyles = {
-  alignItems: "stretch",
-  display: "flex",
-  flexFlow: "row wrap",
-  justifyContent: "center"
-};
-
 export const cardStyles = {
-  display: "inline-block",
-  margin: "0.25em",
   width: "24em"
 };
 

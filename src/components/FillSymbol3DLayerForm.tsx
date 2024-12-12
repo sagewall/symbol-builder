@@ -1,6 +1,5 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import { CalciteBlock, CalciteLabel, CalciteSwitch } from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
@@ -64,40 +63,40 @@ const FillSymbol3DLayerForm = ({
   return (
     <React.Fragment>
       {isMeshSymbol3D && (
-        <CalciteLabel layout="default" style={labelStyles}>
+        <calcite-label layout="default" style={labelStyles}>
           castShadows
-          <CalciteSwitch
-            onCalciteSwitchChange={(event) => {
+          <calcite-switch
+            oncalciteSwitchChange={(event) => {
               setCastShadows(event.target.checked);
               handleCastShadowsChange(layerIndex, event.target.checked);
             }}
             ref={castShadowsRef}
             value={castShadows}
-          ></CalciteSwitch>
-        </CalciteLabel>
+          ></calcite-switch>
+        </calcite-label>
       )}
 
       {isMeshSymbol3D && (
-        <CalciteBlock style={blockStyles} collapsible heading={"edges"}>
+        <calcite-block style={blockStyles} collapsible heading={"edges"}>
           <Edges3DForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerEdgesColorChange}
             handleExtensionLengthChange={handleFillSymbol3DLayerEdgesExtensionLengthChange}
             handleSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
           ></Edges3DForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <FillSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerMaterialColorChange}
           handleColorMixModeChange={handleFillSymbol3DLayerMaterialColorMixModeChange}
         ></FillSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
       {!isMeshSymbol3D && (
-        <CalciteBlock style={blockStyles} collapsible heading={"outline"}>
+        <calcite-block style={blockStyles} collapsible heading={"outline"}>
           <FillSymbol3DLayerOutlineForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerOutlineColorChange}
@@ -105,16 +104,16 @@ const FillSymbol3DLayerForm = ({
             handlePatternCapChange={handleFillSymbol3DLayerOutlinePatternCapChange}
             handleSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
           ></FillSymbol3DLayerOutlineForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
 
       {!isMeshSymbol3D && (
-        <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
+        <calcite-block style={blockStyles} collapsible heading={"pattern"}>
           <StylePattern3DForm
             layerIndex={layerIndex}
             handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
           ></StylePattern3DForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
     </React.Fragment>
   );

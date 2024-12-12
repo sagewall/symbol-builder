@@ -1,12 +1,4 @@
 import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect,
-  CalciteSwitch
-} from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
 import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 import {
@@ -77,11 +69,11 @@ const LineSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         anchor
-        <CalciteSelect
+        <calcite-select
           label={"anchor selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setAnchor(event.target.value);
             handleAnchorChange(
               layerIndex,
@@ -91,16 +83,16 @@ const LineSymbol3DLayerForm = ({
           value={anchor}
         >
           {PATH_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         cap
-        <CalciteSelect
+        <calcite-select
           label={"cap selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setCap(event.target.value);
             handleCapChange(
               layerIndex,
@@ -110,54 +102,54 @@ const LineSymbol3DLayerForm = ({
           value={cap}
         >
           {CAP_3D_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         castShadows
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
+        <calcite-switch
+          oncalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
           ref={castShadowsRef}
           value={castShadows}
-        ></CalciteSwitch>
-      </CalciteLabel>
+        ></calcite-switch>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         height
-        <CalciteInputNumber
+        <calcite-input-number
           label={"height input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setHeight(event.target.value);
             handleHeightChange(layerIndex, event.target.value);
           }}
           value={height}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         width
-        <CalciteInputNumber
+        <calcite-input-number
           label={"width input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setWidth(event.target.value);
             handleWidthChange(layerIndex, event.target.value);
           }}
           value={width}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         join
-        <CalciteSelect
+        <calcite-select
           label={"join selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setJoin(event.target.value);
             handleJoinChange(
               layerIndex,
@@ -167,23 +159,23 @@ const LineSymbol3DLayerForm = ({
           value={join}
         >
           {JOIN_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <PathSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handlePathSymbol3DLayerMaterialColorChange}
         ></PathSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         profile
-        <CalciteSelect
+        <calcite-select
           label={"profile selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setProfile(event.target.value);
             handleProfileChange(
               layerIndex,
@@ -193,16 +185,16 @@ const LineSymbol3DLayerForm = ({
           value={profile}
         >
           {PROFILE_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         profileRotation
-        <CalciteSelect
+        <calcite-select
           label={"profileRotation selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setProfileRotation(event.target.value);
             handleProfileRotationChange(
               layerIndex,
@@ -212,10 +204,10 @@ const LineSymbol3DLayerForm = ({
           value={profileRotation}
         >
           {ROTATION_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
     </React.Fragment>
   );
 };

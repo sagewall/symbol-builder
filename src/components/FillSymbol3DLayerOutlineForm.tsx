@@ -1,12 +1,5 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import {
-  CalciteInput,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import { CAP_OPTIONS } from "./lib/constants";
@@ -48,10 +41,10 @@ const FillSymbol3DLayerOutlineForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -60,18 +53,18 @@ const FillSymbol3DLayerOutlineForm = ({
           type="color"
           value={color}
         />
-      </CalciteLabel>
+      </calcite-label>
 
       <LineStylePattern3DForm
         layerIndex={layerIndex}
         handleStyleChange={handleLineSylePattern3DStyleChange}
       />
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         patternCap
-        <CalciteSelect
+        <calcite-select
           label={"patternCap selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setPatternCap(event.target.value);
             handlePatternCapChange(
               layerIndex,
@@ -82,23 +75,23 @@ const FillSymbol3DLayerOutlineForm = ({
           value={patternCap}
         >
           {CAP_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

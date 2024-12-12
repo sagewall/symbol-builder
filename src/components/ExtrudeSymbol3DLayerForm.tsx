@@ -1,9 +1,3 @@
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteSwitch
-} from "@esri/calcite-components-react";
 import React, { createRef, useEffect, useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import ExtrudeSymbol3DLayerMaterialForm from "./ExtrudeSymbol3DLayerMaterialForm";
@@ -41,46 +35,46 @@ const FillSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         castShadows
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
+        <calcite-switch
+          oncalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
           ref={castShadowsRef}
           value={castShadows}
-        ></CalciteSwitch>
-      </CalciteLabel>
+        ></calcite-switch>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"edges"}>
+      <calcite-block style={blockStyles} collapsible heading={"edges"}>
         <Edges3DForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerEdgesColorChange}
           handleExtensionLengthChange={handleExtrudeSymbol3DLayerEdgesExtensionLengthChange}
           handleSizeChange={handleExtrudeSymbol3DLayerEdgesSizeChange}
         ></Edges3DForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <ExtrudeSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}
         />
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

@@ -2,8 +2,6 @@ import type Graphic from "@arcgis/core/Graphic";
 import type Collection from "@arcgis/core/core/Collection";
 import Point from "@arcgis/core/geometry/Point";
 import type { ArcgisSceneCustomEvent } from "@arcgis/map-components";
-import { ArcgisPlacement, ArcgisScene } from "@arcgis/map-components-react";
-import { CalciteAction } from "@esri/calcite-components-react";
 import React, { useEffect, useRef, useState } from "react";
 
 const viewStyles = {
@@ -32,17 +30,17 @@ const SceneView = ({ graphics }: SceneViewProps) => {
   return (
     <React.Fragment>
       {mounted && (
-        <ArcgisScene
+        <arcgis-scene
           basemap="gray-vector"
           graphics={graphics}
-          onArcgisViewReadyChange={(event) => {
+          onarcgisViewReadyChange={(event) => {
             handleArcgisViewReadyChange(event);
           }}
           ref={arcgisScene}
           style={viewStyles}
         >
-          <ArcgisPlacement position="top-right">
-            <CalciteAction
+          <arcgis-placement position="top-right">
+            <calcite-action
               icon="zoom-to-object"
               scale="s"
               text="Zoom to Graphics"
@@ -50,9 +48,9 @@ const SceneView = ({ graphics }: SceneViewProps) => {
               onClick={() => {
                 arcgisScene.current?.goTo(arcgisScene.current.graphics);
               }}
-            ></CalciteAction>
-          </ArcgisPlacement>
-        </ArcgisScene>
+            ></calcite-action>
+          </arcgis-placement>
+        </arcgis-scene>
       )}
     </React.Fragment>
   );
