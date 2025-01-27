@@ -8,7 +8,7 @@ interface Props {
   handleHrefChange: (layerIndex: number, value: string) => void;
   handlePrimitiveChange: (
     layerIndex: number,
-    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]
   ) => void;
 }
 
@@ -41,7 +41,9 @@ const IconSymbol3DLayerResourceForm = ({
             setPrimitive(event.target.value);
             handlePrimitiveChange(
               layerIndex,
-              event.target.value as InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
+              event.target.value as NonNullable<
+                InstanceType<typeof IconSymbol3DLayer>["resource"]
+              >["primitive"]
             );
           }}
           value={primitive}

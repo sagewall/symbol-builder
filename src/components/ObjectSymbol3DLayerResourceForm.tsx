@@ -8,7 +8,7 @@ interface Props {
   handleHrefChange: (layerIndex: number, value: string) => void;
   handlePrimitiveChange: (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]
   ) => void;
 }
 
@@ -39,7 +39,12 @@ const ObjectSymbol3DLayerResourceForm = ({
           label={"primitive selection"}
           oncalciteSelectChange={(event) => {
             setPrimitive(event.target.value);
-            handlePrimitiveChange(layerIndex, event.target.value);
+            handlePrimitiveChange(
+              layerIndex,
+              event.target.value as NonNullable<
+                InstanceType<typeof ObjectSymbol3DLayer>["resource"]
+              >["primitive"]
+            );
           }}
           value={primitive}
         >

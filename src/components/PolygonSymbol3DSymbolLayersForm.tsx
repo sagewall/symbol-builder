@@ -237,7 +237,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleFillSymbol3DLayerMaterialColorMixModeChange = (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
@@ -271,7 +271,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleFillSymbol3DLayerOutlinePatternCapChange = (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
@@ -382,7 +382,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -496,7 +496,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;

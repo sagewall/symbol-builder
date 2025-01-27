@@ -14,7 +14,7 @@ interface Props {
   ) => void;
   handlePatternCapChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -68,7 +68,9 @@ const FillSymbol3DLayerOutlineForm = ({
             setPatternCap(event.target.value);
             handlePatternCapChange(
               layerIndex,
-              event.target.value as InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+              event.target.value as NonNullable<
+                InstanceType<typeof FillSymbol3DLayer>["outline"]
+              >["patternCap"]
             );
           }}
           ref={patternCapRef}

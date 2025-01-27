@@ -8,7 +8,7 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
   handleColorMixModeChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
   ) => void;
 }
 
@@ -44,9 +44,9 @@ const FillSymbol3DLayerMaterialForm = ({
             setColorMixMode(event.target.value);
             handleColorMixModeChange(
               layerIndex,
-              event.target.value as InstanceType<
-                typeof FillSymbol3DLayer
-              >["material"]["colorMixMode"]
+              event.target.value as NonNullable<
+                InstanceType<typeof FillSymbol3DLayer>["material"]
+              >["colorMixMode"]
             );
           }}
           value={colorMixMode}

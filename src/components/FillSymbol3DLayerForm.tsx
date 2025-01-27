@@ -17,7 +17,7 @@ interface Props {
   handleFillSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
   ) => void;
   handleFillSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlinePatternStyleChange: (
@@ -26,12 +26,12 @@ interface Props {
   ) => void;
   handleFillSymbol3DLayerOutlinePatternCapChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]
   ) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["pattern"]["style"]
+    value: NonNullable<InstanceType<typeof FillSymbol3DLayer>["pattern"]>["style"]
   ) => void;
 }
 

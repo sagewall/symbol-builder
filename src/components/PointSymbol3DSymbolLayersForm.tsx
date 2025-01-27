@@ -165,7 +165,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: InstanceType<typeof IconSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
@@ -279,7 +279,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
@@ -598,6 +598,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
+          label="Add layer"
           slot="control"
           value="Information"
           style={chipStyles}

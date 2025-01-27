@@ -23,7 +23,7 @@ interface Props {
   handleObjectSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["resource"]["primitive"]
+    value: NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]
   ) => void;
   handleRollChange: (layerIndex: number, value: number) => void;
   handleTiltChange: (layerIndex: number, value: number) => void;
