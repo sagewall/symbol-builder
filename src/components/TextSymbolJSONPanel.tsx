@@ -11,7 +11,9 @@ const TextSymbolJSONPanel = ({ textSymbol }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   const codeSnippet = `
