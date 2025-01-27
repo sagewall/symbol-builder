@@ -24,7 +24,7 @@ const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeCh
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

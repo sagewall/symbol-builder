@@ -75,7 +75,7 @@ const SimpleMarkerSymbolForm = ({
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
       <calcite-block style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm
@@ -87,7 +87,7 @@ const SimpleMarkerSymbolForm = ({
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
           solidOnly={sceneView}
-        />
+        ></SimpleLineSymbolForm>
       </calcite-block>
       <calcite-label layout="default" style={labelStyles}>
         size

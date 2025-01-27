@@ -25,7 +25,7 @@ const MeshSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneView graphics={graphics}></SceneView>;
 
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
     setMeshSymbol3D(newMeshSymbol3D);
@@ -67,13 +67,13 @@ const MeshSymbol3DShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <MeshSymbol3DESMPanel meshSymbol3D={meshSymbol3D} />
+                <MeshSymbol3DESMPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <MeshSymbol3DAMDPanel meshSymbol3D={meshSymbol3D} />
+                <MeshSymbol3DAMDPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <MeshSymbol3DJSONPanel meshSymbol3D={meshSymbol3D} />
+                <MeshSymbol3DJSONPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

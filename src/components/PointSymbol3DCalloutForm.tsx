@@ -23,7 +23,7 @@ const PointSymbol3DCalloutForm = ({ handleColorChange, handleSizeChange }: Props
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

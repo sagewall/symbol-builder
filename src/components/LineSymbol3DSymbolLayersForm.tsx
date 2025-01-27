@@ -253,7 +253,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
               )}
               <LineSymbol3DLayerForm
                 layerIndex={index}
@@ -272,7 +272,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleLineSymbol3DLayerPatternStyleChange
                 }
                 handleSizeChange={handleLineSymbol3DLayerSizeChange}
-              />
+              ></LineSymbol3DLayerForm>
             </calcite-block>
           );
         }
@@ -285,7 +285,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 onClick={() => deleteSymbol3DLayer(index)}
                 slot="control"
                 text="Delete"
-              />
+              ></calcite-action>
               <PathSymbol3DLayerForm
                 layerIndex={index}
                 handleAnchorChange={handlePathSymbol3DLayerAnchorChange}

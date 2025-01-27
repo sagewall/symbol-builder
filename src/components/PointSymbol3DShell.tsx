@@ -45,7 +45,7 @@ const PointSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneView graphics={graphics}></SceneView>;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D) => {
     setPointSymbol3D(newPointSymbol3D);
@@ -146,13 +146,13 @@ const PointSymbol3DShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D} />
+                <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D} />
+                <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D} />
+                <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

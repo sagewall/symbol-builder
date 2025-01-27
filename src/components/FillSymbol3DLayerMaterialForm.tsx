@@ -33,7 +33,7 @@ const FillSymbol3DLayerMaterialForm = ({
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

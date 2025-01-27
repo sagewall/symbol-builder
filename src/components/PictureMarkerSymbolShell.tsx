@@ -40,9 +40,9 @@ const PictureMarkerSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapView graphics={graphics}></MapView>;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneView graphics={graphics}></SceneView>;
   }
 
   const handleSwitchChange = () => {
@@ -122,7 +122,7 @@ const PictureMarkerSymbolShell = () => {
                 handleWidthChange={handleWidthChange}
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
-              />
+              ></PictureMarkerSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
@@ -136,13 +136,19 @@ const PictureMarkerSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PictureMarkerSymbolESMPanel pictureMarkerSymbol={pictureMarkerSymbol} />
+                <PictureMarkerSymbolESMPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolAMDPanel pictureMarkerSymbol={pictureMarkerSymbol} />
+                <PictureMarkerSymbolAMDPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolJSONPanel pictureMarkerSymbol={pictureMarkerSymbol} />
+                <PictureMarkerSymbolJSONPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

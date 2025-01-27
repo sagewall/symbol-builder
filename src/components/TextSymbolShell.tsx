@@ -40,7 +40,7 @@ const TextSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapView graphics={graphics} />;
+  const view = <MapView graphics={graphics}></MapView>;
 
   const updateGraphics = (newTextSymbol: TextSymbol) => {
     setTextSymbol(newTextSymbol);
@@ -200,7 +200,7 @@ const TextSymbolShell = () => {
                 handleVerticalAlignmentChange={handleVerticalAlignmentChange}
                 handleXOffsetChange={handleXOffsetChange}
                 handleYOffsetChange={handleYOffsetChange}
-              />
+              ></TextSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
@@ -214,13 +214,13 @@ const TextSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <TextSymbolESMPanel textSymbol={textSymbol} />
+                <TextSymbolESMPanel textSymbol={textSymbol}></TextSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolAMDPanel textSymbol={textSymbol} />
+                <TextSymbolAMDPanel textSymbol={textSymbol}></TextSymbolAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolJSONPanel textSymbol={textSymbol} />
+                <TextSymbolJSONPanel textSymbol={textSymbol}></TextSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

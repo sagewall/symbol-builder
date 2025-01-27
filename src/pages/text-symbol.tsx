@@ -4,7 +4,7 @@ import TextSymbolShell from "../components/TextSymbolShell";
 const TextSymbolPage = () => {
   return (
     <React.Fragment>
-      <TextSymbolShell />
+      <TextSymbolShell></TextSymbolShell>
     </React.Fragment>
   );
 };

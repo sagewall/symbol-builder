@@ -164,7 +164,7 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
               )}
               <FillSymbol3DLayerForm
                 layerIndex={index}
@@ -194,7 +194,7 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 handleFillSymbol3DLayerPatternStyleChange={
                   handleFillSymbol3DLayerPatternStyleChange
                 }
-              />
+              ></FillSymbol3DLayerForm>
             </calcite-block>
           );
         }

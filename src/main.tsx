@@ -57,7 +57,7 @@ const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <App />,
+      element: <App></App>,
       children: [
         {
           path: "/",
@@ -65,51 +65,51 @@ const router = createBrowserRouter(
         },
         {
           path: "cim-symbol",
-          element: <CIMSymbolPage />
+          element: <CIMSymbolPage></CIMSymbolPage>
         },
         {
           path: "line-symbol-3d",
-          element: <LineSymbol3DPage />
+          element: <LineSymbol3DPage></LineSymbol3DPage>
         },
         {
           path: "mesh-symbol-3d",
-          element: <MeshSymbol3DPage />
+          element: <MeshSymbol3DPage></MeshSymbol3DPage>
         },
         {
           path: "picture-fill-symbol",
-          element: <PictureFillSymbolPage />
+          element: <PictureFillSymbolPage></PictureFillSymbolPage>
         },
         {
           path: "picture-marker-symbol",
-          element: <PictureMarkerSymbolPage />
+          element: <PictureMarkerSymbolPage></PictureMarkerSymbolPage>
         },
         {
           path: "point-symbol-3d",
-          element: <PointSymbol3DPage />
+          element: <PointSymbol3DPage></PointSymbol3DPage>
         },
         {
           path: "polygon-symbol-3d",
-          element: <PolygonSymbol3DPage />
+          element: <PolygonSymbol3DPage></PolygonSymbol3DPage>
         },
         {
           path: "simple-fill-symbol",
-          element: <SimpleFillSymbolPage />
+          element: <SimpleFillSymbolPage></SimpleFillSymbolPage>
         },
         {
           path: "simple-line-symbol",
-          element: <SimpleLineSymbolPage />
+          element: <SimpleLineSymbolPage></SimpleLineSymbolPage>
         },
         {
           path: "simple-marker-symbol",
-          element: <SimpleMarkerSymbolPage />
+          element: <SimpleMarkerSymbolPage></SimpleMarkerSymbolPage>
         },
         {
           path: "text-symbol",
-          element: <TextSymbolPage />
+          element: <TextSymbolPage></TextSymbolPage>
         },
         {
           path: "web-style-symbol",
-          element: <WebStyleSymbolPage />
+          element: <WebStyleSymbolPage></WebStyleSymbolPage>
         }
       ]
     }
@@ -119,6 +119,6 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>
 );

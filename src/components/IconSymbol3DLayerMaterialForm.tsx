@@ -22,7 +22,7 @@ const IconSymbol3DLayerMaterialForm = ({ layerIndex, handleColorChange }: Props)
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
     </React.Fragment>
   );

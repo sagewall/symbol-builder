@@ -108,7 +108,7 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={backgroundColor}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -122,7 +122,7 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={borderLineColor}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -149,7 +149,7 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"font"}>
@@ -157,7 +157,7 @@ const TextSymbolForm = ({
           handleDecorationChange={handleFontDecorationChange}
           handleFontChange={handleFontChange}
           handleSizeChange={handleFontSizeChange}
-        />
+        ></FontForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -171,7 +171,7 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={haloColor}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

@@ -52,13 +52,13 @@ const FillSymbol3DLayerOutlineForm = ({
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <LineStylePattern3DForm
         layerIndex={layerIndex}
         handleStyleChange={handleLineSylePattern3DStyleChange}
-      />
+      ></LineStylePattern3DForm>
 
       <calcite-label layout="default" style={labelStyles}>
         patternCap

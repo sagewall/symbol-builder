@@ -45,9 +45,9 @@ const SimpleFillSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapView graphics={graphics}></MapView>;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneView graphics={graphics}></SceneView>;
   }
 
   const handleSwitchChange = () => {
@@ -171,7 +171,7 @@ const SimpleFillSymbolShell = () => {
                 handleOutlineStyleChange={handleOutlineStyleChange}
                 handleOutlineWidthChange={handleOutlineWidthChange}
                 handleStyleChange={handleStyleChange}
-              />
+              ></SimpleFillSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
@@ -185,13 +185,19 @@ const SimpleFillSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <SimpleFillSymbolESMPanel simpleFillSymbol={simpleFillSymbol} />
+                <SimpleFillSymbolESMPanel
+                  simpleFillSymbol={simpleFillSymbol}
+                ></SimpleFillSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleFillSymbolAMDPanel simpleFillSymbol={simpleFillSymbol} />
+                <SimpleFillSymbolAMDPanel
+                  simpleFillSymbol={simpleFillSymbol}
+                ></SimpleFillSymbolAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleFillSymbolJSONPanel simpleFillSymbol={simpleFillSymbol} />
+                <SimpleFillSymbolJSONPanel
+                  simpleFillSymbol={simpleFillSymbol}
+                ></SimpleFillSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

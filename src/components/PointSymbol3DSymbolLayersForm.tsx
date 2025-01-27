@@ -437,7 +437,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                     onClick={() => deleteSymbol3DLayer(index)}
                     slot="control"
                     text="Delete"
-                  />
+                  ></calcite-action>
                 )}
                 <IconSymbol3DLayerForm
                   layerIndex={index}
@@ -465,7 +465,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                     handleIconSymbol3DLayerResourcePrimitiveChange
                   }
                   handleSizeChange={handleIconSymbol3DLayerSizeChange}
-                />
+                ></IconSymbol3DLayerForm>
               </calcite-block>
             );
           }
@@ -478,7 +478,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
                 <ObjectSymbol3DLayerForm
                   layerIndex={index}
                   handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
@@ -519,7 +519,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
                 <TextSymbol3DLayerForm
                   layerIndex={index}
                   handleTextSymbol3DLayerBackgroundColorChange={

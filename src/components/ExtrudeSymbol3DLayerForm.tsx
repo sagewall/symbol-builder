@@ -60,7 +60,7 @@ const FillSymbol3DLayerForm = ({
         <ExtrudeSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}
-        />
+        ></ExtrudeSymbol3DLayerMaterialForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>

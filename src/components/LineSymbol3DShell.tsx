@@ -26,7 +26,7 @@ const LineSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneView graphics={graphics}></SceneView>;
 
   const updateGraphics = (newLineSymbol3D: LineSymbol3D) => {
     setLineSymbol3D(newLineSymbol3D);
@@ -68,13 +68,13 @@ const LineSymbol3DShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D} />
+                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DAMDPanel lineSymbol3D={lineSymbol3D} />
+                <LineSymbol3DAMDPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D} />
+                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

@@ -22,7 +22,7 @@ const TextSymbol3DLayerBackgroundForm = ({ layerIndex, handleColorChange }: Prop
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
     </React.Fragment>
   );

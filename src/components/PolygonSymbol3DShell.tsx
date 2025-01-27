@@ -29,7 +29,7 @@ const PolygonSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneView graphics={graphics}></SceneView>;
 
   const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D) => {
     setPolygonSymbol3D(newPolygonSymbol3D);
@@ -79,13 +79,19 @@ const PolygonSymbol3DShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PolygonSymbol3DESMPanel polygonSymbol3D={polygonSymbol3D} />
+                <PolygonSymbol3DESMPanel
+                  polygonSymbol3D={polygonSymbol3D}
+                ></PolygonSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PolygonSymbol3DAMDPanel polygonSymbol3D={polygonSymbol3D} />
+                <PolygonSymbol3DAMDPanel
+                  polygonSymbol3D={polygonSymbol3D}
+                ></PolygonSymbol3DAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <PolygonSymbol3DJSONPanel polygonSymbol3D={polygonSymbol3D} />
+                <PolygonSymbol3DJSONPanel
+                  polygonSymbol3D={polygonSymbol3D}
+                ></PolygonSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

@@ -4,7 +4,7 @@ import PictureFillSymbolShell from "../components/PictureFillSymbolShell";
 const PictureFillSymbolPage = () => {
   return (
     <React.Fragment>
-      <PictureFillSymbolShell />
+      <PictureFillSymbolShell></PictureFillSymbolShell>
     </React.Fragment>
   );
 };

@@ -72,15 +72,15 @@ const SimpleLineSymbolForm = ({
           handleColorChange={handleMarkerColorChange}
           handlePlacementChange={handleMarkerPlacementChange}
           handleStyleChange={handleMarkerStyleChange}
-        />
+        ></LineSymbolMarkerForm>
       </calcite-block>
     );
   } else {
-    markerBlock = <React.Fragment />;
+    markerBlock = <React.Fragment></React.Fragment>;
   }
 
   if (solidOnly) {
-    styleBlock = <React.Fragment />;
+    styleBlock = <React.Fragment></React.Fragment>;
   } else {
     styleBlock = (
       <calcite-label layout="default" style={labelStyles}>
@@ -130,7 +130,7 @@ const SimpleLineSymbolForm = ({
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

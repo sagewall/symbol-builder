@@ -80,7 +80,7 @@ const PictureFillSymbolForm = ({
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
           solidOnly={false}
-        />
+        ></SimpleLineSymbolForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>

@@ -42,7 +42,7 @@ const SimpleFillSymbolForm = ({
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"outline:"}>
@@ -55,7 +55,7 @@ const SimpleFillSymbolForm = ({
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
           solidOnly={false}
-        />
+        ></SimpleLineSymbolForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>

@@ -4,7 +4,7 @@ import SimpleMarkerSymbolShell from "../components/SimpleMarkerSymbolShell";
 const SimpleMarkerSymbolPage = () => {
   return (
     <React.Fragment>
-      <SimpleMarkerSymbolShell />
+      <SimpleMarkerSymbolShell></SimpleMarkerSymbolShell>
     </React.Fragment>
   );
 };

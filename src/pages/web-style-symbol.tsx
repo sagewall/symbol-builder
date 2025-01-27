@@ -4,7 +4,7 @@ import WebStyleSymbolShell from "../components/WebStyleSymbolShell";
 const WebStyleSymbolPage = () => {
   return (
     <React.Fragment>
-      <WebStyleSymbolShell />
+      <WebStyleSymbolShell></WebStyleSymbolShell>
     </React.Fragment>
   );
 };

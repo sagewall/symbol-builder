@@ -536,7 +536,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                     onClick={() => deleteSymbol3DLayer(index)}
                     slot="control"
                     text="Delete"
-                  />
+                  ></calcite-action>
                 )}
                 <ExtrudeSymbol3DLayerForm
                   layerIndex={index}
@@ -554,7 +554,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                     handleExtrudeSymbol3DLayerMaterialColorChange
                   }
                   handleSizeChange={handleExtrudeSymbol3DLayerSizeChange}
-                />
+                ></ExtrudeSymbol3DLayerForm>
               </calcite-block>
             );
           }
@@ -567,7 +567,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
                 <FillSymbol3DLayerForm
                   layerIndex={index}
                   isMeshSymbol3D={false}
@@ -598,7 +598,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleFillSymbol3DLayerPatternStyleChange={
                     handleFillSymbol3DLayerPatternStyleChange
                   }
-                />
+                ></FillSymbol3DLayerForm>
               </calcite-block>
             );
           }
@@ -611,7 +611,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
                 <IconSymbol3DLayerForm
                   layerIndex={index}
                   handleIconSymbol3DLayerAnchorChange={handleIconSymbol3DLayerAnchorChange}
@@ -637,7 +637,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                     handleIconSymbol3DLayerResourcePrimitiveChange
                   }
                   handleSizeChange={handleIconSymbol3DLayerSizeChange}
-                />
+                ></IconSymbol3DLayerForm>
               </calcite-block>
             );
           }
@@ -650,7 +650,7 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
                 <ObjectSymbol3DLayerForm
                   layerIndex={index}
                   handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
@@ -692,14 +692,14 @@ const PolygonSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
                 <WaterSymbol3DLayerForm
                   layerIndex={index}
                   handleColorChange={handleWaterSymbol3DLayerColorChange}
                   handleWaterbodySizeChange={handleWaterSymbol3DLayerWaterbodySizeChange}
                   handleWaveDirectionChange={handleWaterSymbol3DLayerWaveDirectionChange}
                   handleWaveStrengthChange={handleWaterSymbol3DLayerWaveStrengthChange}
-                />
+                ></WaterSymbol3DLayerForm>
               </calcite-block>
             );
           }

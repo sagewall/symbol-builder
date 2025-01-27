@@ -90,9 +90,9 @@ const WebStyleSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapView graphics={graphics}></MapView>;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneView graphics={graphics}></SceneView>;
   }
 
   const handleSwitchChange = () => {
@@ -258,13 +258,13 @@ const WebStyleSymbolShell = () => {
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
                   handleCustomStyleChange={handleCustomStyleChange}
-                />
+                ></WebStyleSymbol2DForm>
               ) : (
                 <WebStyleSymbol3DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
                   handleCustomStyleChange={handleCustomStyleChange}
-                />
+                ></WebStyleSymbol3DForm>
               )}
             </div>
           </calcite-panel>
@@ -279,13 +279,19 @@ const WebStyleSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <WebStyleSymbolESMPanel webStyleSymbol={currentWebStyleSymbol} />
+                <WebStyleSymbolESMPanel
+                  webStyleSymbol={currentWebStyleSymbol}
+                ></WebStyleSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolAMDPanel webStyleSymbol={currentWebStyleSymbol} />
+                <WebStyleSymbolAMDPanel
+                  webStyleSymbol={currentWebStyleSymbol}
+                ></WebStyleSymbolAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolJSONPanel webStyleSymbol={currentWebStyleSymbol} />
+                <WebStyleSymbolJSONPanel
+                  webStyleSymbol={currentWebStyleSymbol}
+                ></WebStyleSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

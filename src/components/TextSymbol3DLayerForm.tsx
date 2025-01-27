@@ -93,7 +93,7 @@ const TextSymbol3DLayerForm = ({
           handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
           handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
           handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
-        />
+        ></TextSymbol3DLayerFontForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} collapsible heading={"halo"}>

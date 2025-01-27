@@ -22,7 +22,7 @@ const ExtrudeSymbol3DLayerMaterialForm = ({ layerIndex, handleColorChange }: Pro
           }}
           type="color"
           value={color}
-        />
+        ></calcite-input>
       </calcite-label>
     </React.Fragment>
   );

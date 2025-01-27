@@ -41,7 +41,7 @@ const PictureFillSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapView graphics={graphics} />;
+  const view = <MapView graphics={graphics}></MapView>;
 
   const updateGraphics = (newPictureFillSymbol: PictureFillSymbol) => {
     setPictureFillSymbol(newPictureFillSymbol);
@@ -183,7 +183,7 @@ const PictureFillSymbolShell = () => {
                 handleXScaleChange={handleXScaleChange}
                 handleYOffsetChange={handleYOffsetChange}
                 handleYScaleChange={handleYScaleChange}
-              />
+              ></PictureFillSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
@@ -197,13 +197,19 @@ const PictureFillSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PictureFillSymbolESMPanel pictureFillSymbol={pictureFillSymbol} />
+                <PictureFillSymbolESMPanel
+                  pictureFillSymbol={pictureFillSymbol}
+                ></PictureFillSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureFillSymbolAMDPanel pictureFillSymbol={pictureFillSymbol} />
+                <PictureFillSymbolAMDPanel
+                  pictureFillSymbol={pictureFillSymbol}
+                ></PictureFillSymbolAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureFillSymbolJSONPanel pictureFillSymbol={pictureFillSymbol} />
+                <PictureFillSymbolJSONPanel
+                  pictureFillSymbol={pictureFillSymbol}
+                ></PictureFillSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

@@ -44,9 +44,9 @@ const SimpleMarkerSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapView graphics={graphics}></MapView>;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneView graphics={graphics}></SceneView>;
   }
 
   const handleSwitchChange = () => {
@@ -208,7 +208,7 @@ const SimpleMarkerSymbolShell = () => {
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
                 sceneView={sceneView}
-              />
+              ></SimpleMarkerSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
@@ -222,13 +222,19 @@ const SimpleMarkerSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <SimpleMarkerSymbolESMPanel simpleMarkerSymbol={simpleMarkerSymbol} />
+                <SimpleMarkerSymbolESMPanel
+                  simpleMarkerSymbol={simpleMarkerSymbol}
+                ></SimpleMarkerSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleMarkerSymbolAMDPanel simpleMarkerSymbol={simpleMarkerSymbol} />
+                <SimpleMarkerSymbolAMDPanel
+                  simpleMarkerSymbol={simpleMarkerSymbol}
+                ></SimpleMarkerSymbolAMDPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleMarkerSymbolJSONPanel simpleMarkerSymbol={simpleMarkerSymbol} />
+                <SimpleMarkerSymbolJSONPanel
+                  simpleMarkerSymbol={simpleMarkerSymbol}
+                ></SimpleMarkerSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>
