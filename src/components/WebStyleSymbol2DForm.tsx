@@ -202,10 +202,15 @@ const WebStyleSymbol2DForm = ({
               ))}
             </calcite-select>
           </calcite-label>
-          <calcite-list filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
+          <calcite-list
+            displayMode="nested"
+            filter-enabled
+            filter-placeholder="Filter symbols"
+            label="WebStyleSymbols"
+          >
             {pointWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Point symbols" open>
-                <calcite-list>
+                <calcite-list label="Point symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}
@@ -234,7 +239,7 @@ const WebStyleSymbol2DForm = ({
 
             {lineWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Line symbols" open>
-                <calcite-list>
+                <calcite-list label="Line symbols">
                   {lineWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}
@@ -263,7 +268,7 @@ const WebStyleSymbol2DForm = ({
 
             {polygonWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Polygon symbols" open>
-                <calcite-list>
+                <calcite-list label="Polygon symbols">
                   {polygonWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}
@@ -338,13 +343,14 @@ const WebStyleSymbol2DForm = ({
             ></calcite-input-text>
           </calcite-label>
           <calcite-list
+            displayMode="nested"
             filter-enabled
             filter-placeholder="Filter symbols"
             label="Point WebStyleSymbols"
           >
             {pointWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Point symbols" open>
-                <calcite-list>
+                <calcite-list label="Point symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}
@@ -373,7 +379,7 @@ const WebStyleSymbol2DForm = ({
 
             {lineWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Line symbols" open>
-                <calcite-list>
+                <calcite-list label="Line symbols">
                   {lineWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}
@@ -402,7 +408,7 @@ const WebStyleSymbol2DForm = ({
 
             {polygonWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Polygon symbols" open>
-                <calcite-list>
+                <calcite-list label="Polygon symbols">
                   {polygonWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}

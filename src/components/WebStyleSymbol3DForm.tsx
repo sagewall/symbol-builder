@@ -175,10 +175,15 @@ const WebStyleSymbolForm = ({
               value={styleUrl}
             ></calcite-input-text>
           </calcite-label>
-          <calcite-list filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
+          <calcite-list
+            displayMode="nested"
+            filter-enabled
+            filter-placeholder="Filter symbols"
+            label="WebStyleSymbols"
+          >
             {pointWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Point Symbols" open>
-                <calcite-list>
+                <calcite-list label="Point Symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
                       key={index}
