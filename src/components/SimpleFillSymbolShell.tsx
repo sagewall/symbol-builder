@@ -59,8 +59,10 @@ const SimpleFillSymbolShell = () => {
   const updateGraphics = (newSimpleFillSymbol: SimpleFillSymbol) => {
     setSimpleFillSymbol(newSimpleFillSymbol);
 
-    const newPolygonGraphic = graphics.getItemAt(0).clone();
-    newPolygonGraphic.symbol = newSimpleFillSymbol;
+    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
+    if (newPolygonGraphic) {
+      newPolygonGraphic.symbol = newSimpleFillSymbol;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPolygonGraphic);

@@ -126,7 +126,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleIconSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -134,7 +136,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleIconSymbol3DLayerOutlineColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
-    symbolLayer.outline.color = new Color(value);
+    if (symbolLayer.outline) {
+      symbolLayer.outline.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -142,7 +146,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleIconSymbol3DLayerOutlineSizeChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
-    symbolLayer.outline.size = Number(value);
+    if (symbolLayer.outline) {
+      symbolLayer.outline.size = Number(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -150,7 +156,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleIconSymbol3DLayerResourceHrefChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
-    symbolLayer.resource.href = value;
+    if (symbolLayer.resource) {
+      symbolLayer.resource.href = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -161,7 +169,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
-    symbolLayer.resource.primitive = value;
+    if (symbolLayer.resource) {
+      symbolLayer.resource.primitive = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -188,7 +198,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleObjectSymbol3DLayerAnchorPositionXChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
-    symbolLayer.anchorPosition.x = Number(value);
+    if (symbolLayer.anchorPosition) {
+      symbolLayer.anchorPosition.x = Number(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -196,7 +208,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleObjectSymbol3DLayerAnchorPositionYChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
-    symbolLayer.anchorPosition.y = Number(value);
+    if (symbolLayer.anchorPosition) {
+      symbolLayer.anchorPosition.y = Number(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -204,7 +218,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleObjectSymbol3DLayerAnchorPositionZChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
-    symbolLayer.anchorPosition.z = Number(value);
+    if (symbolLayer.anchorPosition) {
+      symbolLayer.anchorPosition.z = Number(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -244,7 +260,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleObjectSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -252,7 +270,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleObjectSymbol3DLayerResourceHrefChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
-    symbolLayer.resource.href = value;
+    if (symbolLayer.resource) {
+      symbolLayer.resource.href = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -263,7 +283,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
-    symbolLayer.resource.primitive = value;
+    if (symbolLayer.resource) {
+      symbolLayer.resource.primitive = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -295,7 +317,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleTextSymbol3DLayerBackgroundColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.background.color = new Color(value);
+    if (symbolLayer.background) {
+      symbolLayer.background.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -306,7 +330,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.decoration = value;
+    if (symbolLayer.font) {
+      symbolLayer.font.decoration = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -314,7 +340,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleTextSymbol3DLayerFontFamilyChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.family = value;
+    if (symbolLayer.font) {
+      symbolLayer.font.family = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -322,7 +350,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleTextSymbol3DLayerFontSizeChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.size = Number(value);
+    if (symbolLayer.font) {
+      symbolLayer.font.size = Number(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -333,7 +363,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.style = value;
+    if (symbolLayer.font) {
+      symbolLayer.font.style = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -344,7 +376,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.font.weight = value;
+    if (symbolLayer.font) {
+      symbolLayer.font.weight = value;
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -352,7 +386,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleTextSymbol3DLayerHaloColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.halo.color = new Color(value);
+    if (symbolLayer.halo) {
+      symbolLayer.halo.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -360,7 +396,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleTextSymbol3DLayerHaloSizeChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.halo.size = Number(value);
+    if (symbolLayer.halo) {
+      symbolLayer.halo.size = Number(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -387,7 +425,9 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleTextSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };

@@ -31,8 +31,10 @@ const LineSymbol3DShell = () => {
   const updateGraphics = (newLineSymbol3D: LineSymbol3D) => {
     setLineSymbol3D(newLineSymbol3D);
 
-    const newLineGraphic = graphics.getItemAt(0).clone();
-    newLineGraphic.symbol = newLineSymbol3D;
+    const newLineGraphic = graphics.getItemAt(0)?.clone();
+    if (newLineGraphic) {
+      newLineGraphic.symbol = newLineSymbol3D;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newLineGraphic);

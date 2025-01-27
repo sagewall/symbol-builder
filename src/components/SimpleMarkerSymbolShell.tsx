@@ -58,9 +58,10 @@ const SimpleMarkerSymbolShell = () => {
   const updateGraphics = (newSimpleMarkerSymbol: SimpleMarkerSymbol) => {
     setSimpleMarkerSymbol(newSimpleMarkerSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newSimpleMarkerSymbol;
-
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newSimpleMarkerSymbol;
+    }
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);
     setGraphics(newGraphics);

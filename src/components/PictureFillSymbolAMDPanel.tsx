@@ -21,12 +21,12 @@ require(["esri/symbols/PictureFillSymbol"], (PictureFillSymbol) => {
   const pictureFillSymbol = new PictureFillSymbol({
     height: ${pictureFillSymbol.height},
     outline: {
-      cap: "${pictureFillSymbol.outline.cap}",
-      color: ${JSON.stringify(pictureFillSymbol.outline.color.toJSON())},
-      join: "${pictureFillSymbol.outline.join}",
-      miterLimit: ${pictureFillSymbol.outline.miterLimit},
-      style: "${pictureFillSymbol.outline.style}",
-      width: ${pictureFillSymbol.outline.width}
+      cap: "${pictureFillSymbol.outline?.cap}",
+      color: ${JSON.stringify(pictureFillSymbol.outline?.color?.toJSON())},
+      join: "${pictureFillSymbol.outline?.join}",
+      miterLimit: ${pictureFillSymbol.outline?.miterLimit},
+      style: "${pictureFillSymbol.outline?.style}",
+      width: ${pictureFillSymbol.outline?.width}
     },
     url: "${pictureFillSymbol.url}",
     width: ${pictureFillSymbol.width},

@@ -34,8 +34,10 @@ const PolygonSymbol3DShell = () => {
   const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D) => {
     setPolygonSymbol3D(newPolygonSymbol3D);
 
-    const newPolygonGraphic = graphics.getItemAt(0).clone();
-    newPolygonGraphic.symbol = newPolygonSymbol3D;
+    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
+    if (newPolygonGraphic) {
+      newPolygonGraphic.symbol = newPolygonSymbol3D;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPolygonGraphic);

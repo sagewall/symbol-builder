@@ -109,7 +109,6 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       newLineStyleMarker3Ds.removeAt(layerIndex);
       newLineStyleMarker3Ds.add(symbolLayer.marker as LineStyleMarker3D, layerIndex);
       setLineStyleMarker3Ds(newLineStyleMarker3Ds);
-      // @ts-expect-error strictNullChecks
       symbolLayer.marker = null;
       updateSymbolLayers(newSymbolLayers);
     }
@@ -120,7 +119,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.color = new Color(value);
+    if (symbolLayer.marker) {
+      symbolLayer.marker.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -128,7 +129,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerPlacementChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.placement = value as InstanceType<typeof LineStyleMarker3D>["placement"];
+    if (symbolLayer.marker) {
+      symbolLayer.marker.placement = value as InstanceType<typeof LineStyleMarker3D>["placement"];
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -136,7 +139,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerStyleChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.style = value as InstanceType<typeof LineStyleMarker3D>["style"];
+    if (symbolLayer.marker) {
+      symbolLayer.marker.style = value as InstanceType<typeof LineStyleMarker3D>["style"];
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -144,7 +149,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -152,7 +159,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.pattern.style = value as InstanceType<typeof LineStylePattern3D>["style"];
+    if (symbolLayer.pattern) {
+      symbolLayer.pattern.style = value as InstanceType<typeof LineStylePattern3D>["style"];
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -208,7 +217,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -314,6 +325,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
+          label="Add Layer"
           slot="control"
           value="Information"
           style={chipStyles}

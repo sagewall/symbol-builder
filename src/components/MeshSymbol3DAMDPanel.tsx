@@ -25,7 +25,7 @@ require(["esri/symbols/MeshSymbol3D"], (MeshSymbol3D) => {
 
   meshSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (symbolLayer.edges.color && symbolLayer.material.color) {
+      if (symbolLayer.edges?.color && symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "fill",
@@ -42,7 +42,7 @@ require(["esri/symbols/MeshSymbol3D"], (MeshSymbol3D) => {
         },
         pattern: {
           type: "style",
-          style: "${symbolLayer.pattern.style}"
+          style: "${symbolLayer.pattern?.style}"
         }
       },
       `;

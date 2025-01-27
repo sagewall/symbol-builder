@@ -26,7 +26,7 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 
 const simpleLineSymbol = new SimpleLineSymbol({
   cap: "${simpleLineSymbol.cap}",
-  color: new Color([${simpleLineSymbol.color.toRgba()}]),
+  color: new Color([${simpleLineSymbol.color?.toRgba()}]),
   join: "${simpleLineSymbol.join}",
   marker: new LineSymbolMarker({
     color: new Color([${simpleLineSymbol.marker.color.toRgba()}]),
@@ -44,7 +44,7 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 
 const simpleLineSymbol = new SimpleLineSymbol({
   cap: "${simpleLineSymbol.cap}",
-  color: new Color([${simpleLineSymbol.color.toRgba()}]),
+  color: new Color([${simpleLineSymbol.color?.toRgba()}]),
   join: "${simpleLineSymbol.join}",
   miterLimit: ${simpleLineSymbol.miterLimit},
   style: "${simpleLineSymbol.style}",

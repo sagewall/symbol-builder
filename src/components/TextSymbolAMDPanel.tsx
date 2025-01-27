@@ -20,10 +20,10 @@ const TextSymbolAMDPanel = ({ textSymbol }: Props) => {
 require(["esri/symbols/TextSymbol"], (TextSymbol) => {
   const textSymbol = new TextSymbol({
     angle: ${textSymbol.angle},
-    backgroundColor: [${textSymbol.backgroundColor.toRgba()}],
-    borderLineColor: [${textSymbol.borderLineColor.toRgba()}],
+    backgroundColor: [${textSymbol.backgroundColor?.toRgba()}],
+    borderLineColor: [${textSymbol.borderLineColor?.toRgba()}],
     borderLineSize: ${textSymbol.borderLineSize},
-    color: [${textSymbol.color.toRgba()}],
+    color: [${textSymbol.color?.toRgba()}],
     font: {
       decoration: "${textSymbol.font.decoration}",
       family: "${textSymbol.font.family}",
@@ -31,7 +31,7 @@ require(["esri/symbols/TextSymbol"], (TextSymbol) => {
       style: "${textSymbol.font.style}",
       weight: "${textSymbol.font.weight}"
     },
-    haloColor: [${textSymbol.haloColor.toRgba()}],
+    haloColor: [${textSymbol.haloColor?.toRgba()}],
     haloSize: ${textSymbol.haloSize},
     horizontalAlignment: "${textSymbol.horizontalAlignment}",
     kerning: ${textSymbol.kerning},

@@ -54,8 +54,10 @@ const PictureMarkerSymbolShell = () => {
   const updateGraphics = (newPictureMarkerSymbol: PictureMarkerSymbol) => {
     setPictureMarkerSymbol(newPictureMarkerSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newPictureMarkerSymbol;
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newPictureMarkerSymbol;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);

@@ -23,7 +23,7 @@ const SimpleLineSymbolAMDPanel = ({ simpleLineSymbol }: Props) => {
 require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
   const simpleLineSymbol = new SimpleLineSymbol({
     cap: "${simpleLineSymbol.cap}",
-    color: [${simpleLineSymbol.color.toRgba()}],
+    color: [${simpleLineSymbol.color?.toRgba()}],
     join: "${simpleLineSymbol.join}",
     marker: {
       color: [${simpleLineSymbol.marker.color.toRgba()}],
@@ -40,7 +40,7 @@ require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
 require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
   const simpleLineSymbol = new SimpleLineSymbol({
     cap: "${simpleLineSymbol.cap}",
-    color: [${simpleLineSymbol.color.toRgba()}],
+    color: [${simpleLineSymbol.color?.toRgba()}],
     join: "${simpleLineSymbol.join}",
     miterLimit: ${simpleLineSymbol.miterLimit},
     style: "${simpleLineSymbol.style}",

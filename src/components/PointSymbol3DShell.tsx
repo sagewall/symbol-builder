@@ -50,8 +50,10 @@ const PointSymbol3DShell = () => {
   const updateGraphics = (newPointSymbol3D: PointSymbol3D) => {
     setPointSymbol3D(newPointSymbol3D);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newPointSymbol3D;
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newPointSymbol3D;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);

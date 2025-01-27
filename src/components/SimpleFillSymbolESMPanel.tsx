@@ -24,12 +24,12 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 const simpleFillSymbol = new SimpleFillSymbol({
   color: new Color([${simpleFillSymbol.color.toRgba()}]),
   outline: new SimpleLineSymbol({
-    cap: "${simpleFillSymbol.outline.cap}",
-    color: new Color([${simpleFillSymbol.outline.color.toRgba()}]),
-    join: "${simpleFillSymbol.outline.join}",
-    miterLimit: ${simpleFillSymbol.outline.miterLimit},
-    style: "${simpleFillSymbol.outline.style}",
-    width: ${simpleFillSymbol.outline.width}
+    cap: "${simpleFillSymbol.outline?.cap}",
+    color: new Color([${simpleFillSymbol.outline?.color?.toRgba()}]),
+    join: "${simpleFillSymbol.outline?.join}",
+    miterLimit: ${simpleFillSymbol.outline?.miterLimit},
+    style: "${simpleFillSymbol.outline?.style}",
+    width: ${simpleFillSymbol.outline?.width}
   }),
   style: "${simpleFillSymbol.style}"
 });`;

@@ -45,8 +45,10 @@ const PictureFillSymbolShell = () => {
 
   const updateGraphics = (newPictureFillSymbol: PictureFillSymbol) => {
     setPictureFillSymbol(newPictureFillSymbol);
-    const newPolygonGraphic = graphics.getItemAt(0).clone();
-    newPolygonGraphic.symbol = newPictureFillSymbol;
+    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
+    if (newPolygonGraphic) {
+      newPolygonGraphic.symbol = newPictureFillSymbol;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPolygonGraphic);

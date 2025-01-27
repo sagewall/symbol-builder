@@ -45,9 +45,10 @@ const TextSymbolShell = () => {
   const updateGraphics = (newTextSymbol: TextSymbol) => {
     setTextSymbol(newTextSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newTextSymbol;
-
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newTextSymbol;
+    }
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);
     setGraphics(newGraphics);

@@ -62,9 +62,10 @@ const SimpleLineSymbolShell = () => {
   const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol) => {
     setSimpleLineSymbol(newSimpleLineSymbol);
 
-    const newPolylineGraphic = graphics.getItemAt(0).clone();
-    newPolylineGraphic.symbol = newSimpleLineSymbol;
-
+    const newPolylineGraphic = graphics.getItemAt(0)?.clone();
+    if (newPolylineGraphic) {
+      newPolylineGraphic.symbol = newSimpleLineSymbol;
+    }
     const newGraphics = new Collection();
     newGraphics.add(newPolylineGraphic);
     setGraphics(newGraphics);
@@ -96,7 +97,6 @@ const SimpleLineSymbolShell = () => {
         setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
         updateGraphics(newSimpleLineSymbol);
       } else {
-        //@ts-expect-error strictNullChecks
         newSimpleLineSymbol.marker = null;
         updateGraphics(newSimpleLineSymbol);
       }

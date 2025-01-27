@@ -26,7 +26,7 @@ const SimpleMarkerSymbolESMPanel = ({ simpleMarkerSymbol }: Props) => {
     color: new Color([${simpleMarkerSymbol.color.toRgba()}]),
     outline: new SimpleLineSymbol({
       cap: "${simpleMarkerSymbol.outline.cap}",
-      color: new Color([${simpleMarkerSymbol.outline.color.toRgba()}]),
+      color: new Color([${simpleMarkerSymbol.outline?.color?.toRgba()}]),
       join: "${simpleMarkerSymbol.outline.join}",
       miterLimit: ${simpleMarkerSymbol.outline.miterLimit},
       style: "${simpleMarkerSymbol.outline.style}",

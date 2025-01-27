@@ -22,15 +22,15 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
   const pointSymbol3D = new PointSymbol3D({
     callout: {
       type: "line",
-      color: [${pointSymbol3D.callout.color.toRgba()}],
-      size: ${pointSymbol3D.callout.size}
+      color: [${pointSymbol3D.callout?.color?.toRgba()}],
+      size: ${pointSymbol3D.callout?.size}
     },
     symbolLayers: [
  `;
 
   pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     {
       type: "icon",
@@ -53,9 +53,9 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
     },
     `;
       } else if (
-        symbolLayer.material.color &&
-        symbolLayer.outline.color &&
-        symbolLayer.resource.primitive
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.primitive
       ) {
         codeSnippet += `
       {
@@ -83,15 +83,15 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
     }
 
     if (symbolLayer.type === "object") {
-      if (symbolLayer.material.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
       {
         type: "object",
         anchor: "${symbolLayer.anchor}",
         anchorPosition: {
-          x: ${symbolLayer.anchorPosition.x},
-          y: ${symbolLayer.anchorPosition.y},
-          z: ${symbolLayer.anchorPosition.z}
+          x: ${symbolLayer.anchorPosition?.x},
+          y: ${symbolLayer.anchorPosition?.y},
+          z: ${symbolLayer.anchorPosition?.z}
         },
         castShadows: ${symbolLayer.castShadows},
         depth: ${symbolLayer.depth},
@@ -108,15 +108,15 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
         width: ${symbolLayer.width}
       },
       `;
-      } else if (symbolLayer.material.color && symbolLayer.resource.primitive) {
+      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
         codeSnippet += `
       {
         type: "object",
         anchor: "${symbolLayer.anchor}",
         anchorPosition: {
-          x: ${symbolLayer.anchorPosition.x},
-          y: ${symbolLayer.anchorPosition.y},
-          z: ${symbolLayer.anchorPosition.z}
+          x: ${symbolLayer.anchorPosition?.x},
+          y: ${symbolLayer.anchorPosition?.y},
+          z: ${symbolLayer.anchorPosition?.z}
         },
         castShadows: ${symbolLayer.castShadows},
         depth: ${symbolLayer.depth},
@@ -137,7 +137,7 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
     }
 
     if (symbolLayer.type === "text") {
-      if (symbolLayer.background.color && symbolLayer.halo.color && symbolLayer.material.color) {
+      if (symbolLayer.background?.color && symbolLayer.halo?.color && symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "text",
@@ -145,11 +145,11 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
           color: [${symbolLayer.background.color.toRgba()}],
         },
         font: {
-          decoration: "${symbolLayer.font.decoration}",
-          family: "${symbolLayer.font.family}",
-          size: ${symbolLayer.font.size},
-          style: "${symbolLayer.font.style}",
-          weight: "${symbolLayer.font.weight}"
+          decoration: "${symbolLayer.font?.decoration}",
+          family: "${symbolLayer.font?.family}",
+          size: ${symbolLayer.font?.size},
+          style: "${symbolLayer.font?.style}",
+          weight: "${symbolLayer.font?.weight}"
         },
         halo: {
           color: [${symbolLayer.halo.color.toRgba()}],
@@ -172,9 +172,9 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
   codeSnippet += `
     ],
     verticalOffset: {
-      maxWorldLength: ${pointSymbol3D.verticalOffset.maxWorldLength},
-      minWorldLength: ${pointSymbol3D.verticalOffset.minWorldLength},
-      screenLength: ${pointSymbol3D.verticalOffset.screenLength}
+      maxWorldLength: ${pointSymbol3D.verticalOffset?.maxWorldLength},
+      minWorldLength: ${pointSymbol3D.verticalOffset?.minWorldLength},
+      screenLength: ${pointSymbol3D.verticalOffset?.screenLength}
     }
   });
 

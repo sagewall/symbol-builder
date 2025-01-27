@@ -98,9 +98,11 @@ const WebStyleSymbolShell = () => {
   const handleSwitchChange = () => {
     if (viewSwitchRef.current) {
       setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
-      (viewSwitchRef.current as HTMLCalciteSwitchElement).checked
-        ? updateGraphics(defaultWebStyleSymbol3D, "pointSymbol")
-        : updateGraphics(defaultPointWebStyleSymbol2D, "pointSymbol");
+      if ((viewSwitchRef.current as HTMLCalciteSwitchElement).checked) {
+        updateGraphics(defaultWebStyleSymbol3D, "pointSymbol");
+      } else {
+        updateGraphics(defaultPointWebStyleSymbol2D, "pointSymbol");
+      }
     }
   };
 

@@ -23,7 +23,7 @@ require(["esri/symbols/SimpleMarkerSymbol"], (SimpleMarkerSymbol) => {
     color: [${simpleMarkerSymbol.color.toRgba()}],
     outline: {
       cap: "${simpleMarkerSymbol.outline.cap}",
-      color: [${simpleMarkerSymbol.outline.color.toRgba()}],
+      color: [${simpleMarkerSymbol.outline?.color?.toRgba()}],
       join: "${simpleMarkerSymbol.outline.join}",
       miterLimit: ${simpleMarkerSymbol.outline.miterLimit},
       style: "${simpleMarkerSymbol.outline.style}",

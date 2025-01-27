@@ -24,12 +24,12 @@ const PictureFillSymbolESMPanel = ({ pictureFillSymbol }: Props) => {
   const pictureFillSymbol = new PictureFillSymbol({
     height: ${pictureFillSymbol.height},
     outline: new SimpleLineSymbol({
-      cap: "${pictureFillSymbol.outline.cap}",
-      color: new Color([${pictureFillSymbol.outline.color.toRgba()}]),
-      join: "${pictureFillSymbol.outline.join}",
-      miterLimit: ${pictureFillSymbol.outline.miterLimit},
-      style: "${pictureFillSymbol.outline.style}",
-      width: ${pictureFillSymbol.outline.width}
+      cap: "${pictureFillSymbol.outline?.cap}",
+      color: new Color([${pictureFillSymbol.outline?.color?.toRgba()}]),
+      join: "${pictureFillSymbol.outline?.join}",
+      miterLimit: ${pictureFillSymbol.outline?.miterLimit},
+      style: "${pictureFillSymbol.outline?.style}",
+      width: ${pictureFillSymbol.outline?.width}
     }),
     url: "${pictureFillSymbol.url}",
     width: ${pictureFillSymbol.width},

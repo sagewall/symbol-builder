@@ -25,7 +25,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
 
   lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "line") {
-      if (symbolLayer.material.color && symbolLayer.marker) {
+      if (symbolLayer.material?.color && symbolLayer.marker) {
         codeSnippet += `
       {
         type: "line",
@@ -33,7 +33,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         join: "${symbolLayer.join}",
         marker: {
           type: "style",
-          color: [${symbolLayer.marker.color.toRgba()}],
+          color: [${symbolLayer.marker.color?.toRgba()}],
           placement: "${symbolLayer.marker.placement}",
           style: "${symbolLayer.marker.style}"
         },
@@ -42,12 +42,12 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         },
         pattern: {
           type: "style",
-          style: "${symbolLayer.pattern.style}"
+          style: "${symbolLayer.pattern?.style}"
         },
         size: ${symbolLayer.size}
       },
       `;
-      } else if (symbolLayer.material.color) {
+      } else if (symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "line",
@@ -58,7 +58,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         },
         pattern: {
           type: "style",
-          style: "${symbolLayer.pattern.style}"
+          style: "${symbolLayer.pattern?.style}"
         },
         size: ${symbolLayer.size}
       },
@@ -67,7 +67,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
     }
 
     if (symbolLayer.type === "path") {
-      if (symbolLayer.material.color) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "path",
@@ -77,7 +77,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         height: ${symbolLayer.height},
         join: "${symbolLayer.join}",
         material: {
-          color: [${symbolLayer.material.color.toRgba()}],
+          color: [${symbolLayer.material?.color.toRgba()}],
         },
         profile: "${symbolLayer.profile}",
         profileRotation: "${symbolLayer.profileRotation}",

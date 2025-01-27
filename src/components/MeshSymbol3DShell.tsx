@@ -30,9 +30,10 @@ const MeshSymbol3DShell = () => {
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
     setMeshSymbol3D(newMeshSymbol3D);
 
-    const newPolygonGraphic = graphics.getItemAt(0).clone();
-    newPolygonGraphic.symbol = newMeshSymbol3D;
-
+    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
+    if (newPolygonGraphic) {
+      newPolygonGraphic.symbol = newMeshSymbol3D;
+    }
     const newGraphics = new Collection();
     newGraphics.add(newPolygonGraphic);
     setGraphics(newGraphics);

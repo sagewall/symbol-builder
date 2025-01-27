@@ -30,7 +30,7 @@ const meshSymbol3D = new MeshSymbol3D({
 
   meshSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (symbolLayer.edges.color && symbolLayer.material.color) {
+      if (symbolLayer.edges?.color && symbolLayer.material?.color) {
         codeSnippet += `
     new FillSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
@@ -44,7 +44,7 @@ const meshSymbol3D = new MeshSymbol3D({
         colorMixMode: "${symbolLayer.material.colorMixMode}",
       },
       pattern: new StylePattern3D({
-        style: "${symbolLayer.pattern.style}"
+        style: "${symbolLayer.pattern?.style}"
       })
     }),
     `;
