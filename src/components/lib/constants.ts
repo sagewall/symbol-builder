@@ -670,8 +670,8 @@ export const ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS: InstanceType<typeof IconSymbol
 ];
 
 export const ICON_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS: NonNullable<
-  InstanceType<typeof IconSymbol3DLayer>["resource"]
->["primitive"][] = ["circle", "square", "cross", "x", "kite", "triangle"];
+  NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]
+>[] = ["circle", "square", "cross", "x", "kite", "triangle"];
 
 export const JOIN_OPTIONS:
   | InstanceType<typeof SimpleLineSymbol>["join"][]
@@ -726,8 +726,8 @@ export const OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS: InstanceType<typeof ObjectSy
 ];
 
 export const OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS: NonNullable<
-  InstanceType<typeof ObjectSymbol3DLayer>["resource"]
->["primitive"][] = ["sphere", "cylinder", "cube", "cone", "inverted-cone", "diamond", "tetrahedron"];
+  NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]
+>[] = ["sphere", "cylinder", "cube", "cone", "inverted-cone", "diamond", "tetrahedron"];
 
 export const PATH_SYMBOL_3D_LAYER_ANCHOR_OPTIONS: InstanceType<typeof PathSymbol3DLayer>["anchor"][] = [
   "center",

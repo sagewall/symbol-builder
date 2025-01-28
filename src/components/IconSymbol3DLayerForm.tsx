@@ -22,7 +22,7 @@ interface Props {
   handleIconSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]
+    value: NonNullable<NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]>
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
