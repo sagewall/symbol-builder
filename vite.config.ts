@@ -9,7 +9,14 @@ export default defineConfig(({ mode }) => {
     base: env.VITE_BASE_NAME,
     build: {
       chunkSizeWarningLimit: 2600,
-      external: ["^@arcgis/", "^@esri/"]
+      external: ["^@arcgis/", "^@esri/"],
+      rollupOptions: {
+        output: {
+          assetFileNames: "assets/[name].[hash][extname]",
+          chunkFileNames: "assets/[name].[hash].js",
+          entryFileNames: "assets/[name].[hash].js"
+        }
+      }
     },
     plugins: [
       bundleStats({
