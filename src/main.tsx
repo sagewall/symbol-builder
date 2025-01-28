@@ -50,7 +50,7 @@ import TextSymbolPage from "./pages/text-symbol";
 import WebStyleSymbolPage from "./pages/web-style-symbol";
 
 setAssetPath(
-  "https://cdn.jsdelivr.net/npm/@esri/calcite-components@3.0.0-next.106/dist/calcite/assets"
+  "https://cdn.jsdelivr.net/npm/@esri/calcite-components@3.0.0-next.116/dist/calcite/assets"
 );
 
 const router = createBrowserRouter(
