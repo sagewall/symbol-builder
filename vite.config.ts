@@ -20,7 +20,8 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       bundleStats({
-        baseline: true
+        baseline: true,
+        json: true
       }),
       react(),
       visualizer({
