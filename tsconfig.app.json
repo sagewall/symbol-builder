@@ -22,8 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src",
-  "node_modules/@arcgis/map-components/dist/types/react.d.ts",
-  "node_modules/@esri/calcite-components/dist/types/react.d.ts"
-]
+  "include": ["src"]
 }
