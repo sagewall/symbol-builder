@@ -1,4 +1,6 @@
 import react from "@vitejs/plugin-react";
+import { bundleStats } from "rollup-plugin-bundle-stats";
+import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig, loadEnv } from "vite";
 
 export default defineConfig(({ mode }) => {
@@ -9,6 +11,18 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 2600,
       external: ["^@arcgis/", "^@esri/"]
     },
-    plugins: [react()],
+    plugins: [
+      bundleStats({
+        baseline: true
+      }),
+      react(),
+      visualizer({
+        brotliSize: true,
+        filename: "./dist/stats.html",
+        gzipSize: true,
+        open: true,
+        template: "sunburst"
+      })
+    ]
   };
 });
