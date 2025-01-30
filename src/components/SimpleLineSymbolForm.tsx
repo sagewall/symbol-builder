@@ -1,6 +1,6 @@
 import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 import { CAP_OPTIONS, JOIN_OPTIONS, LINE_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -43,13 +43,6 @@ const SimpleLineSymbolForm = ({
 
   let markerBlock;
   let styleBlock;
-
-  useEffect(() => {
-    if (solidOnly) {
-      setStyle("solid");
-      handleStyleChange("solid");
-    }
-  }, [solidOnly]);
 
   if (showMarker) {
     markerBlock = (

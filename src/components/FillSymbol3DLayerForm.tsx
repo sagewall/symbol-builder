@@ -1,6 +1,6 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
@@ -54,25 +54,17 @@ const FillSymbol3DLayerForm = ({
 }: Props) => {
   const [castShadows, setCastShadows] = useState(true);
 
-  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
-
-  useEffect(() => {
-    if (castShadowsRef.current) {
-      castShadowsRef.current.checked = true;
-    }
-  }, []);
-
   return (
     <React.Fragment>
       {isMeshSymbol3D && (
         <calcite-label layout="default" style={labelStyles}>
           castShadows
           <calcite-switch
+            checked={castShadows}
             oncalciteSwitchChange={(event) => {
               setCastShadows(event.target.checked);
               handleCastShadowsChange(layerIndex, event.target.checked);
             }}
-            ref={castShadowsRef}
             value={castShadows}
           ></calcite-switch>
         </calcite-label>

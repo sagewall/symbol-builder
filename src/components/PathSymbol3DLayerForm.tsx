@@ -1,5 +1,5 @@
 import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 import {
   CAP_3D_OPTIONS,
@@ -59,14 +59,6 @@ const LineSymbol3DLayerForm = ({
   const [profileRotation, setProfileRotation] = useState("all");
   const [width, setWidth] = useState("3");
 
-  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
-
-  useEffect(() => {
-    if (castShadowsRef.current) {
-      castShadowsRef.current.checked = true;
-    }
-  }, []);
-
   return (
     <React.Fragment>
       <calcite-label layout="default" style={labelStyles}>
@@ -110,11 +102,11 @@ const LineSymbol3DLayerForm = ({
       <calcite-label layout="default" style={labelStyles}>
         castShadows
         <calcite-switch
+          checked={castShadows}
           oncalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          ref={castShadowsRef}
           value={castShadows}
         ></calcite-switch>
       </calcite-label>

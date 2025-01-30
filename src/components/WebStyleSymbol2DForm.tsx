@@ -34,10 +34,6 @@ const WebStyleSymbol2DForm = ({
     "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
   );
 
-  useEffect(() => {
-    getStyleItemDataFromItem(groupItems[0]);
-  }, [groupItems]);
-
   const getStyleItemDataFromItem = async (groupItem: GroupItem) => {
     setPointWebStyleSymbolItems([]);
     setLineWebStyleSymbolItems([]);
@@ -175,6 +171,11 @@ const WebStyleSymbol2DForm = ({
       );
     }
   };
+
+  useEffect(() => {
+    getStyleItemDataFromItem(groupItems[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupItems]);
 
   return (
     <React.Fragment>

@@ -1,6 +1,6 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import { CAP_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
@@ -26,18 +26,9 @@ const FillSymbol3DLayerOutlineForm = ({
   handlePatternCapChange,
   handleSizeChange
 }: Props) => {
-  const colorRef: React.Ref<HTMLCalciteColorPickerElement> | undefined = createRef();
-  const patternCapRef: React.Ref<HTMLCalciteSelectElement> | undefined = createRef();
-
   const [color, setColor] = useState("#111111");
   const [patternCap, setPatternCap] = useState("butt");
   const [size, setSize] = useState("3");
-
-  useEffect(() => {
-    if (colorRef.current) {
-      colorRef.current.value = "#111111";
-    }
-  }, []);
 
   return (
     <React.Fragment>
@@ -73,7 +64,6 @@ const FillSymbol3DLayerOutlineForm = ({
               >
             );
           }}
-          ref={patternCapRef}
           value={patternCap}
         >
           {CAP_OPTIONS.map((option, index) => (

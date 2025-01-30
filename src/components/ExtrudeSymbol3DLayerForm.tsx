@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import ExtrudeSymbol3DLayerMaterialForm from "./ExtrudeSymbol3DLayerMaterialForm";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -25,24 +25,16 @@ const FillSymbol3DLayerForm = ({
   const [castShadows, setCastShadows] = useState(true);
   const [size, setSize] = useState("20");
 
-  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
-
-  useEffect(() => {
-    if (castShadowsRef.current) {
-      castShadowsRef.current.checked = true;
-    }
-  }, []);
-
   return (
     <React.Fragment>
       <calcite-label layout="default" style={labelStyles}>
         castShadows
         <calcite-switch
+          checked={castShadows}
           oncalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          ref={castShadowsRef}
           value={castShadows}
         ></calcite-switch>
       </calcite-label>
