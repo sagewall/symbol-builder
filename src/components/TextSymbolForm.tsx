@@ -1,16 +1,5 @@
 import type Font from "@arcgis/core/symbols/Font";
 import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
-import {
-  CalciteBlock,
-  CalciteInput,
-  CalciteInputNumber,
-  CalciteInputText,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect,
-  CalciteSlider,
-  CalciteSwitch
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import FontForm from "./FontForm";
 import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/constants";
@@ -79,39 +68,39 @@ const TextSymbolForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         text
-        <CalciteInputText
+        <calcite-input-text
           label={"text input"}
-          onCalciteInputTextChange={(event) => {
+          oncalciteInputTextChange={(event) => {
             setText(event.target.value);
             handleTextChange(event.target.value);
           }}
           value={text}
-        ></CalciteInputText>
-      </CalciteLabel>
+        ></calcite-input-text>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         angle
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setAngle(event.target.value as number);
             handleAngleChange(event.target.value as number);
           }}
           step={1}
           ticks={180}
           value={angle}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         backgroundColor
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setBackgroundColor(event.target.value.toString());
             }
@@ -119,13 +108,13 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={backgroundColor}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         borderLineColor
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setBorderLineColor(event.target.value.toString());
             }
@@ -133,26 +122,26 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={borderLineColor}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         borderLineSize
-        <CalciteInputNumber
+        <calcite-input-number
           label={"borderLineSize input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setBorderLineSize(event.target.value);
             handleBorderLineSizeChange(event.target.value);
           }}
           value={borderLineSize}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -160,21 +149,21 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={color}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"font"}>
+      <calcite-block style={blockStyles} collapsible heading={"font"}>
         <FontForm
           handleDecorationChange={handleFontDecorationChange}
           handleFontChange={handleFontChange}
           handleSizeChange={handleFontSizeChange}
-        />
-      </CalciteBlock>
+        ></FontForm>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         haloColor
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setHaloColor(event.target.value.toString());
             }
@@ -182,27 +171,27 @@ const TextSymbolForm = ({
           }}
           type="color"
           value={haloColor}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         haloSize
-        <CalciteInputNumber
+        <calcite-input-number
           label={"haloSize input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setHaloSize(event.target.value);
             handleHaloSizeChange(event.target.value);
           }}
           value={haloSize}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         horizontalAlignment
-        <CalciteSelect
+        <calcite-select
           label={"horizontalAlignment selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
               event.target.value as InstanceType<typeof TextSymbol>["horizontalAlignment"]
@@ -211,16 +200,16 @@ const TextSymbolForm = ({
           value={horizontalAlignment}
         >
           {HORIZONTAL_ALIGNMENT_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         verticalAlignment
-        <CalciteSelect
+        <calcite-select
           label={"verticalAlignment selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
               event.target.value as InstanceType<typeof TextSymbol>["verticalAlignment"]
@@ -229,69 +218,69 @@ const TextSymbolForm = ({
           value={verticalAlignment}
         >
           {VERTICAL_ALIGNMENT_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         kerning
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
+        <calcite-switch
+          oncalciteSwitchChange={(event) => {
             setKerning(event.target.checked);
             handleKerningChange(event.target.checked);
           }}
           value={kerning}
-        ></CalciteSwitch>
-      </CalciteLabel>
+        ></calcite-switch>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         lineWidth
-        <CalciteInputNumber
+        <calcite-input-number
           label={"lineWidth input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setLineWidth(event.target.value);
             handleLineWidthChange(event.target.value);
           }}
           value={lineWidth}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         rotated
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
+        <calcite-switch
+          oncalciteSwitchChange={(event) => {
             setRotated(event.target.checked);
             handleRotatedChange(event.target.checked);
           }}
           value={rotated}
-        ></CalciteSwitch>
-      </CalciteLabel>
+        ></calcite-switch>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         xoffset
-        <CalciteInputNumber
+        <calcite-input-number
           label={"xoffset input"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setXoffset(event.target.value);
             handleXOffsetChange(event.target.value);
           }}
           value={xoffset}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         yoffset
-        <CalciteInputNumber
+        <calcite-input-number
           label={"yoffset input"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setYoffset(event.target.value);
             handleYOffsetChange(event.target.value);
           }}
           value={yoffset}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

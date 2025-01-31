@@ -1,5 +1,4 @@
 import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const TextSymbolESMPanel = ({ textSymbol }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   const codeSnippet = `
@@ -22,10 +23,10 @@ const TextSymbolESMPanel = ({ textSymbol }: Props) => {
   
   const textSymbol = new TextSymbol({
     angle: ${textSymbol.angle},
-    backgroundColor: new Color([${textSymbol.backgroundColor.toRgba()}]),
-    borderLineColor: new Color([${textSymbol.borderLineColor.toRgba()}]),
+    backgroundColor: new Color([${textSymbol.backgroundColor?.toRgba()}]),
+    borderLineColor: new Color([${textSymbol.borderLineColor?.toRgba()}]),
     borderLineSize: ${textSymbol.borderLineSize},
-    color: new Color([${textSymbol.color.toRgba()}]),
+    color: new Color([${textSymbol.color?.toRgba()}]),
     font: new Font({
       decoration: "${textSymbol.font.decoration}",
       family: "${textSymbol.font.family}",
@@ -33,7 +34,7 @@ const TextSymbolESMPanel = ({ textSymbol }: Props) => {
       style: "${textSymbol.font.style}",
       weight: "${textSymbol.font.weight}"
     }),
-    haloColor: new Color([${textSymbol.haloColor.toRgba()}]),
+    haloColor: new Color([${textSymbol.haloColor?.toRgba()}]),
     haloSize: ${textSymbol.haloSize},
     horizontalAlignment: "${textSymbol.horizontalAlignment}",
     kerning: ${textSymbol.kerning},
@@ -47,20 +48,20 @@ const TextSymbolESMPanel = ({ textSymbol }: Props) => {
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -69,7 +70,7 @@ const TextSymbolESMPanel = ({ textSymbol }: Props) => {
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

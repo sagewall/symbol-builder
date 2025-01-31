@@ -3,15 +3,6 @@ import Collection from "@arcgis/core/core/Collection";
 import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
 import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
-import {
-  CalcitePanel,
-  CalciteShell,
-  CalciteShellPanel,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabTitle,
-  CalciteTabs
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import LineSymbol3DAMDPanel from "./LineSymbol3DAMDPanel";
@@ -35,13 +26,15 @@ const LineSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneView graphics={graphics}></SceneView>;
 
   const updateGraphics = (newLineSymbol3D: LineSymbol3D) => {
     setLineSymbol3D(newLineSymbol3D);
 
-    const newLineGraphic = graphics.getItemAt(0).clone();
-    newLineGraphic.symbol = newLineSymbol3D;
+    const newLineGraphic = graphics.getItemAt(0)?.clone();
+    if (newLineGraphic) {
+      newLineGraphic.symbol = newLineSymbol3D;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newLineGraphic);
@@ -57,39 +50,39 @@ const LineSymbol3DShell = () => {
 
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="LineSymbol3D" backButton></Header>
-        <CalciteShellPanel slot="panel-start" position="start" resizable>
-          <CalcitePanel>
+        <calcite-shell-panel slot="panel-start" position="start" resizable>
+          <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <LineSymbol3DForm updateSymbolLayers={updateSymbolLayers}></LineSymbol3DForm>
             </div>
-          </CalcitePanel>
-        </CalciteShellPanel>
+          </calcite-panel>
+        </calcite-shell-panel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <CalcitePanel>
-            <CalciteTabs>
-              <CalciteTabNav slot="title-group" style={tabNavStyles}>
-                <CalciteTabTitle>ESM</CalciteTabTitle>
-                <CalciteTabTitle>AMD</CalciteTabTitle>
-                <CalciteTabTitle>JSON</CalciteTabTitle>
-              </CalciteTabNav>
-              <CalciteTab>
-                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D} />
-              </CalciteTab>
-              <CalciteTab>
-                <LineSymbol3DAMDPanel lineSymbol3D={lineSymbol3D} />
-              </CalciteTab>
-              <CalciteTab>
-                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D} />
-              </CalciteTab>
-            </CalciteTabs>
-          </CalcitePanel>
-        </CalciteShellPanel>
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+          <calcite-panel>
+            <calcite-tabs>
+              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+                <calcite-tab-title>ESM</calcite-tab-title>
+                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>JSON</calcite-tab-title>
+              </calcite-tab-nav>
+              <calcite-tab>
+                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DESMPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <LineSymbol3DAMDPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DAMDPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DJSONPanel>
+              </calcite-tab>
+            </calcite-tabs>
+          </calcite-panel>
+        </calcite-shell-panel>
         {view}
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

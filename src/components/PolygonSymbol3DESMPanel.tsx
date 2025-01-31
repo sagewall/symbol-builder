@@ -1,5 +1,4 @@
 import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let colorImport = false;
@@ -57,34 +58,34 @@ const PolygonSymbol3DESMPanel = ({ polygonSymbol3D }: Props) => {
   });
 
   let codeSnippet = `\n`;
-  colorImport && (codeSnippet += `import Color from "@arcgis/core/Color.js";\n`);
+  if (colorImport) codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
 
-  extrudeSymbol3DLayerImport &&
-    (codeSnippet += `import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";\n`);
+  if (extrudeSymbol3DLayerImport)
+    codeSnippet += `import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";\n`;
 
-  fillSymbol3DLayerImport &&
-    (codeSnippet += `import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";\n`);
+  if (fillSymbol3DLayerImport)
+    codeSnippet += `import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";\n`;
 
-  iconSymbol3DLayerImport &&
-    (codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`);
+  if (iconSymbol3DLayerImport)
+    codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`;
 
-  objectSymbol3DLayerImport &&
-    (codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`);
+  if (objectSymbol3DLayerImport)
+    codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`;
 
-  polygonSymbol3DImport &&
-    (codeSnippet += `import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";\n`);
+  if (polygonSymbol3DImport)
+    codeSnippet += `import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";\n`;
 
-  waterSymbol3DLayerImport &&
-    (codeSnippet += `import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";\n`);
+  if (waterSymbol3DLayerImport)
+    codeSnippet += `import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";\n`;
 
-  lineStylePattern3DImport &&
-    (codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`);
+  if (lineStylePattern3DImport)
+    codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
 
-  solidEdges3DImport &&
-    (codeSnippet += `import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";\n`);
+  if (solidEdges3DImport)
+    codeSnippet += `import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";\n`;
 
-  stylePattern3DImport &&
-    (codeSnippet += `import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";\n`);
+  if (stylePattern3DImport)
+    codeSnippet += `import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";\n`;
 
   codeSnippet += `
 const polygonSymbol3D = new PolygonSymbol3D({
@@ -93,7 +94,11 @@ const polygonSymbol3D = new PolygonSymbol3D({
 
   polygonSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.outline.pattern) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.outline?.pattern
+      ) {
         codeSnippet += `
     new FillSymbol3DLayer({
       material: {
@@ -109,7 +114,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         size: ${symbolLayer.outline.size},
       },
       pattern: new StylePattern3D({
-        style: "${symbolLayer.pattern.style}"
+        style: "${symbolLayer.pattern?.style}"
       })
     }),
     `;
@@ -117,14 +122,14 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "extrude") {
-      if (symbolLayer.material.color) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
     new ExtrudeSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
       edges: new SolidEdges3D({
-        color: new Color([${symbolLayer.edges.color.toRgba()}]),
-        extensionLength: ${symbolLayer.edges.extensionLength},
-        size: ${symbolLayer.edges.size}
+        color: new Color([${symbolLayer.edges?.color?.toRgba()}]),
+        extensionLength: ${symbolLayer.edges?.extensionLength},
+        size: ${symbolLayer.edges?.size}
       }),
       material: {
         color: new Color([${symbolLayer.material.color.toRgba()}]),
@@ -138,7 +143,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
     if (symbolLayer.type === "water") {
       codeSnippet += `
     new WaterSymbol3DLayer({
-      color: new Color([${symbolLayer.color.toRgba()}]),
+      color: new Color([${symbolLayer.color?.toRgba()}]),
       waterbodySize: "${symbolLayer.waterbodySize}",
       waveDirection: ${symbolLayer.waveDirection},
       waveStrength: "${symbolLayer.waveStrength}"
@@ -147,7 +152,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material.color && symbolLayer.outline.color) {
+      if (symbolLayer.material?.color && symbolLayer.outline?.color) {
         codeSnippet += `
     new IconSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
@@ -163,17 +168,17 @@ const polygonSymbol3D = new PolygonSymbol3D({
         size: ${symbolLayer.outline.size}
       },`;
 
-        if (!symbolLayer.resource.href) {
+        if (!symbolLayer.resource?.href) {
           codeSnippet += `
       resource: {
-        primitive: "${symbolLayer.resource.primitive}",
+        primitive: "${symbolLayer.resource?.primitive}",
       },`;
         }
 
-        if (symbolLayer.resource.href) {
+        if (symbolLayer.resource?.href) {
           codeSnippet += `
       resource: {
-        href: "${symbolLayer.resource.href}",
+        href: "${symbolLayer.resource?.href}",
       },`;
         }
 
@@ -185,14 +190,14 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "object") {
-      if (symbolLayer.material.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
       anchorPosition: {
-        x: ${symbolLayer.anchorPosition.x},
-        y: ${symbolLayer.anchorPosition.y},
-        z: ${symbolLayer.anchorPosition.z}
+        x: ${symbolLayer.anchorPosition?.x},
+        y: ${symbolLayer.anchorPosition?.y},
+        z: ${symbolLayer.anchorPosition?.z}
       },
       castShadows: ${symbolLayer.castShadows},
       depth: ${symbolLayer.depth},
@@ -209,14 +214,14 @@ const polygonSymbol3D = new PolygonSymbol3D({
       width: ${symbolLayer.width}
     }),
     `;
-      } else if (symbolLayer.material.color && symbolLayer.resource.primitive) {
+      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
       anchorPosition: {
-        x: ${symbolLayer.anchorPosition.x},
-        y: ${symbolLayer.anchorPosition.y},
-        z: ${symbolLayer.anchorPosition.z}
+        x: ${symbolLayer.anchorPosition?.x},
+        y: ${symbolLayer.anchorPosition?.y},
+        z: ${symbolLayer.anchorPosition?.z}
       },
       castShadows: ${symbolLayer.castShadows},
       depth: ${symbolLayer.depth},
@@ -243,20 +248,20 @@ const polygonSymbol3D = new PolygonSymbol3D({
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -265,7 +270,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

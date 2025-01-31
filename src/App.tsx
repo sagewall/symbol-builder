@@ -6,7 +6,7 @@ function App() {
   return (
     <React.Fragment>
       <div className="App">
-        <Outlet />
+        <Outlet></Outlet>
       </div>
     </React.Fragment>
   );

@@ -1,5 +1,4 @@
 import type MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const MeshSymbol3DESMPanel = ({ meshSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let codeSnippet = `
@@ -29,7 +30,7 @@ const meshSymbol3D = new MeshSymbol3D({
 
   meshSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (symbolLayer.edges.color && symbolLayer.material.color) {
+      if (symbolLayer.edges?.color && symbolLayer.material?.color) {
         codeSnippet += `
     new FillSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
@@ -43,7 +44,7 @@ const meshSymbol3D = new MeshSymbol3D({
         colorMixMode: "${symbolLayer.material.colorMixMode}",
       },
       pattern: new StylePattern3D({
-        style: "${symbolLayer.pattern.style}"
+        style: "${symbolLayer.pattern?.style}"
       })
     }),
     `;
@@ -57,20 +58,20 @@ const meshSymbol3D = new MeshSymbol3D({
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -79,7 +80,7 @@ const meshSymbol3D = new MeshSymbol3D({
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

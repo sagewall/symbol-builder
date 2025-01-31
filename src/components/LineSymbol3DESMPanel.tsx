@@ -1,5 +1,4 @@
 import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const LineSymbol3DESMPanel = ({ lineSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let colorImport = false;
@@ -36,15 +37,15 @@ const LineSymbol3DESMPanel = ({ lineSymbol3D }: Props) => {
 
   let codeSnippet = `\n`;
 
-  colorImport && (codeSnippet += `import Color from "@arcgis/core/Color.js";\n`);
-  lineSymbol3DImport &&
-    (codeSnippet += `import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";\n`);
-  lineSymbol3DLayerImport &&
-    (codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`);
-  pathSymbol3DLayerImport &&
-    (codeSnippet += `import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";\n`);
-  lineStylePattern3DImport &&
-    (codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`);
+  if (colorImport) codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
+  if (lineSymbol3DImport)
+    codeSnippet += `import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";\n`;
+  if (lineSymbol3DLayerImport)
+    codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`;
+  if (pathSymbol3DLayerImport)
+    codeSnippet += `import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";\n`;
+  if (lineStylePattern3DImport)
+    codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
 
   codeSnippet += `
 const lineSymbol3D = new LineSymbol3D({
@@ -53,13 +54,13 @@ const lineSymbol3D = new LineSymbol3D({
 
   lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "line") {
-      if (symbolLayer.material.color && symbolLayer.marker) {
+      if (symbolLayer.material?.color && symbolLayer.marker) {
         codeSnippet += `
     new LineSymbol3DLayer({
       cap: "${symbolLayer.cap}",
       join: "${symbolLayer.join}",
       marker: new LineStyleMarker3D({
-        color: new Color([${symbolLayer.marker.color.toRgba()}]),
+        color: new Color([${symbolLayer.marker.color?.toRgba()}]),
         placement: "${symbolLayer.marker.placement}",
         style: "${symbolLayer.marker.style}"
       }),
@@ -67,12 +68,12 @@ const lineSymbol3D = new LineSymbol3D({
         color: new Color([${symbolLayer.material.color.toRgba()}]),
       },
       pattern: new LineStylePattern3D({
-        style: "${symbolLayer.pattern.style}"
+        style: "${symbolLayer.pattern?.style}"
       }),
       size: ${symbolLayer.size}
     }),
     `;
-      } else if (symbolLayer.material.color) {
+      } else if (symbolLayer.material?.color) {
         codeSnippet += `
     new LineSymbol3DLayer({
       cap: "${symbolLayer.cap}",
@@ -81,7 +82,7 @@ const lineSymbol3D = new LineSymbol3D({
         color: new Color([${symbolLayer.material.color.toRgba()}]),
       },
       pattern: new LineStylePattern3D({
-        style: "${symbolLayer.pattern.style}"
+        style: "${symbolLayer.pattern?.style}"
       }),
       size: ${symbolLayer.size}
     }),
@@ -90,7 +91,7 @@ const lineSymbol3D = new LineSymbol3D({
     }
 
     if (symbolLayer.type === "path") {
-      if (symbolLayer.material.color) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
     new PathSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
@@ -116,20 +117,20 @@ const lineSymbol3D = new LineSymbol3D({
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -138,7 +139,7 @@ const lineSymbol3D = new LineSymbol3D({
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

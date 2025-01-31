@@ -3,15 +3,6 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
-import {
-  CalcitePanel,
-  CalciteShell,
-  CalciteShellPanel,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabTitle,
-  CalciteTabs
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
@@ -49,14 +40,15 @@ const TextSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapView graphics={graphics} />;
+  const view = <MapView graphics={graphics}></MapView>;
 
   const updateGraphics = (newTextSymbol: TextSymbol) => {
     setTextSymbol(newTextSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newTextSymbol;
-
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newTextSymbol;
+    }
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);
     setGraphics(newGraphics);
@@ -184,10 +176,10 @@ const TextSymbolShell = () => {
 
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="TextSymbol" backButton></Header>
-        <CalciteShellPanel slot="panel-start" position="start" resizable>
-          <CalcitePanel>
+        <calcite-shell-panel slot="panel-start" position="start" resizable>
+          <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <TextSymbolForm
@@ -209,33 +201,33 @@ const TextSymbolShell = () => {
                 handleVerticalAlignmentChange={handleVerticalAlignmentChange}
                 handleXOffsetChange={handleXOffsetChange}
                 handleYOffsetChange={handleYOffsetChange}
-              />
+              ></TextSymbolForm>
             </div>
-          </CalcitePanel>
-        </CalciteShellPanel>
+          </calcite-panel>
+        </calcite-shell-panel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <CalcitePanel>
-            <CalciteTabs>
-              <CalciteTabNav slot="title-group" style={tabNavStyles}>
-                <CalciteTabTitle>ESM</CalciteTabTitle>
-                <CalciteTabTitle>AMD</CalciteTabTitle>
-                <CalciteTabTitle>JSON</CalciteTabTitle>
-              </CalciteTabNav>
-              <CalciteTab>
-                <TextSymbolESMPanel textSymbol={textSymbol} />
-              </CalciteTab>
-              <CalciteTab>
-                <TextSymbolAMDPanel textSymbol={textSymbol} />
-              </CalciteTab>
-              <CalciteTab>
-                <TextSymbolJSONPanel textSymbol={textSymbol} />
-              </CalciteTab>
-            </CalciteTabs>
-          </CalcitePanel>
-        </CalciteShellPanel>
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+          <calcite-panel>
+            <calcite-tabs>
+              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+                <calcite-tab-title>ESM</calcite-tab-title>
+                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>JSON</calcite-tab-title>
+              </calcite-tab-nav>
+              <calcite-tab>
+                <TextSymbolESMPanel textSymbol={textSymbol}></TextSymbolESMPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <TextSymbolAMDPanel textSymbol={textSymbol}></TextSymbolAMDPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <TextSymbolJSONPanel textSymbol={textSymbol}></TextSymbolJSONPanel>
+              </calcite-tab>
+            </calcite-tabs>
+          </calcite-panel>
+        </calcite-shell-panel>
         {view}
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

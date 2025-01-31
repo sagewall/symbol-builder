@@ -1,37 +1,35 @@
 import "@arcgis/core/assets/esri/themes/light/main.css";
-import "@arcgis/map-components/dist/components/arcgis-map";
-import "@arcgis/map-components/dist/components/arcgis-placement";
-import "@arcgis/map-components/dist/components/arcgis-scene";
-import "@esri/calcite-components/dist/calcite/calcite.css";
+import "@arcgis/map-components/components/arcgis-map";
+import "@arcgis/map-components/components/arcgis-placement";
+import "@arcgis/map-components/components/arcgis-scene";
+import "@esri/calcite-components/calcite/calcite.css";
+import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-alert";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-button";
+import "@esri/calcite-components/components/calcite-card";
+import "@esri/calcite-components/components/calcite-card-group";
+import "@esri/calcite-components/components/calcite-chip";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-input-text";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-list";
+import "@esri/calcite-components/components/calcite-list-item";
+import "@esri/calcite-components/components/calcite-navigation";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-select";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-slider";
+import "@esri/calcite-components/components/calcite-switch";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import "@esri/calcite-components/components/calcite-tooltip";
 import { setAssetPath } from "@esri/calcite-components/dist/components";
-import "@esri/calcite-components/dist/components/calcite-action";
-import "@esri/calcite-components/dist/components/calcite-alert";
-import "@esri/calcite-components/dist/components/calcite-block";
-import "@esri/calcite-components/dist/components/calcite-button";
-import "@esri/calcite-components/dist/components/calcite-card";
-import "@esri/calcite-components/dist/components/calcite-chip";
-import "@esri/calcite-components/dist/components/calcite-combobox";
-import "@esri/calcite-components/dist/components/calcite-combobox-item";
-import "@esri/calcite-components/dist/components/calcite-input";
-import "@esri/calcite-components/dist/components/calcite-input-number";
-import "@esri/calcite-components/dist/components/calcite-input-text";
-import "@esri/calcite-components/dist/components/calcite-label";
-import "@esri/calcite-components/dist/components/calcite-list";
-import "@esri/calcite-components/dist/components/calcite-list-item";
-import "@esri/calcite-components/dist/components/calcite-loader";
-import "@esri/calcite-components/dist/components/calcite-navigation";
-import "@esri/calcite-components/dist/components/calcite-option";
-import "@esri/calcite-components/dist/components/calcite-panel";
-import "@esri/calcite-components/dist/components/calcite-select";
-import "@esri/calcite-components/dist/components/calcite-shell";
-import "@esri/calcite-components/dist/components/calcite-shell-panel";
-import "@esri/calcite-components/dist/components/calcite-slider";
-import "@esri/calcite-components/dist/components/calcite-switch";
-import "@esri/calcite-components/dist/components/calcite-tab";
-import "@esri/calcite-components/dist/components/calcite-tab-nav";
-import "@esri/calcite-components/dist/components/calcite-tab-title";
-import "@esri/calcite-components/dist/components/calcite-tabs";
-import "@esri/calcite-components/dist/components/calcite-tooltip";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -51,13 +49,15 @@ import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
 import TextSymbolPage from "./pages/text-symbol";
 import WebStyleSymbolPage from "./pages/web-style-symbol";
 
-setAssetPath("https://js.arcgis.com/calcite-components/2.13.2/assets");
+setAssetPath(
+  "https://cdn.jsdelivr.net/npm/@esri/calcite-components@3.0.0-next.123/dist/calcite/assets"
+);
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <App />,
+      element: <App></App>,
       children: [
         {
           path: "/",
@@ -65,51 +65,51 @@ const router = createBrowserRouter(
         },
         {
           path: "cim-symbol",
-          element: <CIMSymbolPage />
+          element: <CIMSymbolPage></CIMSymbolPage>
         },
         {
           path: "line-symbol-3d",
-          element: <LineSymbol3DPage />
+          element: <LineSymbol3DPage></LineSymbol3DPage>
         },
         {
           path: "mesh-symbol-3d",
-          element: <MeshSymbol3DPage />
+          element: <MeshSymbol3DPage></MeshSymbol3DPage>
         },
         {
           path: "picture-fill-symbol",
-          element: <PictureFillSymbolPage />
+          element: <PictureFillSymbolPage></PictureFillSymbolPage>
         },
         {
           path: "picture-marker-symbol",
-          element: <PictureMarkerSymbolPage />
+          element: <PictureMarkerSymbolPage></PictureMarkerSymbolPage>
         },
         {
           path: "point-symbol-3d",
-          element: <PointSymbol3DPage />
+          element: <PointSymbol3DPage></PointSymbol3DPage>
         },
         {
           path: "polygon-symbol-3d",
-          element: <PolygonSymbol3DPage />
+          element: <PolygonSymbol3DPage></PolygonSymbol3DPage>
         },
         {
           path: "simple-fill-symbol",
-          element: <SimpleFillSymbolPage />
+          element: <SimpleFillSymbolPage></SimpleFillSymbolPage>
         },
         {
           path: "simple-line-symbol",
-          element: <SimpleLineSymbolPage />
+          element: <SimpleLineSymbolPage></SimpleLineSymbolPage>
         },
         {
           path: "simple-marker-symbol",
-          element: <SimpleMarkerSymbolPage />
+          element: <SimpleMarkerSymbolPage></SimpleMarkerSymbolPage>
         },
         {
           path: "text-symbol",
-          element: <TextSymbolPage />
+          element: <TextSymbolPage></TextSymbolPage>
         },
         {
           path: "web-style-symbol",
-          element: <WebStyleSymbolPage />
+          element: <WebStyleSymbolPage></WebStyleSymbolPage>
         }
       ]
     }
@@ -119,6 +119,6 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router}></RouterProvider>
   </React.StrictMode>
 );

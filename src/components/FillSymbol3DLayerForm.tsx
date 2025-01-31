@@ -1,7 +1,6 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import { CalciteBlock, CalciteLabel, CalciteSwitch } from "@esri/calcite-components-react";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
@@ -18,7 +17,9 @@ interface Props {
   handleFillSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
+    value: NonNullable<
+      NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+    >
   ) => void;
   handleFillSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerOutlinePatternStyleChange: (
@@ -27,12 +28,12 @@ interface Props {
   ) => void;
   handleFillSymbol3DLayerOutlinePatternCapChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>
   ) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
   handleFillSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["pattern"]["style"]
+    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["pattern"]>["style"]>
   ) => void;
 }
 
@@ -53,51 +54,43 @@ const FillSymbol3DLayerForm = ({
 }: Props) => {
   const [castShadows, setCastShadows] = useState(true);
 
-  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
-
-  useEffect(() => {
-    if (castShadowsRef.current) {
-      castShadowsRef.current.checked = true;
-    }
-  }, []);
-
   return (
     <React.Fragment>
       {isMeshSymbol3D && (
-        <CalciteLabel layout="default" style={labelStyles}>
+        <calcite-label layout="default" style={labelStyles}>
           castShadows
-          <CalciteSwitch
-            onCalciteSwitchChange={(event) => {
+          <calcite-switch
+            checked={castShadows}
+            oncalciteSwitchChange={(event) => {
               setCastShadows(event.target.checked);
               handleCastShadowsChange(layerIndex, event.target.checked);
             }}
-            ref={castShadowsRef}
             value={castShadows}
-          ></CalciteSwitch>
-        </CalciteLabel>
+          ></calcite-switch>
+        </calcite-label>
       )}
 
       {isMeshSymbol3D && (
-        <CalciteBlock style={blockStyles} collapsible heading={"edges"}>
+        <calcite-block style={blockStyles} collapsible heading={"edges"}>
           <Edges3DForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerEdgesColorChange}
             handleExtensionLengthChange={handleFillSymbol3DLayerEdgesExtensionLengthChange}
             handleSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
           ></Edges3DForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <FillSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerMaterialColorChange}
           handleColorMixModeChange={handleFillSymbol3DLayerMaterialColorMixModeChange}
         ></FillSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
       {!isMeshSymbol3D && (
-        <CalciteBlock style={blockStyles} collapsible heading={"outline"}>
+        <calcite-block style={blockStyles} collapsible heading={"outline"}>
           <FillSymbol3DLayerOutlineForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerOutlineColorChange}
@@ -105,16 +98,16 @@ const FillSymbol3DLayerForm = ({
             handlePatternCapChange={handleFillSymbol3DLayerOutlinePatternCapChange}
             handleSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
           ></FillSymbol3DLayerOutlineForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
 
       {!isMeshSymbol3D && (
-        <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
+        <calcite-block style={blockStyles} collapsible heading={"pattern"}>
           <StylePattern3DForm
             layerIndex={layerIndex}
             handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
           ></StylePattern3DForm>
-        </CalciteBlock>
+        </calcite-block>
       )}
     </React.Fragment>
   );

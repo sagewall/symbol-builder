@@ -1,10 +1,4 @@
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteSwitch
-} from "@esri/calcite-components-react";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Edges3DForm from "./Edges3DForm";
 import ExtrudeSymbol3DLayerMaterialForm from "./ExtrudeSymbol3DLayerMaterialForm";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -31,56 +25,48 @@ const FillSymbol3DLayerForm = ({
   const [castShadows, setCastShadows] = useState(true);
   const [size, setSize] = useState("20");
 
-  const castShadowsRef: React.Ref<HTMLCalciteSwitchElement> | undefined = createRef();
-
-  useEffect(() => {
-    if (castShadowsRef.current) {
-      castShadowsRef.current.checked = true;
-    }
-  }, []);
-
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         castShadows
-        <CalciteSwitch
-          onCalciteSwitchChange={(event) => {
+        <calcite-switch
+          checked={castShadows}
+          oncalciteSwitchChange={(event) => {
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          ref={castShadowsRef}
           value={castShadows}
-        ></CalciteSwitch>
-      </CalciteLabel>
+        ></calcite-switch>
+      </calcite-label>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"edges"}>
+      <calcite-block style={blockStyles} collapsible heading={"edges"}>
         <Edges3DForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerEdgesColorChange}
           handleExtensionLengthChange={handleExtrudeSymbol3DLayerEdgesExtensionLengthChange}
           handleSizeChange={handleExtrudeSymbol3DLayerEdgesSizeChange}
         ></Edges3DForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <ExtrudeSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}
-        />
-      </CalciteBlock>
+        ></ExtrudeSymbol3DLayerMaterialForm>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

@@ -4,7 +4,7 @@ import PictureMarkerSymbolShell from "../components/PictureMarkerSymbolShell";
 const PictureMarkerSymbolPage = () => {
   return (
     <React.Fragment>
-      <PictureMarkerSymbolShell />
+      <PictureMarkerSymbolShell></PictureMarkerSymbolShell>
     </React.Fragment>
   );
 };

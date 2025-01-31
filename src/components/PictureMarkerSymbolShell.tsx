@@ -1,17 +1,6 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
-import {
-  CalciteLabel,
-  CalcitePanel,
-  CalciteShell,
-  CalciteShellPanel,
-  CalciteSwitch,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabTitle,
-  CalciteTabs
-} from "@esri/calcite-components-react";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
@@ -51,9 +40,9 @@ const PictureMarkerSymbolShell = () => {
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics} />;
+  let view = <MapView graphics={graphics}></MapView>;
   if (sceneView) {
-    view = <SceneView graphics={graphics} />;
+    view = <SceneView graphics={graphics}></SceneView>;
   }
 
   const handleSwitchChange = () => {
@@ -65,8 +54,10 @@ const PictureMarkerSymbolShell = () => {
   const updateGraphics = (newPictureMarkerSymbol: PictureMarkerSymbol) => {
     setPictureMarkerSymbol(newPictureMarkerSymbol);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newPictureMarkerSymbol;
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newPictureMarkerSymbol;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);
@@ -111,19 +102,19 @@ const PictureMarkerSymbolShell = () => {
 
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="PictureMarkerSymbol" backButton></Header>
-        <CalciteShellPanel slot="panel-start" position="start" resizable>
-          <CalcitePanel>
+        <calcite-shell-panel slot="panel-start" position="start" resizable>
+          <calcite-panel>
             <div slot="header-content">Properties </div>
-            <CalciteLabel slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
-              <CalciteSwitch
+              <calcite-switch
                 ref={viewSwitchRef}
-                onCalciteSwitchChange={handleSwitchChange}
-              ></CalciteSwitch>
+                oncalciteSwitchChange={handleSwitchChange}
+              ></calcite-switch>
               3D
-            </CalciteLabel>
+            </calcite-label>
 
             <div style={formStyles}>
               <PictureMarkerSymbolForm
@@ -133,33 +124,39 @@ const PictureMarkerSymbolShell = () => {
                 handleWidthChange={handleWidthChange}
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
-              />
+              ></PictureMarkerSymbolForm>
             </div>
-          </CalcitePanel>
-        </CalciteShellPanel>
+          </calcite-panel>
+        </calcite-shell-panel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <CalcitePanel>
-            <CalciteTabs>
-              <CalciteTabNav slot="title-group" style={tabNavStyles}>
-                <CalciteTabTitle>ESM</CalciteTabTitle>
-                <CalciteTabTitle>AMD</CalciteTabTitle>
-                <CalciteTabTitle>JSON</CalciteTabTitle>
-              </CalciteTabNav>
-              <CalciteTab>
-                <PictureMarkerSymbolESMPanel pictureMarkerSymbol={pictureMarkerSymbol} />
-              </CalciteTab>
-              <CalciteTab>
-                <PictureMarkerSymbolAMDPanel pictureMarkerSymbol={pictureMarkerSymbol} />
-              </CalciteTab>
-              <CalciteTab>
-                <PictureMarkerSymbolJSONPanel pictureMarkerSymbol={pictureMarkerSymbol} />
-              </CalciteTab>
-            </CalciteTabs>
-          </CalcitePanel>
-        </CalciteShellPanel>
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+          <calcite-panel>
+            <calcite-tabs>
+              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+                <calcite-tab-title>ESM</calcite-tab-title>
+                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>JSON</calcite-tab-title>
+              </calcite-tab-nav>
+              <calcite-tab>
+                <PictureMarkerSymbolESMPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolESMPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <PictureMarkerSymbolAMDPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolAMDPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <PictureMarkerSymbolJSONPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolJSONPanel>
+              </calcite-tab>
+            </calcite-tabs>
+          </calcite-panel>
+        </calcite-shell-panel>
         {view}
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

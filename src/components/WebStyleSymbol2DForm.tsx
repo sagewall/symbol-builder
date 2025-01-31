@@ -1,16 +1,4 @@
 import esriRequest from "@arcgis/core/request";
-import {
-  CalciteInputText,
-  CalciteLabel,
-  CalciteList,
-  CalciteListItem,
-  CalciteOption,
-  CalciteSelect,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabs,
-  CalciteTabTitle
-} from "@esri/calcite-components-react";
 import React, { useEffect, useState } from "react";
 import {
   ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS,
@@ -45,10 +33,6 @@ const WebStyleSymbol2DForm = ({
   const [styleUrl, setStyleUrl] = useState(
     "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data"
   );
-
-  useEffect(() => {
-    getStyleItemDataFromItem(groupItems[0]);
-  }, [groupItems]);
 
   const getStyleItemDataFromItem = async (groupItem: GroupItem) => {
     setPointWebStyleSymbolItems([]);
@@ -188,38 +172,48 @@ const WebStyleSymbol2DForm = ({
     }
   };
 
+  useEffect(() => {
+    getStyleItemDataFromItem(groupItems[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupItems]);
+
   return (
     <React.Fragment>
-      <CalciteTabs>
-        <CalciteTabNav slot="title-group" onCalciteTabChange={handleTabChange}>
-          <CalciteTabTitle tab="agol">ArcGIS Online</CalciteTabTitle>
-          <CalciteTabTitle tab="standard">Standard</CalciteTabTitle>
-          <CalciteTabTitle tab="custom">Custom</CalciteTabTitle>
-        </CalciteTabNav>
-        <CalciteTab tab="agol">
-          <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-tabs>
+        <calcite-tab-nav slot="title-group" oncalciteTabChange={handleTabChange}>
+          <calcite-tab-title tab="agol">ArcGIS Online</calcite-tab-title>
+          <calcite-tab-title tab="standard">Standard</calcite-tab-title>
+          <calcite-tab-title tab="custom">Custom</calcite-tab-title>
+        </calcite-tab-nav>
+        <calcite-tab tab="agol">
+          <calcite-label layout="default" style={labelStyles}>
             Style
-            <CalciteSelect
+            <calcite-select
               label={"styleName selection"}
-              onCalciteSelectChange={(event) => {
+              oncalciteSelectChange={(event) => {
                 setAgolStyle(event.target.value);
                 handleAgolSyleChange(event.target.value);
               }}
               value={agolStyle}
             >
               {groupItems.map((option, index) => (
-                <CalciteOption key={index} value={option.id}>
+                <calcite-option key={index} value={option.id}>
                   {option.title}
-                </CalciteOption>
+                </calcite-option>
               ))}
-            </CalciteSelect>
-          </CalciteLabel>
-          <CalciteList filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
+            </calcite-select>
+          </calcite-label>
+          <calcite-list
+            displayMode="nested"
+            filter-enabled
+            filter-placeholder="Filter symbols"
+            label="WebStyleSymbols"
+          >
             {pointWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Point symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Point symbols" open>
+                <calcite-list label="Point symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -234,19 +228,21 @@ const WebStyleSymbol2DForm = ({
                       <img
                         alt={item.name}
                         slot="content-start"
-                        src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                        src={`${styleUrl.split("/data")[0]}/resources${
+                          item.thumbnail.href.split("/resources")[1]
+                        }`}
                       />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
 
             {lineWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Line symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Line symbols" open>
+                <calcite-list label="Line symbols">
                   {lineWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -261,19 +257,21 @@ const WebStyleSymbol2DForm = ({
                       <img
                         alt={item.name}
                         slot="content-start"
-                        src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                        src={`${styleUrl.split("/data")[0]}/resources${
+                          item.thumbnail.href.split("/resources")[1]
+                        }`}
                       />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
 
             {polygonWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Polygon symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Polygon symbols" open>
+                <calcite-list label="Polygon symbols">
                   {polygonWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -288,71 +286,74 @@ const WebStyleSymbol2DForm = ({
                       <img
                         alt={item.name}
                         slot="content-start"
-                        src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                        src={`${styleUrl.split("/data")[0]}/resources${
+                          item.thumbnail.href.split("/resources")[1]
+                        }`}
                       />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
-          </CalciteList>
-        </CalciteTab>
-        <CalciteTab tab="standard">
-          <CalciteLabel layout="default" style={labelStyles}>
+          </calcite-list>
+        </calcite-tab>
+        <calcite-tab tab="standard">
+          <calcite-label layout="default" style={labelStyles}>
             name
-            <CalciteSelect
+            <calcite-select
               label={"name selection"}
-              onCalciteSelectChange={(event) => {
+              oncalciteSelectChange={(event) => {
                 setName(event.target.value as string);
                 handleNameChange(event.target.value as string);
               }}
               value={name}
             >
               {ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS.map((option, index) => (
-                <CalciteOption key={index}>{option}</CalciteOption>
+                <calcite-option key={index}>{option}</calcite-option>
               ))}
-            </CalciteSelect>
-          </CalciteLabel>
+            </calcite-select>
+          </calcite-label>
 
-          <CalciteLabel layout="default" style={labelStyles}>
+          <calcite-label layout="default" style={labelStyles}>
             styleName
-            <CalciteSelect
+            <calcite-select
               label={"styleName selection"}
-              onCalciteSelectChange={(event) => {
+              oncalciteSelectChange={(event) => {
                 setStyleName(event.target.value);
                 handleStyleNameChange(event.target.value);
               }}
               value={styleName}
             >
               {WEB_STYLE_SYMBOLS_2D_STYLE_OPTIONS.map((option, index) => (
-                <CalciteOption key={index}>{option}</CalciteOption>
+                <calcite-option key={index}>{option}</calcite-option>
               ))}
-            </CalciteSelect>
-          </CalciteLabel>
-        </CalciteTab>
+            </calcite-select>
+          </calcite-label>
+        </calcite-tab>
 
-        <CalciteTab tab="custom">
-          <CalciteLabel layout="default" style={labelStyles}>
+        <calcite-tab tab="custom">
+          <calcite-label layout="default" style={labelStyles}>
             styleUrl
-            <CalciteInputText
+            <calcite-input-text
               label={"url input"}
-              onCalciteInputTextChange={(event) => {
+              oncalciteInputTextChange={(event) => {
                 setStyleUrl(event.target.value);
                 getStyleItemDataFromUrl(event.target.value);
               }}
               value={styleUrl}
-            ></CalciteInputText>
-          </CalciteLabel>
-          <CalciteList
+            ></calcite-input-text>
+          </calcite-label>
+          <calcite-list
+            displayMode="nested"
             filter-enabled
             filter-placeholder="Filter symbols"
             label="Point WebStyleSymbols"
           >
             {pointWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Point symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Point symbols" open>
+                <calcite-list label="Point symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -367,19 +368,21 @@ const WebStyleSymbol2DForm = ({
                       <img
                         alt={item.name}
                         slot="content-start"
-                        src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                        src={`${styleUrl.split("/data")[0]}/resources${
+                          item.thumbnail.href.split("/resources")[1]
+                        }`}
                       />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
 
             {lineWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Line symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Line symbols" open>
+                <calcite-list label="Line symbols">
                   {lineWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -394,19 +397,21 @@ const WebStyleSymbol2DForm = ({
                       <img
                         alt={item.name}
                         slot="content-start"
-                        src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                        src={`${styleUrl.split("/data")[0]}/resources${
+                          item.thumbnail.href.split("/resources")[1]
+                        }`}
                       />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
 
             {polygonWebStyleSymbolItems.length > 0 && (
-              <CalciteListItem label="Polygon symbols" open>
-                <CalciteList>
+              <calcite-list-item label="Polygon symbols" open>
+                <calcite-list label="Polygon symbols">
                   {polygonWebStyleSymbolItems.map((item, index) => (
-                    <CalciteListItem
+                    <calcite-list-item
                       key={index}
                       label={item.name}
                       onClick={(event) => {
@@ -421,16 +426,18 @@ const WebStyleSymbol2DForm = ({
                       <img
                         alt={item.name}
                         slot="content-start"
-                        src={`${styleUrl.split("/data")[0]}/resources${item.thumbnail.href.split("/resources")[1]}`}
+                        src={`${styleUrl.split("/data")[0]}/resources${
+                          item.thumbnail.href.split("/resources")[1]
+                        }`}
                       />
-                    </CalciteListItem>
+                    </calcite-list-item>
                   ))}
-                </CalciteList>
-              </CalciteListItem>
+                </calcite-list>
+              </calcite-list-item>
             )}
-          </CalciteList>
-        </CalciteTab>
-      </CalciteTabs>
+          </calcite-list>
+        </calcite-tab>
+      </calcite-tabs>
     </React.Fragment>
   );
 };

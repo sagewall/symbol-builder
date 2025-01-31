@@ -1,5 +1,4 @@
 import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const SimpleFillSymbolAMDPanel = ({ simpleFillSymbol }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   const codeSnippet = `
@@ -20,12 +21,12 @@ require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
   const simpleFillSymbol = new SimpleFillSymbol({
     color: [${simpleFillSymbol.color.toRgba()}],
     outline: {
-      cap: "${simpleFillSymbol.outline.cap}",
-      color: [${simpleFillSymbol.outline.color.toRgba()}],
-      join: "${simpleFillSymbol.outline.join}",
-      miterLimit: ${simpleFillSymbol.outline.miterLimit},
-      style: "${simpleFillSymbol.outline.style}",
-      width: ${simpleFillSymbol.outline.width}
+      cap: "${simpleFillSymbol.outline?.cap}",
+      color: [${simpleFillSymbol.outline?.color?.toRgba()}],
+      join: "${simpleFillSymbol.outline?.join}",
+      miterLimit: ${simpleFillSymbol.outline?.miterLimit},
+      style: "${simpleFillSymbol.outline?.style}",
+      width: ${simpleFillSymbol.outline?.width}
     },
     style: "${simpleFillSymbol.style}"
   });
@@ -33,20 +34,20 @@ require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">AMD / Autocasting</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -55,7 +56,7 @@ require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

@@ -1,14 +1,6 @@
 import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import {
-  CalciteBlock,
-  CalciteInput,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 import { CAP_OPTIONS, JOIN_OPTIONS, LINE_STYLE_OPTIONS } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -52,25 +44,18 @@ const SimpleLineSymbolForm = ({
   let markerBlock;
   let styleBlock;
 
-  useEffect(() => {
-    if (solidOnly) {
-      setStyle("solid");
-      handleStyleChange("solid");
-    }
-  }, [solidOnly]);
-
   if (showMarker) {
     markerBlock = (
-      <CalciteBlock
+      <calcite-block
         style={blockStyles}
         collapsible
         heading={"marker"}
-        onCalciteBlockClose={(event) => {
+        oncalciteBlockClose={(event) => {
           if (handleMarkerBlockToggle) {
             handleMarkerBlockToggle(event.target);
           }
         }}
-        onCalciteBlockOpen={(event) => {
+        oncalciteBlockOpen={(event) => {
           if (handleMarkerBlockToggle) {
             handleMarkerBlockToggle(event.target);
           }
@@ -80,57 +65,57 @@ const SimpleLineSymbolForm = ({
           handleColorChange={handleMarkerColorChange}
           handlePlacementChange={handleMarkerPlacementChange}
           handleStyleChange={handleMarkerStyleChange}
-        />
-      </CalciteBlock>
+        ></LineSymbolMarkerForm>
+      </calcite-block>
     );
   } else {
-    markerBlock = <React.Fragment />;
+    markerBlock = <React.Fragment></React.Fragment>;
   }
 
   if (solidOnly) {
-    styleBlock = <React.Fragment />;
+    styleBlock = <React.Fragment></React.Fragment>;
   } else {
     styleBlock = (
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         style
-        <CalciteSelect
+        <calcite-select
           label={"style selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
             handleStyleChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["style"]);
           }}
           value={style}
         >
           {LINE_STYLE_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
     );
   }
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         cap
-        <CalciteSelect
+        <calcite-select
           label={"cap selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setCap(event.target.value);
             handleCapChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["cap"]);
           }}
           value={cap}
         >
           {CAP_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -138,54 +123,54 @@ const SimpleLineSymbolForm = ({
           }}
           type="color"
           value={color}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         join
-        <CalciteSelect
+        <calcite-select
           label={"join selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setJoin(event.target.value);
             handleJoinChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["join"]);
           }}
           value={join}
         >
           {JOIN_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
       {markerBlock}
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         miterLimit
-        <CalciteInputNumber
+        <calcite-input-number
           label={"miterLimit input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setMiterLimit(event.target.value);
             handleMiterLimitChange(event.target.value);
           }}
           value={miterLimit}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
       {styleBlock}
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         width
-        <CalciteInputNumber
+        <calcite-input-number
           label={"width input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
           value={width}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

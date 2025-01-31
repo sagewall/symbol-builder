@@ -1,13 +1,6 @@
 import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import {
-  CalciteBlock,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
@@ -64,11 +57,11 @@ const LineSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         cap
-        <CalciteSelect
+        <calcite-select
           label={"cap selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setCap(event.target.value);
             handleCapChange(
               layerIndex,
@@ -79,21 +72,21 @@ const LineSymbol3DLayerForm = ({
         >
           {CAP_OPTIONS.map((option, index) =>
             option === "butt" ? (
-              <CalciteOption key={index} selected>
+              <calcite-option key={index} selected>
                 {option}
-              </CalciteOption>
+              </calcite-option>
             ) : (
-              <CalciteOption key={index}>{option}</CalciteOption>
+              <calcite-option key={index}>{option}</calcite-option>
             )
           )}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         join
-        <CalciteSelect
+        <calcite-select
           label={"join selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setJoin(event.target.value);
             handleJoinChange(
               layerIndex,
@@ -103,19 +96,19 @@ const LineSymbol3DLayerForm = ({
           value={join}
         >
           {JOIN_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteBlock
+      <calcite-block
         style={blockStyles}
         collapsible
         heading={"marker"}
-        onCalciteBlockClose={(event) => {
+        oncalciteBlockClose={(event) => {
           handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
         }}
-        onCalciteBlockOpen={(event) => {
+        oncalciteBlockOpen={(event) => {
           handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
         }}
       >
@@ -125,34 +118,34 @@ const LineSymbol3DLayerForm = ({
           handlePlacementChange={handleLineSymbol3DLayerMarkerPlacementChange}
           handleStyleChange={handleLineSymbol3DLayerMarkerStyleChange}
         ></LineStyleMarker3DForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} collapsible heading={"material"}>
         <LineSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleLineSymbol3DLayerMaterialColorChange}
         ></LineSymbol3DLayerMaterialForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteBlock style={blockStyles} collapsible heading={"pattern"}>
+      <calcite-block style={blockStyles} collapsible heading={"pattern"}>
         <LineStylePattern3DForm
           layerIndex={layerIndex}
           handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}
         ></LineStylePattern3DForm>
-      </CalciteBlock>
+      </calcite-block>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

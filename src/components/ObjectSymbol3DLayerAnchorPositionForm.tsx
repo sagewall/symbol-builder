@@ -1,4 +1,3 @@
-import { CalciteInputNumber, CalciteLabel } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
@@ -23,41 +22,41 @@ const ObjectSymbol3DLayerAnchorPositionForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         x
-        <CalciteInputNumber
+        <calcite-input-number
           label={"anchor position x"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, x: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionXChange(layerIndex, event.target.value);
           }}
           value={anchorPosition.x}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         y
-        <CalciteInputNumber
+        <calcite-input-number
           label={"anchor position y"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, y: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionYChange(layerIndex, event.target.value);
           }}
           value={anchorPosition.y}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         z
-        <CalciteInputNumber
+        <calcite-input-number
           label={"anchor position z"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, z: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionZChange(layerIndex, event.target.value);
           }}
           value={anchorPosition.z}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

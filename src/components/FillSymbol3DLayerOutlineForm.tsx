@@ -1,13 +1,6 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import {
-  CalciteInput,
-  CalciteInputNumber,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import { CAP_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
@@ -21,7 +14,7 @@ interface Props {
   ) => void;
   handlePatternCapChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -33,25 +26,16 @@ const FillSymbol3DLayerOutlineForm = ({
   handlePatternCapChange,
   handleSizeChange
 }: Props) => {
-  const colorRef: React.Ref<HTMLCalciteColorPickerElement> | undefined = createRef();
-  const patternCapRef: React.Ref<HTMLCalciteSelectElement> | undefined = createRef();
-
   const [color, setColor] = useState("#111111");
   const [patternCap, setPatternCap] = useState("butt");
   const [size, setSize] = useState("3");
 
-  useEffect(() => {
-    if (colorRef.current) {
-      colorRef.current.value = "#111111";
-    }
-  }, []);
-
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -59,46 +43,47 @@ const FillSymbol3DLayerOutlineForm = ({
           }}
           type="color"
           value={color}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
       <LineStylePattern3DForm
         layerIndex={layerIndex}
         handleStyleChange={handleLineSylePattern3DStyleChange}
-      />
+      ></LineStylePattern3DForm>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         patternCap
-        <CalciteSelect
+        <calcite-select
           label={"patternCap selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setPatternCap(event.target.value);
             handlePatternCapChange(
               layerIndex,
-              event.target.value as InstanceType<typeof FillSymbol3DLayer>["outline"]["patternCap"]
+              event.target.value as NonNullable<
+                NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]
+              >
             );
           }}
-          ref={patternCapRef}
           value={patternCap}
         >
           {CAP_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         size
-        <CalciteInputNumber
+        <calcite-input-number
           label={"size input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

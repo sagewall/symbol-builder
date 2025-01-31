@@ -1,4 +1,3 @@
-import { CalciteInputNumber, CalciteLabel } from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
@@ -17,29 +16,29 @@ const IconSymbol3DLayerForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         x
-        <CalciteInputNumber
+        <calcite-input-number
           label={"x anchor position"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, x: event.target.value });
             handleIconSymbol3DLayerAnchorPositionXChange(layerIndex, event.target.value);
           }}
           value={anchorPosition.x}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         y
-        <CalciteInputNumber
+        <calcite-input-number
           label={"y anchor position"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setAnchorPosition({ ...anchorPosition, y: event.target.value });
             handleIconSymbol3DLayerAnchorPositionYChange(layerIndex, event.target.value);
           }}
           value={anchorPosition.y}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

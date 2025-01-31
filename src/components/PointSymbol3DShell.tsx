@@ -7,15 +7,6 @@ import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
 import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
-import {
-  CalcitePanel,
-  CalciteShell,
-  CalciteShellPanel,
-  CalciteTab,
-  CalciteTabNav,
-  CalciteTabTitle,
-  CalciteTabs
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import Header from "./Header";
 import PointSymbol3DAMDPanel from "./PointSymbol3DAMDPanel";
@@ -54,13 +45,15 @@ const PointSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics} />;
+  const view = <SceneView graphics={graphics}></SceneView>;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D) => {
     setPointSymbol3D(newPointSymbol3D);
 
-    const newPointGraphic = graphics.getItemAt(0).clone();
-    newPointGraphic.symbol = newPointSymbol3D;
+    const newPointGraphic = graphics.getItemAt(0)?.clone();
+    if (newPointGraphic) {
+      newPointGraphic.symbol = newPointSymbol3D;
+    }
 
     const newGraphics = new Collection();
     newGraphics.add(newPointGraphic);
@@ -128,10 +121,10 @@ const PointSymbol3DShell = () => {
 
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="PointSymbol3D" backButton></Header>
-        <CalciteShellPanel slot="panel-start" position="start" resizable>
-          <CalcitePanel>
+        <calcite-shell-panel slot="panel-start" position="start" resizable>
+          <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <PointSymbol3DForm
@@ -143,31 +136,31 @@ const PointSymbol3DShell = () => {
                 updateSymbolLayers={updateSymbolLayers}
               ></PointSymbol3DForm>
             </div>
-          </CalcitePanel>
-        </CalciteShellPanel>
+          </calcite-panel>
+        </calcite-shell-panel>
 
-        <CalciteShellPanel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <CalcitePanel>
-            <CalciteTabs>
-              <CalciteTabNav slot="title-group" style={tabNavStyles}>
-                <CalciteTabTitle>ESM</CalciteTabTitle>
-                <CalciteTabTitle>AMD</CalciteTabTitle>
-                <CalciteTabTitle>JSON</CalciteTabTitle>
-              </CalciteTabNav>
-              <CalciteTab>
-                <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D} />
-              </CalciteTab>
-              <CalciteTab>
-                <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D} />
-              </CalciteTab>
-              <CalciteTab>
-                <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D} />
-              </CalciteTab>
-            </CalciteTabs>
-          </CalcitePanel>
-        </CalciteShellPanel>
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+          <calcite-panel>
+            <calcite-tabs>
+              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+                <calcite-tab-title>ESM</calcite-tab-title>
+                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>JSON</calcite-tab-title>
+              </calcite-tab-nav>
+              <calcite-tab>
+                <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DESMPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DAMDPanel>
+              </calcite-tab>
+              <calcite-tab>
+                <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DJSONPanel>
+              </calcite-tab>
+            </calcite-tabs>
+          </calcite-panel>
+        </calcite-shell-panel>
         {view}
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

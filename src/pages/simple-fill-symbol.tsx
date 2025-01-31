@@ -4,7 +4,7 @@ import SimpleFillSymbolShell from "../components/SimpleFillSymbolShell";
 const SimpleFillSymbolPage = () => {
   return (
     <React.Fragment>
-      <SimpleFillSymbolShell />
+      <SimpleFillSymbolShell></SimpleFillSymbolShell>
     </React.Fragment>
   );
 };

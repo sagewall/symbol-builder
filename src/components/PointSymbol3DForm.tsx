@@ -1,5 +1,4 @@
 import type Collection from "@arcgis/core/core/Collection";
-import { CalciteBlock } from "@esri/calcite-components-react";
 import React from "react";
 import { blockStyles } from "./lib/styles";
 import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";
@@ -25,22 +24,22 @@ const PointSymbol3DForm = ({
 }: Props) => {
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"callout"}>
+      <calcite-block style={blockStyles} collapsible heading={"callout"}>
         <PointSymbol3DCalloutForm
           handleColorChange={handleCalloutColorChange}
           handleSizeChange={handleCalloutSizeChange}
         ></PointSymbol3DCalloutForm>
-      </CalciteBlock>
+      </calcite-block>
       <PointSymbol3DSymbolLayersForm
         updateSymbolLayers={updateSymbolLayers}
       ></PointSymbol3DSymbolLayersForm>
-      <CalciteBlock style={blockStyles} collapsible heading={"verticalOffset"}>
+      <calcite-block style={blockStyles} collapsible heading={"verticalOffset"}>
         <PointSymbol3DVerticalOffsetForm
           handleMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
           handleMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}
           handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}
         ></PointSymbol3DVerticalOffsetForm>
-      </CalciteBlock>
+      </calcite-block>
     </React.Fragment>
   );
 };

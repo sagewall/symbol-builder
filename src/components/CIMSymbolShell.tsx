@@ -1,4 +1,3 @@
-import { CalciteShell } from "@esri/calcite-components-react";
 import React from "react";
 import { iframeStyles, shellStyles } from "./lib/styles";
 import Header from "./Header";
@@ -6,7 +5,7 @@ import Header from "./Header";
 const CIMSymbolShell = () => {
   return (
     <React.Fragment>
-      <CalciteShell style={shellStyles}>
+      <calcite-shell style={shellStyles}>
         <Header title="CIMSymbol" backButton></Header>
         <iframe
           allow="clipboard-read; clipboard-write self https://esri.github.io/cim-symbol-builder-js/ https://sagewall.github.io/symbol-builder/ https://local.arcgis.com:8000/ https://*.arcgis.com;"
@@ -14,7 +13,7 @@ const CIMSymbolShell = () => {
           style={iframeStyles}
           title="CIM Symbol Builder"
         ></iframe>
-      </CalciteShell>
+      </calcite-shell>
     </React.Fragment>
   );
 };

@@ -4,7 +4,7 @@ import SimpleLineSymbolShell from "../components/SimpleLineSymbolShell";
 const SimpleLineSymbolPage = () => {
   return (
     <React.Fragment>
-      <SimpleLineSymbolShell />
+      <SimpleLineSymbolShell></SimpleLineSymbolShell>
     </React.Fragment>
   );
 };

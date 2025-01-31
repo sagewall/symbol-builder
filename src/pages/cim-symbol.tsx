@@ -4,7 +4,7 @@ import CIMSymbolShell from "../components/CIMSymbolShell";
 const CIMSymbolPage = () => {
   return (
     <React.Fragment>
-      <CIMSymbolShell />
+      <CIMSymbolShell></CIMSymbolShell>
     </React.Fragment>
   );
 };

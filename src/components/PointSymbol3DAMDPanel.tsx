@@ -1,5 +1,4 @@
 import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const PointSymbol3DAMDPanel = ({ pointSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let codeSnippet = `
@@ -21,15 +22,15 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
   const pointSymbol3D = new PointSymbol3D({
     callout: {
       type: "line",
-      color: [${pointSymbol3D.callout.color.toRgba()}],
-      size: ${pointSymbol3D.callout.size}
+      color: [${pointSymbol3D.callout?.color?.toRgba()}],
+      size: ${pointSymbol3D.callout?.size}
     },
     symbolLayers: [
  `;
 
   pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     {
       type: "icon",
@@ -52,9 +53,9 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
     },
     `;
       } else if (
-        symbolLayer.material.color &&
-        symbolLayer.outline.color &&
-        symbolLayer.resource.primitive
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.primitive
       ) {
         codeSnippet += `
       {
@@ -82,15 +83,15 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
     }
 
     if (symbolLayer.type === "object") {
-      if (symbolLayer.material.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
       {
         type: "object",
         anchor: "${symbolLayer.anchor}",
         anchorPosition: {
-          x: ${symbolLayer.anchorPosition.x},
-          y: ${symbolLayer.anchorPosition.y},
-          z: ${symbolLayer.anchorPosition.z}
+          x: ${symbolLayer.anchorPosition?.x},
+          y: ${symbolLayer.anchorPosition?.y},
+          z: ${symbolLayer.anchorPosition?.z}
         },
         castShadows: ${symbolLayer.castShadows},
         depth: ${symbolLayer.depth},
@@ -107,15 +108,15 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
         width: ${symbolLayer.width}
       },
       `;
-      } else if (symbolLayer.material.color && symbolLayer.resource.primitive) {
+      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
         codeSnippet += `
       {
         type: "object",
         anchor: "${symbolLayer.anchor}",
         anchorPosition: {
-          x: ${symbolLayer.anchorPosition.x},
-          y: ${symbolLayer.anchorPosition.y},
-          z: ${symbolLayer.anchorPosition.z}
+          x: ${symbolLayer.anchorPosition?.x},
+          y: ${symbolLayer.anchorPosition?.y},
+          z: ${symbolLayer.anchorPosition?.z}
         },
         castShadows: ${symbolLayer.castShadows},
         depth: ${symbolLayer.depth},
@@ -136,7 +137,7 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
     }
 
     if (symbolLayer.type === "text") {
-      if (symbolLayer.background.color && symbolLayer.halo.color && symbolLayer.material.color) {
+      if (symbolLayer.background?.color && symbolLayer.halo?.color && symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "text",
@@ -144,11 +145,11 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
           color: [${symbolLayer.background.color.toRgba()}],
         },
         font: {
-          decoration: "${symbolLayer.font.decoration}",
-          family: "${symbolLayer.font.family}",
-          size: ${symbolLayer.font.size},
-          style: "${symbolLayer.font.style}",
-          weight: "${symbolLayer.font.weight}"
+          decoration: "${symbolLayer.font?.decoration}",
+          family: "${symbolLayer.font?.family}",
+          size: ${symbolLayer.font?.size},
+          style: "${symbolLayer.font?.style}",
+          weight: "${symbolLayer.font?.weight}"
         },
         halo: {
           color: [${symbolLayer.halo.color.toRgba()}],
@@ -171,9 +172,9 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
   codeSnippet += `
     ],
     verticalOffset: {
-      maxWorldLength: ${pointSymbol3D.verticalOffset.maxWorldLength},
-      minWorldLength: ${pointSymbol3D.verticalOffset.minWorldLength},
-      screenLength: ${pointSymbol3D.verticalOffset.screenLength}
+      maxWorldLength: ${pointSymbol3D.verticalOffset?.maxWorldLength},
+      minWorldLength: ${pointSymbol3D.verticalOffset?.minWorldLength},
+      screenLength: ${pointSymbol3D.verticalOffset?.screenLength}
     }
   });
 
@@ -181,20 +182,20 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">AMD / Autocasting</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -203,7 +204,7 @@ require(["esri/symbols/PointSymbol3D"], (PointSymbol3D) => {
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

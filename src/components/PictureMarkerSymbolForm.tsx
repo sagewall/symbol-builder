@@ -1,9 +1,3 @@
-import {
-  CalciteInputNumber,
-  CalciteInputText,
-  CalciteLabel,
-  CalciteSlider
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
@@ -33,84 +27,84 @@ const PictureMarkerSymbolForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         angle
-        <CalciteSlider
+        <calcite-slider
           labelHandles={true}
           labelTicks={true}
           max={360}
           min={0}
-          onCalciteSliderChange={(event) => {
+          oncalciteSliderChange={(event) => {
             setAngle(event.target.value as number);
             handleAngleChange(event.target.value as number);
           }}
           step={1}
           ticks={180}
           value={angle}
-        ></CalciteSlider>
-      </CalciteLabel>
+        ></calcite-slider>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         height
-        <CalciteInputNumber
+        <calcite-input-number
           label={"height input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setHeight(event.target.value);
             handleHeightChange(event.target.value);
           }}
           value={height}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         width
-        <CalciteInputNumber
+        <calcite-input-number
           label={"width input"}
           min={0}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
           value={width}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         url
-        <CalciteInputText
+        <calcite-input-text
           label={"url input"}
-          onCalciteInputTextChange={(event) => {
+          oncalciteInputTextChange={(event) => {
             setUrl(event.target.value);
             handleUrlChange(event.target.value);
           }}
           value={url}
-        ></CalciteInputText>
-      </CalciteLabel>
+        ></calcite-input-text>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         xoffset
-        <CalciteInputNumber
+        <calcite-input-number
           label={"xoffset input"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setXoffset(event.target.value);
             handleXoffsetChange(event.target.value);
           }}
           value={xoffset}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         yoffset
-        <CalciteInputNumber
+        <calcite-input-number
           label={"yoffset input"}
-          onCalciteInputNumberChange={(event) => {
+          oncalciteInputNumberChange={(event) => {
             setYoffset(event.target.value);
             handleYoffsetChange(event.target.value);
           }}
           value={yoffset}
-        ></CalciteInputNumber>
-      </CalciteLabel>
+        ></calcite-input-number>
+      </calcite-label>
     </React.Fragment>
   );
 };

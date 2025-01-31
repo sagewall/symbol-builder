@@ -1,5 +1,4 @@
 import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const PolygonSymbol3DAMDPanel = ({ polygonSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let codeSnippet = `
@@ -24,7 +25,11 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
 
   polygonSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.outline.pattern) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.outline?.pattern
+      ) {
         codeSnippet += `
       {
         type: "fill",
@@ -43,7 +48,7 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
         },
         pattern: {
           type: "style",
-          style: "${symbolLayer.pattern.style}"
+          style: "${symbolLayer.pattern?.style}"
         }
       },
       `;
@@ -51,16 +56,16 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
     }
 
     if (symbolLayer.type === "extrude") {
-      if (symbolLayer.material.color) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "extrude",
         castShadows: ${symbolLayer.castShadows},
         edges: {
           type: "solid",
-          color: [${symbolLayer.edges.color.toRgba()}],
-          extensionLength: ${symbolLayer.edges.extensionLength},
-          size: ${symbolLayer.edges.size}
+          color: [${symbolLayer.edges?.color?.toRgba()}],
+          extensionLength: ${symbolLayer.edges?.extensionLength},
+          size: ${symbolLayer.edges?.size}
         },
         material: {
           color: [${symbolLayer.material.color.toRgba()}],
@@ -75,7 +80,7 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
       codeSnippet += `
       {
         type: "water",
-        color: [${symbolLayer.color.toRgba()}],
+        color: [${symbolLayer.color?.toRgba()}],
         waterbodySize: "${symbolLayer.waterbodySize}",
         waveDirection: ${symbolLayer.waveDirection},
         waveStrength: "${symbolLayer.waveStrength}"
@@ -84,7 +89,7 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
     }
 
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
         codeSnippet += `
       {
         type: "icon",
@@ -107,9 +112,9 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
       },
       `;
       } else if (
-        symbolLayer.material.color &&
-        symbolLayer.outline.color &&
-        symbolLayer.resource.primitive
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.primitive
       ) {
         codeSnippet += `
         {
@@ -136,15 +141,15 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
     }
 
     if (symbolLayer.type === "object") {
-      if (symbolLayer.material.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
       {
         type: "object",
         anchor: "${symbolLayer.anchor}",
         anchorPosition: {
-          x: ${symbolLayer.anchorPosition.x},
-          y: ${symbolLayer.anchorPosition.y},
-          z: ${symbolLayer.anchorPosition.z}
+          x: ${symbolLayer.anchorPosition?.x},
+          y: ${symbolLayer.anchorPosition?.y},
+          z: ${symbolLayer.anchorPosition?.z}
         },
         castShadows: ${symbolLayer.castShadows},
         depth: ${symbolLayer.depth},
@@ -161,15 +166,15 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
         width: ${symbolLayer.width}
       },
       `;
-      } else if (symbolLayer.material.color && symbolLayer.resource.primitive) {
+      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
         codeSnippet += `
       {
         type: "object",
         anchor: "${symbolLayer.anchor}",
         anchorPosition: {
-          x: ${symbolLayer.anchorPosition.x},
-          y: ${symbolLayer.anchorPosition.y},
-          z: ${symbolLayer.anchorPosition.z}
+          x: ${symbolLayer.anchorPosition?.x},
+          y: ${symbolLayer.anchorPosition?.y},
+          z: ${symbolLayer.anchorPosition?.z}
         },
         castShadows: ${symbolLayer.castShadows},
         depth: ${symbolLayer.depth},
@@ -198,20 +203,20 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">AMD / Autocasting</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -220,7 +225,7 @@ require(["esri/symbols/PolygonSymbol3D"], (PolygonSymbol3D) => {
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

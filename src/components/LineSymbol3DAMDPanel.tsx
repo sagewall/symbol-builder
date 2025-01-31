@@ -1,5 +1,4 @@
 import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const LineSymbol3DAMDPanel = ({ lineSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let codeSnippet = `
@@ -24,7 +25,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
 
   lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "line") {
-      if (symbolLayer.material.color && symbolLayer.marker) {
+      if (symbolLayer.material?.color && symbolLayer.marker) {
         codeSnippet += `
       {
         type: "line",
@@ -32,7 +33,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         join: "${symbolLayer.join}",
         marker: {
           type: "style",
-          color: [${symbolLayer.marker.color.toRgba()}],
+          color: [${symbolLayer.marker.color?.toRgba()}],
           placement: "${symbolLayer.marker.placement}",
           style: "${symbolLayer.marker.style}"
         },
@@ -41,12 +42,12 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         },
         pattern: {
           type: "style",
-          style: "${symbolLayer.pattern.style}"
+          style: "${symbolLayer.pattern?.style}"
         },
         size: ${symbolLayer.size}
       },
       `;
-      } else if (symbolLayer.material.color) {
+      } else if (symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "line",
@@ -57,7 +58,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         },
         pattern: {
           type: "style",
-          style: "${symbolLayer.pattern.style}"
+          style: "${symbolLayer.pattern?.style}"
         },
         size: ${symbolLayer.size}
       },
@@ -66,7 +67,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
     }
 
     if (symbolLayer.type === "path") {
-      if (symbolLayer.material.color) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
       {
         type: "path",
@@ -76,7 +77,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         height: ${symbolLayer.height},
         join: "${symbolLayer.join}",
         material: {
-          color: [${symbolLayer.material.color.toRgba()}],
+          color: [${symbolLayer.material?.color.toRgba()}],
         },
         profile: "${symbolLayer.profile}",
         profileRotation: "${symbolLayer.profileRotation}",
@@ -95,20 +96,20 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">AMD / Autocasting</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -117,7 +118,7 @@ require(["esri/symbols/LineSymbol3D"], (LineSymbol3D) => {
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

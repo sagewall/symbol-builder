@@ -1,5 +1,4 @@
 import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
-import { CalciteAction, CalciteAlert, CalcitePanel } from "@esri/calcite-components-react";
 import React, { useRef } from "react";
 import { jsonStyles } from "./lib/styles";
 
@@ -12,7 +11,9 @@ const PointSymbol3DESMPanel = ({ pointSymbol3D }: Props) => {
 
   const handleCopyClick = async () => {
     await navigator.clipboard.writeText(codeSnippet);
-    alertRef.current && (alertRef.current.open = true);
+    if (alertRef.current) {
+      alertRef.current.open = true;
+    }
   };
 
   let colorImport = false;
@@ -43,33 +44,33 @@ const PointSymbol3DESMPanel = ({ pointSymbol3D }: Props) => {
   });
 
   let codeSnippet = `\n`;
-  colorImport && (codeSnippet += `import Color from "@arcgis/core/Color.js";\n`);
-  fontImport && (codeSnippet += `import Font from "@arcgis/core/symbols/Font.js";\n`);
-  iconSymbol3DLayerImport &&
-    (codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`);
-  objectSymbol3DLayerImport &&
-    (codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`);
-  pointSymbol3DImport &&
-    (codeSnippet += `import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";\n`);
-  textSymbol3DLayerImport &&
-    (codeSnippet += `import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";\n`);
-  lineCallout3DImport &&
-    (codeSnippet += `import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D.js";\n`);
-  symbol3DVerticalOffsetImport &&
-    (codeSnippet += `import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";\n`);
+  if (colorImport) codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
+  if (fontImport) codeSnippet += `import Font from "@arcgis/core/symbols/Font.js";\n`;
+  if (iconSymbol3DLayerImport)
+    codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`;
+  if (objectSymbol3DLayerImport)
+    codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`;
+  if (pointSymbol3DImport)
+    codeSnippet += `import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";\n`;
+  if (textSymbol3DLayerImport)
+    codeSnippet += `import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";\n`;
+  if (lineCallout3DImport)
+    codeSnippet += `import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D.js";\n`;
+  if (symbol3DVerticalOffsetImport)
+    codeSnippet += `import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";\n`;
 
   codeSnippet += `
 const pointSymbol3D = new PointSymbol3D({
   callout: new LineCallout3D({
-    color: new Color([${pointSymbol3D.callout.color.toRgba()}]),
-    size: ${pointSymbol3D.callout.size}
+    color: new Color([${pointSymbol3D.callout?.color?.toRgba()}]),
+    size: ${pointSymbol3D.callout?.size}
   }),
   symbolLayers: [
 `;
 
   pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material.color && symbolLayer.outline.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     new IconSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
@@ -92,9 +93,9 @@ const pointSymbol3D = new PointSymbol3D({
     }),
     `;
       } else if (
-        symbolLayer.material.color &&
-        symbolLayer.outline.color &&
-        symbolLayer.resource.primitive
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.primitive
       ) {
         codeSnippet += `
     new IconSymbol3DLayer({
@@ -121,14 +122,14 @@ const pointSymbol3D = new PointSymbol3D({
     }
 
     if (symbolLayer.type === "object") {
-      if (symbolLayer.material.color && symbolLayer.resource.href) {
+      if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
       anchorPosition: {
-        x: ${symbolLayer.anchorPosition.x},
-        y: ${symbolLayer.anchorPosition.y},
-        z: ${symbolLayer.anchorPosition.z}
+        x: ${symbolLayer.anchorPosition?.x},
+        y: ${symbolLayer.anchorPosition?.y},
+        z: ${symbolLayer.anchorPosition?.z}
       },
       castShadows: ${symbolLayer.castShadows},
       depth: ${symbolLayer.depth},
@@ -145,14 +146,14 @@ const pointSymbol3D = new PointSymbol3D({
       width: ${symbolLayer.width}
     }),
     `;
-      } else if (symbolLayer.material.color && symbolLayer.resource.primitive) {
+      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
       anchorPosition: {
-        x: ${symbolLayer.anchorPosition.x},
-        y: ${symbolLayer.anchorPosition.y},
-        z: ${symbolLayer.anchorPosition.z}
+        x: ${symbolLayer.anchorPosition?.x},
+        y: ${symbolLayer.anchorPosition?.y},
+        z: ${symbolLayer.anchorPosition?.z}
       },
       castShadows: ${symbolLayer.castShadows},
       depth: ${symbolLayer.depth},
@@ -173,18 +174,18 @@ const pointSymbol3D = new PointSymbol3D({
     }
 
     if (symbolLayer.type === "text") {
-      if (symbolLayer.background.color && symbolLayer.halo.color && symbolLayer.material.color) {
+      if (symbolLayer.background?.color && symbolLayer.halo?.color && symbolLayer.material?.color) {
         codeSnippet += `
     new TextSymbol3DLayer({
       background: {
-        color: new Color([${symbolLayer.background.color.toRgba()}]),
+        color: new Color([${symbolLayer.background?.color.toRgba()}]),
       },
       font: new Font({
-        decoration: "${symbolLayer.font.decoration}",
-        family: "${symbolLayer.font.family}",
-        size: ${symbolLayer.font.size},
-        style: "${symbolLayer.font.style}",
-        weight: "${symbolLayer.font.weight}"
+        decoration: "${symbolLayer.font?.decoration}",
+        family: "${symbolLayer.font?.family}",
+        size: ${symbolLayer.font?.size},
+        style: "${symbolLayer.font?.style}",
+        weight: "${symbolLayer.font?.weight}"
       }),
       halo: {
         color: new Color([${symbolLayer.halo.color.toRgba()}]),
@@ -207,28 +208,28 @@ const pointSymbol3D = new PointSymbol3D({
   codeSnippet += `
   ],
   verticalOffset: new Symbol3DVerticalOffset({
-    maxWorldLength: ${pointSymbol3D.verticalOffset.maxWorldLength},
-    minWorldLength: ${pointSymbol3D.verticalOffset.minWorldLength},
-    screenLength: ${pointSymbol3D.verticalOffset.screenLength}
+    maxWorldLength: ${pointSymbol3D.verticalOffset?.maxWorldLength},
+    minWorldLength: ${pointSymbol3D.verticalOffset?.minWorldLength},
+    screenLength: ${pointSymbol3D.verticalOffset?.screenLength}
   })
 });`;
 
   return (
     <React.Fragment>
-      <CalcitePanel>
+      <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
-        <CalciteAction
+        <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
           onClick={handleCopyClick}
-        ></CalciteAction>
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
-      </CalcitePanel>
-      <CalciteAlert
+      </calcite-panel>
+      <calcite-alert
         autoClose
         autoCloseDuration="fast"
         icon="copy-to-clipboard"
@@ -237,7 +238,7 @@ const pointSymbol3D = new PointSymbol3D({
         ref={alertRef}
       >
         <div slot="message">Copied to clipboard</div>
-      </CalciteAlert>
+      </calcite-alert>
     </React.Fragment>
   );
 };

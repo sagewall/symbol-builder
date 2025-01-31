@@ -1,10 +1,4 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import {
-  CalciteInput,
-  CalciteLabel,
-  CalciteOption,
-  CalciteSelect
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import { COLOR_MIX_MODE_OPTIONS } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
@@ -14,7 +8,9 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
   handleColorMixModeChange: (
     layerIndex: number,
-    value: InstanceType<typeof FillSymbol3DLayer>["material"]["colorMixMode"]
+    value: NonNullable<
+      NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+    >
   ) => void;
 }
 
@@ -28,10 +24,10 @@ const FillSymbol3DLayerMaterialForm = ({
 
   return (
     <React.Fragment>
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         color
-        <CalciteInput
-          onCalciteInputInput={(event) => {
+        <calcite-input
+          oncalciteInputInput={(event) => {
             if (event.target.value) {
               setColor(event.target.value.toString());
             }
@@ -39,29 +35,29 @@ const FillSymbol3DLayerMaterialForm = ({
           }}
           type="color"
           value={color}
-        />
-      </CalciteLabel>
+        ></calcite-input>
+      </calcite-label>
 
-      <CalciteLabel layout="default" style={labelStyles}>
+      <calcite-label layout="default" style={labelStyles}>
         colorMixMode
-        <CalciteSelect
+        <calcite-select
           label={"cap selection"}
-          onCalciteSelectChange={(event) => {
+          oncalciteSelectChange={(event) => {
             setColorMixMode(event.target.value);
             handleColorMixModeChange(
               layerIndex,
-              event.target.value as InstanceType<
-                typeof FillSymbol3DLayer
-              >["material"]["colorMixMode"]
+              event.target.value as NonNullable<
+                NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+              >
             );
           }}
           value={colorMixMode}
         >
           {COLOR_MIX_MODE_OPTIONS.map((option, index) => (
-            <CalciteOption key={index}>{option}</CalciteOption>
+            <calcite-option key={index}>{option}</calcite-option>
           ))}
-        </CalciteSelect>
-      </CalciteLabel>
+        </calcite-select>
+      </calcite-label>
     </React.Fragment>
   );
 };

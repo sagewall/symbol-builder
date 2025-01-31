@@ -4,12 +4,6 @@ import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import {
-  CalciteAction,
-  CalciteBlock,
-  CalciteChip,
-  CalciteTooltip
-} from "@esri/calcite-components-react";
 import React, { useState } from "react";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
@@ -115,7 +109,6 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       newLineStyleMarker3Ds.removeAt(layerIndex);
       newLineStyleMarker3Ds.add(symbolLayer.marker as LineStyleMarker3D, layerIndex);
       setLineStyleMarker3Ds(newLineStyleMarker3Ds);
-      // @ts-expect-error strictNullChecks
       symbolLayer.marker = null;
       updateSymbolLayers(newSymbolLayers);
     }
@@ -126,7 +119,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.color = new Color(value);
+    if (symbolLayer.marker) {
+      symbolLayer.marker.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -134,7 +129,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerPlacementChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.placement = value as InstanceType<typeof LineStyleMarker3D>["placement"];
+    if (symbolLayer.marker) {
+      symbolLayer.marker.placement = value as InstanceType<typeof LineStyleMarker3D>["placement"];
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -142,7 +139,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMarkerStyleChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.marker.style = value as InstanceType<typeof LineStyleMarker3D>["style"];
+    if (symbolLayer.marker) {
+      symbolLayer.marker.style = value as InstanceType<typeof LineStyleMarker3D>["style"];
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -150,7 +149,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -158,7 +159,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleLineSymbol3DLayerPatternStyleChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    symbolLayer.pattern.style = value as InstanceType<typeof LineStylePattern3D>["style"];
+    if (symbolLayer.pattern) {
+      symbolLayer.pattern.style = value as InstanceType<typeof LineStylePattern3D>["style"];
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -214,7 +217,9 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handlePathSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as PathSymbol3DLayer;
-    symbolLayer.material.color = new Color(value);
+    if (symbolLayer.material) {
+      symbolLayer.material.color = new Color(value);
+    }
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -252,14 +257,14 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       symbolLayers.map((symbolLayer: LineSymbol3DLayer | PathSymbol3DLayer, index: number) => {
         if (symbolLayer.type === "line") {
           symbol3DLayerCollectionForm.push(
-            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
+            <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
               {index === symbolLayers.length - 1 && (
-                <CalciteAction
+                <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
                   text="Delete"
-                />
+                ></calcite-action>
               )}
               <LineSymbol3DLayerForm
                 layerIndex={index}
@@ -278,20 +283,20 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                   handleLineSymbol3DLayerPatternStyleChange
                 }
                 handleSizeChange={handleLineSymbol3DLayerSizeChange}
-              />
-            </CalciteBlock>
+              ></LineSymbol3DLayerForm>
+            </calcite-block>
           );
         }
 
         if (symbolLayer.type === "path") {
           symbol3DLayerCollectionForm.push(
-            <CalciteBlock collapsible heading={`symbolLayers[${index}]`} key={index}>
-              <CalciteAction
+            <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+              <calcite-action
                 icon="trash"
                 onClick={() => deleteSymbol3DLayer(index)}
                 slot="control"
                 text="Delete"
-              />
+              ></calcite-action>
               <PathSymbol3DLayerForm
                 layerIndex={index}
                 handleAnchorChange={handlePathSymbol3DLayerAnchorChange}
@@ -306,7 +311,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 handleProfileRotationChange={handlePathSymbol3DLayerProfileRotationChange}
                 handleWidthChange={handlePathSymbol3DLayerWidthChange}
               ></PathSymbol3DLayerForm>
-            </CalciteBlock>
+            </calcite-block>
           );
         }
       });
@@ -316,36 +321,37 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   return (
     <React.Fragment>
-      <CalciteBlock style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
-        <CalciteChip
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+        <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
+          label="Add Layer"
           slot="control"
           value="Information"
           style={chipStyles}
-        ></CalciteChip>
-        <CalciteTooltip reference-element={"add-layer-chip"}>
+        ></calcite-chip>
+        <calcite-tooltip reference-element={"add-layer-chip"}>
           <span>Add symbol layer by opening the dropdown menu on the right</span>
-        </CalciteTooltip>
+        </calcite-tooltip>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addLineSymbol3DLayer()}
           slot="header-menu-actions"
           icon="line"
           text-enabled
           text="Add LineSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
-        <CalciteAction
+        <calcite-action
           onClick={() => addPathSymbol3DLayer()}
           slot="header-menu-actions"
           icon="line"
           text-enabled
           text="Add PathSymbol3DLayer"
-        ></CalciteAction>
+        ></calcite-action>
 
         {createSymbol3DLayerCollectionForm()}
-      </CalciteBlock>
+      </calcite-block>
     </React.Fragment>
   );
 };
