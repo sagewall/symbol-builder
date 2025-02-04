@@ -1,8 +1,6 @@
-import "@arcgis/core/assets/esri/themes/light/main.css";
 import "@arcgis/map-components/components/arcgis-map";
 import "@arcgis/map-components/components/arcgis-placement";
 import "@arcgis/map-components/components/arcgis-scene";
-import "@esri/calcite-components/calcite/calcite.css";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-alert";
 import "@esri/calcite-components/components/calcite-block";
