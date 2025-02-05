@@ -27,7 +27,6 @@ import "@esri/calcite-components/components/calcite-tab-nav";
 import "@esri/calcite-components/components/calcite-tab-title";
 import "@esri/calcite-components/components/calcite-tabs";
 import "@esri/calcite-components/components/calcite-tooltip";
-import { setAssetPath } from "@esri/calcite-components/dist/components";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -46,10 +45,6 @@ import SimpleLineSymbolPage from "./pages/simple-line-symbol";
 import SimpleMarkerSymbolPage from "./pages/simple-marker-symbol";
 import TextSymbolPage from "./pages/text-symbol";
 import WebStyleSymbolPage from "./pages/web-style-symbol";
-
-setAssetPath(
-  "https://cdn.jsdelivr.net/npm/@esri/calcite-components@3.0.0-next.123/dist/calcite/assets"
-);
 
 const router = createBrowserRouter(
   [
