@@ -12,7 +12,7 @@ import PolygonSymbol3DAMDPanel from "./PolygonSymbol3DAMDPanel";
 import PolygonSymbol3DESMPanel from "./PolygonSymbol3DESMPanel";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
-import SceneShell from "./SceneShell";
+import Scene from "./Scene";
 import { polygon } from "./lib/geometry";
 import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
@@ -29,7 +29,7 @@ const PolygonSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const viewElement = <SceneShell graphics={graphics}></SceneShell>;
+  const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D) => {
     setPolygonSymbol3D(newPolygonSymbol3D);

@@ -4,12 +4,12 @@ import Point from "@arcgis/core/geometry/Point";
 import type { ArcgisMapCustomEvent } from "@arcgis/map-components";
 import React, { useRef } from "react";
 
-interface MapShellProps {
+interface MapProps {
   graphics?: Collection<Graphic>;
 }
 
-const MapShell = ({ graphics }: MapShellProps) => {
-  const arcgisMap = useRef<HTMLArcgisMapElement>(null);
+const Map = ({ graphics }: MapProps) => {
+  const viewElement = useRef<HTMLArcgisMapElement>(null);
 
   const handleArcgisViewReadyChange = (event: ArcgisMapCustomEvent<void>) => {
     event.target.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
@@ -24,7 +24,7 @@ const MapShell = ({ graphics }: MapShellProps) => {
         onarcgisViewReadyChange={(event) => {
           handleArcgisViewReadyChange(event);
         }}
-        ref={arcgisMap}
+        ref={viewElement}
       >
         <arcgis-placement position="top-right">
           <calcite-action
@@ -33,7 +33,7 @@ const MapShell = ({ graphics }: MapShellProps) => {
             text="Zoom to Graphics"
             textEnabled
             onClick={() => {
-              arcgisMap.current?.goTo(arcgisMap.current.graphics);
+              viewElement.current?.goTo(viewElement.current.graphics);
             }}
           ></calcite-action>
         </arcgis-placement>
@@ -42,4 +42,4 @@ const MapShell = ({ graphics }: MapShellProps) => {
   );
 };
 
-export default MapShell;
+export default Map;

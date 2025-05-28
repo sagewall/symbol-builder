@@ -8,8 +8,8 @@ interface SceneViewProps {
   graphics?: Collection<Graphic>;
 }
 
-const SceneShell = ({ graphics }: SceneViewProps) => {
-  const arcgisScene = useRef<HTMLArcgisSceneElement>(null);
+const Scene = ({ graphics }: SceneViewProps) => {
+  const viewElement = useRef<HTMLArcgisSceneElement>(null);
 
   const handleArcgisViewReadyChange = (event: ArcgisSceneCustomEvent<void>) => {
     event.target.center = new Point({ longitude: -117.1957098, latitude: 34.0564505 });
@@ -24,7 +24,7 @@ const SceneShell = ({ graphics }: SceneViewProps) => {
         onarcgisViewReadyChange={(event) => {
           handleArcgisViewReadyChange(event);
         }}
-        ref={arcgisScene}
+        ref={viewElement}
       >
         <arcgis-placement position="top-right">
           <calcite-action
@@ -33,7 +33,7 @@ const SceneShell = ({ graphics }: SceneViewProps) => {
             text="Zoom to Graphics"
             textEnabled
             onClick={() => {
-              arcgisScene.current?.goTo(arcgisScene.current.graphics);
+              viewElement.current?.goTo(viewElement.current.graphics);
             }}
           ></calcite-action>
         </arcgis-placement>
@@ -42,4 +42,4 @@ const SceneShell = ({ graphics }: SceneViewProps) => {
   );
 };
 
-export default SceneShell;
+export default Scene;

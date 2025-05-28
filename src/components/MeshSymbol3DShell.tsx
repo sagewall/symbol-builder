@@ -8,7 +8,7 @@ import MeshSymbol3DAMDPanel from "./MeshSymbol3DAMDPanel";
 import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
-import SceneShell from "./SceneShell";
+import Scene from "./Scene";
 import { mesh } from "./lib/geometry";
 import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
@@ -25,7 +25,7 @@ const MeshSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const viewElement = <SceneShell graphics={graphics}></SceneShell>;
+  const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
     setMeshSymbol3D(newMeshSymbol3D);

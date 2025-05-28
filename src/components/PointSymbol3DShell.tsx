@@ -13,7 +13,7 @@ import PointSymbol3DAMDPanel from "./PointSymbol3DAMDPanel";
 import PointSymbol3DESMPanel from "./PointSymbol3DESMPanel";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
-import SceneShell from "./SceneShell";
+import Scene from "./Scene";
 import { point } from "./lib/geometry";
 import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
@@ -45,7 +45,7 @@ const PointSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const viewElement = <SceneShell graphics={graphics}></SceneShell>;
+  const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D) => {
     setPointSymbol3D(newPointSymbol3D);

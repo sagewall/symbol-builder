@@ -5,7 +5,7 @@ import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import React, { useState } from "react";
 import Header from "./Header";
-import MapShell from "./MapShell";
+import Map from "./Map";
 import PictureFillSymbolAMDPanel from "./PictureFillSymbolAMDPanel";
 import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
@@ -41,7 +41,7 @@ const PictureFillSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const viewElement = <MapShell graphics={graphics}></MapShell>;
+  const viewElement = <Map graphics={graphics}></Map>;
 
   const updateGraphics = (newPictureFillSymbol: PictureFillSymbol) => {
     setPictureFillSymbol(newPictureFillSymbol);

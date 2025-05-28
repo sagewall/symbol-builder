@@ -5,8 +5,8 @@ import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import MapShell from "./MapShell";
-import SceneShell from "./SceneShell";
+import Map from "./Map";
+import Scene from "./Scene";
 import SimpleLineSymbolAMDPanel from "./SimpleLineSymbolAMDPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
@@ -47,15 +47,15 @@ const SimpleLineSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneShell, setSceneShell] = useState(false);
-  let viewElement = <MapShell graphics={graphics}></MapShell>;
-  if (sceneShell) {
-    viewElement = <SceneShell graphics={graphics}></SceneShell>;
+  const [scene, setScene] = useState(false);
+  let viewElement = <Map graphics={graphics}></Map>;
+  if (scene) {
+    viewElement = <Scene graphics={graphics}></Scene>;
   }
 
   const handleSwitchChange = () => {
     if (viewSwitchRef.current) {
-      setSceneShell((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+      setScene((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
