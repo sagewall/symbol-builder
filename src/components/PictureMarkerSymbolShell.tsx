@@ -3,12 +3,12 @@ import Collection from "@arcgis/core/core/Collection";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
+import MapShell from "./MapShell";
 import PictureMarkerSymbolAMDPanel from "./PictureMarkerSymbolAMDPanel";
 import PictureMarkerSymbolESMPanel from "./PictureMarkerSymbolESMPanel";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
-import SceneView from "./SceneView";
+import SceneShell from "./SceneShell";
 import { point } from "./lib/geometry";
 import {
   formStyles,
@@ -39,15 +39,15 @@ const PictureMarkerSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics}></MapView>;
-  if (sceneView) {
-    view = <SceneView graphics={graphics}></SceneView>;
+  const [sceneShell, setSceneShell] = useState(false);
+  let viewElement = <MapShell graphics={graphics}></MapShell>;
+  if (sceneShell) {
+    viewElement = <SceneShell graphics={graphics}></SceneShell>;
   }
 
   const handleSwitchChange = () => {
     if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+      setSceneShell((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
@@ -155,7 +155,7 @@ const PictureMarkerSymbolShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

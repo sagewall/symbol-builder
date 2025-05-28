@@ -5,8 +5,8 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
+import MapShell from "./MapShell";
+import SceneShell from "./SceneShell";
 import SimpleMarkerSymbolAMDPanel from "./SimpleMarkerSymbolAMDPanel";
 import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
@@ -43,15 +43,15 @@ const SimpleMarkerSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics}></MapView>;
-  if (sceneView) {
-    view = <SceneView graphics={graphics}></SceneView>;
+  const [sceneShell, setSceneShell] = useState(false);
+  let viewElement = <MapShell graphics={graphics}></MapShell>;
+  if (sceneShell) {
+    viewElement = <SceneShell graphics={graphics}></SceneShell>;
   }
 
   const handleSwitchChange = () => {
     if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+      setSceneShell((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
@@ -208,7 +208,7 @@ const SimpleMarkerSymbolShell = () => {
                 handleStyleChange={handleStyleChange}
                 handleXoffsetChange={handleXoffsetChange}
                 handleYoffsetChange={handleYoffsetChange}
-                sceneView={sceneView}
+                sceneShell={sceneShell}
               ></SimpleMarkerSymbolForm>
             </div>
           </calcite-panel>
@@ -240,7 +240,7 @@ const SimpleMarkerSymbolShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

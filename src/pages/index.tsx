@@ -85,7 +85,7 @@ const cards = SYMBOLS.map((symbol) => {
           </React.Fragment>
         )}
 
-        {symbol.mapView && (
+        {symbol.map && (
           <React.Fragment>
             <calcite-chip
               id={`${symbol.name}-map-chip`}
@@ -100,7 +100,7 @@ const cards = SYMBOLS.map((symbol) => {
           </React.Fragment>
         )}
 
-        {symbol.sceneView && (
+        {symbol.scene && (
           <React.Fragment>
             <calcite-chip
               id={`${symbol.name}-scene-chip`}

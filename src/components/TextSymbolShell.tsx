@@ -5,7 +5,7 @@ import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import React, { useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
+import MapShell from "./MapShell";
 import TextSymbolAMDPanel from "./TextSymbolAMDPanel";
 import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
@@ -40,7 +40,7 @@ const TextSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <MapView graphics={graphics}></MapView>;
+  const viewElement = <MapShell graphics={graphics}></MapShell>;
 
   const updateGraphics = (newTextSymbol: TextSymbol) => {
     setTextSymbol(newTextSymbol);
@@ -226,7 +226,7 @@ const TextSymbolShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

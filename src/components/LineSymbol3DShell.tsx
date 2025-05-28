@@ -9,7 +9,7 @@ import LineSymbol3DAMDPanel from "./LineSymbol3DAMDPanel";
 import LineSymbol3DESMPanel from "./LineSymbol3DESMPanel";
 import LineSymbol3DForm from "./LineSymbol3DForm";
 import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
-import SceneView from "./SceneView";
+import SceneShell from "./SceneShell";
 import { polyline } from "./lib/geometry";
 import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
@@ -26,7 +26,7 @@ const LineSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics}></SceneView>;
+  const viewElement = <SceneShell graphics={graphics}></SceneShell>;
 
   const updateGraphics = (newLineSymbol3D: LineSymbol3D) => {
     setLineSymbol3D(newLineSymbol3D);
@@ -81,7 +81,7 @@ const LineSymbol3DShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

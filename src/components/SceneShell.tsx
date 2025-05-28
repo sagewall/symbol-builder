@@ -4,16 +4,11 @@ import Point from "@arcgis/core/geometry/Point";
 import type { ArcgisSceneCustomEvent } from "@arcgis/map-components";
 import React, { useRef } from "react";
 
-const viewStyles = {
-  height: "100%",
-  width: "100%"
-};
-
 interface SceneViewProps {
   graphics?: Collection<Graphic>;
 }
 
-const SceneView = ({ graphics }: SceneViewProps) => {
+const SceneShell = ({ graphics }: SceneViewProps) => {
   const arcgisScene = useRef<HTMLArcgisSceneElement>(null);
 
   const handleArcgisViewReadyChange = (event: ArcgisSceneCustomEvent<void>) => {
@@ -30,7 +25,6 @@ const SceneView = ({ graphics }: SceneViewProps) => {
           handleArcgisViewReadyChange(event);
         }}
         ref={arcgisScene}
-        style={viewStyles}
       >
         <arcgis-placement position="top-right">
           <calcite-action
@@ -48,4 +42,4 @@ const SceneView = ({ graphics }: SceneViewProps) => {
   );
 };
 
-export default SceneView;
+export default SceneShell;

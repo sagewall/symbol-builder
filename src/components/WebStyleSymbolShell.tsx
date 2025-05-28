@@ -4,8 +4,8 @@ import esriRequest from "@arcgis/core/request";
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
 import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
+import MapShell from "./MapShell";
+import SceneShell from "./SceneShell";
 import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
 import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
 import WebStyleSymbolAMDPanel from "./WebStyleSymbolAMDPanel";
@@ -89,15 +89,15 @@ const WebStyleSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics}></MapView>;
-  if (sceneView) {
-    view = <SceneView graphics={graphics}></SceneView>;
+  const [sceneShell, setSceneShell] = useState(false);
+  let viewElement = <MapShell graphics={graphics}></MapShell>;
+  if (sceneShell) {
+    viewElement = <SceneShell graphics={graphics}></SceneShell>;
   }
 
   const handleSwitchChange = () => {
     if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+      setSceneShell((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
       if ((viewSwitchRef.current as HTMLCalciteSwitchElement).checked) {
         updateGraphics(defaultWebStyleSymbol3D, "pointSymbol");
       } else {
@@ -254,7 +254,7 @@ const WebStyleSymbolShell = () => {
             </calcite-label>
 
             <div style={formStyles}>
-              {!sceneView ? (
+              {!sceneShell ? (
                 <WebStyleSymbol2DForm
                   groupItems={groupItems}
                   handleNameChange={handleNameChange}
@@ -298,7 +298,7 @@ const WebStyleSymbolShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

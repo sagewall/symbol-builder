@@ -5,8 +5,8 @@ import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import MapView from "./MapView";
-import SceneView from "./SceneView";
+import MapShell from "./MapShell";
+import SceneShell from "./SceneShell";
 import SimpleLineSymbolAMDPanel from "./SimpleLineSymbolAMDPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
@@ -47,15 +47,15 @@ const SimpleLineSymbolShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const [sceneView, setSceneView] = useState(false);
-  let view = <MapView graphics={graphics}></MapView>;
-  if (sceneView) {
-    view = <SceneView graphics={graphics}></SceneView>;
+  const [sceneShell, setSceneShell] = useState(false);
+  let viewElement = <MapShell graphics={graphics}></MapShell>;
+  if (sceneShell) {
+    viewElement = <SceneShell graphics={graphics}></SceneShell>;
   }
 
   const handleSwitchChange = () => {
     if (viewSwitchRef.current) {
-      setSceneView((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
+      setSceneShell((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
@@ -216,7 +216,7 @@ const SimpleLineSymbolShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

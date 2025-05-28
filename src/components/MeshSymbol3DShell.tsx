@@ -8,7 +8,7 @@ import MeshSymbol3DAMDPanel from "./MeshSymbol3DAMDPanel";
 import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
-import SceneView from "./SceneView";
+import SceneShell from "./SceneShell";
 import { mesh } from "./lib/geometry";
 import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
@@ -25,7 +25,7 @@ const MeshSymbol3DShell = () => {
 
   const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
-  const view = <SceneView graphics={graphics}></SceneView>;
+  const viewElement = <SceneShell graphics={graphics}></SceneShell>;
 
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
     setMeshSymbol3D(newMeshSymbol3D);
@@ -79,7 +79,7 @@ const MeshSymbol3DShell = () => {
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
-        {view}
+        {viewElement}
       </calcite-shell>
     </React.Fragment>
   );

@@ -4,16 +4,11 @@ import Point from "@arcgis/core/geometry/Point";
 import type { ArcgisMapCustomEvent } from "@arcgis/map-components";
 import React, { useRef } from "react";
 
-const viewStyles = {
-  height: "100%",
-  width: "100%"
-};
-
-interface MapViewProps {
+interface MapShellProps {
   graphics?: Collection<Graphic>;
 }
 
-const MapView = ({ graphics }: MapViewProps) => {
+const MapShell = ({ graphics }: MapShellProps) => {
   const arcgisMap = useRef<HTMLArcgisMapElement>(null);
 
   const handleArcgisViewReadyChange = (event: ArcgisMapCustomEvent<void>) => {
@@ -30,7 +25,6 @@ const MapView = ({ graphics }: MapViewProps) => {
           handleArcgisViewReadyChange(event);
         }}
         ref={arcgisMap}
-        style={viewStyles}
       >
         <arcgis-placement position="top-right">
           <calcite-action
@@ -48,4 +42,4 @@ const MapView = ({ graphics }: MapViewProps) => {
   );
 };
 
-export default MapView;
+export default MapShell;
