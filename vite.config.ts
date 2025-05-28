@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   return {
     base: env.VITE_BASE_NAME,
     build: {
-      chunkSizeWarningLimit: 5400,
+      chunkSizeWarningLimit: 5600,
       external: ["^@arcgis/", "^@esri/"],
       rollupOptions: {
         output: {
