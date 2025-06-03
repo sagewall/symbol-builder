@@ -5,7 +5,7 @@ import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
 import React, { useState } from "react";
 import Header from "./Header";
-import LineSymbol3DAMDPanel from "./LineSymbol3DAMDPanel";
+import LineSymbol3DCDNPanel from "./LineSymbol3DCDNPanel";
 import LineSymbol3DESMPanel from "./LineSymbol3DESMPanel";
 import LineSymbol3DForm from "./LineSymbol3DForm";
 import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
@@ -66,14 +66,14 @@ const LineSymbol3DShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
                 <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DAMDPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DAMDPanel>
+                <LineSymbol3DCDNPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DJSONPanel>
