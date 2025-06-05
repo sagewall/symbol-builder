@@ -17,7 +17,7 @@ const PictureFillSymbolCDNPanel = ({ pictureFillSymbol }: Props) => {
   };
 
   const codeSnippet = `
-const PictureFillSymbol = await $arcgis.import("@arcgis/core/symbols/PictureFillSymbol.js")
+const PictureFillSymbol = await $arcgis.import("@arcgis/core/symbols/PictureFillSymbol.js");
 
 const pictureFillSymbol = new PictureFillSymbol({
   height: ${pictureFillSymbol.height},

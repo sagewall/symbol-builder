@@ -17,7 +17,7 @@ const PointSymbol3DCDNPanel = ({ pointSymbol3D }: Props) => {
   };
 
   let codeSnippet = `
-const PointSymbol3D = await $arcgis.import("@arcgis/core/symbols/PointSymbol3D.js")
+const PointSymbol3D = await $arcgis.import("@arcgis/core/symbols/PointSymbol3D.js");
 
 const pointSymbol3D = new PointSymbol3D({
   callout: {
