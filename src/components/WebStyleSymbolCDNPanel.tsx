@@ -6,7 +6,7 @@ interface Props {
   webStyleSymbol: WebStyleSymbol;
 }
 
-const WebStyleSymbolAMDPanel = ({ webStyleSymbol }: Props) => {
+const WebStyleSymbolCDNPanel = ({ webStyleSymbol }: Props) => {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -20,26 +20,26 @@ const WebStyleSymbolAMDPanel = ({ webStyleSymbol }: Props) => {
 
   if (webStyleSymbol.styleName) {
     codeSnippet = `
-require(["esri/symbols/WebStyleSymbol"], (WebStyleSymbol) => {
-  const webStyleSymbol = new WebStyleSymbol({
-    name: "${webStyleSymbol.name}",
-    styleName: "${webStyleSymbol.styleName}"
-  });
+const WebStyleSymbol = await $arcgis.import("@arcgis/core/symbols/WebStyleSymbol.js");
+
+const webStyleSymbol = new WebStyleSymbol({
+  name: "${webStyleSymbol.name}",
+  styleName: "${webStyleSymbol.styleName}"
 });`;
   } else {
     codeSnippet = `
-require(["esri/symbols/WebStyleSymbol"], (WebStyleSymbol) => {
-  const webStyleSymbol = new WebStyleSymbol({
-    name: "${webStyleSymbol.name}",
-    styleUrl: "${webStyleSymbol.styleUrl}"
-  });
+const WebStyleSymbol = await $arcgis.import("@arcgis/core/symbols/WebStyleSymbol.js");
+
+const webStyleSymbol = new WebStyleSymbol({
+  name: "${webStyleSymbol.name}",
+  styleUrl: "${webStyleSymbol.styleUrl}"
 });`;
   }
 
   return (
     <React.Fragment>
       <calcite-panel>
-        <div slot="header-content">AMD / Autocasting</div>
+        <div slot="header-content">CDN</div>
         <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
@@ -65,4 +65,4 @@ require(["esri/symbols/WebStyleSymbol"], (WebStyleSymbol) => {
   );
 };
 
-export default WebStyleSymbolAMDPanel;
+export default WebStyleSymbolCDNPanel;

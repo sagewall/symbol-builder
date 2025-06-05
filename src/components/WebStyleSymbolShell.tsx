@@ -8,7 +8,7 @@ import Map from "./Map";
 import Scene from "./Scene";
 import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
 import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
-import WebStyleSymbolAMDPanel from "./WebStyleSymbolAMDPanel";
+import WebStyleSymbolCDNPanel from "./WebStyleSymbolCDNPanel";
 import WebStyleSymbolESMPanel from "./WebStyleSymbolESMPanel";
 import WebStyleSymbolJSONPanel from "./WebStyleSymbolJSONPanel";
 import {
@@ -277,7 +277,7 @@ const WebStyleSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -286,9 +286,9 @@ const WebStyleSymbolShell = () => {
                 ></WebStyleSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolAMDPanel
+                <WebStyleSymbolCDNPanel
                   webStyleSymbol={currentWebStyleSymbol}
-                ></WebStyleSymbolAMDPanel>
+                ></WebStyleSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <WebStyleSymbolJSONPanel
