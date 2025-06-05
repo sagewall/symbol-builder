@@ -6,7 +6,7 @@ interface Props {
   simpleMarkerSymbol: SimpleMarkerSymbol;
 }
 
-const SimpleMarkerSymbolAMDPanel = ({ simpleMarkerSymbol }: Props) => {
+const SimpleMarkerSymbolCDNPanel = ({ simpleMarkerSymbol }: Props) => {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -17,30 +17,30 @@ const SimpleMarkerSymbolAMDPanel = ({ simpleMarkerSymbol }: Props) => {
   };
 
   const codeSnippet = `
-require(["esri/symbols/SimpleMarkerSymbol"], (SimpleMarkerSymbol) => {
-  const simpleMarkerSymbol = new SimpleMarkerSymbol({
-    angle: ${simpleMarkerSymbol.angle},
-    color: [${simpleMarkerSymbol.color.toRgba()}],
-    outline: {
-      cap: "${simpleMarkerSymbol.outline.cap}",
-      color: [${simpleMarkerSymbol.outline?.color?.toRgba()}],
-      join: "${simpleMarkerSymbol.outline.join}",
-      miterLimit: ${simpleMarkerSymbol.outline.miterLimit},
-      style: "${simpleMarkerSymbol.outline.style}",
-      width: ${simpleMarkerSymbol.outline.width}
-    },
-    path: "${simpleMarkerSymbol.path}",
-    size: ${simpleMarkerSymbol.size},
-    style: "${simpleMarkerSymbol.style}",
-    xoffset: ${simpleMarkerSymbol.xoffset},
-    yoffset: ${simpleMarkerSymbol.yoffset}
-  });
+const SimpleMarkerSymbol = await $arcgis.import("@arcgis/core/symbols/SimpleMarkerSymbol.js");
+
+const simpleMarkerSymbol = new SimpleMarkerSymbol({
+  angle: ${simpleMarkerSymbol.angle},
+  color: [${simpleMarkerSymbol.color.toRgba()}],
+  outline: {
+    cap: "${simpleMarkerSymbol.outline.cap}",
+    color: [${simpleMarkerSymbol.outline?.color?.toRgba()}],
+    join: "${simpleMarkerSymbol.outline.join}",
+    miterLimit: ${simpleMarkerSymbol.outline.miterLimit},
+    style: "${simpleMarkerSymbol.outline.style}",
+    width: ${simpleMarkerSymbol.outline.width}
+  },
+  path: "${simpleMarkerSymbol.path}",
+  size: ${simpleMarkerSymbol.size},
+  style: "${simpleMarkerSymbol.style}",
+  xoffset: ${simpleMarkerSymbol.xoffset},
+  yoffset: ${simpleMarkerSymbol.yoffset}
 });`;
 
   return (
     <React.Fragment>
       <calcite-panel>
-        <div slot="header-content">AMD / Autocasting</div>
+        <div slot="header-content">CDN</div>
         <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
@@ -66,4 +66,4 @@ require(["esri/symbols/SimpleMarkerSymbol"], (SimpleMarkerSymbol) => {
   );
 };
 
-export default SimpleMarkerSymbolAMDPanel;
+export default SimpleMarkerSymbolCDNPanel;

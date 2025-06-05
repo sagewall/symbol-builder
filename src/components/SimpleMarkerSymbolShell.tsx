@@ -7,7 +7,7 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
-import SimpleMarkerSymbolAMDPanel from "./SimpleMarkerSymbolAMDPanel";
+import SimpleMarkerSymbolCDNPanel from "./SimpleMarkerSymbolCDNPanel";
 import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
@@ -219,7 +219,7 @@ const SimpleMarkerSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -228,9 +228,9 @@ const SimpleMarkerSymbolShell = () => {
                 ></SimpleMarkerSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleMarkerSymbolAMDPanel
+                <SimpleMarkerSymbolCDNPanel
                   simpleMarkerSymbol={simpleMarkerSymbol}
-                ></SimpleMarkerSymbolAMDPanel>
+                ></SimpleMarkerSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <SimpleMarkerSymbolJSONPanel
