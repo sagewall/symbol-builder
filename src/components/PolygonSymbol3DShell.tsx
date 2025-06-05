@@ -8,7 +8,7 @@ import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
 import React, { useState } from "react";
 import Header from "./Header";
-import PolygonSymbol3DAMDPanel from "./PolygonSymbol3DAMDPanel";
+import PolygonSymbol3DCDNPanel from "./PolygonSymbol3DCDNPanel";
 import PolygonSymbol3DESMPanel from "./PolygonSymbol3DESMPanel";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
@@ -77,7 +77,7 @@ const PolygonSymbol3DShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -86,9 +86,9 @@ const PolygonSymbol3DShell = () => {
                 ></PolygonSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PolygonSymbol3DAMDPanel
+                <PolygonSymbol3DCDNPanel
                   polygonSymbol3D={polygonSymbol3D}
-                ></PolygonSymbol3DAMDPanel>
+                ></PolygonSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <PolygonSymbol3DJSONPanel
