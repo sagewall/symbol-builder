@@ -4,7 +4,7 @@ import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import Map from "./Map";
-import PictureMarkerSymbolAMDPanel from "./PictureMarkerSymbolAMDPanel";
+import PictureMarkerSymbolCDNPanel from "./PictureMarkerSymbolCDNPanel";
 import PictureMarkerSymbolESMPanel from "./PictureMarkerSymbolESMPanel";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
@@ -134,7 +134,7 @@ const PictureMarkerSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -143,9 +143,9 @@ const PictureMarkerSymbolShell = () => {
                 ></PictureMarkerSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolAMDPanel
+                <PictureMarkerSymbolCDNPanel
                   pictureMarkerSymbol={pictureMarkerSymbol}
-                ></PictureMarkerSymbolAMDPanel>
+                ></PictureMarkerSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <PictureMarkerSymbolJSONPanel

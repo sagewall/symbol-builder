@@ -6,7 +6,7 @@ interface Props {
   pictureMarkerSymbol: PictureMarkerSymbol;
 }
 
-const PictureMarkerSymbolAMDPanel = ({ pictureMarkerSymbol }: Props) => {
+const PictureMarkerSymbolCDNPanel = ({ pictureMarkerSymbol }: Props) => {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -17,21 +17,21 @@ const PictureMarkerSymbolAMDPanel = ({ pictureMarkerSymbol }: Props) => {
   };
 
   const codeSnippet = `
-require(["esri/symbols/PictureMarkerSymbol"], (PictureMarkerSymbol) => {
-  const pictureMarkerSymbol = new PictureMarkerSymbol({
-    angle: ${pictureMarkerSymbol.angle},
-    height: ${pictureMarkerSymbol.height},
-    url: "${pictureMarkerSymbol.url}",
-    width: ${pictureMarkerSymbol.width},
-    xoffset: ${pictureMarkerSymbol.xoffset},
-    yoffset: ${pictureMarkerSymbol.yoffset}
-  });
+const PictureMarkerSymbol = await $arcgis.import("@arcgis/core/symbols/PictureMarkerSymbol.js");
+
+const pictureMarkerSymbol = new PictureMarkerSymbol({
+  angle: ${pictureMarkerSymbol.angle},
+  height: ${pictureMarkerSymbol.height},
+  url: "${pictureMarkerSymbol.url}",
+  width: ${pictureMarkerSymbol.width},
+  xoffset: ${pictureMarkerSymbol.xoffset},
+  yoffset: ${pictureMarkerSymbol.yoffset}
 });`;
 
   return (
     <React.Fragment>
       <calcite-panel>
-        <div slot="header-content">AMD / Autocasting</div>
+        <div slot="header-content">CDN</div>
         <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
@@ -57,4 +57,4 @@ require(["esri/symbols/PictureMarkerSymbol"], (PictureMarkerSymbol) => {
   );
 };
 
-export default PictureMarkerSymbolAMDPanel;
+export default PictureMarkerSymbolCDNPanel;
