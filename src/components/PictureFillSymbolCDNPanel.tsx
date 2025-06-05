@@ -6,7 +6,7 @@ interface Props {
   pictureFillSymbol: PictureFillSymbol;
 }
 
-const PictureFillSymbolAMDPanel = ({ pictureFillSymbol }: Props) => {
+const PictureFillSymbolCDNPanel = ({ pictureFillSymbol }: Props) => {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -17,30 +17,30 @@ const PictureFillSymbolAMDPanel = ({ pictureFillSymbol }: Props) => {
   };
 
   const codeSnippet = `
-require(["esri/symbols/PictureFillSymbol"], (PictureFillSymbol) => {
-  const pictureFillSymbol = new PictureFillSymbol({
-    height: ${pictureFillSymbol.height},
-    outline: {
-      cap: "${pictureFillSymbol.outline?.cap}",
-      color: ${JSON.stringify(pictureFillSymbol.outline?.color?.toJSON())},
-      join: "${pictureFillSymbol.outline?.join}",
-      miterLimit: ${pictureFillSymbol.outline?.miterLimit},
-      style: "${pictureFillSymbol.outline?.style}",
-      width: ${pictureFillSymbol.outline?.width}
-    },
-    url: "${pictureFillSymbol.url}",
-    width: ${pictureFillSymbol.width},
-    xoffset: ${pictureFillSymbol.xoffset},
-    xscale: ${pictureFillSymbol.xscale},
-    yoffset: ${pictureFillSymbol.yoffset},
-    yscale: ${pictureFillSymbol.yscale}
-  });
+const PictureFillSymbol = await $arcgis.import("@arcgis/core/symbols/PictureFillSymbol.js")
+
+const pictureFillSymbol = new PictureFillSymbol({
+  height: ${pictureFillSymbol.height},
+  outline: {
+    cap: "${pictureFillSymbol.outline?.cap}",
+    color: ${JSON.stringify(pictureFillSymbol.outline?.color?.toJSON())},
+    join: "${pictureFillSymbol.outline?.join}",
+    miterLimit: ${pictureFillSymbol.outline?.miterLimit},
+    style: "${pictureFillSymbol.outline?.style}",
+    width: ${pictureFillSymbol.outline?.width}
+  },
+  url: "${pictureFillSymbol.url}",
+  width: ${pictureFillSymbol.width},
+  xoffset: ${pictureFillSymbol.xoffset},
+  xscale: ${pictureFillSymbol.xscale},
+  yoffset: ${pictureFillSymbol.yoffset},
+  yscale: ${pictureFillSymbol.yscale}
 });`;
 
   return (
     <React.Fragment>
       <calcite-panel>
-        <div slot="header-content">AMD / Autocasting</div>
+        <div slot="header-content">CDN</div>
         <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
@@ -66,4 +66,4 @@ require(["esri/symbols/PictureFillSymbol"], (PictureFillSymbol) => {
   );
 };
 
-export default PictureFillSymbolAMDPanel;
+export default PictureFillSymbolCDNPanel;

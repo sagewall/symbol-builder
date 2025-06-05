@@ -6,7 +6,7 @@ import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import React, { useState } from "react";
 import Header from "./Header";
 import Map from "./Map";
-import PictureFillSymbolAMDPanel from "./PictureFillSymbolAMDPanel";
+import PictureFillSymbolCDNPanel from "./PictureFillSymbolCDNPanel";
 import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
@@ -195,7 +195,7 @@ const PictureFillSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -204,9 +204,9 @@ const PictureFillSymbolShell = () => {
                 ></PictureFillSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureFillSymbolAMDPanel
+                <PictureFillSymbolCDNPanel
                   pictureFillSymbol={pictureFillSymbol}
-                ></PictureFillSymbolAMDPanel>
+                ></PictureFillSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <PictureFillSymbolJSONPanel
