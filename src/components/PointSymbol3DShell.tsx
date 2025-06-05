@@ -9,7 +9,7 @@ import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
 import React, { useState } from "react";
 import Header from "./Header";
-import PointSymbol3DAMDPanel from "./PointSymbol3DAMDPanel";
+import PointSymbol3DCDNPanel from "./PointSymbol3DCDNPanel";
 import PointSymbol3DESMPanel from "./PointSymbol3DESMPanel";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
@@ -144,14 +144,14 @@ const PointSymbol3DShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
                 <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PointSymbol3DAMDPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DAMDPanel>
+                <PointSymbol3DCDNPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DJSONPanel>
