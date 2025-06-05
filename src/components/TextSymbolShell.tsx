@@ -6,7 +6,7 @@ import TextSymbol from "@arcgis/core/symbols/TextSymbol";
 import React, { useState } from "react";
 import Header from "./Header";
 import Map from "./Map";
-import TextSymbolAMDPanel from "./TextSymbolAMDPanel";
+import TextSymbolCDNPanel from "./TextSymbolCDNPanel";
 import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
@@ -211,14 +211,14 @@ const TextSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
                 <TextSymbolESMPanel textSymbol={textSymbol}></TextSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolAMDPanel textSymbol={textSymbol}></TextSymbolAMDPanel>
+                <TextSymbolCDNPanel textSymbol={textSymbol}></TextSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <TextSymbolJSONPanel textSymbol={textSymbol}></TextSymbolJSONPanel>
