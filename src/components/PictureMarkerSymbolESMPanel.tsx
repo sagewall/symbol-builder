@@ -17,16 +17,16 @@ const PictureMarkerSymbolESMPanel = ({ pictureMarkerSymbol }: Props) => {
   };
 
   const codeSnippet = `
-  import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
-  
-  const pictureMarkerSymbol = new PictureMarkerSymbol({
-    angle: ${pictureMarkerSymbol.angle},
-    height: ${pictureMarkerSymbol.height},
-    url: "${pictureMarkerSymbol.url}",
-    width: ${pictureMarkerSymbol.width},
-    xoffset: ${pictureMarkerSymbol.xoffset},
-    yoffset: ${pictureMarkerSymbol.yoffset}
-  });`;
+import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
+
+const pictureMarkerSymbol = new PictureMarkerSymbol({
+  angle: ${pictureMarkerSymbol.angle},
+  height: ${pictureMarkerSymbol.height},
+  url: "${pictureMarkerSymbol.url}",
+  width: ${pictureMarkerSymbol.width},
+  xoffset: ${pictureMarkerSymbol.xoffset},
+  yoffset: ${pictureMarkerSymbol.yoffset}
+});`;
 
   return (
     <React.Fragment>

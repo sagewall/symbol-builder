@@ -17,27 +17,27 @@ const SimpleMarkerSymbolESMPanel = ({ simpleMarkerSymbol }: Props) => {
   };
 
   const codeSnippet = `
-  import Color from "@arcgis/core/Color.js";
-  import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
-  import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
-  
-  const simpleMarkerSymbol = new SimpleMarkerSymbol({
-    angle: ${simpleMarkerSymbol.angle},
-    color: new Color([${simpleMarkerSymbol.color.toRgba()}]),
-    outline: new SimpleLineSymbol({
-      cap: "${simpleMarkerSymbol.outline.cap}",
-      color: new Color([${simpleMarkerSymbol.outline?.color?.toRgba()}]),
-      join: "${simpleMarkerSymbol.outline.join}",
-      miterLimit: ${simpleMarkerSymbol.outline.miterLimit},
-      style: "${simpleMarkerSymbol.outline.style}",
-      width: ${simpleMarkerSymbol.outline.width}
-    }),
-    path: "${simpleMarkerSymbol.path}",
-    size: ${simpleMarkerSymbol.size},
-    style: "${simpleMarkerSymbol.style}",
-    xoffset: ${simpleMarkerSymbol.xoffset},
-    yoffset: ${simpleMarkerSymbol.yoffset}
-  });`;
+import Color from "@arcgis/core/Color.js";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
+import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
+
+const simpleMarkerSymbol = new SimpleMarkerSymbol({
+  angle: ${simpleMarkerSymbol.angle},
+  color: new Color([${simpleMarkerSymbol.color.toRgba()}]),
+  outline: new SimpleLineSymbol({
+    cap: "${simpleMarkerSymbol.outline.cap}",
+    color: new Color([${simpleMarkerSymbol.outline?.color?.toRgba()}]),
+    join: "${simpleMarkerSymbol.outline.join}",
+    miterLimit: ${simpleMarkerSymbol.outline.miterLimit},
+    style: "${simpleMarkerSymbol.outline.style}",
+    width: ${simpleMarkerSymbol.outline.width}
+  }),
+  path: "${simpleMarkerSymbol.path}",
+  size: ${simpleMarkerSymbol.size},
+  style: "${simpleMarkerSymbol.style}",
+  xoffset: ${simpleMarkerSymbol.xoffset},
+  yoffset: ${simpleMarkerSymbol.yoffset}
+});`;
 
   return (
     <React.Fragment>
