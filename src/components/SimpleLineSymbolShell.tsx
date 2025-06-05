@@ -7,7 +7,7 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
-import SimpleLineSymbolAMDPanel from "./SimpleLineSymbolAMDPanel";
+import SimpleLineSymbolCDNPanel from "./SimpleLineSymbolCDNPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
@@ -195,7 +195,7 @@ const SimpleLineSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -204,9 +204,9 @@ const SimpleLineSymbolShell = () => {
                 ></SimpleLineSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleLineSymbolAMDPanel
+                <SimpleLineSymbolCDNPanel
                   simpleLineSymbol={simpleLineSymbol}
-                ></SimpleLineSymbolAMDPanel>
+                ></SimpleLineSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <SimpleLineSymbolJSONPanel

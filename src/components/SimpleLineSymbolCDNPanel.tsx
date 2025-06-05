@@ -6,7 +6,7 @@ interface Props {
   simpleLineSymbol: SimpleLineSymbol;
 }
 
-const SimpleLineSymbolAMDPanel = ({ simpleLineSymbol }: Props) => {
+const SimpleLineSymbolCDNPanel = ({ simpleLineSymbol }: Props) => {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -20,39 +20,39 @@ const SimpleLineSymbolAMDPanel = ({ simpleLineSymbol }: Props) => {
 
   if (simpleLineSymbol.marker) {
     codeSnippet = `
-require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
-  const simpleLineSymbol = new SimpleLineSymbol({
-    cap: "${simpleLineSymbol.cap}",
-    color: [${simpleLineSymbol.color?.toRgba()}],
-    join: "${simpleLineSymbol.join}",
-    marker: {
-      color: [${simpleLineSymbol.marker.color.toRgba()}],
-      placement: "${simpleLineSymbol.marker.placement}",
-      style: "${simpleLineSymbol.marker.style}",
-    },
-    miterLimit: ${simpleLineSymbol.miterLimit},
-    style: "${simpleLineSymbol.style}",
-    width: ${simpleLineSymbol.width}
-  });
+const SimpleLineSymbol = await $arcgis.import("@arcgis/core/symbols/SimpleLineSymbol.js");
+
+const simpleLineSymbol = new SimpleLineSymbol({
+  cap: "${simpleLineSymbol.cap}",
+  color: [${simpleLineSymbol.color?.toRgba()}],
+  join: "${simpleLineSymbol.join}",
+  marker: {
+    color: [${simpleLineSymbol.marker.color.toRgba()}],
+    placement: "${simpleLineSymbol.marker.placement}",
+    style: "${simpleLineSymbol.marker.style}",
+  },
+  miterLimit: ${simpleLineSymbol.miterLimit},
+  style: "${simpleLineSymbol.style}",
+  width: ${simpleLineSymbol.width}
 });`;
   } else {
     codeSnippet = `
-require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
-  const simpleLineSymbol = new SimpleLineSymbol({
-    cap: "${simpleLineSymbol.cap}",
-    color: [${simpleLineSymbol.color?.toRgba()}],
-    join: "${simpleLineSymbol.join}",
-    miterLimit: ${simpleLineSymbol.miterLimit},
-    style: "${simpleLineSymbol.style}",
-    width: ${simpleLineSymbol.width}
-  });
+const SimpleLineSymbol = await $arcgis.import("@arcgis/core/symbols/SimpleLineSymbol.js");
+
+const simpleLineSymbol = new SimpleLineSymbol({
+  cap: "${simpleLineSymbol.cap}",
+  color: [${simpleLineSymbol.color?.toRgba()}],
+  join: "${simpleLineSymbol.join}",
+  miterLimit: ${simpleLineSymbol.miterLimit},
+  style: "${simpleLineSymbol.style}",
+  width: ${simpleLineSymbol.width}
 });`;
   }
 
   return (
     <React.Fragment>
       <calcite-panel>
-        <div slot="header-content">AMD / Autocasting</div>
+        <div slot="header-content">CDN</div>
         <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
@@ -78,4 +78,4 @@ require(["esri/symbols/SimpleLineSymbol"], (SimpleLineSymbol) => {
   );
 };
 
-export default SimpleLineSymbolAMDPanel;
+export default SimpleLineSymbolCDNPanel;
