@@ -6,7 +6,7 @@ interface Props {
   simpleFillSymbol: SimpleFillSymbol;
 }
 
-const SimpleFillSymbolAMDPanel = ({ simpleFillSymbol }: Props) => {
+const SimpleFillSymbolCDNPanel = ({ simpleFillSymbol }: Props) => {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -17,25 +17,25 @@ const SimpleFillSymbolAMDPanel = ({ simpleFillSymbol }: Props) => {
   };
 
   const codeSnippet = `
-require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
-  const simpleFillSymbol = new SimpleFillSymbol({
-    color: [${simpleFillSymbol.color.toRgba()}],
-    outline: {
-      cap: "${simpleFillSymbol.outline?.cap}",
-      color: [${simpleFillSymbol.outline?.color?.toRgba()}],
-      join: "${simpleFillSymbol.outline?.join}",
-      miterLimit: ${simpleFillSymbol.outline?.miterLimit},
-      style: "${simpleFillSymbol.outline?.style}",
-      width: ${simpleFillSymbol.outline?.width}
-    },
-    style: "${simpleFillSymbol.style}"
-  });
+const SimpleFillSymbol = await $arcgis.import("@arcgis/core/symbols/SimpleFillSymbol.js");
+
+const simpleFillSymbol = new SimpleFillSymbol({
+  color: [${simpleFillSymbol.color.toRgba()}],
+  outline: {
+    cap: "${simpleFillSymbol.outline?.cap}",
+    color: [${simpleFillSymbol.outline?.color?.toRgba()}],
+    join: "${simpleFillSymbol.outline?.join}",
+    miterLimit: ${simpleFillSymbol.outline?.miterLimit},
+    style: "${simpleFillSymbol.outline?.style}",
+    width: ${simpleFillSymbol.outline?.width}
+  },
+  style: "${simpleFillSymbol.style}"
 });`;
 
   return (
     <React.Fragment>
       <calcite-panel>
-        <div slot="header-content">AMD / Autocasting</div>
+        <div slot="header-content">CDN</div>
         <calcite-action
           icon="copy-to-clipboard"
           label="Copy code to clipboard"
@@ -61,4 +61,4 @@ require(["esri/symbols/SimpleFillSymbol"], (SimpleFillSymbol) => {
   );
 };
 
-export default SimpleFillSymbolAMDPanel;
+export default SimpleFillSymbolCDNPanel;

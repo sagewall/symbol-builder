@@ -7,7 +7,7 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
-import SimpleFillSymbolAMDPanel from "./SimpleFillSymbolAMDPanel";
+import SimpleFillSymbolCDNPanel from "./SimpleFillSymbolCDNPanel";
 import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
@@ -183,7 +183,7 @@ const SimpleFillSymbolShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
@@ -192,9 +192,9 @@ const SimpleFillSymbolShell = () => {
                 ></SimpleFillSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleFillSymbolAMDPanel
+                <SimpleFillSymbolCDNPanel
                   simpleFillSymbol={simpleFillSymbol}
-                ></SimpleFillSymbolAMDPanel>
+                ></SimpleFillSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <SimpleFillSymbolJSONPanel
