@@ -4,7 +4,7 @@ import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import React, { useState } from "react";
 import Header from "./Header";
-import MeshSymbol3DAMDPanel from "./MeshSymbol3DAMDPanel";
+import MeshSymbol3DCDNPanel from "./MeshSymbol3DCDNPanel";
 import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
@@ -64,14 +64,14 @@ const MeshSymbol3DShell = () => {
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
                 <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>AMD</calcite-tab-title>
+                <calcite-tab-title>CDN</calcite-tab-title>
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
                 <MeshSymbol3DESMPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <MeshSymbol3DAMDPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DAMDPanel>
+                <MeshSymbol3DCDNPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
                 <MeshSymbol3DJSONPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DJSONPanel>
