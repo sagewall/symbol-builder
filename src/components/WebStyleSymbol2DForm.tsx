@@ -210,7 +210,7 @@ const WebStyleSymbol2DForm = ({
             label="WebStyleSymbols"
           >
             {pointWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Point symbols" open>
+              <calcite-list-item label="Point symbols" expanded>
                 <calcite-list label="Point symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
@@ -239,7 +239,7 @@ const WebStyleSymbol2DForm = ({
             )}
 
             {lineWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Line symbols" open>
+              <calcite-list-item label="Line symbols" expanded>
                 <calcite-list label="Line symbols">
                   {lineWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
@@ -268,7 +268,7 @@ const WebStyleSymbol2DForm = ({
             )}
 
             {polygonWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Polygon symbols" open>
+              <calcite-list-item label="Polygon symbols" expanded>
                 <calcite-list label="Polygon symbols">
                   {polygonWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
@@ -350,7 +350,7 @@ const WebStyleSymbol2DForm = ({
             label="Point WebStyleSymbols"
           >
             {pointWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Point symbols" open>
+              <calcite-list-item label="Point symbols" expanded>
                 <calcite-list label="Point symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
@@ -379,7 +379,7 @@ const WebStyleSymbol2DForm = ({
             )}
 
             {lineWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Line symbols" open>
+              <calcite-list-item label="Line symbols" expanded>
                 <calcite-list label="Line symbols">
                   {lineWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item
@@ -408,7 +408,7 @@ const WebStyleSymbol2DForm = ({
             )}
 
             {polygonWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Polygon symbols" open>
+              <calcite-list-item label="Polygon symbols" expanded>
                 <calcite-list label="Polygon symbols">
                   {polygonWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item

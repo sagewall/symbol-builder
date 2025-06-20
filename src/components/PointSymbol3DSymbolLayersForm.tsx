@@ -596,7 +596,7 @@ const PointSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   return (
     <React.Fragment>
-      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} expanded>
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"

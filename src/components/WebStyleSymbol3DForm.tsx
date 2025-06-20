@@ -182,7 +182,7 @@ const WebStyleSymbolForm = ({
             label="WebStyleSymbols"
           >
             {pointWebStyleSymbolItems.length > 0 && (
-              <calcite-list-item label="Point Symbols" open>
+              <calcite-list-item label="Point Symbols" expanded>
                 <calcite-list label="Point Symbols">
                   {pointWebStyleSymbolItems.map((item, index) => (
                     <calcite-list-item

@@ -102,7 +102,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   ) => {
     const newSymbolLayers = symbolLayers.clone();
     const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as LineSymbol3DLayer;
-    if (currentMarkerBlock.open && !symbolLayer.marker) {
+    if (currentMarkerBlock.expanded && !symbolLayer.marker) {
       symbolLayer.marker = lineStyleMarker3Ds.getItemAt(layerIndex);
     } else {
       const newLineStyleMarker3Ds = lineStyleMarker3Ds.clone();
@@ -321,7 +321,7 @@ const LineSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   return (
     <React.Fragment>
-      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} open={true}>
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} expanded>
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"

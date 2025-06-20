@@ -92,7 +92,7 @@ const SimpleLineSymbolShell = () => {
   const handleMarkerBlockToggle = (currentMarkerBlock: HTMLCalciteBlockElement) => {
     if (currentMarkerBlock.heading === "marker") {
       const newSimpleLineSymbol = simpleLineSymbol.clone();
-      if (currentMarkerBlock.open) {
+      if (currentMarkerBlock.expanded) {
         newSimpleLineSymbol.marker = lineSymbolMarker;
         setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
         updateGraphics(newSimpleLineSymbol);
