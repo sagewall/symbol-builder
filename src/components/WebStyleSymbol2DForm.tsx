@@ -174,7 +174,6 @@ const WebStyleSymbol2DForm = ({
 
   useEffect(() => {
     getStyleItemDataFromItem(groupItems[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupItems]);
 
   return (
