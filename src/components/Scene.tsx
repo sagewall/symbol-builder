@@ -4,7 +4,7 @@ import Point from "@arcgis/core/geometry/Point";
 import type { ArcgisSceneCustomEvent } from "@arcgis/map-components";
 import "@arcgis/map-components/components/arcgis-scene";
 import "@esri/calcite-components/components/calcite-action";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 interface SceneViewProps {
   graphics?: Collection<Graphic>;
@@ -12,12 +12,6 @@ interface SceneViewProps {
 
 function Scene({ graphics }: SceneViewProps) {
   const viewElement = useRef<HTMLArcgisSceneElement>(null);
-
-  useEffect(() => {
-    if (viewElement.current && graphics) {
-      viewElement.current.graphics = graphics;
-    }
-  }, [graphics]);
 
   const handleArcgisViewReadyChange = (event: ArcgisSceneCustomEvent<void>) => {
     event.target.center = new Point({
