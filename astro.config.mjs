@@ -4,8 +4,9 @@ import { loadEnv } from "vite";
 import react from "@astrojs/react";
 import netlify from "@astrojs/netlify";
 
-const { VITE_BASE_NAME } = loadEnv(
-  process.env.NODE_ENV || "/",
+const { PUBLIC_BASE } = loadEnv(process.env.NODE_ENV || "/", process.cwd(), "");
+const { PUBLIC_SITE } = loadEnv(
+  process.env.NODE_ENV || "http://localhost:4321",
   process.cwd(),
   ""
 );
@@ -13,12 +14,8 @@ const { VITE_BASE_NAME } = loadEnv(
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
+  base: PUBLIC_BASE,
   devToolbar: { enabled: false },
   integrations: [react()],
-  vite: {
-    base: VITE_BASE_NAME,
-    build: {
-      chunkSizeWarningLimit: 5600,
-    },
-  },
+  site: PUBLIC_SITE,
 });
