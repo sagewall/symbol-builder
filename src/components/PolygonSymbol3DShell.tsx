@@ -6,28 +6,41 @@ import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
-import React, { useState } from "react";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import "@esri/calcite-components/dist/components/calcite-shell";
+import "@esri/calcite-components/dist/components/calcite-shell-panel";
+import "@esri/calcite-components/dist/components/calcite-tab";
+import "@esri/calcite-components/dist/components/calcite-tab-nav";
+import "@esri/calcite-components/dist/components/calcite-tab-title";
+import "@esri/calcite-components/dist/components/calcite-tabs";
+import { useState } from "react";
+import { polygon } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import PolygonSymbol3DCDNPanel from "./PolygonSymbol3DCDNPanel";
 import PolygonSymbol3DESMPanel from "./PolygonSymbol3DESMPanel";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
 import Scene from "./Scene";
-import { polygon } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
-const PolygonSymbol3DShell = () => {
+function PolygonSymbol3DShell() {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
 
   const polygonGraphic = new Graphic({
     geometry: polygon,
-    symbol: polygonSymbol3D
+    symbol: polygonSymbol3D,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
@@ -60,19 +73,26 @@ const PolygonSymbol3DShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="PolygonSymbol3D" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
-              <PolygonSymbol3DForm updateSymbolLayers={updateSymbolLayers}></PolygonSymbol3DForm>
+              <PolygonSymbol3DForm
+                updateSymbolLayers={updateSymbolLayers}
+              ></PolygonSymbol3DForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -100,8 +120,8 @@ const PolygonSymbol3DShell = () => {
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PolygonSymbol3DShell;

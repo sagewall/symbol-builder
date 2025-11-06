@@ -3,7 +3,24 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import React, { useRef, useState } from "react";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-switch";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import { useRef, useState } from "react";
+import { polyline } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
@@ -11,41 +28,34 @@ import SimpleLineSymbolCDNPanel from "./SimpleLineSymbolCDNPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
-import { polyline } from "./lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles
-} from "./lib/styles";
 
-const SimpleLineSymbolShell = () => {
+function SimpleLineSymbolShell() {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
       miterLimit: 1,
-      width: 1
+      width: 1,
     })
   );
 
   const [lineSymbolMarker, setLineSymbolMarker] = useState(
     new LineSymbolMarker({
-      color: "#007ac2"
+      color: "#007ac2",
     })
   );
 
   const polylineGraphic = new Graphic({
     geometry: polyline,
-    symbol: simpleLineSymbol
+    symbol: simpleLineSymbol,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polylineGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -71,7 +81,9 @@ const SimpleLineSymbolShell = () => {
     setGraphics(newGraphics);
   };
 
-  const handleCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]) => {
+  const handleCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     updateGraphics(newSimpleLineSymbol);
@@ -83,13 +95,17 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]) => {
+  const handleJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerBlockToggle = (currentMarkerBlock: HTMLCalciteBlockElement) => {
+  const handleMarkerBlockToggle = (
+    currentMarkerBlock: HTMLCalciteBlockElement
+  ) => {
     if (currentMarkerBlock.heading === "marker") {
       const newSimpleLineSymbol = simpleLineSymbol.clone();
       if (currentMarkerBlock.expanded) {
@@ -143,7 +159,9 @@ const SimpleLineSymbolShell = () => {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]) => {
+  const handleStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]
+  ) => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     updateGraphics(newSimpleLineSymbol);
@@ -156,13 +174,17 @@ const SimpleLineSymbolShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="SimpleLineSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
               <calcite-switch
                 ref={viewSwitchRef}
@@ -190,7 +212,12 @@ const SimpleLineSymbolShell = () => {
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -218,8 +245,8 @@ const SimpleLineSymbolShell = () => {
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default SimpleLineSymbolShell;

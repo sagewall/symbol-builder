@@ -1,12 +1,15 @@
 import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-alert";
+import "@esri/calcite-components/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   lineSymbol3D: LineSymbol3D;
 }
 
-const LineSymbol3DESMPanel = ({ lineSymbol3D }: Props) => {
+function LineSymbol3DESMPanel({ lineSymbol3D }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -37,7 +40,8 @@ const LineSymbol3DESMPanel = ({ lineSymbol3D }: Props) => {
 
   let codeSnippet = `\n`;
 
-  if (colorImport) codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
+  if (colorImport)
+    codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
   if (lineSymbol3DImport)
     codeSnippet += `import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";\n`;
   if (lineSymbol3DLayerImport)
@@ -116,7 +120,7 @@ const lineSymbol3D = new LineSymbol3D({
 });`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
         <calcite-action
@@ -140,8 +144,8 @@ const lineSymbol3D = new LineSymbol3D({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default LineSymbol3DESMPanel;

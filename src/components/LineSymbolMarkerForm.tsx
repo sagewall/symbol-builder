@@ -1,27 +1,36 @@
 import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
-import React, { useState } from "react";
-import { MARKER_PLACEMENT_OPTIONS, MARKER_STYLE_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import {
+  MARKER_PLACEMENT_OPTIONS,
+  MARKER_STYLE_OPTIONS,
+} from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   handleColorChange: ((value: string) => void) | undefined;
   handlePlacementChange:
     | ((value: InstanceType<typeof LineSymbolMarker>["placement"]) => void)
     | undefined;
-  handleStyleChange: ((value: InstanceType<typeof LineSymbolMarker>["style"]) => void) | undefined;
+  handleStyleChange:
+    | ((value: InstanceType<typeof LineSymbolMarker>["style"]) => void)
+    | undefined;
 }
 
-const LineSymbolMarkerForm = ({
+function LineSymbolMarkerForm({
   handleColorChange,
   handlePlacementChange,
-  handleStyleChange
-}: Props) => {
+  handleStyleChange,
+}: Props) {
   const [color, setColor] = useState("#007ac2");
   const [placement, setPlacement] = useState("begin-end");
   const [style, setStyle] = useState("arrow");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -46,7 +55,9 @@ const LineSymbolMarkerForm = ({
             setPlacement(event.target.value);
             if (handlePlacementChange) {
               handlePlacementChange(
-                event.target.value as InstanceType<typeof LineSymbolMarker>["placement"]
+                event.target.value as InstanceType<
+                  typeof LineSymbolMarker
+                >["placement"]
               );
             }
           }}
@@ -66,7 +77,9 @@ const LineSymbolMarkerForm = ({
             setStyle(event.target.value);
             if (handleStyleChange) {
               handleStyleChange(
-                event.target.value as InstanceType<typeof LineSymbolMarker>["style"]
+                event.target.value as InstanceType<
+                  typeof LineSymbolMarker
+                >["style"]
               );
             }
           }}
@@ -77,8 +90,8 @@ const LineSymbolMarkerForm = ({
           ))}
         </calcite-select>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default LineSymbolMarkerForm;

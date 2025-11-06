@@ -1,12 +1,17 @@
 import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
 import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import { CAP_OPTIONS, JOIN_OPTIONS } from "../lib/constants";
+import { blockStyles, labelStyles } from "../lib/styles";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
-import { CAP_OPTIONS, JOIN_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -22,7 +27,10 @@ interface Props {
     layerIndex: number,
     currentMarkerBlock: HTMLCalciteBlockElement
   ) => void;
-  handleLineSymbol3DLayerMarkerColorChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMarkerColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleLineSymbol3DLayerMarkerPlacementChange: (
     layerIndex: number,
     value: InstanceType<typeof LineStyleMarker3D>["placement"]
@@ -31,7 +39,10 @@ interface Props {
     layerIndex: number,
     value: InstanceType<typeof LineStyleMarker3D>["style"]
   ) => void;
-  handleLineSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleLineSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
     value: InstanceType<typeof LineStylePattern3D>["style"]
@@ -39,7 +50,7 @@ interface Props {
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-const LineSymbol3DLayerForm = ({
+function LineSymbol3DLayerForm({
   layerIndex,
   handleCapChange,
   handleJoinChange,
@@ -49,14 +60,14 @@ const LineSymbol3DLayerForm = ({
   handleLineSymbol3DLayerMarkerStyleChange,
   handleLineSymbol3DLayerMaterialColorChange,
   handleLineSymbol3DLayerPatternStyleChange,
-  handleSizeChange
-}: Props) => {
+  handleSizeChange,
+}: Props) {
   const [cap, setCap] = useState("butt");
   const [join, setJoin] = useState("miter");
   const [size, setSize] = useState("3");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         cap
         <calcite-select
@@ -65,7 +76,9 @@ const LineSymbol3DLayerForm = ({
             setCap(event.target.value);
             handleCapChange(
               layerIndex,
-              event.target.value as InstanceType<typeof LineSymbol3DLayer>["cap"]
+              event.target.value as InstanceType<
+                typeof LineSymbol3DLayer
+              >["cap"]
             );
           }}
           value={cap}
@@ -90,7 +103,9 @@ const LineSymbol3DLayerForm = ({
             setJoin(event.target.value);
             handleJoinChange(
               layerIndex,
-              event.target.value as InstanceType<typeof LineSymbol3DLayer>["join"]
+              event.target.value as InstanceType<
+                typeof LineSymbol3DLayer
+              >["join"]
             );
           }}
           value={join}
@@ -146,8 +161,8 @@ const LineSymbol3DLayerForm = ({
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default LineSymbol3DLayerForm;

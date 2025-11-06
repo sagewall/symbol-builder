@@ -1,12 +1,15 @@
 import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-alert";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   webStyleSymbol: WebStyleSymbol;
 }
 
-const SimpleFillSymbolJSONPanel = ({ webStyleSymbol }: Props) => {
+function SimpleFillSymbolJSONPanel({ webStyleSymbol }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -23,7 +26,7 @@ const webStyleSymbolSymbol = WebStyleSymbol.fromJSON(
 ${JSON.stringify(webStyleSymbol.toJSON(), null, 2)});`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">JSON</div>
         <calcite-action
@@ -47,8 +50,8 @@ ${JSON.stringify(webStyleSymbol.toJSON(), null, 2)});`;
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default SimpleFillSymbolJSONPanel;

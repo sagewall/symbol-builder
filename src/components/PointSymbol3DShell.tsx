@@ -7,43 +7,58 @@ import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
 import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D";
 import Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import { useState } from "react";
+import { point } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import PointSymbol3DCDNPanel from "./PointSymbol3DCDNPanel";
 import PointSymbol3DESMPanel from "./PointSymbol3DESMPanel";
 import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
 import Scene from "./Scene";
-import { point } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
-const PointSymbol3DShell = () => {
-  const [lineCallout3D, setLineCallout3D] = useState(new LineCallout3D({ size: 1 }));
+function PointSymbol3DShell() {
+  const [lineCallout3D, setLineCallout3D] = useState(
+    new LineCallout3D({ size: 1 })
+  );
 
   const [symbol3DVerticalOffset, setSymbol3DVerticalOffset] = useState(
     new Symbol3DVerticalOffset({
       maxWorldLength: 100,
       minWorldLength: 0,
-      screenLength: 0
+      screenLength: 0,
     })
   );
 
   const [pointSymbol3D, setPointSymbol3D] = useState(
     new PointSymbol3D({
       callout: lineCallout3D,
-      verticalOffset: symbol3DVerticalOffset
+      verticalOffset: symbol3DVerticalOffset,
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: pointSymbol3D
+    symbol: pointSymbol3D,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
@@ -81,7 +96,9 @@ const PointSymbol3DShell = () => {
   };
 
   const updateSymbolLayers = (
-    symbolLayers: Collection<IconSymbol3DLayer | ObjectSymbol3DLayer | TextSymbol3DLayer>
+    symbolLayers: Collection<
+      IconSymbol3DLayer | ObjectSymbol3DLayer | TextSymbol3DLayer
+    >
   ) => {
     const newPointSymbol3D = pointSymbol3D.clone();
     newPointSymbol3D.symbolLayers.removeAll();
@@ -89,7 +106,9 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleVerticalOffsetMaxWorldLengthChange = (currentMaxWorldLength: string) => {
+  const handleVerticalOffsetMaxWorldLengthChange = (
+    currentMaxWorldLength: string
+  ) => {
     const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
     newSymbol3DVerticalOffset.maxWorldLength = Number(currentMaxWorldLength);
     setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
@@ -99,7 +118,9 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleVerticalOffsetMinWorldLengthChange = (currentMinWorldLength: string) => {
+  const handleVerticalOffsetMinWorldLengthChange = (
+    currentMinWorldLength: string
+  ) => {
     const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
     newSymbol3DVerticalOffset.minWorldLength = Number(currentMinWorldLength);
     setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
@@ -109,7 +130,9 @@ const PointSymbol3DShell = () => {
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleVerticalOffsetScreenLengthChange = (currentScreenLength: string) => {
+  const handleVerticalOffsetScreenLengthChange = (
+    currentScreenLength: string
+  ) => {
     const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
     newSymbol3DVerticalOffset.screenLength = Number(currentScreenLength);
     setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
@@ -120,7 +143,7 @@ const PointSymbol3DShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="PointSymbol3D" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
@@ -130,16 +153,27 @@ const PointSymbol3DShell = () => {
               <PointSymbol3DForm
                 handleCalloutColorChange={handleCalloutColorChange}
                 handleCalloutSizeChange={handleCalloutSizeChange}
-                handleVerticalOffsetMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
-                handleVerticalOffsetMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}
-                handleVerticalOffsetScreenLengthChange={handleVerticalOffsetScreenLengthChange}
+                handleVerticalOffsetMaxWorldLengthChange={
+                  handleVerticalOffsetMaxWorldLengthChange
+                }
+                handleVerticalOffsetMinWorldLengthChange={
+                  handleVerticalOffsetMinWorldLengthChange
+                }
+                handleVerticalOffsetScreenLengthChange={
+                  handleVerticalOffsetScreenLengthChange
+                }
                 updateSymbolLayers={updateSymbolLayers}
               ></PointSymbol3DForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -148,21 +182,27 @@ const PointSymbol3DShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PointSymbol3DESMPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DESMPanel>
+                <PointSymbol3DESMPanel
+                  pointSymbol3D={pointSymbol3D}
+                ></PointSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PointSymbol3DCDNPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DCDNPanel>
+                <PointSymbol3DCDNPanel
+                  pointSymbol3D={pointSymbol3D}
+                ></PointSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <PointSymbol3DJSONPanel pointSymbol3D={pointSymbol3D}></PointSymbol3DJSONPanel>
+                <PointSymbol3DJSONPanel
+                  pointSymbol3D={pointSymbol3D}
+                ></PointSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PointSymbol3DShell;

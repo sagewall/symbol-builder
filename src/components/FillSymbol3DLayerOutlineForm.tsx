@@ -1,9 +1,14 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import { CAP_OPTIONS } from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
-import { CAP_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -14,24 +19,28 @@ interface Props {
   ) => void;
   handlePatternCapChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["outline"]
+      >["patternCap"]
+    >
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-const FillSymbol3DLayerOutlineForm = ({
+function FillSymbol3DLayerOutlineForm({
   layerIndex,
   handleColorChange,
   handleLineSylePattern3DStyleChange,
   handlePatternCapChange,
-  handleSizeChange
-}: Props) => {
+  handleSizeChange,
+}: Props) {
   const [color, setColor] = useState("#111111");
   const [patternCap, setPatternCap] = useState("butt");
   const [size, setSize] = useState("3");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -60,7 +69,9 @@ const FillSymbol3DLayerOutlineForm = ({
             handlePatternCapChange(
               layerIndex,
               event.target.value as NonNullable<
-                NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]
+                NonNullable<
+                  InstanceType<typeof FillSymbol3DLayer>["outline"]
+                >["patternCap"]
               >
             );
           }}
@@ -84,8 +95,8 @@ const FillSymbol3DLayerOutlineForm = ({
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default FillSymbol3DLayerOutlineForm;

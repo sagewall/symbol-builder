@@ -1,7 +1,24 @@
 import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
-import React, { useRef, useState } from "react";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-switch";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import { useRef, useState } from "react";
+import { point } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import Map from "./Map";
 import PictureMarkerSymbolCDNPanel from "./PictureMarkerSymbolCDNPanel";
@@ -9,35 +26,28 @@ import PictureMarkerSymbolESMPanel from "./PictureMarkerSymbolESMPanel";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
 import Scene from "./Scene";
-import { point } from "./lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles
-} from "./lib/styles";
 
-const PictureMarkerSymbolShell = () => {
+function PictureMarkerSymbolShell() {
   const viewSwitchRef = useRef(null);
 
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
     new PictureMarkerSymbol({
       height: 100,
       url: "https://sagewall.github.io/test-images/globie.png",
-      width: 100
+      width: 100,
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: pictureMarkerSymbol
+    symbol: pictureMarkerSymbol,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -101,13 +111,17 @@ const PictureMarkerSymbolShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="PictureMarkerSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
               <calcite-switch
                 ref={viewSwitchRef}
@@ -129,7 +143,12 @@ const PictureMarkerSymbolShell = () => {
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -157,8 +176,8 @@ const PictureMarkerSymbolShell = () => {
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PictureMarkerSymbolShell;

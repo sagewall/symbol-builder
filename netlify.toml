@@ -1,7 +1,10 @@
 [build]
-  command = "NODE_OPTIONS='--max_old_space_size=8192' npm run build"
+  command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  NODE_OPTIONS = "--max_old_space_size=4096"
+  
 [[headers]]
   for = "/*"
   [headers.values]
@@ -10,8 +13,3 @@
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200

@@ -1,28 +1,42 @@
 import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-input-text";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import { SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS } from "../lib/constants";
+import { blockStyles, labelStyles } from "../lib/styles";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
-import { SIMPLE_MARKER_SYMBOL_STYLE_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   handleAngleChange: (value: number) => void;
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
+  handleOutlineCapChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["cap"]
+  ) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
+  handleOutlineJoinChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["join"]
+  ) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
+  handleOutlineStyleChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["style"]
+  ) => void;
   handleOutlineWidthChange: (value: string) => void;
   handlePathChange: (value: string) => void;
   handleSizeChange: (value: string) => void;
-  handleStyleChange: (value: InstanceType<typeof SimpleMarkerSymbol>["style"]) => void;
+  handleStyleChange: (
+    value: InstanceType<typeof SimpleMarkerSymbol>["style"]
+  ) => void;
   handleXoffsetChange: (value: string) => void;
   handleYoffsetChange: (value: string) => void;
   scene: boolean;
 }
 
-const SimpleMarkerSymbolForm = ({
+function SimpleMarkerSymbolForm({
   handleAngleChange,
   handleColorChange,
   handleOutlineCapChange,
@@ -36,8 +50,8 @@ const SimpleMarkerSymbolForm = ({
   handleStyleChange,
   handleXoffsetChange,
   handleYoffsetChange,
-  scene
-}: Props) => {
+  scene,
+}: Props) {
   const [angle, setAngle] = useState(0);
   const [color, setColor] = useState("#007ac2");
   const [path, setPath] = useState("");
@@ -47,12 +61,12 @@ const SimpleMarkerSymbolForm = ({
   const [yoffset, setYoffset] = useState("0");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         angle
         <calcite-slider
-          labelHandles={true}
-          labelTicks={true}
+          label-handles
+          label-ticks
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
@@ -108,7 +122,9 @@ const SimpleMarkerSymbolForm = ({
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
             handleStyleChange(
-              event.target.value as InstanceType<typeof SimpleMarkerSymbol>["style"]
+              event.target.value as InstanceType<
+                typeof SimpleMarkerSymbol
+              >["style"]
             );
           }}
           value={style}
@@ -153,8 +169,8 @@ const SimpleMarkerSymbolForm = ({
           value={yoffset}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default SimpleMarkerSymbolForm;

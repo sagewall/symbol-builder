@@ -1,12 +1,15 @@
 import type PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-alert";
+import "@esri/calcite-components/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   pictureFillSymbol: PictureFillSymbol;
 }
 
-const PictureFillSymbolESMPanel = ({ pictureFillSymbol }: Props) => {
+function PictureFillSymbolESMPanel({ pictureFillSymbol }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -40,7 +43,7 @@ const pictureFillSymbol = new PictureFillSymbol({
 });`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
         <calcite-action
@@ -64,8 +67,8 @@ const pictureFillSymbol = new PictureFillSymbol({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PictureFillSymbolESMPanel;

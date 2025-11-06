@@ -1,7 +1,10 @@
 import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
-import React, { useState } from "react";
-import { FILL_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import { FILL_OPTIONS } from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -11,11 +14,11 @@ interface Props {
   ) => void;
 }
 
-const StylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
+function StylePattern3DForm({ layerIndex, handleStyleChange }: Props) {
   const [style, setStyle] = useState("solid");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         style
         <calcite-select
@@ -34,8 +37,8 @@ const StylePattern3DForm = ({ layerIndex, handleStyleChange }: Props) => {
           ))}
         </calcite-select>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default StylePattern3DForm;

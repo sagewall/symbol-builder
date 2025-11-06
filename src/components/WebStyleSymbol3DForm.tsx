@@ -1,5 +1,15 @@
 import esriRequest from "@arcgis/core/request";
-import React, { useState } from "react";
+import "@esri/calcite-components/dist/components/calcite-input-text";
+import "@esri/calcite-components/dist/components/calcite-label";
+import "@esri/calcite-components/dist/components/calcite-list";
+import "@esri/calcite-components/dist/components/calcite-list-item";
+import "@esri/calcite-components/dist/components/calcite-option";
+import "@esri/calcite-components/dist/components/calcite-select";
+import "@esri/calcite-components/dist/components/calcite-tab";
+import "@esri/calcite-components/dist/components/calcite-tab-nav";
+import "@esri/calcite-components/dist/components/calcite-tab-title";
+import "@esri/calcite-components/dist/components/calcite-tabs";
+import { useState } from "react";
 import {
   ESRI_ICONS_STYLE_NAME_OPTIONS,
   ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS,
@@ -10,33 +20,37 @@ import {
   ESRI_RECREATION_STYLE_NAME_OPTIONS,
   ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS,
   ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS,
-  WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS
-} from "./lib/constants";
-import { labelStyles } from "./lib/styles";
-import type { ItemType, WebStyleStymbolItem } from "./lib/types";
+  WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS,
+} from "../lib/constants";
+import { labelStyles } from "../lib/styles";
+import type { ItemType, WebStyleStymbolItem } from "../lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (styleUrl: string, name: string, itemType: ItemType) => void;
+  handleCustomStyleChange: (
+    styleUrl: string,
+    name: string,
+    itemType: ItemType
+  ) => void;
 }
 
-const WebStyleSymbolForm = ({
+function WebStyleSymbolForm({
   handleNameChange,
   handleStyleNameChange,
-  handleCustomStyleChange
-}: Props) => {
+  handleCustomStyleChange,
+}: Props) {
   const [name, setName] = useState("Accessibility");
   const [names, setNames] = useState(ESRI_ICONS_STYLE_NAME_OPTIONS);
-  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<WebStyleStymbolItem[]>(
-    []
-  );
+  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<
+    WebStyleStymbolItem[]
+  >([]);
   const [styleName, setStyleName] = useState("EsriIconsStyle");
   const [styleUrl, setStyleUrl] = useState("");
 
   async function getStyleItemDataFromUrl(url: string) {
     const response = await esriRequest(url, {
-      responseType: "json"
+      responseType: "json",
     });
     const items = response.data.items;
 
@@ -123,9 +137,12 @@ const WebStyleSymbolForm = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-tabs>
-        <calcite-tab-nav slot="title-group" oncalciteTabChange={handleTabChange}>
+        <calcite-tab-nav
+          slot="title-group"
+          oncalciteTabChange={handleTabChange}
+        >
           <calcite-tab-title tab="standard">Standard</calcite-tab-title>
           <calcite-tab-title tab="custom">Custom</calcite-tab-title>
         </calcite-tab-nav>
@@ -190,14 +207,24 @@ const WebStyleSymbolForm = ({
                       label={item.name}
                       onClick={(event) => {
                         const newName =
-                          (event.target as HTMLCalciteListItemElement).label === undefined
+                          (event.target as HTMLCalciteListItemElement).label ===
+                          undefined
                             ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement).label;
-                        handleCustomStyleChange(styleUrl, newName, "pointSymbol");
+                            : (event.target as HTMLCalciteListItemElement)
+                                .label;
+                        handleCustomStyleChange(
+                          styleUrl,
+                          newName,
+                          "pointSymbol"
+                        );
                       }}
                       value={item.name}
                     >
-                      <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
+                      <img
+                        alt={item.name}
+                        slot="content-start"
+                        src={item.thumbnail.href}
+                      />
                     </calcite-list-item>
                   ))}
                 </calcite-list>
@@ -206,8 +233,8 @@ const WebStyleSymbolForm = ({
           </calcite-list>
         </calcite-tab>
       </calcite-tabs>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default WebStyleSymbolForm;
