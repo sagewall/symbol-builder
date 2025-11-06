@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import { useState } from "react";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -7,12 +10,16 @@ interface Props {
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeChange }: Props) => {
+function TextSymbol3DLayerHaloForm({
+  layerIndex,
+  handleColorChange,
+  handleSizeChange,
+}: Props) {
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("0");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -39,8 +46,8 @@ const TextSymbol3DLayerHaloForm = ({ layerIndex, handleColorChange, handleSizeCh
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default TextSymbol3DLayerHaloForm;

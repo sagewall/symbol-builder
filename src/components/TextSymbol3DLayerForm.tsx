@@ -1,22 +1,40 @@
 import type Font from "@arcgis/core/symbols/Font";
 import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-input-text";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import {
+  HORIZONTAL_ALIGNMENT_OPTIONS,
+  VERTICAL_ALIGNMENT_OPTIONS,
+} from "../lib/constants";
+import { blockStyles, labelStyles } from "../lib/styles";
 import TextSymbol3DLayerBackgroundForm from "./TextSymbol3DLayerBackgroundForm";
 import TextSymbol3DLayerFontForm from "./TextSymbol3DLayerFontForm";
 import TextSymbol3DLayerHaloForm from "./TextSymbol3DLayerHaloForm";
 import TextSymbol3DLayerMaterialForm from "./TextSymbol3DLayerMaterialForm";
-import { HORIZONTAL_ALIGNMENT_OPTIONS, VERTICAL_ALIGNMENT_OPTIONS } from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
-  handleTextSymbol3DLayerBackgroundColorChange: (layerIndex: number, value: string) => void;
+  handleTextSymbol3DLayerBackgroundColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleTextSymbol3DLayerFontDecorationChange: (
     layerIndex: number,
     value: InstanceType<typeof Font>["decoration"]
   ) => void;
-  handleTextSymbol3DLayerFontFamilyChange: (layerIndex: number, value: string) => void;
-  handleTextSymbol3DLayerFontSizeChange: (layerIndex: number, value: string) => void;
+  handleTextSymbol3DLayerFontFamilyChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerFontSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleTextSymbol3DLayerFontStyleChange: (
     layerIndex: number,
     value: InstanceType<typeof Font>["style"]
@@ -25,14 +43,23 @@ interface Props {
     layerIndex: number,
     value: InstanceType<typeof Font>["weight"]
   ) => void;
-  handleTextSymbol3DLayerHaloColorChange: (layerIndex: number, value: string) => void;
-  handleTextSymbol3DLayerHaloSizeChange: (layerIndex: number, value: string) => void;
+  handleTextSymbol3DLayerHaloColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
+  handleTextSymbol3DLayerHaloSizeChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleHorizontalAlignmentChange: (
     layerIndex: number,
     value: InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
   ) => void;
   handleLineHeightChange: (layerIndex: number, value: string) => void;
-  handleTextSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleTextSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
   handleTextChange: (layerIndex: number, value: string) => void;
   handleVerticalAlignmentChange: (
@@ -41,7 +68,7 @@ interface Props {
   ) => void;
 }
 
-const TextSymbol3DLayerForm = ({
+function TextSymbol3DLayerForm({
   handleTextSymbol3DLayerBackgroundColorChange,
   handleTextSymbol3DLayerFontDecorationChange,
   handleTextSymbol3DLayerFontFamilyChange,
@@ -56,8 +83,8 @@ const TextSymbol3DLayerForm = ({
   handleSizeChange,
   handleTextChange,
   handleVerticalAlignmentChange,
-  layerIndex
-}: Props) => {
+  layerIndex,
+}: Props) {
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [lineHeight, setLineHeight] = useState("1");
   const [size, setSize] = useState("9");
@@ -65,7 +92,7 @@ const TextSymbol3DLayerForm = ({
   const [verticalAlignment, setVerticalAlignment] = useState("baseline");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         text
         <calcite-input-text
@@ -112,7 +139,9 @@ const TextSymbol3DLayerForm = ({
             setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
               layerIndex,
-              event.target.value as InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
+              event.target.value as InstanceType<
+                typeof TextSymbol3DLayer
+              >["horizontalAlignment"]
             );
           }}
           value={horizontalAlignment}
@@ -131,7 +160,9 @@ const TextSymbol3DLayerForm = ({
             setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
               layerIndex,
-              event.target.value as InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
+              event.target.value as InstanceType<
+                typeof TextSymbol3DLayer
+              >["verticalAlignment"]
             );
           }}
           value={verticalAlignment}
@@ -174,8 +205,8 @@ const TextSymbol3DLayerForm = ({
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default TextSymbol3DLayerForm;

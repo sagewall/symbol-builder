@@ -1,17 +1,23 @@
-import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import { useState } from "react";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   handleColorChange: (value: string) => void;
   handleSizeChange: (value: string) => void;
 }
 
-const PointSymbol3DCalloutForm = ({ handleColorChange, handleSizeChange }: Props) => {
+function PointSymbol3DCalloutForm({
+  handleColorChange,
+  handleSizeChange,
+}: Props) {
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("1");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -38,8 +44,8 @@ const PointSymbol3DCalloutForm = ({ handleColorChange, handleSizeChange }: Props
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PointSymbol3DCalloutForm;

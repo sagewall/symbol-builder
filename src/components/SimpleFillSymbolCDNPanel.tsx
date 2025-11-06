@@ -1,12 +1,15 @@
 import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-alert";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   simpleFillSymbol: SimpleFillSymbol;
 }
 
-const SimpleFillSymbolCDNPanel = ({ simpleFillSymbol }: Props) => {
+function SimpleFillSymbolCDNPanel({ simpleFillSymbol }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -33,7 +36,7 @@ const simpleFillSymbol = new SimpleFillSymbol({
 });`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">CDN</div>
         <calcite-action
@@ -57,8 +60,8 @@ const simpleFillSymbol = new SimpleFillSymbol({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default SimpleFillSymbolCDNPanel;

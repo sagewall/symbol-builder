@@ -1,7 +1,11 @@
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import React, { useState } from "react";
-import { COLOR_MIX_MODE_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import { COLOR_MIX_MODE_OPTIONS } from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -9,21 +13,23 @@ interface Props {
   handleColorMixModeChange: (
     layerIndex: number,
     value: NonNullable<
-      NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["material"]
+      >["colorMixMode"]
     >
   ) => void;
 }
 
-const FillSymbol3DLayerMaterialForm = ({
+function FillSymbol3DLayerMaterialForm({
   layerIndex,
   handleColorChange,
-  handleColorMixModeChange
-}: Props) => {
+  handleColorMixModeChange,
+}: Props) {
   const [color, setColor] = useState("#007ac2");
   const [colorMixMode, setColorMixMode] = useState("multiply");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -47,7 +53,9 @@ const FillSymbol3DLayerMaterialForm = ({
             handleColorMixModeChange(
               layerIndex,
               event.target.value as NonNullable<
-                NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+                NonNullable<
+                  InstanceType<typeof FillSymbol3DLayer>["material"]
+                >["colorMixMode"]
               >
             );
           }}
@@ -58,8 +66,8 @@ const FillSymbol3DLayerMaterialForm = ({
           ))}
         </calcite-select>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default FillSymbol3DLayerMaterialForm;

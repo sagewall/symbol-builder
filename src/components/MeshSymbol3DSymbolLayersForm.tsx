@@ -4,27 +4,31 @@ import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
+import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-chip";
+import "@esri/calcite-components/components/calcite-tooltip";
 import React, { useState } from "react";
+import { blockStyles, chipStyles } from "../lib/styles";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
-import { blockStyles, chipStyles } from "./lib/styles";
 
-interface PageProps {
+interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
-const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
+function MeshSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
   const createNewFillSymbol3DLayer = (): FillSymbol3DLayer => {
     const newFillSymbol3DLayer = new FillSymbol3DLayer({
       material: {
         color: "#007ac2",
-        colorMixMode: "multiply"
+        colorMixMode: "multiply",
       },
       edges: new SolidEdges3D({
-        color: "#000000"
+        color: "#000000",
       }),
       pattern: new StylePattern3D({
-        style: "solid"
-      })
+        style: "solid",
+      }),
     });
     return newFillSymbol3DLayer;
   };
@@ -46,17 +50,27 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean) => {
+  const handleFillSymbol3DLayerCastShadowsChange = (
+    layerIndex: number,
+    value: boolean
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerEdgesColorChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerEdgesColorChange = (
+    layerIndex: number,
+    value: string
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.color = new Color(value);
     }
@@ -64,9 +78,14 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerEdgesExtensionLengthChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerEdgesExtensionLengthChange = (
+    layerIndex: number,
+    value: string
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.extensionLength = Number(value);
     }
@@ -74,9 +93,14 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerEdgesSizeChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerEdgesSizeChange = (
+    layerIndex: number,
+    value: string
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.size = Number(value);
     }
@@ -84,9 +108,14 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerMaterialColorChange = (
+    layerIndex: number,
+    value: string
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -97,11 +126,15 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   const handleFillSymbol3DLayerMaterialColorMixModeChange = (
     layerIndex: number,
     value: NonNullable<
-      NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["material"]
+      >["colorMixMode"]
     >
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.colorMixMode = value;
     }
@@ -109,9 +142,14 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerOutlineColorChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerOutlineColorChange = (
+    layerIndex: number,
+    value: string
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.color = new Color(value);
     }
@@ -124,7 +162,9 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     value: InstanceType<typeof LineStylePattern3D>["style"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.outline?.pattern) {
       symbolLayer.outline.pattern.style = value;
     }
@@ -135,10 +175,16 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
   const handleFillSymbol3DLayerOutlinePatternCapChange = (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["outline"]
+      >["patternCap"]
+    >
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.patternCap = value;
     }
@@ -146,9 +192,14 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerOutlineSizeChange = (layerIndex: number, value: string) => {
+  const handleFillSymbol3DLayerOutlineSizeChange = (
+    layerIndex: number,
+    value: string
+  ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
@@ -161,7 +212,9 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
     value: InstanceType<typeof StylePattern3D>["style"]
   ) => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex
+    ) as FillSymbol3DLayer;
     if (symbolLayer.pattern) {
       symbolLayer.pattern.style = value;
     }
@@ -176,7 +229,11 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
       symbolLayers.map((symbolLayer: FillSymbol3DLayer, index: number) => {
         if (symbolLayer.type === "fill") {
           symbol3DLayerCollectionForm.push(
-            <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+            <calcite-block
+              collapsible
+              heading={`symbolLayers[${index}]`}
+              key={index}
+            >
               {index === symbolLayers.length - 1 && (
                 <calcite-action
                   icon="trash"
@@ -188,12 +245,18 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
               <FillSymbol3DLayerForm
                 layerIndex={index}
                 isMeshSymbol3D={true}
-                handleCastShadowsChange={handleFillSymbol3DLayerCastShadowsChange}
-                handleFillSymbol3DLayerEdgesColorChange={handleFillSymbol3DLayerEdgesColorChange}
+                handleCastShadowsChange={
+                  handleFillSymbol3DLayerCastShadowsChange
+                }
+                handleFillSymbol3DLayerEdgesColorChange={
+                  handleFillSymbol3DLayerEdgesColorChange
+                }
                 handleFillSymbol3DLayerEdgesExtensionLengthChange={
                   handleFillSymbol3DLayerEdgesExtensionLengthChange
                 }
-                handleFillSymbol3DLayerEdgesSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
+                handleFillSymbol3DLayerEdgesSizeChange={
+                  handleFillSymbol3DLayerEdgesSizeChange
+                }
                 handleFillSymbol3DLayerMaterialColorChange={
                   handleFillSymbol3DLayerMaterialColorChange
                 }
@@ -209,7 +272,9 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
                 handleFillSymbol3DLayerOutlinePatternCapChange={
                   handleFillSymbol3DLayerOutlinePatternCapChange
                 }
-                handleFillSymbol3DLayerOutlineSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
+                handleFillSymbol3DLayerOutlineSizeChange={
+                  handleFillSymbol3DLayerOutlineSizeChange
+                }
                 handleFillSymbol3DLayerPatternStyleChange={
                   handleFillSymbol3DLayerPatternStyleChange
                 }
@@ -223,8 +288,13 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
   };
 
   return (
-    <React.Fragment>
-      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} expanded>
+    <>
+      <calcite-block
+        style={blockStyles}
+        collapsible
+        heading={"symbolLayers"}
+        expanded
+      >
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
@@ -234,7 +304,9 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
           style={chipStyles}
         ></calcite-chip>
         <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>Add symbol layer by opening the dropdown menu on the right</span>
+          <span>
+            Add symbol layer by opening the dropdown menu on the right
+          </span>
         </calcite-tooltip>
 
         <calcite-action
@@ -247,8 +319,8 @@ const MeshSymbol3DSymbolLayersForm = ({ updateSymbolLayers }: PageProps) => {
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default MeshSymbol3DSymbolLayersForm;

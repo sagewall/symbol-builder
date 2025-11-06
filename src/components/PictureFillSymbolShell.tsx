@@ -3,22 +3,34 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import { useState } from "react";
+import { polygon } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import Map from "./Map";
 import PictureFillSymbolCDNPanel from "./PictureFillSymbolCDNPanel";
 import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
-import { polygon } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
-const PictureFillSymbolShell = () => {
+function PictureFillSymbolShell() {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
     new SimpleLineSymbol({
       color: "#007ac2",
       miterLimit: 1,
-      width: 1
+      width: 1,
     })
   );
 
@@ -27,19 +39,20 @@ const PictureFillSymbolShell = () => {
       height: 75,
       outline: simpleLineSymbol,
       url: "https://sagewall.github.io/test-images/globie.png",
-      width: 75
+      width: 75,
     })
   );
 
   const polygonGraphic = new Graphic({
     geometry: polygon,
-    symbol: pictureFillSymbol
+    symbol: pictureFillSymbol,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
@@ -164,7 +177,7 @@ const PictureFillSymbolShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="PictureFillSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
@@ -190,7 +203,12 @@ const PictureFillSymbolShell = () => {
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -218,8 +236,8 @@ const PictureFillSymbolShell = () => {
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PictureFillSymbolShell;

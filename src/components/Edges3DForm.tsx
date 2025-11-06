@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import { useState } from "react";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -8,18 +11,18 @@ interface Props {
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-const Edges3DForm = ({
+function Edges3DForm({
   layerIndex,
   handleColorChange,
   handleExtensionLengthChange,
-  handleSizeChange
-}: Props) => {
+  handleSizeChange,
+}: Props) {
   const [color, setColor] = useState("#000000");
   const [extensionLength, setExtensionLength] = useState("0");
   const [size, setSize] = useState("1");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -59,8 +62,8 @@ const Edges3DForm = ({
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default Edges3DForm;

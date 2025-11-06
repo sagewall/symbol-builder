@@ -1,12 +1,15 @@
 import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-alert";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   polygonSymbol3D: PolygonSymbol3D;
 }
 
-const PolygonSymbol3DCDNPanel = ({ polygonSymbol3D }: Props) => {
+function PolygonSymbol3DCDNPanel({ polygonSymbol3D }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -89,7 +92,11 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.href
+      ) {
         codeSnippet += `
     {
       type: "icon",
@@ -166,7 +173,10 @@ const polygonSymbol3D = new PolygonSymbol3D({
       width: ${symbolLayer.width}
     },
     `;
-      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
+      } else if (
+        symbolLayer.material?.color &&
+        symbolLayer.resource?.primitive
+      ) {
         codeSnippet += `
     {
       type: "object",
@@ -200,7 +210,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
 });`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">CDN</div>
         <calcite-action
@@ -224,8 +234,8 @@ const polygonSymbol3D = new PolygonSymbol3D({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PolygonSymbol3DCDNPanel;

@@ -1,12 +1,15 @@
 import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-alert";
+import "@esri/calcite-components/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   pointSymbol3D: PointSymbol3D;
 }
 
-const PointSymbol3DCDNPanel = ({ pointSymbol3D }: Props) => {
+function PointSymbol3DCDNPanel({ pointSymbol3D }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -30,7 +33,11 @@ const pointSymbol3D = new PointSymbol3D({
 
   pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.href
+      ) {
         codeSnippet += `
   {
     type: "icon",
@@ -108,7 +115,10 @@ const pointSymbol3D = new PointSymbol3D({
       width: ${symbolLayer.width}
     },
     `;
-      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
+      } else if (
+        symbolLayer.material?.color &&
+        symbolLayer.resource?.primitive
+      ) {
         codeSnippet += `
     {
       type: "object",
@@ -137,7 +147,11 @@ const pointSymbol3D = new PointSymbol3D({
     }
 
     if (symbolLayer.type === "text") {
-      if (symbolLayer.background?.color && symbolLayer.halo?.color && symbolLayer.material?.color) {
+      if (
+        symbolLayer.background?.color &&
+        symbolLayer.halo?.color &&
+        symbolLayer.material?.color
+      ) {
         codeSnippet += `
     {
       type: "text",
@@ -179,7 +193,7 @@ const pointSymbol3D = new PointSymbol3D({
 });`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">CDN</div>
         <calcite-action
@@ -203,8 +217,8 @@ const pointSymbol3D = new PointSymbol3D({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PointSymbol3DCDNPanel;

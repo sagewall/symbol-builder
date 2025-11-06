@@ -1,14 +1,20 @@
 import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
-import React, { useState } from "react";
-import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import "@esri/calcite-components/components/calcite-switch";
+import { useState } from "react";
 import {
   CAP_3D_OPTIONS,
   JOIN_OPTIONS,
   PATH_SYMBOL_3D_LAYER_ANCHOR_OPTIONS,
   PROFILE_OPTIONS,
-  ROTATION_OPTIONS
-} from "./lib/constants";
-import { blockStyles, labelStyles } from "./lib/styles";
+  ROTATION_OPTIONS,
+} from "../lib/constants";
+import { blockStyles, labelStyles } from "../lib/styles";
+import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
@@ -26,7 +32,10 @@ interface Props {
     layerIndex: number,
     value: InstanceType<typeof PathSymbol3DLayer>["join"]
   ) => void;
-  handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handlePathSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string
+  ) => void;
   handleProfileChange: (
     layerIndex: number,
     value: InstanceType<typeof PathSymbol3DLayer>["profile"]
@@ -38,7 +47,7 @@ interface Props {
   handleWidthChange: (layerIndex: number, value: string) => void;
 }
 
-const LineSymbol3DLayerForm = ({
+function LineSymbol3DLayerForm({
   layerIndex,
   handleAnchorChange,
   handleCapChange,
@@ -48,8 +57,8 @@ const LineSymbol3DLayerForm = ({
   handlePathSymbol3DLayerMaterialColorChange,
   handleProfileChange,
   handleProfileRotationChange,
-  handleWidthChange
-}: Props) => {
+  handleWidthChange,
+}: Props) {
   const [anchor, setAnchor] = useState("center");
   const [cap, setCap] = useState("butt");
   const [castShadows, setCastShadows] = useState(true);
@@ -60,7 +69,7 @@ const LineSymbol3DLayerForm = ({
   const [width, setWidth] = useState("3");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         anchor
         <calcite-select
@@ -69,7 +78,9 @@ const LineSymbol3DLayerForm = ({
             setAnchor(event.target.value);
             handleAnchorChange(
               layerIndex,
-              event.target.value as InstanceType<typeof PathSymbol3DLayer>["anchor"]
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["anchor"]
             );
           }}
           value={anchor}
@@ -88,7 +99,9 @@ const LineSymbol3DLayerForm = ({
             setCap(event.target.value);
             handleCapChange(
               layerIndex,
-              event.target.value as InstanceType<typeof PathSymbol3DLayer>["cap"]
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["cap"]
             );
           }}
           value={cap}
@@ -145,7 +158,9 @@ const LineSymbol3DLayerForm = ({
             setJoin(event.target.value);
             handleJoinChange(
               layerIndex,
-              event.target.value as InstanceType<typeof PathSymbol3DLayer>["join"]
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["join"]
             );
           }}
           value={join}
@@ -171,7 +186,9 @@ const LineSymbol3DLayerForm = ({
             setProfile(event.target.value);
             handleProfileChange(
               layerIndex,
-              event.target.value as InstanceType<typeof PathSymbol3DLayer>["profile"]
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["profile"]
             );
           }}
           value={profile}
@@ -190,7 +207,9 @@ const LineSymbol3DLayerForm = ({
             setProfileRotation(event.target.value);
             handleProfileRotationChange(
               layerIndex,
-              event.target.value as InstanceType<typeof PathSymbol3DLayer>["profileRotation"]
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["profileRotation"]
             );
           }}
           value={profileRotation}
@@ -200,8 +219,8 @@ const LineSymbol3DLayerForm = ({
           ))}
         </calcite-select>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default LineSymbol3DLayerForm;

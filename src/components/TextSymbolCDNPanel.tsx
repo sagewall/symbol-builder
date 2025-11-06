@@ -1,12 +1,15 @@
 import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-alert";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   textSymbol: TextSymbol;
 }
 
-const TextSymbolCDNPanel = ({ textSymbol }: Props) => {
+function TextSymbolCDNPanel({ textSymbol }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -45,7 +48,7 @@ const textSymbol = new TextSymbol({
 });`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">CDN</div>
         <calcite-action
@@ -69,8 +72,8 @@ const textSymbol = new TextSymbol({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default TextSymbolCDNPanel;

@@ -1,7 +1,15 @@
 import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
-import React, { useState } from "react";
-import { WATERBODY_SIZE_OPTIONS, WAVE_STRENGTH_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-input";
+import "@esri/calcite-components/dist/components/calcite-label";
+import "@esri/calcite-components/dist/components/calcite-option";
+import "@esri/calcite-components/dist/components/calcite-select";
+import "@esri/calcite-components/dist/components/calcite-slider";
+import { useState } from "react";
+import {
+  WATERBODY_SIZE_OPTIONS,
+  WAVE_STRENGTH_OPTIONS,
+} from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -17,20 +25,20 @@ interface Props {
   ) => void;
 }
 
-const WaterSymbol3DLayerForm = ({
+function WaterSymbol3DLayerForm({
   layerIndex,
   handleColorChange,
   handleWaterbodySizeChange,
   handleWaveDirectionChange,
-  handleWaveStrengthChange
-}: Props) => {
+  handleWaveStrengthChange,
+}: Props) {
   const [color, setColor] = useState("#0077BE");
   const [waterbodySize, setWaterbodySize] = useState("medium");
   const [waveDirection, setWaveDirection] = useState(0);
   const [waveStrength, setWaveStrength] = useState("moderate");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -53,7 +61,9 @@ const WaterSymbol3DLayerForm = ({
             setWaterbodySize(event.target.value);
             handleWaterbodySizeChange(
               layerIndex,
-              event.target.value as InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"]
+              event.target.value as InstanceType<
+                typeof WaterSymbol3DLayer
+              >["waterbodySize"]
             );
           }}
           value={waterbodySize}
@@ -95,7 +105,9 @@ const WaterSymbol3DLayerForm = ({
             setWaveStrength(event.target.value);
             handleWaveStrengthChange(
               layerIndex,
-              event.target.value as InstanceType<typeof WaterSymbol3DLayer>["waveStrength"]
+              event.target.value as InstanceType<
+                typeof WaterSymbol3DLayer
+              >["waveStrength"]
             );
           }}
           value={waveStrength}
@@ -111,8 +123,8 @@ const WaterSymbol3DLayerForm = ({
           )}
         </calcite-select>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default WaterSymbol3DLayerForm;

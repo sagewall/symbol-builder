@@ -1,15 +1,25 @@
 import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-block";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-input-text";
+import "@esri/calcite-components/components/calcite-label";
+import { useState } from "react";
+import { blockStyles, labelStyles } from "../lib/styles";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
-import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   handleHeightChange: (value: string) => void;
-  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
+  handleOutlineCapChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["cap"]
+  ) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
+  handleOutlineJoinChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["join"]
+  ) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
+  handleOutlineStyleChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["style"]
+  ) => void;
   handleOutlineWidthChange: (value: string) => void;
   handleUrlChange: (value: string) => void;
   handleWidthChange: (value: string) => void;
@@ -19,7 +29,7 @@ interface Props {
   handleYScaleChange: (value: string) => void;
 }
 
-const PictureFillSymbolForm = ({
+function PictureFillSymbolForm({
   handleHeightChange,
   handleOutlineCapChange,
   handleOutlineColorChange,
@@ -32,10 +42,12 @@ const PictureFillSymbolForm = ({
   handleXOffsetChange,
   handleXScaleChange,
   handleYOffsetChange,
-  handleYScaleChange
-}: Props) => {
+  handleYScaleChange,
+}: Props) {
   const [height, setHeight] = useState("75");
-  const [url, setUrl] = useState("https://sagewall.github.io/test-images/globie.png");
+  const [url, setUrl] = useState(
+    "https://sagewall.github.io/test-images/globie.png"
+  );
   const [width, setWidth] = useState("75");
   const [xoffset, setXoffset] = useState("0");
   const [xscale, setXscale] = useState("1");
@@ -43,7 +55,7 @@ const PictureFillSymbolForm = ({
   const [yscale, setYscale] = useState("1");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         height
         <calcite-input-number
@@ -144,8 +156,8 @@ const PictureFillSymbolForm = ({
           value={yscale}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PictureFillSymbolForm;

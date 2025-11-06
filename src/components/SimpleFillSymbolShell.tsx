@@ -3,7 +3,24 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import React, { useRef, useState } from "react";
+import "@esri/calcite-components/dist/components/calcite-label";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import "@esri/calcite-components/dist/components/calcite-shell";
+import "@esri/calcite-components/dist/components/calcite-shell-panel";
+import "@esri/calcite-components/dist/components/calcite-switch";
+import "@esri/calcite-components/dist/components/calcite-tab";
+import "@esri/calcite-components/dist/components/calcite-tab-nav";
+import "@esri/calcite-components/dist/components/calcite-tab-title";
+import "@esri/calcite-components/dist/components/calcite-tabs";
+import { useRef, useState } from "react";
+import { polygon } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
@@ -11,16 +28,8 @@ import SimpleFillSymbolCDNPanel from "./SimpleFillSymbolCDNPanel";
 import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
-import { polygon } from "./lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles
-} from "./lib/styles";
 
-const SimpleFillSymbolShell = () => {
+function SimpleFillSymbolShell() {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -30,19 +39,20 @@ const SimpleFillSymbolShell = () => {
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
     new SimpleFillSymbol({
       color: "#007ac2",
-      outline: simpleLineSymbol
+      outline: simpleLineSymbol,
     })
   );
 
   const polygonGraphic = new Graphic({
     geometry: polygon,
-    symbol: simpleFillSymbol
+    symbol: simpleFillSymbol,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -141,20 +151,26 @@ const SimpleFillSymbolShell = () => {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleFillSymbol>["style"]) => {
+  const handleStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleFillSymbol>["style"]
+  ) => {
     const newSimpleFillSymbol = simpleFillSymbol.clone();
     newSimpleFillSymbol.style = currentStyleValue;
     updateGraphics(newSimpleFillSymbol);
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="SimpleFillSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
               <calcite-switch
                 ref={viewSwitchRef}
@@ -178,7 +194,12 @@ const SimpleFillSymbolShell = () => {
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -206,8 +227,8 @@ const SimpleFillSymbolShell = () => {
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default SimpleFillSymbolShell;

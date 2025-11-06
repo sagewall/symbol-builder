@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import { labelStyles } from "../lib/styles";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-input-text";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-slider";
+import { useState } from "react";
 
 interface Props {
   handleAngleChange: (value: number) => void;
@@ -10,23 +14,25 @@ interface Props {
   handleYoffsetChange: (value: string) => void;
 }
 
-const PictureMarkerSymbolForm = ({
+function PictureMarkerSymbolForm({
   handleAngleChange,
   handleHeightChange,
   handleUrlChange,
   handleWidthChange,
   handleXoffsetChange,
-  handleYoffsetChange
-}: Props) => {
+  handleYoffsetChange,
+}: Props) {
   const [angle, setAngle] = useState(0);
   const [height, setHeight] = useState("100");
-  const [url, setUrl] = useState("https://sagewall.github.io/test-images/globie.png");
+  const [url, setUrl] = useState(
+    "https://sagewall.github.io/test-images/globie.png"
+  );
   const [width, setWidth] = useState("100");
   const [xoffset, setXoffset] = useState("0");
   const [yoffset, setYoffset] = useState("0");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         angle
         <calcite-slider
@@ -105,8 +111,8 @@ const PictureMarkerSymbolForm = ({
           value={yoffset}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PictureMarkerSymbolForm;

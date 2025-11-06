@@ -1,7 +1,14 @@
 import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
-import React, { useState } from "react";
-import { LINE_STYLE_MARKER_3D_STYLE_OPTIONS, MARKER_PLACEMENT_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-label";
+import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-select";
+import { useState } from "react";
+import {
+  LINE_STYLE_MARKER_3D_STYLE_OPTIONS,
+  MARKER_PLACEMENT_OPTIONS,
+} from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -16,18 +23,18 @@ interface Props {
   ) => void;
 }
 
-const LineStyleMarker3DForm = ({
+function LineStyleMarker3DForm({
   layerIndex,
   handleColorChange,
   handlePlacementChange,
-  handleStyleChange
-}: Props) => {
+  handleStyleChange,
+}: Props) {
   const [color, setColor] = useState("#007ac2");
   const [placement, setPlacement] = useState("begin-end");
   const [style, setStyle] = useState("arrow");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -50,7 +57,9 @@ const LineStyleMarker3DForm = ({
             setPlacement(event.target.value);
             handlePlacementChange(
               layerIndex,
-              event.target.value as InstanceType<typeof LineStyleMarker3D>["placement"]
+              event.target.value as InstanceType<
+                typeof LineStyleMarker3D
+              >["placement"]
             );
           }}
           value={placement}
@@ -69,7 +78,9 @@ const LineStyleMarker3DForm = ({
             setStyle(event.target.value);
             handleStyleChange(
               layerIndex,
-              event.target.value as InstanceType<typeof LineStyleMarker3D>["style"]
+              event.target.value as InstanceType<
+                typeof LineStyleMarker3D
+              >["style"]
             );
           }}
           value={style}
@@ -79,8 +90,8 @@ const LineStyleMarker3DForm = ({
           ))}
         </calcite-select>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default LineStyleMarker3DForm;

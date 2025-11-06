@@ -1,12 +1,15 @@
 import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-action";
+import "@esri/calcite-components/dist/components/calcite-alert";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   webStyleSymbol: WebStyleSymbol;
 }
 
-const WebStyleSymbolESMPanel = ({ webStyleSymbol }: Props) => {
+function WebStyleSymbolESMPanel({ webStyleSymbol }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -37,7 +40,7 @@ const webStyleSymbol = new WebStyleSymbol({
   }
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">ESM / TypeScript</div>
         <calcite-action
@@ -61,8 +64,8 @@ const webStyleSymbol = new WebStyleSymbol({
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default WebStyleSymbolESMPanel;

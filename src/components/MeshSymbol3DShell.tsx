@@ -2,28 +2,41 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
-import React, { useState } from "react";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import { useState } from "react";
+import { mesh } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "../lib/styles";
 import Header from "./Header";
 import MeshSymbol3DCDNPanel from "./MeshSymbol3DCDNPanel";
 import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
 import Scene from "./Scene";
-import { mesh } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
-const MeshSymbol3DShell = () => {
+function MeshSymbol3DShell() {
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
 
   const meshGraphic = new Graphic({
     geometry: mesh,
-    symbol: meshSymbol3D
+    symbol: meshSymbol3D,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(meshGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
@@ -47,19 +60,26 @@ const MeshSymbol3DShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="MeshSymbol3D" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
-              <MeshSymbol3DForm updateSymbolLayers={updateSymbolLayers}></MeshSymbol3DForm>
+              <MeshSymbol3DForm
+                updateSymbolLayers={updateSymbolLayers}
+              ></MeshSymbol3DForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -68,21 +88,27 @@ const MeshSymbol3DShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <MeshSymbol3DESMPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DESMPanel>
+                <MeshSymbol3DESMPanel
+                  meshSymbol3D={meshSymbol3D}
+                ></MeshSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <MeshSymbol3DCDNPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DCDNPanel>
+                <MeshSymbol3DCDNPanel
+                  meshSymbol3D={meshSymbol3D}
+                ></MeshSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <MeshSymbol3DJSONPanel meshSymbol3D={meshSymbol3D}></MeshSymbol3DJSONPanel>
+                <MeshSymbol3DJSONPanel
+                  meshSymbol3D={meshSymbol3D}
+                ></MeshSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default MeshSymbol3DShell;
