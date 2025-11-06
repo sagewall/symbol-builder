@@ -3,19 +3,33 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import Font from "@arcgis/core/symbols/Font";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol";
-import React, { useState } from "react";
+import "@esri/calcite-components/dist/components/calcite-panel";
+import "@esri/calcite-components/dist/components/calcite-shell";
+import "@esri/calcite-components/dist/components/calcite-shell-panel";
+import "@esri/calcite-components/dist/components/calcite-tab";
+import "@esri/calcite-components/dist/components/calcite-tab-nav";
+import "@esri/calcite-components/dist/components/calcite-tab-title";
+import "@esri/calcite-components/dist/components/calcite-tabs";
+import { useState } from "react";
+import { point } from "../lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "../lib/styles";
+import type { FontData } from "../lib/types";
 import Header from "./Header";
 import Map from "./Map";
 import TextSymbolCDNPanel from "./TextSymbolCDNPanel";
 import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
-import { point } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
-import type { FontData } from "./lib/types";
 
-const TextSymbolShell = () => {
-  const [font, setFont] = useState(new Font({ family: "Abril Fatface", size: 12 }));
+function TextSymbolShell() {
+  const [font, setFont] = useState(
+    new Font({ family: "Abril Fatface", size: 12 })
+  );
 
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
@@ -26,19 +40,20 @@ const TextSymbolShell = () => {
       haloColor: "#ffffff",
       haloSize: 0,
       kerning: false,
-      text: "Hello World!"
+      text: "Hello World!",
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: textSymbol
+    symbol: textSymbol,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
@@ -123,7 +138,9 @@ const TextSymbolShell = () => {
   };
 
   const handleHorizontalAlignmentChange = (
-    currentHorizontalAlignment: InstanceType<typeof TextSymbol>["horizontalAlignment"]
+    currentHorizontalAlignment: InstanceType<
+      typeof TextSymbol
+    >["horizontalAlignment"]
   ) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.horizontalAlignment = currentHorizontalAlignment;
@@ -155,7 +172,9 @@ const TextSymbolShell = () => {
   };
 
   const handleVerticalAlignmentChange = (
-    currentVerticalAlignment: InstanceType<typeof TextSymbol>["verticalAlignment"]
+    currentVerticalAlignment: InstanceType<
+      typeof TextSymbol
+    >["verticalAlignment"]
   ) => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.verticalAlignment = currentVerticalAlignment;
@@ -175,7 +194,7 @@ const TextSymbolShell = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <calcite-shell style={shellStyles}>
         <Header title="TextSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
@@ -193,7 +212,9 @@ const TextSymbolShell = () => {
                 handleFontSizeChange={handleFontSizeChange}
                 handleHaloColorChange={handleHaloColorChange}
                 handleHaloSizeChange={handleHaloSizeChange}
-                handleHorizontalAlignmentChange={handleHorizontalAlignmentChange}
+                handleHorizontalAlignmentChange={
+                  handleHorizontalAlignmentChange
+                }
                 handleKerningChange={handleKerningChange}
                 handleLineWidthChange={handleLineWidthChange}
                 handleRotatedChange={handleRotatedChange}
@@ -206,7 +227,12 @@ const TextSymbolShell = () => {
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -215,21 +241,27 @@ const TextSymbolShell = () => {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <TextSymbolESMPanel textSymbol={textSymbol}></TextSymbolESMPanel>
+                <TextSymbolESMPanel
+                  textSymbol={textSymbol}
+                ></TextSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolCDNPanel textSymbol={textSymbol}></TextSymbolCDNPanel>
+                <TextSymbolCDNPanel
+                  textSymbol={textSymbol}
+                ></TextSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolJSONPanel textSymbol={textSymbol}></TextSymbolJSONPanel>
+                <TextSymbolJSONPanel
+                  textSymbol={textSymbol}
+                ></TextSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>
         </calcite-shell-panel>
         {viewElement}
       </calcite-shell>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default TextSymbolShell;

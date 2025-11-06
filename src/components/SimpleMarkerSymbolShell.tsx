@@ -3,24 +3,32 @@ import Graphic from "@arcgis/core/Graphic";
 import Collection from "@arcgis/core/core/Collection";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-import React, { useRef, useState } from "react";
-import Header from "./Header";
-import Map from "./Map";
-import Scene from "./Scene";
-import SimpleMarkerSymbolCDNPanel from "./SimpleMarkerSymbolCDNPanel";
-import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
-import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
-import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
-import { point } from "./lib/geometry";
+import "@esri/calcite-components/components/calcite-panel";
+import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-switch";
+import "@esri/calcite-components/components/calcite-tab";
+import "@esri/calcite-components/components/calcite-tab-nav";
+import "@esri/calcite-components/components/calcite-tab-title";
+import "@esri/calcite-components/components/calcite-tabs";
+import { useRef, useState } from "react";
+import { point } from "../lib/geometry";
 import {
   formStyles,
   shellPanelStyles,
   shellStyles,
   tabNavStyles,
-  viewSwitchLabelStyles
-} from "./lib/styles";
+  viewSwitchLabelStyles,
+} from "../lib/styles";
+import Header from "./Header";
+import MapElement from "./Map";
+import Scene from "./Scene";
+import SimpleMarkerSymbolCDNPanel from "./SimpleMarkerSymbolCDNPanel";
+import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
+import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
+import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 
-const SimpleMarkerSymbolShell = () => {
+function SimpleMarkerSymbolShell() {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -29,22 +37,23 @@ const SimpleMarkerSymbolShell = () => {
 
   const [simpleMarkerSymbol, setSimpleMarkerSymbol] = useState(
     new SimpleMarkerSymbol({
-      outline: simpleLineSymbol
+      outline: simpleLineSymbol,
     })
   );
 
   const pointGraphic = new Graphic({
     geometry: point,
-    symbol: simpleMarkerSymbol
+    symbol: simpleMarkerSymbol,
   });
 
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
-  let viewElement = <Map graphics={graphics}></Map>;
+  let viewElement = <MapElement graphics={graphics}></MapElement>;
   if (scene) {
     viewElement = <Scene graphics={graphics}></Scene>;
   }
@@ -178,72 +187,79 @@ const SimpleMarkerSymbolShell = () => {
   };
 
   return (
-    <React.Fragment>
-      <calcite-shell style={shellStyles}>
-        <Header title="SimpleMarkerSymbol" backButton></Header>
-        <calcite-shell-panel slot="panel-start" position="start" resizable>
-          <calcite-panel>
-            <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
-              2D
-              <calcite-switch
-                ref={viewSwitchRef}
-                oncalciteSwitchChange={handleSwitchChange}
-              ></calcite-switch>
-              3D
-            </calcite-label>
+    <calcite-shell style={shellStyles}>
+      <Header title="SimpleMarkerSymbol" backButton></Header>
+      <calcite-shell-panel slot="panel-start" position="start" resizable>
+        <calcite-panel>
+          <div slot="header-content">Properties </div>
+          <calcite-label
+            slot="header-actions-end"
+            layout="inline"
+            style={viewSwitchLabelStyles}
+          >
+            2D
+            <calcite-switch
+              ref={viewSwitchRef}
+              oncalciteSwitchChange={handleSwitchChange}
+            ></calcite-switch>
+            3D
+          </calcite-label>
 
-            <div style={formStyles}>
-              <SimpleMarkerSymbolForm
-                handleAngleChange={handleAngleChange}
-                handleColorChange={handleColorChange}
-                handleOutlineCapChange={handleOutlineCapChange}
-                handleOutlineColorChange={handleOutlineColorChange}
-                handleOutlineJoinChange={handleOutlineJoinChange}
-                handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
-                handleOutlineStyleChange={handleOutlineStyleChange}
-                handleOutlineWidthChange={handleOutlineWidthChange}
-                handlePathChange={handlePathChange}
-                handleSizeChange={handleSizeChange}
-                handleStyleChange={handleStyleChange}
-                handleXoffsetChange={handleXoffsetChange}
-                handleYoffsetChange={handleYoffsetChange}
-                scene={scene}
-              ></SimpleMarkerSymbolForm>
-            </div>
-          </calcite-panel>
-        </calcite-shell-panel>
+          <div style={formStyles}>
+            <SimpleMarkerSymbolForm
+              handleAngleChange={handleAngleChange}
+              handleColorChange={handleColorChange}
+              handleOutlineCapChange={handleOutlineCapChange}
+              handleOutlineColorChange={handleOutlineColorChange}
+              handleOutlineJoinChange={handleOutlineJoinChange}
+              handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
+              handleOutlineStyleChange={handleOutlineStyleChange}
+              handleOutlineWidthChange={handleOutlineWidthChange}
+              handlePathChange={handlePathChange}
+              handleSizeChange={handleSizeChange}
+              handleStyleChange={handleStyleChange}
+              handleXoffsetChange={handleXoffsetChange}
+              handleYoffsetChange={handleYoffsetChange}
+              scene={scene}
+            ></SimpleMarkerSymbolForm>
+          </div>
+        </calcite-panel>
+      </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
-          <calcite-panel>
-            <calcite-tabs>
-              <calcite-tab-nav slot="title-group" style={tabNavStyles}>
-                <calcite-tab-title>ESM</calcite-tab-title>
-                <calcite-tab-title>CDN</calcite-tab-title>
-                <calcite-tab-title>JSON</calcite-tab-title>
-              </calcite-tab-nav>
-              <calcite-tab>
-                <SimpleMarkerSymbolESMPanel
-                  simpleMarkerSymbol={simpleMarkerSymbol}
-                ></SimpleMarkerSymbolESMPanel>
-              </calcite-tab>
-              <calcite-tab>
-                <SimpleMarkerSymbolCDNPanel
-                  simpleMarkerSymbol={simpleMarkerSymbol}
-                ></SimpleMarkerSymbolCDNPanel>
-              </calcite-tab>
-              <calcite-tab>
-                <SimpleMarkerSymbolJSONPanel
-                  simpleMarkerSymbol={simpleMarkerSymbol}
-                ></SimpleMarkerSymbolJSONPanel>
-              </calcite-tab>
-            </calcite-tabs>
-          </calcite-panel>
-        </calcite-shell-panel>
-        {viewElement}
-      </calcite-shell>
-    </React.Fragment>
+      <calcite-shell-panel
+        slot="panel-end"
+        position="end"
+        resizable
+        style={shellPanelStyles}
+      >
+        <calcite-panel>
+          <calcite-tabs>
+            <calcite-tab-nav slot="title-group" style={tabNavStyles}>
+              <calcite-tab-title selected>ESM</calcite-tab-title>
+              <calcite-tab-title>CDN</calcite-tab-title>
+              <calcite-tab-title>JSON</calcite-tab-title>
+            </calcite-tab-nav>
+            <calcite-tab selected>
+              <SimpleMarkerSymbolESMPanel
+                simpleMarkerSymbol={simpleMarkerSymbol}
+              ></SimpleMarkerSymbolESMPanel>
+            </calcite-tab>
+            <calcite-tab>
+              <SimpleMarkerSymbolCDNPanel
+                simpleMarkerSymbol={simpleMarkerSymbol}
+              ></SimpleMarkerSymbolCDNPanel>
+            </calcite-tab>
+            <calcite-tab>
+              <SimpleMarkerSymbolJSONPanel
+                simpleMarkerSymbol={simpleMarkerSymbol}
+              ></SimpleMarkerSymbolJSONPanel>
+            </calcite-tab>
+          </calcite-tabs>
+        </calcite-panel>
+      </calcite-shell-panel>
+      {viewElement}
+    </calcite-shell>
   );
-};
+}
 
 export default SimpleMarkerSymbolShell;

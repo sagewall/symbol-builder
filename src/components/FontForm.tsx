@@ -1,21 +1,31 @@
 import type Font from "@arcgis/core/symbols/Font";
-import React, { useState } from "react";
-import { FONTS, FONT_DECORATION_OPTIONS } from "./lib/constants";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/dist/components/calcite-input-number";
+import "@esri/calcite-components/dist/components/calcite-label";
+import "@esri/calcite-components/dist/components/calcite-option";
+import "@esri/calcite-components/dist/components/calcite-select";
+import { useState } from "react";
+import { FONTS, FONT_DECORATION_OPTIONS } from "../lib/constants";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
-  handleDecorationChange: (value: InstanceType<typeof Font>["decoration"]) => void;
+  handleDecorationChange: (
+    value: InstanceType<typeof Font>["decoration"]
+  ) => void;
   handleFontChange: (value: string) => void;
   handleSizeChange: (value: string) => void;
 }
 
-const FontForm = ({ handleDecorationChange, handleFontChange, handleSizeChange }: Props) => {
+function FontForm({
+  handleDecorationChange,
+  handleFontChange,
+  handleSizeChange,
+}: Props) {
   const [decoration, setDecoration] = useState("none");
   const [font, setFont] = useState("Arial Regular");
   const [size, setSize] = useState("12");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         <calcite-select
           label={"font selection"}
@@ -39,7 +49,9 @@ const FontForm = ({ handleDecorationChange, handleFontChange, handleSizeChange }
           label={"font decoration selection"}
           oncalciteSelectChange={(event) => {
             setDecoration(event.target.value);
-            handleDecorationChange(event.target.value as InstanceType<typeof Font>["decoration"]);
+            handleDecorationChange(
+              event.target.value as InstanceType<typeof Font>["decoration"]
+            );
           }}
           value={decoration}
         >
@@ -61,8 +73,8 @@ const FontForm = ({ handleDecorationChange, handleFontChange, handleSizeChange }
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default FontForm;

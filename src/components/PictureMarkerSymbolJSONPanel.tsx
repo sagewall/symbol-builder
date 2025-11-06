@@ -1,12 +1,15 @@
 import type PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
-import React, { useRef } from "react";
-import { jsonStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-alert";
+import "@esri/calcite-components/components/calcite-panel";
+import { useRef } from "react";
+import { jsonStyles } from "../lib/styles";
 
 interface Props {
   pictureMarkerSymbol: PictureMarkerSymbol;
 }
 
-const PictureMarkerSymbolJSONPanel = ({ pictureMarkerSymbol }: Props) => {
+function PictureMarkerSymbolJSONPanel({ pictureMarkerSymbol }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -23,7 +26,7 @@ const textSymbolSymbol = PictureMarkerSymbol.fromJSON(
 ${JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)});`;
 
   return (
-    <React.Fragment>
+    <>
       <calcite-panel>
         <div slot="header-content">JSON</div>
         <calcite-action
@@ -47,8 +50,8 @@ ${JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)});`;
       >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PictureMarkerSymbolJSONPanel;

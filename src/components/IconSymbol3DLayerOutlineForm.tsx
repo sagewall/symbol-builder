@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { labelStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-input";
+import "@esri/calcite-components/components/calcite-input-number";
+import "@esri/calcite-components/components/calcite-label";
+import { useState } from "react";
+import { labelStyles } from "../lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -7,16 +10,16 @@ interface Props {
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-const IconSymbol3DLayerOutlineForm = ({
+function IconSymbol3DLayerOutlineForm({
   layerIndex,
   handleColorChange,
-  handleSizeChange
-}: Props) => {
+  handleSizeChange,
+}: Props) {
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("1.5");
 
   return (
-    <React.Fragment>
+    <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
@@ -43,8 +46,8 @@ const IconSymbol3DLayerOutlineForm = ({
           value={size}
         ></calcite-input-number>
       </calcite-label>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default IconSymbol3DLayerOutlineForm;

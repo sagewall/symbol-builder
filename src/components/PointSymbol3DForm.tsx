@@ -1,6 +1,6 @@
 import type Collection from "@arcgis/core/core/Collection";
-import React from "react";
-import { blockStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-block";
+import { blockStyles } from "../lib/styles";
 import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";
 import PointSymbol3DSymbolLayersForm from "./PointSymbol3DSymbolLayersForm";
 import PointSymbol3DVerticalOffsetForm from "./PointSymbol3DVerticalOffsetForm";
@@ -14,16 +14,16 @@ interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
-const PointSymbol3DForm = ({
+function PointSymbol3DForm({
   handleCalloutColorChange,
   handleCalloutSizeChange,
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
-  updateSymbolLayers
-}: Props) => {
+  updateSymbolLayers,
+}: Props) {
   return (
-    <React.Fragment>
+    <>
       <calcite-block style={blockStyles} collapsible heading={"callout"}>
         <PointSymbol3DCalloutForm
           handleColorChange={handleCalloutColorChange}
@@ -40,8 +40,8 @@ const PointSymbol3DForm = ({
           handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}
         ></PointSymbol3DVerticalOffsetForm>
       </calcite-block>
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default PointSymbol3DForm;
