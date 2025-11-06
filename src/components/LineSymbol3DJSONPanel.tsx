@@ -9,7 +9,7 @@ interface Props {
   lineSymbol3D: LineSymbol3D;
 }
 
-const LineSymbol3DJSONPanel = ({ lineSymbol3D }: Props) => {
+function LineSymbol3DJSONPanel({ lineSymbol3D }: Props) {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async () => {
@@ -52,6 +52,6 @@ ${JSON.stringify(lineSymbol3D.toJSON(), null, 2)});`;
       </calcite-alert>
     </>
   );
-};
+}
 
 export default LineSymbol3DJSONPanel;

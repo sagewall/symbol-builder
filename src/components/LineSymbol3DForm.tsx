@@ -5,7 +5,7 @@ interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
-const LineSymbol3DForm = ({ updateSymbolLayers }: Props) => {
+function LineSymbol3DForm({ updateSymbolLayers }: Props) {
   return (
     <>
       <LineSymbol3DSymbolLayersForm
@@ -13,6 +13,6 @@ const LineSymbol3DForm = ({ updateSymbolLayers }: Props) => {
       ></LineSymbol3DSymbolLayersForm>
     </>
   );
-};
+}
 
 export default LineSymbol3DForm;
