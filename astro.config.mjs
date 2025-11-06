@@ -4,12 +4,7 @@ import { loadEnv } from "vite";
 import react from "@astrojs/react";
 import netlify from "@astrojs/netlify";
 
-const { PUBLIC_BASE } = loadEnv(
-  process.env.NODE_ENV || "development",
-  process.cwd(),
-  ""
-);
-const { PUBLIC_SITE } = loadEnv(
+const { PUBLIC_BASE, PUBLIC_SITE } = loadEnv(
   process.env.NODE_ENV || "development",
   process.cwd(),
   ""
