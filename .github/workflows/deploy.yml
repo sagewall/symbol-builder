@@ -29,6 +29,8 @@ jobs:
         # build-cmd: pnpm run build # The command to run to build your site. Runs the package build script/task by default. (optional)
         env:
           # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # Use single quotation marks for the variable value. (optional)
+          NODE_ENV: "production"
+          NODE_OPTIONS: "--max-old-space-size=4096"
           PUBLIC_SITE: "https://sagewall.github.io"
           PUBLIC_BASE: "/symbol-builder"
 

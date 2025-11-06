@@ -4,9 +4,13 @@ import { loadEnv } from "vite";
 import react from "@astrojs/react";
 import netlify from "@astrojs/netlify";
 
-const { PUBLIC_BASE } = loadEnv(process.env.NODE_ENV || "/", process.cwd(), "");
+const { PUBLIC_BASE } = loadEnv(
+  process.env.NODE_ENV || "development",
+  process.cwd(),
+  ""
+);
 const { PUBLIC_SITE } = loadEnv(
-  process.env.NODE_ENV || "http://localhost:4321",
+  process.env.NODE_ENV || "development",
   process.cwd(),
   ""
 );
@@ -14,8 +18,8 @@ const { PUBLIC_SITE } = loadEnv(
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
-  base: PUBLIC_BASE,
+  base: PUBLIC_BASE || "/",
   devToolbar: { enabled: false },
   integrations: [react()],
-  site: PUBLIC_SITE,
+  site: PUBLIC_SITE || "http://localhost:4321",
 });
