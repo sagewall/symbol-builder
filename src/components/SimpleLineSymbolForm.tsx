@@ -89,11 +89,11 @@ function SimpleLineSymbolForm({
       </calcite-block>
     );
   } else {
-    markerBlock = <></>;
+    markerBlock = null;
   }
 
   if (solidOnly) {
-    styleBlock = <></>;
+    styleBlock = null;
   } else {
     styleBlock = (
       <calcite-label layout="default" style={labelStyles}>
