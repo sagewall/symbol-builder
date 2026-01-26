@@ -1,30 +1,30 @@
-import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
-import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
-import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
-import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
-import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
-import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
-import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D";
+import Color from "@arcgis/core/Color.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
+import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
+import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
+import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
+import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
+import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
+import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
+import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-chip";
 import "@esri/calcite-components/dist/components/calcite-tooltip";
 import React, { useState } from "react";
-import { blockStyles, chipStyles } from "../lib/styles";
 import ExtrudeSymbol3DLayerForm from "./ExtrudeSymbol3DLayerForm";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
+import { blockStyles, chipStyles } from "./lib/styles";
 
 interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
-function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
+function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props): React.ReactElement {
   const createNewExtrudeSymbol3DLayer = (): ExtrudeSymbol3DLayer => {
     const newExtrudeSymbol3DLayer = new ExtrudeSymbol3DLayer({
       edges: new SolidEdges3D({ size: 1 }),
@@ -86,7 +86,7 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
-  const addExtrudeSymbol3DLayer = () => {
+  const addExtrudeSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const extrudeSymbol3DLayer = createNewExtrudeSymbol3DLayer();
     newSymbolLayers.add(extrudeSymbol3DLayer);
@@ -94,7 +94,7 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const addFillSymbol3DLayer = () => {
+  const addFillSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const fillSymbol3DLayer = createNewFillSymbol3DLayer();
     newSymbolLayers.add(fillSymbol3DLayer);
@@ -102,7 +102,7 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const addIconSymbol3DLayer = () => {
+  const addIconSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const iconSymbol3DLayer = createNewIconSymbol3DLayer();
     newSymbolLayers.add(iconSymbol3DLayer);
@@ -110,7 +110,7 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const addObjectSymbol3DLayer = () => {
+  const addObjectSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const objectSymbol3DLayer = createNewObjectSymbol3DLayer();
     newSymbolLayers.add(objectSymbol3DLayer);
@@ -118,7 +118,7 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const addWaterSymbol3DLayer = () => {
+  const addWaterSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const waterSymbol3DLayer = createNewWaterSymbol3DLayer();
     newSymbolLayers.add(waterSymbol3DLayer);
@@ -126,34 +126,24 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const deleteSymbol3DLayer = (index: number) => {
+  const deleteSymbol3DLayer = (index: number): void => {
     const newSymbolLayers = symbolLayers.clone();
     newSymbolLayers.removeAt(index);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleExtrudeSymbol3DLayerCastShadowsChange = (
-    layerIndex: number,
-    value: boolean
-  ) => {
+  const handleExtrudeSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ExtrudeSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleExtrudeSymbol3DLayerEdgesColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleExtrudeSymbol3DLayerEdgesColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ExtrudeSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.color = new Color(value);
     }
@@ -161,14 +151,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleExtrudeSymbol3DLayerEdgesExtensionLengthChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleExtrudeSymbol3DLayerEdgesExtensionLengthChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ExtrudeSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.extensionLength = Number(value);
     }
@@ -176,14 +161,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleExtrudeSymbol3DLayerEdgesSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleExtrudeSymbol3DLayerEdgesSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ExtrudeSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.size = Number(value);
     }
@@ -191,14 +171,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleExtrudeSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleExtrudeSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ExtrudeSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -206,40 +181,25 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleExtrudeSymbol3DLayerSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleExtrudeSymbol3DLayerSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ExtrudeSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ExtrudeSymbol3DLayer;
     symbolLayer.size = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerCastShadowsChange = (
-    layerIndex: number,
-    value: boolean
-  ) => {
+  const handleFillSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerEdgesColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerEdgesColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.color = new Color(value);
     }
@@ -247,14 +207,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerEdgesExtensionLengthChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerEdgesExtensionLengthChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.extensionLength = Number(value);
     }
@@ -262,14 +217,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerEdgesSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerEdgesSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.size = Number(value);
     }
@@ -277,14 +227,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -294,16 +239,10 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleFillSymbol3DLayerMaterialColorMixModeChange = (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof FillSymbol3DLayer>["material"]
-      >["colorMixMode"]
-    >
-  ) => {
+    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]>,
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.colorMixMode = value;
     }
@@ -311,14 +250,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerOutlineColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerOutlineColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.color = new Color(value);
     }
@@ -326,18 +260,11 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerOutlinePatternChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerOutlinePatternChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.outline?.pattern) {
-      symbolLayer.outline.pattern.style = value as InstanceType<
-        typeof LineStylePattern3D
-      >["style"];
+      symbolLayer.outline.pattern.style = value as InstanceType<typeof LineStylePattern3D>["style"];
     }
 
     setSymbolLayers(newSymbolLayers);
@@ -346,16 +273,10 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleFillSymbol3DLayerOutlinePatternCapChange = (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof FillSymbol3DLayer>["outline"]
-      >["patternCap"]
-    >
-  ) => {
+    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>,
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.patternCap = value;
     }
@@ -363,14 +284,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleFillSymbol3DLayerOutlineSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleFillSymbol3DLayerOutlineSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
@@ -380,12 +296,10 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleFillSymbol3DLayerPatternStyleChange = (
     layerIndex: number,
-    value: InstanceType<typeof StylePattern3D>["style"]
-  ) => {
+    value: InstanceType<typeof StylePattern3D>["style"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as FillSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as FillSymbol3DLayer;
     if (symbolLayer.pattern) {
       symbolLayer.pattern.style = value;
     }
@@ -395,64 +309,42 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleIconSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
-  ) => {
+    value: InstanceType<typeof IconSymbol3DLayer>["anchor"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerAnchorPositionXChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerAnchorPositionXChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.x = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerAnchorPositionYChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerAnchorPositionYChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.y = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerAngleChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleIconSymbol3DLayerAngleChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.angle = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -460,14 +352,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerOutlineColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerOutlineColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.color = new Color(value);
     }
@@ -475,14 +362,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerOutlineSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerOutlineSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
@@ -490,14 +372,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerResourceHrefChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerResourceHrefChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.href = value;
     }
@@ -507,16 +384,10 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof IconSymbol3DLayer>["resource"]
-      >["primitive"]
-    >
-  ) => {
+    value: NonNullable<NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]>,
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.primitive = value;
     }
@@ -524,14 +395,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.size = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -539,25 +405,18 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleObjectSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
-  ) => {
+    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerAnchorPositionXChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerAnchorPositionXChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.x = Number(value);
     }
@@ -565,14 +424,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerAnchorPositionYChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerAnchorPositionYChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.y = Number(value);
     }
@@ -580,14 +434,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerAnchorPositionZChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerAnchorPositionZChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.z = Number(value);
     }
@@ -595,66 +444,41 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerCastShadowsChange = (
-    layerIndex: number,
-    value: boolean
-  ) => {
+  const handleObjectSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerDepthChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerDepthChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.depth = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerHeadingChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleObjectSymbol3DLayerHeadingChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.heading = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerHeightChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerHeightChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.height = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -662,14 +486,9 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerResourceHrefChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerResourceHrefChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.href = value;
     }
@@ -679,16 +498,10 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof ObjectSymbol3DLayer>["resource"]
-      >["primitive"]
-    >
-  ) => {
+    value: NonNullable<NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]>,
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.primitive = value;
     }
@@ -696,53 +509,33 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerRollChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleObjectSymbol3DLayerRollChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.roll = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerTiltChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleObjectSymbol3DLayerTiltChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.tilt = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerWidthChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerWidthChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.width = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleWaterSymbol3DLayerColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleWaterSymbol3DLayerColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as WaterSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
     symbolLayer.color = new Color(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -750,25 +543,18 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleWaterSymbol3DLayerWaterbodySizeChange = (
     layerIndex: number,
-    value: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"]
-  ) => {
+    value: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as WaterSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
     symbolLayer.waterbodySize = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleWaterSymbol3DLayerWaveDirectionChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleWaterSymbol3DLayerWaveDirectionChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as WaterSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
     symbolLayer.waveDirection = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -776,249 +562,150 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleWaterSymbol3DLayerWaveStrengthChange = (
     layerIndex: number,
-    value: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"]
-  ) => {
+    value: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as WaterSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as WaterSymbol3DLayer;
     symbolLayer.waveStrength = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const createSymbol3DLayerCollectionForm = () => {
+  const createSymbol3DLayerCollectionForm = (): React.ReactElement[] | undefined => {
     if (symbolLayers.length > 0) {
-      const symbol3DLayerCollectionForm: React.JSX.Element[] = [];
+      const symbol3DLayerCollectionForm: React.ReactElement[] = [];
 
-      symbolLayers.map(
+      symbolLayers.forEach(
         (
           symbolLayer:
-            | FillSymbol3DLayer
             | ExtrudeSymbol3DLayer
-            | WaterSymbol3DLayer
+            | FillSymbol3DLayer
             | IconSymbol3DLayer
-            | ObjectSymbol3DLayer,
-          index: number
-        ) => {
+            | ObjectSymbol3DLayer
+            | WaterSymbol3DLayer,
+          index: number,
+        ): void => {
           if (symbolLayer.type === "extrude") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
-                {index === symbolLayers.length - 1 && (
-                  <calcite-action
-                    icon="trash"
-                    onClick={() => deleteSymbol3DLayer(index)}
-                    slot="control"
-                    text="Delete"
-                  ></calcite-action>
-                )}
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <calcite-action
+                  icon="trash"
+                  onClick={() => deleteSymbol3DLayer(index)}
+                  slot="control"
+                  text="Delete"></calcite-action>
+
                 <ExtrudeSymbol3DLayerForm
                   layerIndex={index}
-                  handleCastShadowsChange={
-                    handleExtrudeSymbol3DLayerCastShadowsChange
-                  }
-                  handleExtrudeSymbol3DLayerEdgesColorChange={
-                    handleExtrudeSymbol3DLayerEdgesColorChange
-                  }
+                  handleCastShadowsChange={handleExtrudeSymbol3DLayerCastShadowsChange}
+                  handleExtrudeSymbol3DLayerEdgesColorChange={handleExtrudeSymbol3DLayerEdgesColorChange}
                   handleExtrudeSymbol3DLayerEdgesExtensionLengthChange={
                     handleExtrudeSymbol3DLayerEdgesExtensionLengthChange
                   }
-                  handleExtrudeSymbol3DLayerEdgesSizeChange={
-                    handleExtrudeSymbol3DLayerEdgesSizeChange
-                  }
-                  handleExtrudeSymbol3DLayerMaterialColorChange={
-                    handleExtrudeSymbol3DLayerMaterialColorChange
-                  }
-                  handleSizeChange={handleExtrudeSymbol3DLayerSizeChange}
-                ></ExtrudeSymbol3DLayerForm>
-              </calcite-block>
+                  handleExtrudeSymbol3DLayerEdgesSizeChange={handleExtrudeSymbol3DLayerEdgesSizeChange}
+                  handleExtrudeSymbol3DLayerMaterialColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}
+                  handleSizeChange={handleExtrudeSymbol3DLayerSizeChange}></ExtrudeSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
 
           if (symbolLayer.type === "fill") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
-                  text="Delete"
-                ></calcite-action>
+                  text="Delete"></calcite-action>
                 <FillSymbol3DLayerForm
                   layerIndex={index}
                   isMeshSymbol3D={false}
-                  handleCastShadowsChange={
-                    handleFillSymbol3DLayerCastShadowsChange
-                  }
-                  handleFillSymbol3DLayerEdgesColorChange={
-                    handleFillSymbol3DLayerEdgesColorChange
-                  }
-                  handleFillSymbol3DLayerEdgesExtensionLengthChange={
-                    handleFillSymbol3DLayerEdgesExtensionLengthChange
-                  }
-                  handleFillSymbol3DLayerEdgesSizeChange={
-                    handleFillSymbol3DLayerEdgesSizeChange
-                  }
-                  handleFillSymbol3DLayerMaterialColorChange={
-                    handleFillSymbol3DLayerMaterialColorChange
-                  }
-                  handleFillSymbol3DLayerMaterialColorMixModeChange={
-                    handleFillSymbol3DLayerMaterialColorMixModeChange
-                  }
-                  handleFillSymbol3DLayerOutlineColorChange={
-                    handleFillSymbol3DLayerOutlineColorChange
-                  }
-                  handleFillSymbol3DLayerOutlinePatternStyleChange={
-                    handleFillSymbol3DLayerOutlinePatternChange
-                  }
-                  handleFillSymbol3DLayerOutlinePatternCapChange={
-                    handleFillSymbol3DLayerOutlinePatternCapChange
-                  }
-                  handleFillSymbol3DLayerOutlineSizeChange={
-                    handleFillSymbol3DLayerOutlineSizeChange
-                  }
+                  handleCastShadowsChange={handleFillSymbol3DLayerCastShadowsChange}
+                  handleFillSymbol3DLayerEdgesColorChange={handleFillSymbol3DLayerEdgesColorChange}
+                  handleFillSymbol3DLayerEdgesExtensionLengthChange={handleFillSymbol3DLayerEdgesExtensionLengthChange}
+                  handleFillSymbol3DLayerEdgesSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
+                  handleFillSymbol3DLayerMaterialColorChange={handleFillSymbol3DLayerMaterialColorChange}
+                  handleFillSymbol3DLayerMaterialColorMixModeChange={handleFillSymbol3DLayerMaterialColorMixModeChange}
+                  handleFillSymbol3DLayerOutlineColorChange={handleFillSymbol3DLayerOutlineColorChange}
+                  handleFillSymbol3DLayerOutlinePatternStyleChange={handleFillSymbol3DLayerOutlinePatternChange}
+                  handleFillSymbol3DLayerOutlinePatternCapChange={handleFillSymbol3DLayerOutlinePatternCapChange}
+                  handleFillSymbol3DLayerOutlineSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
                   handleFillSymbol3DLayerPatternStyleChange={
                     handleFillSymbol3DLayerPatternStyleChange
-                  }
-                ></FillSymbol3DLayerForm>
-              </calcite-block>
+                  }></FillSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
 
           if (symbolLayer.type === "icon") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
-                  text="Delete"
-                ></calcite-action>
+                  text="Delete"></calcite-action>
                 <IconSymbol3DLayerForm
                   layerIndex={index}
-                  handleIconSymbol3DLayerAnchorChange={
-                    handleIconSymbol3DLayerAnchorChange
-                  }
-                  handleIconSymbol3DLayerAnchorPositionXChange={
-                    handleIconSymbol3DLayerAnchorPositionXChange
-                  }
-                  handleIconSymbol3DLayerAnchorPositionYChange={
-                    handleIconSymbol3DLayerAnchorPositionYChange
-                  }
-                  handleIconSymbol3DLayerAngleChange={
-                    handleIconSymbol3DLayerAngleChange
-                  }
-                  handleIconSymbol3DLayerMaterialColorChange={
-                    handleIconSymbol3DLayerMaterialColorChange
-                  }
-                  handleIconSymbol3DLayerOutlineColorChange={
-                    handleIconSymbol3DLayerOutlineColorChange
-                  }
-                  handleIconSymbol3DLayerOutlineSizeChange={
-                    handleIconSymbol3DLayerOutlineSizeChange
-                  }
-                  handleIconSymbol3DLayerResourceHrefChange={
-                    handleIconSymbol3DLayerResourceHrefChange
-                  }
-                  handleIconSymbol3DLayerResourcePrimitiveChange={
-                    handleIconSymbol3DLayerResourcePrimitiveChange
-                  }
-                  handleSizeChange={handleIconSymbol3DLayerSizeChange}
-                ></IconSymbol3DLayerForm>
-              </calcite-block>
+                  handleIconSymbol3DLayerAnchorChange={handleIconSymbol3DLayerAnchorChange}
+                  handleIconSymbol3DLayerAnchorPositionXChange={handleIconSymbol3DLayerAnchorPositionXChange}
+                  handleIconSymbol3DLayerAnchorPositionYChange={handleIconSymbol3DLayerAnchorPositionYChange}
+                  handleIconSymbol3DLayerAngleChange={handleIconSymbol3DLayerAngleChange}
+                  handleIconSymbol3DLayerMaterialColorChange={handleIconSymbol3DLayerMaterialColorChange}
+                  handleIconSymbol3DLayerOutlineColorChange={handleIconSymbol3DLayerOutlineColorChange}
+                  handleIconSymbol3DLayerOutlineSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
+                  handleIconSymbol3DLayerResourceHrefChange={handleIconSymbol3DLayerResourceHrefChange}
+                  handleIconSymbol3DLayerResourcePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
+                  handleSizeChange={handleIconSymbol3DLayerSizeChange}></IconSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
 
           if (symbolLayer.type === "object") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
-                  text="Delete"
-                ></calcite-action>
+                  text="Delete"></calcite-action>
                 <ObjectSymbol3DLayerForm
                   layerIndex={index}
                   handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
-                  handleObjectSymbol3DLayerAnchorPositionXChange={
-                    handleObjectSymbol3DLayerAnchorPositionXChange
-                  }
-                  handleObjectSymbol3DLayerAnchorPositionYChange={
-                    handleObjectSymbol3DLayerAnchorPositionYChange
-                  }
-                  handleObjectSymbol3DLayerAnchorPositionZChange={
-                    handleObjectSymbol3DLayerAnchorPositionZChange
-                  }
-                  handleCastShadowsChange={
-                    handleObjectSymbol3DLayerCastShadowsChange
-                  }
+                  handleObjectSymbol3DLayerAnchorPositionXChange={handleObjectSymbol3DLayerAnchorPositionXChange}
+                  handleObjectSymbol3DLayerAnchorPositionYChange={handleObjectSymbol3DLayerAnchorPositionYChange}
+                  handleObjectSymbol3DLayerAnchorPositionZChange={handleObjectSymbol3DLayerAnchorPositionZChange}
+                  handleCastShadowsChange={handleObjectSymbol3DLayerCastShadowsChange}
                   handleDepthChange={handleObjectSymbol3DLayerDepthChange}
                   handleHeadingChange={handleObjectSymbol3DLayerHeadingChange}
                   handleHeightChange={handleObjectSymbol3DLayerHeightChange}
-                  handleObjectSymbol3DLayerMaterialColorChange={
-                    handleObjectSymbol3DLayerMaterialColorChange
-                  }
-                  handleObjectSymbol3DLayerResourceHrefChange={
-                    handleObjectSymbol3DLayerResourceHrefChange
-                  }
-                  handleObjectSymbol3DLayerResourcePrimitiveChange={
-                    handleObjectSymbol3DLayerResourcePrimitiveChange
-                  }
+                  handleObjectSymbol3DLayerMaterialColorChange={handleObjectSymbol3DLayerMaterialColorChange}
+                  handleObjectSymbol3DLayerResourceHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
+                  handleObjectSymbol3DLayerResourcePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
                   handleRollChange={handleObjectSymbol3DLayerRollChange}
                   handleTiltChange={handleObjectSymbol3DLayerTiltChange}
-                  handleWidthChange={handleObjectSymbol3DLayerWidthChange}
-                ></ObjectSymbol3DLayerForm>
-              </calcite-block>
+                  handleWidthChange={handleObjectSymbol3DLayerWidthChange}></ObjectSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
 
           if (symbolLayer.type === "water") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
-                  text="Delete"
-                ></calcite-action>
+                  text="Delete"></calcite-action>
                 <WaterSymbol3DLayerForm
                   layerIndex={index}
                   handleColorChange={handleWaterSymbol3DLayerColorChange}
-                  handleWaterbodySizeChange={
-                    handleWaterSymbol3DLayerWaterbodySizeChange
-                  }
-                  handleWaveDirectionChange={
-                    handleWaterSymbol3DLayerWaveDirectionChange
-                  }
-                  handleWaveStrengthChange={
-                    handleWaterSymbol3DLayerWaveStrengthChange
-                  }
-                ></WaterSymbol3DLayerForm>
-              </calcite-block>
+                  handleWaterbodySizeChange={handleWaterSymbol3DLayerWaterbodySizeChange}
+                  handleWaveDirectionChange={handleWaterSymbol3DLayerWaveDirectionChange}
+                  handleWaveStrengthChange={handleWaterSymbol3DLayerWaveStrengthChange}></WaterSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
-        }
+        },
       );
       return symbol3DLayerCollectionForm;
     }
@@ -1026,24 +713,16 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   return (
     <>
-      <calcite-block
-        style={blockStyles}
-        collapsible
-        heading={"symbolLayers"}
-        expanded
-      >
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} expanded>
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
           label="Add layer"
           slot="control"
           value="Information"
-          style={chipStyles}
-        ></calcite-chip>
+          style={chipStyles}></calcite-chip>
         <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
+          <span>Add symbol layer by opening the dropdown menu on the right</span>
         </calcite-tooltip>
 
         <calcite-action
@@ -1051,40 +730,35 @@ function PolygonSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
           slot="header-menu-actions"
           icon="polygon"
           text-enabled
-          text="Add FillSymbol3DLayer"
-        ></calcite-action>
+          text="Add FillSymbol3DLayer"></calcite-action>
 
         <calcite-action
           onClick={() => addExtrudeSymbol3DLayer()}
           slot="header-menu-actions"
           icon="polygon"
           text-enabled
-          text="Add ExtrudeSymbol3DLayer"
-        ></calcite-action>
+          text="Add ExtrudeSymbol3DLayer"></calcite-action>
 
         <calcite-action
           onClick={() => addWaterSymbol3DLayer()}
           slot="header-menu-actions"
           icon="polygon"
           text-enabled
-          text="Add WaterSymbol3DLayer"
-        ></calcite-action>
+          text="Add WaterSymbol3DLayer"></calcite-action>
 
         <calcite-action
           onClick={() => addIconSymbol3DLayer()}
           slot="header-menu-actions"
           icon="point"
           text-enabled
-          text="Add IconSymbol3DLayer"
-        ></calcite-action>
+          text="Add IconSymbol3DLayer"></calcite-action>
 
         <calcite-action
           onClick={() => addObjectSymbol3DLayer()}
           slot="header-menu-actions"
           icon="point"
           text-enabled
-          text="Add ObjectSymbol3DLayer"
-        ></calcite-action>
+          text="Add ObjectSymbol3DLayer"></calcite-action>
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>
     </>

@@ -1,18 +1,18 @@
-import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-alert";
 import "@esri/calcite-components/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   simpleMarkerSymbol: SimpleMarkerSymbol;
 }
 
-function SimpleMarkerSymbolJSONPanel({ simpleMarkerSymbol }: Props) {
+function SimpleMarkerSymbolJSONPanel({ simpleMarkerSymbol }: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;
@@ -35,8 +35,7 @@ ${JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2)});`;
           text="Copy Snippet"
           text-enabled
           slot="header-actions-end"
-          onClick={handleCopyClick}
-        ></calcite-action>
+          onClick={handleCopyClick}></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -46,8 +45,7 @@ ${JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2)});`;
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}
-      >
+        ref={alertRef}>
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

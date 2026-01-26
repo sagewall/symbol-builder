@@ -9,13 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@arcgis/map-components": "^4.34.8",
-    "@astrojs/netlify": "^6.6.0",
+    "@arcgis/map-components": "^5.0.0-next.146",
+    "@astrojs/netlify": "^6.6.4",
     "@astrojs/react": "^4.4.2",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "astro": "^5.15.4",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^5.16.12",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   }
 }

@@ -1,18 +1,18 @@
-import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
+import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-alert";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   webStyleSymbol: WebStyleSymbol;
 }
 
-function SimpleFillSymbolJSONPanel({ webStyleSymbol }: Props) {
+function SimpleFillSymbolJSONPanel({ webStyleSymbol }: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;
@@ -35,8 +35,7 @@ ${JSON.stringify(webStyleSymbol.toJSON(), null, 2)});`;
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}
-        ></calcite-action>
+          onClick={handleCopyClick}></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -46,8 +45,7 @@ ${JSON.stringify(webStyleSymbol.toJSON(), null, 2)});`;
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}
-      >
+        ref={alertRef}>
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

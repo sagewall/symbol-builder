@@ -1,8 +1,8 @@
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
-import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
-import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
+import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
 import "@esri/calcite-components/components/calcite-panel";
 import "@esri/calcite-components/components/calcite-shell";
 import "@esri/calcite-components/components/calcite-shell-panel";
@@ -11,21 +11,15 @@ import "@esri/calcite-components/components/calcite-tab-nav";
 import "@esri/calcite-components/components/calcite-tab-title";
 import "@esri/calcite-components/components/calcite-tabs";
 import { useState } from "react";
-import { polyline } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-} from "../lib/styles";
-import Header from "./Header";
 import LineSymbol3DCDNPanel from "./LineSymbol3DCDNPanel";
 import LineSymbol3DESMPanel from "./LineSymbol3DESMPanel";
 import LineSymbol3DForm from "./LineSymbol3DForm";
 import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
 import Scene from "./Scene";
+import { polyline } from "./lib/geometry";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
 
-function LineSymbol3DShell() {
+function LineSymbol3DShell(): React.ReactElement {
   const [lineSymbol3D, setLineSymbol3D] = useState(new LineSymbol3D());
 
   const lineGraphic = new Graphic({
@@ -36,12 +30,11 @@ function LineSymbol3DShell() {
   const graphicsCollection = new Collection();
   graphicsCollection.add(lineGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
-  const updateGraphics = (newLineSymbol3D: LineSymbol3D) => {
+  const updateGraphics = (newLineSymbol3D: LineSymbol3D): void => {
     setLineSymbol3D(newLineSymbol3D);
 
     const newLineGraphic = graphics.getItemAt(0)?.clone();
@@ -54,9 +47,7 @@ function LineSymbol3DShell() {
     setGraphics(newGraphics);
   };
 
-  const updateSymbolLayers = (
-    symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>
-  ) => {
+  const updateSymbolLayers = (symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>): void => {
     const newLineSymbol3D = lineSymbol3D.clone();
     newLineSymbol3D.symbolLayers.removeAll();
     newLineSymbol3D.symbolLayers.addMany(symbolLayers);
@@ -66,24 +57,16 @@ function LineSymbol3DShell() {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="LineSymbol3D" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
-              <LineSymbol3DForm
-                updateSymbolLayers={updateSymbolLayers}
-              ></LineSymbol3DForm>
+              <LineSymbol3DForm updateSymbolLayers={updateSymbolLayers}></LineSymbol3DForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel
-          slot="panel-end"
-          position="end"
-          resizable
-          style={shellPanelStyles}
-        >
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -92,19 +75,13 @@ function LineSymbol3DShell() {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <LineSymbol3DESMPanel
-                  lineSymbol3D={lineSymbol3D}
-                ></LineSymbol3DESMPanel>
+                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DCDNPanel
-                  lineSymbol3D={lineSymbol3D}
-                ></LineSymbol3DCDNPanel>
+                <LineSymbol3DCDNPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DJSONPanel
-                  lineSymbol3D={lineSymbol3D}
-                ></LineSymbol3DJSONPanel>
+                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

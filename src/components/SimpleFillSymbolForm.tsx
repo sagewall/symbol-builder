@@ -1,32 +1,24 @@
-import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
-import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import { useState } from "react";
-import { FILL_OPTIONS } from "../lib/constants";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { fillOptions } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["cap"]
-  ) => void;
+  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["join"]
-  ) => void;
+  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["style"]
-  ) => void;
+  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleOutlineWidthChange: (value: string) => void;
-  handleStyleChange: (
-    value: InstanceType<typeof SimpleFillSymbol>["style"]
-  ) => void;
+  handleStyleChange: (value: InstanceType<typeof SimpleFillSymbol>["style"]) => void;
 }
 
 function SimpleFillSymbolForm({
@@ -38,7 +30,7 @@ function SimpleFillSymbolForm({
   handleOutlineStyleChange,
   handleOutlineWidthChange,
   handleStyleChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#007ac2");
   const [style, setStyle] = useState("solid");
 
@@ -49,13 +41,12 @@ function SimpleFillSymbolForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
-            handleColorChange(event.target.value as string);
+            handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}
-        ></calcite-input>
+          value={color}></calcite-input>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"outline:"}>
@@ -67,8 +58,7 @@ function SimpleFillSymbolForm({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
-          solidOnly={false}
-        ></SimpleLineSymbolForm>
+          solidOnly={false}></SimpleLineSymbolForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -77,15 +67,10 @@ function SimpleFillSymbolForm({
           label={"style selection"}
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(
-              event.target.value as InstanceType<
-                typeof SimpleFillSymbol
-              >["style"]
-            );
+            handleStyleChange(event.target.value as InstanceType<typeof SimpleFillSymbol>["style"]);
           }}
-          value={style}
-        >
-          {FILL_OPTIONS.map((option, index) => (
+          value={style}>
+          {fillOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

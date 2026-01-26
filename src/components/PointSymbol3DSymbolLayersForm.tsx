@@ -1,16 +1,16 @@
-import Color from "@arcgis/core/Color";
-import Collection from "@arcgis/core/core/Collection";
-import Font from "@arcgis/core/symbols/Font";
-import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
-import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
+import Color from "@arcgis/core/Color.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import Font from "@arcgis/core/symbols/Font.js";
+import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
+import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
+import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-chip";
 import "@esri/calcite-components/components/calcite-tooltip";
 import React, { useState } from "react";
-import { blockStyles, chipStyles } from "../lib/styles";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
+import { blockStyles, chipStyles } from "./lib/styles";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 
@@ -18,7 +18,7 @@ interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
-function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
+function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props): React.ReactElement {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
     const newIconSymbol3DLayer = new IconSymbol3DLayer();
     newIconSymbol3DLayer.anchor = "center";
@@ -62,7 +62,7 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
-  const addIconSymbol3DLayer = () => {
+  const addIconSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const iconSymbol3DLayer = createNewIconSymbol3DLayer();
     newSymbolLayers.add(iconSymbol3DLayer);
@@ -70,7 +70,7 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const addObjectSymbol3DLayer = () => {
+  const addObjectSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const objectSymbol3DLayer = createNewObjectSymbol3DLayer();
     newSymbolLayers.add(objectSymbol3DLayer);
@@ -78,7 +78,7 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const addTextSymbol3DLayer = () => {
+  const addTextSymbol3DLayer = (): void => {
     const newSymbolLayers = symbolLayers.clone();
     const textSymbol3DLayer = createNewTextSymbol3DLayer();
     newSymbolLayers.add(textSymbol3DLayer);
@@ -86,7 +86,7 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const deleteSymbol3DLayer = (index: number) => {
+  const deleteSymbol3DLayer = (index: number): void => {
     const newSymbolLayers = symbolLayers.clone();
     newSymbolLayers.removeAt(index);
     setSymbolLayers(newSymbolLayers);
@@ -95,64 +95,42 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleIconSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
-  ) => {
+    value: InstanceType<typeof IconSymbol3DLayer>["anchor"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerAnchorPositionXChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerAnchorPositionXChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.x = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerAngleChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleIconSymbol3DLayerAngleChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.angle = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerAnchorPositionYChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerAnchorPositionYChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.y = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -160,14 +138,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerOutlineColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerOutlineColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.color = new Color(value);
     }
@@ -175,14 +148,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerOutlineSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerOutlineSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
@@ -190,14 +158,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerResourceHrefChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerResourceHrefChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.href = value;
     }
@@ -207,16 +170,10 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleIconSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof IconSymbol3DLayer>["resource"]
-      >["primitive"]
-    >
-  ) => {
+    value: NonNullable<NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]>,
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.primitive = value;
     }
@@ -224,14 +181,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleIconSymbol3DLayerSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleIconSymbol3DLayerSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as IconSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as IconSymbol3DLayer;
     symbolLayer.size = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -239,25 +191,18 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleObjectSymbol3DLayerAnchorChange = (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
-  ) => {
+    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.anchor = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerAnchorPositionXChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerAnchorPositionXChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.x = Number(value);
     }
@@ -265,14 +210,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerAnchorPositionYChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerAnchorPositionYChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.y = Number(value);
     }
@@ -280,14 +220,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerAnchorPositionZChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerAnchorPositionZChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.z = Number(value);
     }
@@ -295,66 +230,41 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerCastShadowsChange = (
-    layerIndex: number,
-    value: boolean
-  ) => {
+  const handleObjectSymbol3DLayerCastShadowsChange = (layerIndex: number, value: boolean): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.castShadows = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerDepthChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerDepthChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.depth = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerHeadingChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleObjectSymbol3DLayerHeadingChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.heading = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerHeightChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerHeightChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.height = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -362,14 +272,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerResourceHrefChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerResourceHrefChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.href = value;
     }
@@ -379,16 +284,10 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleObjectSymbol3DLayerResourcePrimitiveChange = (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof ObjectSymbol3DLayer>["resource"]
-      >["primitive"]
-    >
-  ) => {
+    value: NonNullable<NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]>,
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     if (symbolLayer.resource) {
       symbolLayer.resource.primitive = value;
     }
@@ -396,53 +295,33 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerRollChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleObjectSymbol3DLayerRollChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.roll = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerTiltChange = (
-    layerIndex: number,
-    value: number
-  ) => {
+  const handleObjectSymbol3DLayerTiltChange = (layerIndex: number, value: number): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.tilt = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleObjectSymbol3DLayerWidthChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleObjectSymbol3DLayerWidthChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as ObjectSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as ObjectSymbol3DLayer;
     symbolLayer.width = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerBackgroundColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerBackgroundColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.background) {
       symbolLayer.background.color = new Color(value);
     }
@@ -452,12 +331,10 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleTextSymbol3DLayerFontDecorationChange = (
     layerIndex: number,
-    value: InstanceType<typeof Font>["decoration"]
-  ) => {
+    value: InstanceType<typeof Font>["decoration"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.font) {
       symbolLayer.font.decoration = value;
     }
@@ -465,14 +342,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerFontFamilyChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerFontFamilyChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.font) {
       symbolLayer.font.family = value;
     }
@@ -480,14 +352,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerFontSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerFontSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.font) {
       symbolLayer.font.size = Number(value);
     }
@@ -497,12 +364,10 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleTextSymbol3DLayerFontStyleChange = (
     layerIndex: number,
-    value: InstanceType<typeof Font>["style"]
-  ) => {
+    value: InstanceType<typeof Font>["style"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.font) {
       symbolLayer.font.style = value;
     }
@@ -512,12 +377,10 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleTextSymbol3DLayerFontWeightChange = (
     layerIndex: number,
-    value: InstanceType<typeof Font>["weight"]
-  ) => {
+    value: InstanceType<typeof Font>["weight"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.font) {
       symbolLayer.font.weight = value;
     }
@@ -525,14 +388,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerHaloColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerHaloColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.halo) {
       symbolLayer.halo.color = new Color(value);
     }
@@ -540,14 +398,9 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerHaloSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerHaloSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.halo) {
       symbolLayer.halo.size = Number(value);
     }
@@ -557,38 +410,26 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleTextSymbol3DLayerHorizontalAlignmentChange = (
     layerIndex: number,
-    value: InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"]
-  ) => {
+    value: InstanceType<typeof TextSymbol3DLayer>["horizontalAlignment"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     symbolLayer.horizontalAlignment = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerLineHeightChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerLineHeightChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     symbolLayer.lineHeight = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerMaterialColorChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerMaterialColorChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
@@ -596,27 +437,17 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerSizeChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerSizeChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     symbolLayer.size = Number(value);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleTextSymbol3DLayerTextChange = (
-    layerIndex: number,
-    value: string
-  ) => {
+  const handleTextSymbol3DLayerTextChange = (layerIndex: number, value: string): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     symbolLayer.text = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -624,184 +455,103 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   const handleTextSymbol3DLayerVerticalAlignmentChange = (
     layerIndex: number,
-    value: InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"]
-  ) => {
+    value: InstanceType<typeof TextSymbol3DLayer>["verticalAlignment"],
+  ): void => {
     const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex
-    ) as TextSymbol3DLayer;
+    const symbolLayer = newSymbolLayers.getItemAt(layerIndex) as TextSymbol3DLayer;
     symbolLayer.verticalAlignment = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const createSymbol3DLayerCollectionForm = () => {
+  const createSymbol3DLayerCollectionForm = (): React.ReactElement[] | undefined => {
     if (symbolLayers.length > 0) {
-      const symbol3DLayerCollectionForm: React.JSX.Element[] = [];
+      const symbol3DLayerCollectionForm: React.ReactElement[] = [];
 
-      symbolLayers.map(
-        (
-          symbolLayer:
-            | IconSymbol3DLayer
-            | ObjectSymbol3DLayer
-            | TextSymbol3DLayer,
-          index: number
-        ) => {
+      symbolLayers.forEach(
+        (symbolLayer: IconSymbol3DLayer | ObjectSymbol3DLayer | TextSymbol3DLayer, index: number) => {
           if (symbolLayer.type === "icon") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
-                {index === symbolLayers.length - 1 && (
-                  <calcite-action
-                    icon="trash"
-                    onClick={() => deleteSymbol3DLayer(index)}
-                    slot="control"
-                    text="Delete"
-                  ></calcite-action>
-                )}
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
+                <calcite-action
+                  icon="trash"
+                  onClick={() => deleteSymbol3DLayer(index)}
+                  slot="control"
+                  text="Delete"></calcite-action>
+
                 <IconSymbol3DLayerForm
                   layerIndex={index}
-                  handleIconSymbol3DLayerAnchorChange={
-                    handleIconSymbol3DLayerAnchorChange
-                  }
-                  handleIconSymbol3DLayerAnchorPositionXChange={
-                    handleIconSymbol3DLayerAnchorPositionXChange
-                  }
-                  handleIconSymbol3DLayerAngleChange={
-                    handleIconSymbol3DLayerAngleChange
-                  }
-                  handleIconSymbol3DLayerAnchorPositionYChange={
-                    handleIconSymbol3DLayerAnchorPositionYChange
-                  }
-                  handleIconSymbol3DLayerMaterialColorChange={
-                    handleIconSymbol3DLayerMaterialColorChange
-                  }
-                  handleIconSymbol3DLayerOutlineColorChange={
-                    handleIconSymbol3DLayerOutlineColorChange
-                  }
-                  handleIconSymbol3DLayerOutlineSizeChange={
-                    handleIconSymbol3DLayerOutlineSizeChange
-                  }
-                  handleIconSymbol3DLayerResourceHrefChange={
-                    handleIconSymbol3DLayerResourceHrefChange
-                  }
-                  handleIconSymbol3DLayerResourcePrimitiveChange={
-                    handleIconSymbol3DLayerResourcePrimitiveChange
-                  }
-                  handleSizeChange={handleIconSymbol3DLayerSizeChange}
-                ></IconSymbol3DLayerForm>
-              </calcite-block>
+                  handleIconSymbol3DLayerAnchorChange={handleIconSymbol3DLayerAnchorChange}
+                  handleIconSymbol3DLayerAnchorPositionXChange={handleIconSymbol3DLayerAnchorPositionXChange}
+                  handleIconSymbol3DLayerAngleChange={handleIconSymbol3DLayerAngleChange}
+                  handleIconSymbol3DLayerAnchorPositionYChange={handleIconSymbol3DLayerAnchorPositionYChange}
+                  handleIconSymbol3DLayerMaterialColorChange={handleIconSymbol3DLayerMaterialColorChange}
+                  handleIconSymbol3DLayerOutlineColorChange={handleIconSymbol3DLayerOutlineColorChange}
+                  handleIconSymbol3DLayerOutlineSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
+                  handleIconSymbol3DLayerResourceHrefChange={handleIconSymbol3DLayerResourceHrefChange}
+                  handleIconSymbol3DLayerResourcePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
+                  handleSizeChange={handleIconSymbol3DLayerSizeChange}></IconSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
 
           if (symbolLayer.type === "object") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
-                  text="Delete"
-                ></calcite-action>
+                  text="Delete"></calcite-action>
                 <ObjectSymbol3DLayerForm
                   layerIndex={index}
                   handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
-                  handleObjectSymbol3DLayerAnchorPositionXChange={
-                    handleObjectSymbol3DLayerAnchorPositionXChange
-                  }
-                  handleObjectSymbol3DLayerAnchorPositionYChange={
-                    handleObjectSymbol3DLayerAnchorPositionYChange
-                  }
-                  handleObjectSymbol3DLayerAnchorPositionZChange={
-                    handleObjectSymbol3DLayerAnchorPositionZChange
-                  }
-                  handleCastShadowsChange={
-                    handleObjectSymbol3DLayerCastShadowsChange
-                  }
+                  handleObjectSymbol3DLayerAnchorPositionXChange={handleObjectSymbol3DLayerAnchorPositionXChange}
+                  handleObjectSymbol3DLayerAnchorPositionYChange={handleObjectSymbol3DLayerAnchorPositionYChange}
+                  handleObjectSymbol3DLayerAnchorPositionZChange={handleObjectSymbol3DLayerAnchorPositionZChange}
+                  handleCastShadowsChange={handleObjectSymbol3DLayerCastShadowsChange}
                   handleDepthChange={handleObjectSymbol3DLayerDepthChange}
                   handleHeadingChange={handleObjectSymbol3DLayerHeadingChange}
                   handleHeightChange={handleObjectSymbol3DLayerHeightChange}
-                  handleObjectSymbol3DLayerMaterialColorChange={
-                    handleObjectSymbol3DLayerMaterialColorChange
-                  }
-                  handleObjectSymbol3DLayerResourceHrefChange={
-                    handleObjectSymbol3DLayerResourceHrefChange
-                  }
-                  handleObjectSymbol3DLayerResourcePrimitiveChange={
-                    handleObjectSymbol3DLayerResourcePrimitiveChange
-                  }
+                  handleObjectSymbol3DLayerMaterialColorChange={handleObjectSymbol3DLayerMaterialColorChange}
+                  handleObjectSymbol3DLayerResourceHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
+                  handleObjectSymbol3DLayerResourcePrimitiveChange={handleObjectSymbol3DLayerResourcePrimitiveChange}
                   handleRollChange={handleObjectSymbol3DLayerRollChange}
                   handleTiltChange={handleObjectSymbol3DLayerTiltChange}
-                  handleWidthChange={handleObjectSymbol3DLayerWidthChange}
-                ></ObjectSymbol3DLayerForm>
-              </calcite-block>
+                  handleWidthChange={handleObjectSymbol3DLayerWidthChange}></ObjectSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
           if (symbolLayer.type === "text") {
             symbol3DLayerCollectionForm.push(
-              <calcite-block
-                collapsible
-                heading={`symbolLayers[${index}]`}
-                key={index}
-              >
+              <calcite-block collapsible heading={`symbolLayers[${index}]`} key={index}>
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
                   slot="control"
-                  text="Delete"
-                ></calcite-action>
+                  text="Delete"></calcite-action>
                 <TextSymbol3DLayerForm
                   layerIndex={index}
-                  handleTextSymbol3DLayerBackgroundColorChange={
-                    handleTextSymbol3DLayerBackgroundColorChange
-                  }
-                  handleTextSymbol3DLayerFontDecorationChange={
-                    handleTextSymbol3DLayerFontDecorationChange
-                  }
-                  handleTextSymbol3DLayerFontFamilyChange={
-                    handleTextSymbol3DLayerFontFamilyChange
-                  }
-                  handleTextSymbol3DLayerFontSizeChange={
-                    handleTextSymbol3DLayerFontSizeChange
-                  }
-                  handleTextSymbol3DLayerFontStyleChange={
-                    handleTextSymbol3DLayerFontStyleChange
-                  }
-                  handleTextSymbol3DLayerFontWeightChange={
-                    handleTextSymbol3DLayerFontWeightChange
-                  }
-                  handleTextSymbol3DLayerHaloColorChange={
-                    handleTextSymbol3DLayerHaloColorChange
-                  }
-                  handleTextSymbol3DLayerHaloSizeChange={
-                    handleTextSymbol3DLayerHaloSizeChange
-                  }
-                  handleHorizontalAlignmentChange={
-                    handleTextSymbol3DLayerHorizontalAlignmentChange
-                  }
-                  handleLineHeightChange={
-                    handleTextSymbol3DLayerLineHeightChange
-                  }
-                  handleTextSymbol3DLayerMaterialColorChange={
-                    handleTextSymbol3DLayerMaterialColorChange
-                  }
+                  handleTextSymbol3DLayerBackgroundColorChange={handleTextSymbol3DLayerBackgroundColorChange}
+                  handleTextSymbol3DLayerFontDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
+                  handleTextSymbol3DLayerFontFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
+                  handleTextSymbol3DLayerFontSizeChange={handleTextSymbol3DLayerFontSizeChange}
+                  handleTextSymbol3DLayerFontStyleChange={handleTextSymbol3DLayerFontStyleChange}
+                  handleTextSymbol3DLayerFontWeightChange={handleTextSymbol3DLayerFontWeightChange}
+                  handleTextSymbol3DLayerHaloColorChange={handleTextSymbol3DLayerHaloColorChange}
+                  handleTextSymbol3DLayerHaloSizeChange={handleTextSymbol3DLayerHaloSizeChange}
+                  handleHorizontalAlignmentChange={handleTextSymbol3DLayerHorizontalAlignmentChange}
+                  handleLineHeightChange={handleTextSymbol3DLayerLineHeightChange}
+                  handleTextSymbol3DLayerMaterialColorChange={handleTextSymbol3DLayerMaterialColorChange}
                   handleSizeChange={handleTextSymbol3DLayerSizeChange}
                   handleTextChange={handleTextSymbol3DLayerTextChange}
                   handleVerticalAlignmentChange={
                     handleTextSymbol3DLayerVerticalAlignmentChange
-                  }
-                ></TextSymbol3DLayerForm>
-              </calcite-block>
+                  }></TextSymbol3DLayerForm>
+              </calcite-block>,
             );
           }
-        }
+        },
       );
       return symbol3DLayerCollectionForm;
     }
@@ -809,24 +559,16 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
 
   return (
     <>
-      <calcite-block
-        style={blockStyles}
-        collapsible
-        heading={"symbolLayers"}
-        expanded
-      >
+      <calcite-block style={blockStyles} collapsible heading={"symbolLayers"} expanded>
         <calcite-chip
           id="add-layer-chip"
           icon="add-layer"
           label="Add layer"
           slot="control"
           value="Information"
-          style={chipStyles}
-        ></calcite-chip>
+          style={chipStyles}></calcite-chip>
         <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
+          <span>Add symbol layer by opening the dropdown menu on the right</span>
         </calcite-tooltip>
 
         <calcite-action
@@ -834,24 +576,21 @@ function PointSymbol3DSymbolLayersForm({ updateSymbolLayers }: Props) {
           slot="header-menu-actions"
           icon="point"
           text-enabled
-          text="Add IconSymbol3DLayer"
-        ></calcite-action>
+          text="Add IconSymbol3DLayer"></calcite-action>
 
         <calcite-action
           onClick={() => addObjectSymbol3DLayer()}
           slot="header-menu-actions"
           icon="point"
           text-enabled
-          text="Add ObjectSymbol3DLayer"
-        ></calcite-action>
+          text="Add ObjectSymbol3DLayer"></calcite-action>
 
         <calcite-action
           onClick={() => addTextSymbol3DLayer()}
           slot="header-menu-actions"
           icon="text"
           text-enabled
-          text="Add TextSymbol3DLayer"
-        ></calcite-action>
+          text="Add TextSymbol3DLayer"></calcite-action>
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>

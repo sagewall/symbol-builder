@@ -1,4 +1,4 @@
-import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
@@ -6,54 +6,29 @@ import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-slider";
 import { useState } from "react";
-import { ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "../lib/constants";
-import { blockStyles, labelStyles } from "../lib/styles";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
+import { iconSymbol3dLayerAnchorOptions } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleIconSymbol3DLayerAnchorChange: (
     layerIndex: number,
-    value: InstanceType<typeof IconSymbol3DLayer>["anchor"]
+    value: InstanceType<typeof IconSymbol3DLayer>["anchor"],
   ) => void;
-  handleIconSymbol3DLayerAnchorPositionXChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerAngleChange: (
-    layerIndex: number,
-    value: number
-  ) => void;
-  handleIconSymbol3DLayerAnchorPositionYChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerMaterialColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerOutlineColorChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerOutlineSizeChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
-  handleIconSymbol3DLayerResourceHrefChange: (
-    layerIndex: number,
-    value: string
-  ) => void;
+  handleIconSymbol3DLayerAnchorPositionXChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerAngleChange: (layerIndex: number, value: number) => void;
+  handleIconSymbol3DLayerAnchorPositionYChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
+  handleIconSymbol3DLayerResourceHrefChange: (layerIndex: number, value: string) => void;
   handleIconSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof IconSymbol3DLayer>["resource"]
-      >["primitive"]
-    >
+    value: NonNullable<NonNullable<InstanceType<typeof IconSymbol3DLayer>["resource"]>["primitive"]>,
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -70,7 +45,7 @@ function IconSymbol3DLayerForm({
   handleIconSymbol3DLayerResourceHrefChange,
   handleIconSymbol3DLayerResourcePrimitiveChange,
   handleSizeChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [anchor, setAnchor] = useState("center");
   const [angle, setAngle] = useState(0);
   const [size, setSize] = useState("12");
@@ -85,34 +60,24 @@ function IconSymbol3DLayerForm({
             setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
-              event.target.value as InstanceType<
-                typeof IconSymbol3DLayer
-              >["anchor"]
+              event.target.value as InstanceType<typeof IconSymbol3DLayer>["anchor"],
             );
           }}
-          value={anchor}
-        >
-          {ICON_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
+          value={anchor}>
+          {iconSymbol3dLayerAnchorOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
       </calcite-label>
 
       {anchor === "relative" && (
-        <calcite-block
-          style={blockStyles}
-          collapsible
-          heading={"anchorPosition"}
-        >
+        <calcite-block style={blockStyles} collapsible heading={"anchorPosition"}>
           <IconSymbol3DLayerAnchorPositionForm
             layerIndex={layerIndex}
-            handleIconSymbol3DLayerAnchorPositionXChange={
-              handleIconSymbol3DLayerAnchorPositionXChange
-            }
+            handleIconSymbol3DLayerAnchorPositionXChange={handleIconSymbol3DLayerAnchorPositionXChange}
             handleIconSymbol3DLayerAnchorPositionYChange={
               handleIconSymbol3DLayerAnchorPositionYChange
-            }
-          ></IconSymbol3DLayerAnchorPositionForm>
+            }></IconSymbol3DLayerAnchorPositionForm>
         </calcite-block>
       )}
 
@@ -125,38 +90,31 @@ function IconSymbol3DLayerForm({
           min={0}
           oncalciteSliderChange={(event) => {
             setAngle(event.target.value as number);
-            handleIconSymbol3DLayerAngleChange(
-              layerIndex,
-              event.target.value as number
-            );
+            handleIconSymbol3DLayerAngleChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={180}
-          value={angle}
-        ></calcite-slider>
+          value={angle}></calcite-slider>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"material"}>
         <IconSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
-          handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
-        ></IconSymbol3DLayerMaterialForm>
+          handleColorChange={handleIconSymbol3DLayerMaterialColorChange}></IconSymbol3DLayerMaterialForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} collapsible heading={"outline"}>
         <IconSymbol3DLayerOutlineForm
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
-          handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
-        ></IconSymbol3DLayerOutlineForm>
+          handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}></IconSymbol3DLayerOutlineForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} collapsible heading={"resource"}>
         <IconSymbol3DLayerResourceForm
           layerIndex={layerIndex}
           handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
-          handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
-        ></IconSymbol3DLayerResourceForm>
+          handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}></IconSymbol3DLayerResourceForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -168,8 +126,7 @@ function IconSymbol3DLayerForm({
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}
-        ></calcite-input-number>
+          value={size}></calcite-input-number>
       </calcite-label>
     </>
   );

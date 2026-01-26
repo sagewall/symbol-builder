@@ -1,4 +1,4 @@
-import esriRequest from "@arcgis/core/request";
+import esriRequest from "@arcgis/core/request.js";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-list";
@@ -11,54 +11,47 @@ import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
 import { useState } from "react";
 import {
-  ESRI_ICONS_STYLE_NAME_OPTIONS,
-  ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS,
-  ESRI_RECREATION_STYLE_NAME_OPTIONS,
-  ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS,
-  ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS,
-  WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS,
-} from "../lib/constants";
-import { labelStyles } from "../lib/styles";
-import type { ItemType, WebStyleStymbolItem } from "../lib/types";
+  esriIconsStyleNameOptions,
+  esriInfrastructureStyleNameOptions,
+  esriRealisticSignsAndSignalsStyleNameOptions,
+  esriRealisticStreetSceneStyleNameOptions,
+  esriRealisticTransportationStyleNameOptions,
+  esriRealisticTreesStyleNameOptions,
+  esriRecreationStyleNameOptions,
+  esriThematicShapesStyleNameOptions,
+  esriThematicTreesStyleNameOptions,
+  webStyleSymbols3DStyleOptions,
+} from "./lib/constants";
+import { labelStyles } from "./lib/styles";
+import type { ItemType, WebStyleStymbolItem } from "./lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (
-    styleUrl: string,
-    name: string,
-    itemType: ItemType
-  ) => void;
+  handleCustomStyleChange: (styleUrl: string, name: string, itemType: ItemType) => void;
 }
 
 function WebStyleSymbolForm({
   handleNameChange,
   handleStyleNameChange,
   handleCustomStyleChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [name, setName] = useState("Accessibility");
-  const [names, setNames] = useState(ESRI_ICONS_STYLE_NAME_OPTIONS);
-  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<
-    WebStyleStymbolItem[]
-  >([]);
+  const [names, setNames] = useState(esriIconsStyleNameOptions);
+  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<WebStyleStymbolItem[]>([]);
   const [styleName, setStyleName] = useState("EsriIconsStyle");
   const [styleUrl, setStyleUrl] = useState("");
 
-  async function getStyleItemDataFromUrl(url: string) {
+  async function getStyleItemDataFromUrl(url: string): Promise<void> {
     const response = await esriRequest(url, {
       responseType: "json",
     });
-    const items = response.data.items;
+    const data = response.data as { items: WebStyleStymbolItem[] };
+    const items = data.items;
 
     const pointItems = items
       .filter((item: WebStyleStymbolItem) => item.itemType === "pointSymbol")
-      .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => {
-        return a.name.localeCompare(b.name);
-      });
+      .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => a.name.localeCompare(b.name));
 
     if (pointItems.length > 0) {
       setPointWebStyleSymbolItems(pointItems);
@@ -66,7 +59,7 @@ function WebStyleSymbolForm({
     }
   }
 
-  const handleTabChange = (event: CustomEvent) => {
+  const handleTabChange = async (event: CustomEvent): Promise<void> => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
     if (tabNav.selectedTitle.tab === "standard") {
       setName("Accessibility");
@@ -74,75 +67,70 @@ function WebStyleSymbolForm({
       handleStyleNameChange(styleName);
     } else {
       setName("");
-      setStyleUrl(
-        "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data"
-      );
-      getStyleItemDataFromUrl(
-        "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data"
+      setStyleUrl("https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data");
+      await getStyleItemDataFromUrl(
+        "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data",
       );
     }
   };
 
-  const updateNames = (styleName: string) => {
+  const updateNames = (styleName: string): void => {
     switch (styleName) {
       case "EsriIconsStyle":
-        setNames(ESRI_ICONS_STYLE_NAME_OPTIONS);
-        setName(ESRI_ICONS_STYLE_NAME_OPTIONS[0]);
+        setNames(esriIconsStyleNameOptions);
+        setName(esriIconsStyleNameOptions[0]);
         break;
 
       case "EsriInfrastructureStyle":
-        setNames(ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS);
-        setName(ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS[0]);
+        setNames(esriInfrastructureStyleNameOptions);
+        setName(esriInfrastructureStyleNameOptions[0]);
         break;
 
       case "EsriRealisticSignsandSignalsStyle":
-        setNames(ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS);
-        setName(ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS[0]);
+        setNames(esriRealisticSignsAndSignalsStyleNameOptions);
+        setName(esriRealisticSignsAndSignalsStyleNameOptions[0]);
         break;
 
       case "EsriRealisticStreetSceneStyle":
-        setNames(ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS);
-        setName(ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS[0]);
+        setNames(esriRealisticStreetSceneStyleNameOptions);
+        setName(esriRealisticStreetSceneStyleNameOptions[0]);
         break;
 
       case "EsriRealisticTransportationStyle":
-        setNames(ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS);
-        setName(ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS[0]);
+        setNames(esriRealisticTransportationStyleNameOptions);
+        setName(esriRealisticTransportationStyleNameOptions[0]);
         break;
 
       case "EsriRealisticTreesStyle":
-        setNames(ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS);
-        setName(ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS[0]);
+        setNames(esriRealisticTreesStyleNameOptions);
+        setName(esriRealisticTreesStyleNameOptions[0]);
         break;
 
       case "EsriRecreationStyle":
-        setNames(ESRI_RECREATION_STYLE_NAME_OPTIONS);
-        setName(ESRI_RECREATION_STYLE_NAME_OPTIONS[0]);
+        setNames(esriRecreationStyleNameOptions);
+        setName(esriRecreationStyleNameOptions[0]);
         break;
 
       case "EsriThematicShapesStyle":
-        setNames(ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS);
-        setName(ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS[0]);
+        setNames(esriThematicShapesStyleNameOptions);
+        setName(esriThematicShapesStyleNameOptions[0]);
         break;
 
       case "EsriThematicTreesStyle":
-        setNames(ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS);
-        setName(ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS[0]);
+        setNames(esriThematicTreesStyleNameOptions);
+        setName(esriThematicTreesStyleNameOptions[0]);
         break;
 
       default:
-        setNames(ESRI_ICONS_STYLE_NAME_OPTIONS);
-        setName(ESRI_ICONS_STYLE_NAME_OPTIONS[0]);
+        setNames(esriIconsStyleNameOptions);
+        setName(esriIconsStyleNameOptions[0]);
     }
   };
 
   return (
     <>
       <calcite-tabs>
-        <calcite-tab-nav
-          slot="title-group"
-          oncalciteTabChange={handleTabChange}
-        >
+        <calcite-tab-nav slot="title-group" oncalciteTabChange={handleTabChange}>
           <calcite-tab-title tab="standard">Standard</calcite-tab-title>
           <calcite-tab-title tab="custom">Custom</calcite-tab-title>
         </calcite-tab-nav>
@@ -152,11 +140,10 @@ function WebStyleSymbolForm({
             <calcite-select
               label={"name selection"}
               oncalciteSelectChange={(event) => {
-                setName(event.target.value as string);
-                handleNameChange(event.target.value as string);
+                setName(event.target.value);
+                handleNameChange(event.target.value);
               }}
-              value={name}
-            >
+              value={name}>
               {names.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -172,9 +159,8 @@ function WebStyleSymbolForm({
                 handleStyleNameChange(event.target.value);
                 updateNames(event.target.value);
               }}
-              value={styleName}
-            >
-              {WEB_STYLE_SYMBOLS_3D_STYLE_OPTIONS.map((option, index) => (
+              value={styleName}>
+              {webStyleSymbols3DStyleOptions.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
             </calcite-select>
@@ -185,19 +171,13 @@ function WebStyleSymbolForm({
             styleUrl
             <calcite-input-text
               label={"url input"}
-              oncalciteInputTextChange={(event) => {
+              oncalciteInputTextChange={async (event) => {
                 setStyleUrl(event.target.value);
-                getStyleItemDataFromUrl(event.target.value);
+                await getStyleItemDataFromUrl(event.target.value);
               }}
-              value={styleUrl}
-            ></calcite-input-text>
+              value={styleUrl}></calcite-input-text>
           </calcite-label>
-          <calcite-list
-            displayMode="nested"
-            filter-enabled
-            filter-placeholder="Filter symbols"
-            label="WebStyleSymbols"
-          >
+          <calcite-list displayMode="nested" filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
             {pointWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Point Symbols" expanded>
                 <calcite-list label="Point Symbols">
@@ -207,24 +187,13 @@ function WebStyleSymbolForm({
                       label={item.name}
                       onClick={(event) => {
                         const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
+                          (event.target as HTMLCalciteListItemElement).label === undefined
                             ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
-                        handleCustomStyleChange(
-                          styleUrl,
-                          newName,
-                          "pointSymbol"
-                        );
+                            : (event.target as HTMLCalciteListItemElement).label;
+                        handleCustomStyleChange(styleUrl, newName, "pointSymbol");
                       }}
-                      value={item.name}
-                    >
-                      <img
-                        alt={item.name}
-                        slot="content-start"
-                        src={item.thumbnail.href}
-                      />
+                      value={item.name}>
+                      <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
                     </calcite-list-item>
                   ))}
                 </calcite-list>

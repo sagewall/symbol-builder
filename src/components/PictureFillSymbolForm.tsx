@@ -1,25 +1,19 @@
-import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleHeightChange: (value: string) => void;
-  handleOutlineCapChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["cap"]
-  ) => void;
+  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["join"]
-  ) => void;
+  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["style"]
-  ) => void;
+  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
   handleOutlineWidthChange: (value: string) => void;
   handleUrlChange: (value: string) => void;
   handleWidthChange: (value: string) => void;
@@ -43,11 +37,9 @@ function PictureFillSymbolForm({
   handleXScaleChange,
   handleYOffsetChange,
   handleYScaleChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [height, setHeight] = useState("75");
-  const [url, setUrl] = useState(
-    "https://sagewall.github.io/test-images/globie.png"
-  );
+  const [url, setUrl] = useState("https://sagewall.github.io/test-images/globie.png");
   const [width, setWidth] = useState("75");
   const [xoffset, setXoffset] = useState("0");
   const [xscale, setXscale] = useState("1");
@@ -65,8 +57,7 @@ function PictureFillSymbolForm({
             setHeight(event.target.value);
             handleHeightChange(event.target.value);
           }}
-          value={height}
-        ></calcite-input-number>
+          value={height}></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -78,8 +69,7 @@ function PictureFillSymbolForm({
             setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
-          value={width}
-        ></calcite-input-number>
+          value={width}></calcite-input-number>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"outline:"}>
@@ -91,8 +81,7 @@ function PictureFillSymbolForm({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
-          solidOnly={false}
-        ></SimpleLineSymbolForm>
+          solidOnly={false}></SimpleLineSymbolForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -103,8 +92,7 @@ function PictureFillSymbolForm({
             setUrl(event.target.value);
             handleUrlChange(event.target.value);
           }}
-          value={url}
-        ></calcite-input-text>
+          value={url}></calcite-input-text>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -115,8 +103,7 @@ function PictureFillSymbolForm({
             setXoffset(event.target.value);
             handleXOffsetChange(event.target.value);
           }}
-          value={xoffset}
-        ></calcite-input-number>
+          value={xoffset}></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -127,8 +114,7 @@ function PictureFillSymbolForm({
             setYoffset(event.target.value);
             handleYOffsetChange(event.target.value);
           }}
-          value={yoffset}
-        ></calcite-input-number>
+          value={yoffset}></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -140,8 +126,7 @@ function PictureFillSymbolForm({
             setXscale(event.target.value);
             handleXScaleChange(event.target.value);
           }}
-          value={xscale}
-        ></calcite-input-number>
+          value={xscale}></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -153,8 +138,7 @@ function PictureFillSymbolForm({
             setYscale(event.target.value);
             handleYScaleChange(event.target.value);
           }}
-          value={yscale}
-        ></calcite-input-number>
+          value={yscale}></calcite-input-number>
       </calcite-label>
     </>
   );

@@ -38,7 +38,9 @@ export const labelStyles = {
   "--calcite-label-margin-bottom": "2em",
 };
 
-export const shellStyles = {};
+export const shellStyles = {
+  border: "1px solid",
+};
 
 export const shellPanelStyles = {
   "--calcite-shell-panel-min-width": "16.5em",

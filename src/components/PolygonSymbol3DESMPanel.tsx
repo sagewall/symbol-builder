@@ -1,18 +1,18 @@
-import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
+import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-alert";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   polygonSymbol3D: PolygonSymbol3D;
 }
 
-function PolygonSymbol3DESMPanel({ polygonSymbol3D }: Props) {
+function PolygonSymbol3DESMPanel({ polygonSymbol3D }: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;
@@ -61,35 +61,45 @@ function PolygonSymbol3DESMPanel({ polygonSymbol3D }: Props) {
   });
 
   let codeSnippet = `\n`;
-  if (colorImport)
+  if (colorImport) {
     codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
+  }
 
-  if (extrudeSymbol3DLayerImport)
+  if (extrudeSymbol3DLayerImport) {
     codeSnippet += `import ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";\n`;
+  }
 
-  if (fillSymbol3DLayerImport)
+  if (fillSymbol3DLayerImport) {
     codeSnippet += `import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";\n`;
+  }
 
-  if (iconSymbol3DLayerImport)
+  if (iconSymbol3DLayerImport) {
     codeSnippet += `import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";\n`;
+  }
 
-  if (objectSymbol3DLayerImport)
+  if (objectSymbol3DLayerImport) {
     codeSnippet += `import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";\n`;
+  }
 
-  if (polygonSymbol3DImport)
+  if (polygonSymbol3DImport) {
     codeSnippet += `import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";\n`;
+  }
 
-  if (waterSymbol3DLayerImport)
+  if (waterSymbol3DLayerImport) {
     codeSnippet += `import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";\n`;
+  }
 
-  if (lineStylePattern3DImport)
+  if (lineStylePattern3DImport) {
     codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
+  }
 
-  if (solidEdges3DImport)
+  if (solidEdges3DImport) {
     codeSnippet += `import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";\n`;
+  }
 
-  if (stylePattern3DImport)
+  if (stylePattern3DImport) {
     codeSnippet += `import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";\n`;
+  }
 
   codeSnippet += `
 const polygonSymbol3D = new PolygonSymbol3D({
@@ -98,19 +108,15 @@ const polygonSymbol3D = new PolygonSymbol3D({
 
   polygonSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (
-        symbolLayer.material?.color &&
-        symbolLayer.outline?.color &&
-        symbolLayer.outline?.pattern
-      ) {
+      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.outline?.pattern) {
         codeSnippet += `
     new FillSymbol3DLayer({
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
         colorMixMode: "${symbolLayer.material.colorMixMode}",
       },
       outline: {
-        color: new Color([${symbolLayer.outline.color.toRgba()}]),
+        color: new Color([${symbolLayer.outline.color.toRgba().toString()}]),
         pattern: new LineStylePattern3D({
           style: "${symbolLayer.outline.pattern.style}"
         }),
@@ -131,12 +137,12 @@ const polygonSymbol3D = new PolygonSymbol3D({
     new ExtrudeSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
       edges: new SolidEdges3D({
-        color: new Color([${symbolLayer.edges?.color?.toRgba()}]),
+        color: new Color([${symbolLayer.edges?.color?.toRgba().toString()}]),
         extensionLength: ${symbolLayer.edges?.extensionLength},
         size: ${symbolLayer.edges?.size}
       }),
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       size: ${symbolLayer.size}
     }),
@@ -147,7 +153,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
     if (symbolLayer.type === "water") {
       codeSnippet += `
     new WaterSymbol3DLayer({
-      color: new Color([${symbolLayer.color?.toRgba()}]),
+      color: new Color([${symbolLayer.color?.toRgba().toString()}]),
       waterbodySize: "${symbolLayer.waterbodySize}",
       waveDirection: ${symbolLayer.waveDirection},
       waveStrength: "${symbolLayer.waveStrength}"
@@ -165,10 +171,10 @@ const polygonSymbol3D = new PolygonSymbol3D({
         y: ${symbolLayer.anchorPosition.y}
       },
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}])
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       outline: {
-        color: new Color([${symbolLayer.outline.color.toRgba()}]),
+        color: new Color([${symbolLayer.outline.color.toRgba().toString()}]),
         size: ${symbolLayer.outline.size}
       },`;
 
@@ -208,7 +214,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}])
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {
         href: "${symbolLayer.resource.href}"
@@ -218,10 +224,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       width: ${symbolLayer.width}
     }),
     `;
-      } else if (
-        symbolLayer.material?.color &&
-        symbolLayer.resource?.primitive
-      ) {
+      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
       anchor: "${symbolLayer.anchor}",
@@ -235,7 +238,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}])
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {
         primitive: "${symbolLayer.resource.primitive}",
@@ -263,8 +266,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}
-        ></calcite-action>
+          onClick={handleCopyClick}></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -274,8 +276,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}
-      >
+        ref={alertRef}>
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

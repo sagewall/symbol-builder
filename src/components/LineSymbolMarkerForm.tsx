@@ -1,30 +1,23 @@
-import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
+import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker.js";
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
-import {
-  MARKER_PLACEMENT_OPTIONS,
-  MARKER_STYLE_OPTIONS,
-} from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+import { markerPlacementOptions, markerStyleOptions } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   handleColorChange: ((value: string) => void) | undefined;
-  handlePlacementChange:
-    | ((value: InstanceType<typeof LineSymbolMarker>["placement"]) => void)
-    | undefined;
-  handleStyleChange:
-    | ((value: InstanceType<typeof LineSymbolMarker>["style"]) => void)
-    | undefined;
+  handlePlacementChange: ((value: InstanceType<typeof LineSymbolMarker>["placement"]) => void) | undefined;
+  handleStyleChange: ((value: InstanceType<typeof LineSymbolMarker>["style"]) => void) | undefined;
 }
 
 function LineSymbolMarkerForm({
   handleColorChange,
   handlePlacementChange,
   handleStyleChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#007ac2");
   const [placement, setPlacement] = useState("begin-end");
   const [style, setStyle] = useState("arrow");
@@ -36,15 +29,14 @@ function LineSymbolMarkerForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
             if (handleColorChange) {
-              handleColorChange(event.target.value as string);
+              handleColorChange(event.target.value);
             }
           }}
           type="color"
-          value={color}
-        ></calcite-input>
+          value={color}></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -54,16 +46,11 @@ function LineSymbolMarkerForm({
           oncalciteSelectChange={(event) => {
             setPlacement(event.target.value);
             if (handlePlacementChange) {
-              handlePlacementChange(
-                event.target.value as InstanceType<
-                  typeof LineSymbolMarker
-                >["placement"]
-              );
+              handlePlacementChange(event.target.value as InstanceType<typeof LineSymbolMarker>["placement"]);
             }
           }}
-          value={placement}
-        >
-          {MARKER_PLACEMENT_OPTIONS.map((option, index) => (
+          value={placement}>
+          {markerPlacementOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
@@ -76,16 +63,11 @@ function LineSymbolMarkerForm({
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
             if (handleStyleChange) {
-              handleStyleChange(
-                event.target.value as InstanceType<
-                  typeof LineSymbolMarker
-                >["style"]
-              );
+              handleStyleChange(event.target.value as InstanceType<typeof LineSymbolMarker>["style"]);
             }
           }}
-          value={style}
-        >
-          {MARKER_STYLE_OPTIONS.map((option, index) => (
+          value={style}>
+          {markerStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

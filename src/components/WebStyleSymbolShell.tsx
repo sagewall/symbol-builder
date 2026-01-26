@@ -1,7 +1,7 @@
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import esriRequest from "@arcgis/core/request";
-import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import esriRequest from "@arcgis/core/request.js";
+import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
@@ -12,28 +12,6 @@ import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
 import { useEffect, useRef, useState } from "react";
-import {
-  ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS,
-  ESRI_ICONS_STYLE_NAME_OPTIONS,
-  ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS,
-  ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS,
-  ESRI_RECREATION_STYLE_NAME_OPTIONS,
-  ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS,
-  ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS,
-} from "../lib/constants";
-import { point, polygon, polyline } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles,
-} from "../lib/styles";
-import type { GroupItem, ItemType } from "../lib/types";
-import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
 import WebStyleSymbol2DForm from "./WebStyleSymbol2DForm";
@@ -41,26 +19,38 @@ import WebStyleSymbol3DForm from "./WebStyleSymbol3DForm";
 import WebStyleSymbolCDNPanel from "./WebStyleSymbolCDNPanel";
 import WebStyleSymbolESMPanel from "./WebStyleSymbolESMPanel";
 import WebStyleSymbolJSONPanel from "./WebStyleSymbolJSONPanel";
+import {
+  esri2DPointSymbolsStyleNameOptions,
+  esriIconsStyleNameOptions,
+  esriInfrastructureStyleNameOptions,
+  esriRealisticSignsAndSignalsStyleNameOptions,
+  esriRealisticStreetSceneStyleNameOptions,
+  esriRealisticTransportationStyleNameOptions,
+  esriRealisticTreesStyleNameOptions,
+  esriRecreationStyleNameOptions,
+  esriThematicShapesStyleNameOptions,
+  esriThematicTreesStyleNameOptions,
+} from "./lib/constants";
+import { point, polygon, polyline } from "./lib/geometry";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import type { GroupItem, ItemType } from "./lib/types";
 
-function WebStyleSymbolShell() {
+function WebStyleSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
 
   const defaultPointWebStyleSymbol2D = new WebStyleSymbol({
     name: "Armadillo",
-    styleUrl:
-      "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
+    styleUrl: "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
   });
 
   const defaultPolygonWebStyleSymbol2D = new WebStyleSymbol({
     name: "A Crosshatch",
-    styleUrl:
-      "https://www.arcgis.com/sharing/rest/content/items/807adef8568448318173798e15954ee5/data",
+    styleUrl: "https://www.arcgis.com/sharing/rest/content/items/807adef8568448318173798e15954ee5/data",
   });
 
   const defaultPolylineWebStyleSymbol2D = new WebStyleSymbol({
     name: "Aqueduct",
-    styleUrl:
-      "https://www.arcgis.com/sharing/rest/content/items/971bd7dfb0684860957ab7844a245bc1/data",
+    styleUrl: "https://www.arcgis.com/sharing/rest/content/items/971bd7dfb0684860957ab7844a245bc1/data",
   });
 
   const defaultWebStyleSymbol3D = new WebStyleSymbol({
@@ -68,19 +58,11 @@ function WebStyleSymbolShell() {
     styleName: "EsriIconsStyle",
   });
 
-  const [currentWebStyleSymbol, setCurrentWebStyleSymbol] = useState(
-    defaultPointWebStyleSymbol2D
-  );
-  const [groupItems, setGroupItems] = useState([]);
-  const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(
-    defaultPointWebStyleSymbol2D
-  );
-  const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(
-    defaultPolygonWebStyleSymbol2D
-  );
-  const [polylineWebStyleSymbol, setPolylineWebStyleSymbol] = useState(
-    defaultPolylineWebStyleSymbol2D
-  );
+  const [currentWebStyleSymbol, setCurrentWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
+  const [groupItems, setGroupItems] = useState<GroupItem[]>([]);
+  const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
+  const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(defaultPolygonWebStyleSymbol2D);
+  const [polylineWebStyleSymbol, setPolylineWebStyleSymbol] = useState(defaultPolylineWebStyleSymbol2D);
 
   const pointGraphic = new Graphic({
     geometry: point,
@@ -100,8 +82,7 @@ function WebStyleSymbolShell() {
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -109,7 +90,7 @@ function WebStyleSymbolShell() {
     viewElement = <Scene graphics={graphics}></Scene>;
   }
 
-  const handleSwitchChange = () => {
+  const handleSwitchChange = (): void => {
     if (viewSwitchRef.current) {
       setScene((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
       if ((viewSwitchRef.current as HTMLCalciteSwitchElement).checked) {
@@ -120,10 +101,7 @@ function WebStyleSymbolShell() {
     }
   };
 
-  const updateGraphics = (
-    newWebStyleSymbol: WebStyleSymbol,
-    itemType: ItemType
-  ) => {
+  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol, itemType: ItemType): void => {
     if (itemType === "pointSymbol") {
       setPointWebStyleSymbol(newWebStyleSymbol);
       setCurrentWebStyleSymbol(newWebStyleSymbol);
@@ -161,68 +139,61 @@ function WebStyleSymbolShell() {
     }
   };
 
-  const handleNameChange = (currentName: string) => {
+  const handleNameChange = (currentName: string): void => {
     const newWebStyleSymbol = pointWebStyleSymbol.clone();
     newWebStyleSymbol.name = currentName;
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
-  const handleStyleNameChange = (currentStyleName: string) => {
+  const handleStyleNameChange = (currentStyleName: string): void => {
     const newWebStyleSymbol = new WebStyleSymbol();
 
     switch (currentStyleName) {
       case "EsriIconsStyle":
-        newWebStyleSymbol.name = ESRI_ICONS_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriIconsStyleNameOptions[0];
         break;
 
       case "EsriInfrastructureStyle":
-        newWebStyleSymbol.name = ESRI_INFRASTRUCTURE_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriInfrastructureStyleNameOptions[0];
         break;
 
       case "EsriRealisticSignsandSignalsStyle":
-        newWebStyleSymbol.name =
-          ESRI_REALISTIC_SIGNS_AND_SIGNALS_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriRealisticSignsAndSignalsStyleNameOptions[0];
         break;
 
       case "EsriRealisticStreetSceneStyle":
-        newWebStyleSymbol.name =
-          ESRI_REALISTIC_STREET_SCENE_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriRealisticStreetSceneStyleNameOptions[0];
         break;
 
       case "EsriRealisticTransportationStyle":
-        newWebStyleSymbol.name =
-          ESRI_REALISTIC_TRANSPORTATION_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriRealisticTransportationStyleNameOptions[0];
         break;
 
       case "EsriRealisticTreesStyle":
-        newWebStyleSymbol.name = ESRI_REALISTIC_TREES_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriRealisticTreesStyleNameOptions[0];
         break;
 
       case "EsriRecreationStyle":
-        newWebStyleSymbol.name = ESRI_RECREATION_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriRecreationStyleNameOptions[0];
         break;
 
       case "EsriThematicShapesStyle":
-        newWebStyleSymbol.name = ESRI_THEMATIC_SHAPES_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriThematicShapesStyleNameOptions[0];
         break;
 
       case "EsriThematicTreesStyle":
-        newWebStyleSymbol.name = ESRI_THEMATIC_TREES_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esriThematicTreesStyleNameOptions[0];
         break;
 
       default:
-        newWebStyleSymbol.name = ESRI_2D_POINT_SYMBOLS_STYLE_NAME_OPTIONS[0];
+        newWebStyleSymbol.name = esri2DPointSymbolsStyleNameOptions[0];
     }
 
     newWebStyleSymbol.styleName = currentStyleName;
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
-  const handleCustomStyleChange = (
-    currentStyleUrl: string,
-    currentName: string,
-    itemType: ItemType
-  ) => {
+  const handleCustomStyleChange = (currentStyleUrl: string, currentName: string, itemType: ItemType): void => {
     const newWebStyleSymbol = new WebStyleSymbol();
     newWebStyleSymbol.name = currentName;
     newWebStyleSymbol.styleUrl = currentStyleUrl;
@@ -240,13 +211,16 @@ function WebStyleSymbolShell() {
     }
   };
 
-  const requestGroupItems = async (itemId: string) => {
-    const response = await esriRequest(
-      `https://www.arcgis.com/sharing/rest/content/groups/${itemId}?f=pjson`,
-      {
-        responseType: "json",
-      }
-    );
+  interface EsriGroupItemsResponse {
+    data: {
+      items: GroupItem[];
+    };
+  }
+
+  const requestGroupItems = async (itemId: string): Promise<void> => {
+    const response = (await esriRequest(`https://www.arcgis.com/sharing/rest/content/groups/${itemId}?f=pjson`, {
+      responseType: "json",
+    })) as EsriGroupItemsResponse;
     const sortedGroupItems = response.data.items
       .filter((item: GroupItem) => item.type === "Style")
       .sort((a: GroupItem, b: GroupItem) => a.title.localeCompare(b.title));
@@ -254,26 +228,21 @@ function WebStyleSymbolShell() {
   };
 
   useEffect(() => {
-    requestGroupItems("7687bc306b8048a48efd92b3a6da9d88");
+    const fetchGroupItems = async (): Promise<void> => {
+      await requestGroupItems("7687bc306b8048a48efd92b3a6da9d88");
+    };
+    void fetchGroupItems();
   }, []);
 
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="WebStyleSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
-              <calcite-switch
-                ref={viewSwitchRef}
-                oncalciteSwitchChange={handleSwitchChange}
-              ></calcite-switch>
+              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
               3D
             </calcite-label>
 
@@ -283,25 +252,18 @@ function WebStyleSymbolShell() {
                   groupItems={groupItems}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
-                  handleCustomStyleChange={handleCustomStyleChange}
-                ></WebStyleSymbol2DForm>
+                  handleCustomStyleChange={handleCustomStyleChange}></WebStyleSymbol2DForm>
               ) : (
                 <WebStyleSymbol3DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
-                  handleCustomStyleChange={handleCustomStyleChange}
-                ></WebStyleSymbol3DForm>
+                  handleCustomStyleChange={handleCustomStyleChange}></WebStyleSymbol3DForm>
               )}
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel
-          slot="panel-end"
-          position="end"
-          resizable
-          style={shellPanelStyles}
-        >
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -310,19 +272,13 @@ function WebStyleSymbolShell() {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <WebStyleSymbolESMPanel
-                  webStyleSymbol={currentWebStyleSymbol}
-                ></WebStyleSymbolESMPanel>
+                <WebStyleSymbolESMPanel webStyleSymbol={currentWebStyleSymbol}></WebStyleSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolCDNPanel
-                  webStyleSymbol={currentWebStyleSymbol}
-                ></WebStyleSymbolCDNPanel>
+                <WebStyleSymbolCDNPanel webStyleSymbol={currentWebStyleSymbol}></WebStyleSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolJSONPanel
-                  webStyleSymbol={currentWebStyleSymbol}
-                ></WebStyleSymbolJSONPanel>
+                <WebStyleSymbolJSONPanel webStyleSymbol={currentWebStyleSymbol}></WebStyleSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

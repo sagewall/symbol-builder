@@ -1,6 +1,6 @@
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-panel";
 import "@esri/calcite-components/components/calcite-shell";
@@ -11,23 +11,16 @@ import "@esri/calcite-components/components/calcite-tab-nav";
 import "@esri/calcite-components/components/calcite-tab-title";
 import "@esri/calcite-components/components/calcite-tabs";
 import { useRef, useState } from "react";
-import { point } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles,
-} from "../lib/styles";
-import Header from "./Header";
 import Map from "./Map";
 import PictureMarkerSymbolCDNPanel from "./PictureMarkerSymbolCDNPanel";
 import PictureMarkerSymbolESMPanel from "./PictureMarkerSymbolESMPanel";
 import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
 import Scene from "./Scene";
+import { point } from "./lib/geometry";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
 
-function PictureMarkerSymbolShell() {
+function PictureMarkerSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
 
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
@@ -35,7 +28,7 @@ function PictureMarkerSymbolShell() {
       height: 100,
       url: "https://sagewall.github.io/test-images/globie.png",
       width: 100,
-    })
+    }),
   );
 
   const pointGraphic = new Graphic({
@@ -46,8 +39,7 @@ function PictureMarkerSymbolShell() {
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -55,13 +47,13 @@ function PictureMarkerSymbolShell() {
     viewElement = <Scene graphics={graphics}></Scene>;
   }
 
-  const handleSwitchChange = () => {
+  const handleSwitchChange = (): void => {
     if (viewSwitchRef.current) {
       setScene((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
-  const updateGraphics = (newPictureMarkerSymbol: PictureMarkerSymbol) => {
+  const updateGraphics = (newPictureMarkerSymbol: PictureMarkerSymbol): void => {
     setPictureMarkerSymbol(newPictureMarkerSymbol);
 
     const newPointGraphic = graphics.getItemAt(0)?.clone();
@@ -74,37 +66,37 @@ function PictureMarkerSymbolShell() {
     setGraphics(newGraphics);
   };
 
-  const handleAngleChange = (currentAngle: number) => {
+  const handleAngleChange = (currentAngle: number): void => {
     const newPictureMarkerSymbol = pictureMarkerSymbol.clone();
     newPictureMarkerSymbol.angle = currentAngle;
     updateGraphics(newPictureMarkerSymbol);
   };
 
-  const handleHeightChange = (currentHeight: string) => {
+  const handleHeightChange = (currentHeight: string): void => {
     const newPictureMarkerSymbol = pictureMarkerSymbol.clone();
     newPictureMarkerSymbol.height = Number(currentHeight);
     updateGraphics(newPictureMarkerSymbol);
   };
 
-  const handleUrlChange = (currentUrlValue: string) => {
+  const handleUrlChange = (currentUrlValue: string): void => {
     const newPictureMarkerSymbol = pictureMarkerSymbol.clone();
     newPictureMarkerSymbol.url = currentUrlValue;
     updateGraphics(newPictureMarkerSymbol);
   };
 
-  const handleWidthChange = (currentWidth: string) => {
+  const handleWidthChange = (currentWidth: string): void => {
     const newPictureMarkerSymbol = pictureMarkerSymbol.clone();
     newPictureMarkerSymbol.width = Number(currentWidth);
     updateGraphics(newPictureMarkerSymbol);
   };
 
-  const handleXoffsetChange = (currentXoffset: string) => {
+  const handleXoffsetChange = (currentXoffset: string): void => {
     const newPictureMarkerSymbol = pictureMarkerSymbol.clone();
     newPictureMarkerSymbol.xoffset = Number(currentXoffset);
     updateGraphics(newPictureMarkerSymbol);
   };
 
-  const handleYoffsetChange = (currentYoffset: string) => {
+  const handleYoffsetChange = (currentYoffset: string): void => {
     const newPictureMarkerSymbol = pictureMarkerSymbol.clone();
     newPictureMarkerSymbol.yoffset = Number(currentYoffset);
     updateGraphics(newPictureMarkerSymbol);
@@ -113,20 +105,12 @@ function PictureMarkerSymbolShell() {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="PictureMarkerSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
-              <calcite-switch
-                ref={viewSwitchRef}
-                oncalciteSwitchChange={handleSwitchChange}
-              ></calcite-switch>
+              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
               3D
             </calcite-label>
 
@@ -137,18 +121,12 @@ function PictureMarkerSymbolShell() {
                 handleUrlChange={handleUrlChange}
                 handleWidthChange={handleWidthChange}
                 handleXoffsetChange={handleXoffsetChange}
-                handleYoffsetChange={handleYoffsetChange}
-              ></PictureMarkerSymbolForm>
+                handleYoffsetChange={handleYoffsetChange}></PictureMarkerSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel
-          slot="panel-end"
-          position="end"
-          resizable
-          style={shellPanelStyles}
-        >
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -157,19 +135,13 @@ function PictureMarkerSymbolShell() {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PictureMarkerSymbolESMPanel
-                  pictureMarkerSymbol={pictureMarkerSymbol}
-                ></PictureMarkerSymbolESMPanel>
+                <PictureMarkerSymbolESMPanel pictureMarkerSymbol={pictureMarkerSymbol}></PictureMarkerSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolCDNPanel
-                  pictureMarkerSymbol={pictureMarkerSymbol}
-                ></PictureMarkerSymbolCDNPanel>
+                <PictureMarkerSymbolCDNPanel pictureMarkerSymbol={pictureMarkerSymbol}></PictureMarkerSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolJSONPanel
-                  pictureMarkerSymbol={pictureMarkerSymbol}
-                ></PictureMarkerSymbolJSONPanel>
+                <PictureMarkerSymbolJSONPanel pictureMarkerSymbol={pictureMarkerSymbol}></PictureMarkerSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

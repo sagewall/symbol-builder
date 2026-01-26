@@ -1,22 +1,18 @@
-import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
-import { COLOR_MIX_MODE_OPTIONS } from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+import { colorMixModeOptions } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleColorMixModeChange: (
     layerIndex: number,
-    value: NonNullable<
-      NonNullable<
-        InstanceType<typeof FillSymbol3DLayer>["material"]
-      >["colorMixMode"]
-    >
+    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]>,
   ) => void;
 }
 
@@ -24,7 +20,7 @@ function FillSymbol3DLayerMaterialForm({
   layerIndex,
   handleColorChange,
   handleColorMixModeChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#007ac2");
   const [colorMixMode, setColorMixMode] = useState("multiply");
 
@@ -35,13 +31,12 @@ function FillSymbol3DLayerMaterialForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
-            handleColorChange(layerIndex, event.target.value as string);
+            handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}
-        ></calcite-input>
+          value={color}></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -53,15 +48,12 @@ function FillSymbol3DLayerMaterialForm({
             handleColorMixModeChange(
               layerIndex,
               event.target.value as NonNullable<
-                NonNullable<
-                  InstanceType<typeof FillSymbol3DLayer>["material"]
-                >["colorMixMode"]
-              >
+                NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+              >,
             );
           }}
-          value={colorMixMode}
-        >
-          {COLOR_MIX_MODE_OPTIONS.map((option, index) => (
+          value={colorMixMode}>
+          {colorMixModeOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

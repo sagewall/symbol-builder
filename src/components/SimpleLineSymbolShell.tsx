@@ -1,8 +1,8 @@
-import Color from "@arcgis/core/Color";
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import Color from "@arcgis/core/Color.js";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker.js";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-panel";
 import "@esri/calcite-components/components/calcite-shell";
@@ -13,23 +13,16 @@ import "@esri/calcite-components/components/calcite-tab-nav";
 import "@esri/calcite-components/components/calcite-tab-title";
 import "@esri/calcite-components/components/calcite-tabs";
 import { useRef, useState } from "react";
-import { polyline } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles,
-} from "../lib/styles";
-import Header from "./Header";
 import Map from "./Map";
 import Scene from "./Scene";
 import SimpleLineSymbolCDNPanel from "./SimpleLineSymbolCDNPanel";
 import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
+import { polyline } from "./lib/geometry";
+import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
 
-function SimpleLineSymbolShell() {
+function SimpleLineSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -37,13 +30,13 @@ function SimpleLineSymbolShell() {
       color: "#007ac2",
       miterLimit: 1,
       width: 1,
-    })
+    }),
   );
 
   const [lineSymbolMarker, setLineSymbolMarker] = useState(
     new LineSymbolMarker({
       color: "#007ac2",
-    })
+    }),
   );
 
   const polylineGraphic = new Graphic({
@@ -54,8 +47,7 @@ function SimpleLineSymbolShell() {
   const graphicsCollection = new Collection();
   graphicsCollection.add(polylineGraphic);
 
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -63,13 +55,13 @@ function SimpleLineSymbolShell() {
     viewElement = <Scene graphics={graphics}></Scene>;
   }
 
-  const handleSwitchChange = () => {
+  const handleSwitchChange = (): void => {
     if (viewSwitchRef.current) {
       setScene((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
-  const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol) => {
+  const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol): void => {
     setSimpleLineSymbol(newSimpleLineSymbol);
 
     const newPolylineGraphic = graphics.getItemAt(0)?.clone();
@@ -81,36 +73,30 @@ function SimpleLineSymbolShell() {
     setGraphics(newGraphics);
   };
 
-  const handleCapChange = (
-    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]
-  ) => {
+  const handleCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleColorChange = (currentColor: string) => {
+  const handleColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.color = new Color(currentColor);
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleJoinChange = (
-    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]
-  ) => {
+  const handleJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerBlockToggle = (
-    currentMarkerBlock: HTMLCalciteBlockElement
-  ) => {
+  const handleMarkerBlockToggle = (currentMarkerBlock: HTMLCalciteBlockElement): void => {
     if (currentMarkerBlock.heading === "marker") {
       const newSimpleLineSymbol = simpleLineSymbol.clone();
       if (currentMarkerBlock.expanded) {
         newSimpleLineSymbol.marker = lineSymbolMarker;
-        setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
+        setLineSymbolMarker(newSimpleLineSymbol.marker);
         updateGraphics(newSimpleLineSymbol);
       } else {
         newSimpleLineSymbol.marker = null;
@@ -119,55 +105,51 @@ function SimpleLineSymbolShell() {
     }
   };
 
-  const handleMarkerColorChange = (currentColor: string) => {
+  const handleMarkerColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.color = new Color(currentColor);
     }
 
-    setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
+    setLineSymbolMarker(newSimpleLineSymbol.marker!);
     updateGraphics(newSimpleLineSymbol);
   };
 
   const handleMarkerPlacementChange = (
-    currentPlacementValue: InstanceType<typeof LineSymbolMarker>["placement"]
-  ) => {
+    currentPlacementValue: InstanceType<typeof LineSymbolMarker>["placement"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.placement = currentPlacementValue;
     }
 
-    setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
+    setLineSymbolMarker(newSimpleLineSymbol.marker!);
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerStyleChange = (
-    currentMarkerStyle: InstanceType<typeof LineSymbolMarker>["style"]
-  ) => {
+  const handleMarkerStyleChange = (currentMarkerStyle: InstanceType<typeof LineSymbolMarker>["style"]): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.style = currentMarkerStyle;
     }
 
-    setLineSymbolMarker(newSimpleLineSymbol.marker as LineSymbolMarker);
+    setLineSymbolMarker(newSimpleLineSymbol.marker!);
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMiterLimitChange = (currentMiterLimitValue: string) => {
+  const handleMiterLimitChange = (currentMiterLimitValue: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleStyleChange = (
-    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]
-  ) => {
+  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleWidthChange = (currentWidthValue: string) => {
+  const handleWidthChange = (currentWidthValue: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.width = Number(currentWidthValue);
     updateGraphics(newSimpleLineSymbol);
@@ -176,20 +158,12 @@ function SimpleLineSymbolShell() {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="SimpleLineSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label
-              slot="header-actions-end"
-              layout="inline"
-              style={viewSwitchLabelStyles}
-            >
+            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
               2D
-              <calcite-switch
-                ref={viewSwitchRef}
-                oncalciteSwitchChange={handleSwitchChange}
-              ></calcite-switch>
+              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
               3D
             </calcite-label>
 
@@ -206,18 +180,12 @@ function SimpleLineSymbolShell() {
                 handleStyleChange={handleStyleChange}
                 handleWidthChange={handleWidthChange}
                 showMarker={true}
-                solidOnly={false}
-              ></SimpleLineSymbolForm>
+                solidOnly={false}></SimpleLineSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel
-          slot="panel-end"
-          position="end"
-          resizable
-          style={shellPanelStyles}
-        >
+        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -226,19 +194,13 @@ function SimpleLineSymbolShell() {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <SimpleLineSymbolESMPanel
-                  simpleLineSymbol={simpleLineSymbol}
-                ></SimpleLineSymbolESMPanel>
+                <SimpleLineSymbolESMPanel simpleLineSymbol={simpleLineSymbol}></SimpleLineSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleLineSymbolCDNPanel
-                  simpleLineSymbol={simpleLineSymbol}
-                ></SimpleLineSymbolCDNPanel>
+                <SimpleLineSymbolCDNPanel simpleLineSymbol={simpleLineSymbol}></SimpleLineSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleLineSymbolJSONPanel
-                  simpleLineSymbol={simpleLineSymbol}
-                ></SimpleLineSymbolJSONPanel>
+                <SimpleLineSymbolJSONPanel simpleLineSymbol={simpleLineSymbol}></SimpleLineSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

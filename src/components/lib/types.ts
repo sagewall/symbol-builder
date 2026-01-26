@@ -1,3 +1,5 @@
+import type Font from "@arcgis/core/symbols/Font.js";
+
 export type FontData = {
   font: FontOptions;
   status: number;
@@ -7,13 +9,14 @@ export type FontData = {
   name: string;
   dataUrl: string;
 };
+
 export type FontOptions = {
   family: string;
   style: InstanceType<typeof Font>["style"];
   weight: InstanceType<typeof Font>["weight"];
 };
 
-export type ItemType = "pointSymbol" | "lineSymbol" | "polygonSymbol";
+export type ItemType = "lineSymbol" | "pointSymbol" | "polygonSymbol";
 
 export type GroupItem = {
   access: string;

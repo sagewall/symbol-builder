@@ -1,9 +1,16 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
   "compilerOptions": {
-    "jsx": "preserve",
-    "jsxImportSource": "react"
-  }
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "**/*",
+    "./node_modules/@arcgis/coding-components/dist/types/react.d.ts",
+    "./node_modules/@esri/calcite-components/dist/types/react.d.ts",
+    "./node_modules/@arcgis/map-components/dist/types/react.d.ts",
+    "./types.d.ts"
+  ],
+  "exclude": ["public", "./**/*.test.ts"]
 }

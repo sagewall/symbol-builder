@@ -1,17 +1,14 @@
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
 import { useState } from "react";
-import { labelStyles } from "../lib/styles";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
-function PathSymbol3DLayerMaterialForm({
-  layerIndex,
-  handleColorChange,
-}: Props) {
+function PathSymbol3DLayerMaterialForm({ layerIndex, handleColorChange }: Props): React.ReactElement {
   const [color, setColor] = useState("#007ac2");
 
   return (
@@ -21,15 +18,14 @@ function PathSymbol3DLayerMaterialForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
             if (handleColorChange) {
-              handleColorChange(layerIndex, event.target.value as string);
+              handleColorChange(layerIndex, event.target.value);
             }
           }}
           type="color"
-          value={color}
-        ></calcite-input>
+          value={color}></calcite-input>
       </calcite-label>
     </>
   );
