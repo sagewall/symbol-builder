@@ -27,7 +27,7 @@ export type GroupItem = {
   type: string;
 };
 
-export type WebStyleStymbolItem = {
+export type WebStyleSymbolItem = {
   cimRef: string;
   dimensionality: string;
   formats: string[];

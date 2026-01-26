@@ -4,7 +4,12 @@ import "@esri/calcite-components/components/calcite-chip";
 import "@esri/calcite-components/components/calcite-shell";
 import "@esri/calcite-components/components/calcite-tooltip";
 import { symbols } from "./lib/constants";
-import { cardFooterStyles, cardStyles, cardsStyles, shellStyles } from "./lib/styles";
+import {
+  cardFooterStyles,
+  cardStyles,
+  cardsStyles,
+  shellStyles,
+} from "./lib/styles";
 
 const cards = symbols.map((symbol) => (
   <calcite-card label={symbol.name} style={cardStyles} key={symbol.name}>
@@ -18,8 +23,11 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value={symbol.symbolLayers}
             icon="layers"
-            scale="s"></calcite-chip>
-          <calcite-tooltip reference-element={`${symbol.name}-symbol-layers-chip`}>
+            scale="s"
+          ></calcite-chip>
+          <calcite-tooltip
+            reference-element={`${symbol.name}-symbol-layers-chip`}
+          >
             <span>Symbol Layers</span>
           </calcite-tooltip>
         </>
@@ -32,7 +40,8 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value={symbol.point}
             icon="point"
-            scale="s"></calcite-chip>
+            scale="s"
+          ></calcite-chip>
           <calcite-tooltip reference-element={`${symbol.name}-point-chip`}>
             <span>Point</span>
           </calcite-tooltip>
@@ -46,7 +55,8 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value={symbol.line}
             icon="line"
-            scale="s"></calcite-chip>
+            scale="s"
+          ></calcite-chip>
           <calcite-tooltip reference-element={`${symbol.name}-line-chip`}>
             <span>Line</span>
           </calcite-tooltip>
@@ -60,7 +70,8 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value={symbol.polygon}
             icon="polygon"
-            scale="s"></calcite-chip>
+            scale="s"
+          ></calcite-chip>
           <calcite-tooltip reference-element={`${symbol.name}-polygon-chip`}>
             <span>Polygon</span>
           </calcite-tooltip>
@@ -74,7 +85,8 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value={symbol.mesh}
             icon="cube"
-            scale="s"></calcite-chip>
+            scale="s"
+          ></calcite-chip>
           <calcite-tooltip reference-element={`${symbol.name}-mesh-chip`}>
             <span>Mesh</span>
           </calcite-tooltip>
@@ -88,7 +100,8 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value="2D"
             icon="map"
-            scale="s"></calcite-chip>
+            scale="s"
+          ></calcite-chip>
           <calcite-tooltip reference-element={`${symbol.name}-map-chip`}>
             <span>2D Map View</span>
           </calcite-tooltip>
@@ -102,7 +115,8 @@ const cards = symbols.map((symbol) => (
             label={symbol.name}
             value="3D"
             icon="globe"
-            scale="s"></calcite-chip>
+            scale="s"
+          ></calcite-chip>
           <calcite-tooltip reference-element={`${symbol.name}-scene-chip`}>
             <span>3D Scene View</span>
           </calcite-tooltip>

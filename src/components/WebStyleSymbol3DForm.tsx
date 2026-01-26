@@ -23,12 +23,16 @@ import {
   webStyleSymbols3DStyleOptions,
 } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
-import type { ItemType, WebStyleStymbolItem } from "./lib/types";
+import type { ItemType, WebStyleSymbolItem } from "./lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (value: string) => void;
-  handleCustomStyleChange: (styleUrl: string, name: string, itemType: ItemType) => void;
+  handleCustomStyleChange: (
+    styleUrl: string,
+    name: string,
+    itemType: ItemType,
+  ) => void;
 }
 
 function WebStyleSymbolForm({
@@ -38,7 +42,9 @@ function WebStyleSymbolForm({
 }: Props): React.ReactElement {
   const [name, setName] = useState("Accessibility");
   const [names, setNames] = useState(esriIconsStyleNameOptions);
-  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<WebStyleStymbolItem[]>([]);
+  const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<
+    WebStyleSymbolItem[]
+  >([]);
   const [styleName, setStyleName] = useState("EsriIconsStyle");
   const [styleUrl, setStyleUrl] = useState("");
 
@@ -46,12 +52,14 @@ function WebStyleSymbolForm({
     const response = await esriRequest(url, {
       responseType: "json",
     });
-    const data = response.data as { items: WebStyleStymbolItem[] };
+    const data = response.data as { items: WebStyleSymbolItem[] };
     const items = data.items;
 
     const pointItems = items
-      .filter((item: WebStyleStymbolItem) => item.itemType === "pointSymbol")
-      .sort((a: WebStyleStymbolItem, b: WebStyleStymbolItem) => a.name.localeCompare(b.name));
+      .filter((item: WebStyleSymbolItem) => item.itemType === "pointSymbol")
+      .sort((a: WebStyleSymbolItem, b: WebStyleSymbolItem) =>
+        a.name.localeCompare(b.name),
+      );
 
     if (pointItems.length > 0) {
       setPointWebStyleSymbolItems(pointItems);
@@ -67,7 +75,9 @@ function WebStyleSymbolForm({
       handleStyleNameChange(styleName);
     } else {
       setName("");
-      setStyleUrl("https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data");
+      setStyleUrl(
+        "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data",
+      );
       await getStyleItemDataFromUrl(
         "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data",
       );
@@ -130,7 +140,10 @@ function WebStyleSymbolForm({
   return (
     <>
       <calcite-tabs>
-        <calcite-tab-nav slot="title-group" oncalciteTabChange={handleTabChange}>
+        <calcite-tab-nav
+          slot="title-group"
+          oncalciteTabChange={handleTabChange}
+        >
           <calcite-tab-title tab="standard">Standard</calcite-tab-title>
           <calcite-tab-title tab="custom">Custom</calcite-tab-title>
         </calcite-tab-nav>
@@ -143,7 +156,8 @@ function WebStyleSymbolForm({
                 setName(event.target.value);
                 handleNameChange(event.target.value);
               }}
-              value={name}>
+              value={name}
+            >
               {names.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -159,7 +173,8 @@ function WebStyleSymbolForm({
                 handleStyleNameChange(event.target.value);
                 updateNames(event.target.value);
               }}
-              value={styleName}>
+              value={styleName}
+            >
               {webStyleSymbols3DStyleOptions.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -175,9 +190,15 @@ function WebStyleSymbolForm({
                 setStyleUrl(event.target.value);
                 await getStyleItemDataFromUrl(event.target.value);
               }}
-              value={styleUrl}></calcite-input-text>
+              value={styleUrl}
+            ></calcite-input-text>
           </calcite-label>
-          <calcite-list displayMode="nested" filter-enabled filter-placeholder="Filter symbols" label="WebStyleSymbols">
+          <calcite-list
+            displayMode="nested"
+            filter-enabled
+            filter-placeholder="Filter symbols"
+            label="WebStyleSymbols"
+          >
             {pointWebStyleSymbolItems.length > 0 && (
               <calcite-list-item label="Point Symbols" expanded>
                 <calcite-list label="Point Symbols">
@@ -187,13 +208,24 @@ function WebStyleSymbolForm({
                       label={item.name}
                       onClick={(event) => {
                         const newName =
-                          (event.target as HTMLCalciteListItemElement).label === undefined
+                          (event.target as HTMLCalciteListItemElement).label ===
+                          undefined
                             ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement).label;
-                        handleCustomStyleChange(styleUrl, newName, "pointSymbol");
+                            : (event.target as HTMLCalciteListItemElement)
+                                .label;
+                        handleCustomStyleChange(
+                          styleUrl,
+                          newName,
+                          "pointSymbol",
+                        );
                       }}
-                      value={item.name}>
-                      <img alt={item.name} slot="content-start" src={item.thumbnail.href} />
+                      value={item.name}
+                    >
+                      <img
+                        alt={item.name}
+                        slot="content-start"
+                        src={item.thumbnail.href}
+                      />
                     </calcite-list-item>
                   ))}
                 </calcite-list>
