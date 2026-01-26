@@ -12,7 +12,11 @@ interface Props {
   handleHrefChange: (layerIndex: number, value: string) => void;
   handlePrimitiveChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]>,
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof ObjectSymbol3DLayer>["resource"]
+      >["primitive"]
+    >,
   ) => void;
 }
 
@@ -34,7 +38,8 @@ function ObjectSymbol3DLayerResourceForm({
             setHref(event.target.value);
             handleHrefChange(layerIndex, event.target.value);
           }}
-          value={href}></calcite-input-text>
+          value={href}
+        ></calcite-input-text>
       </calcite-label>
       <calcite-label layout="default" style={labelStyles}>
         primitive
@@ -45,11 +50,14 @@ function ObjectSymbol3DLayerResourceForm({
             handlePrimitiveChange(
               layerIndex,
               event.target.value as NonNullable<
-                NonNullable<InstanceType<typeof ObjectSymbol3DLayer>["resource"]>["primitive"]
+                NonNullable<
+                  InstanceType<typeof ObjectSymbol3DLayer>["resource"]
+                >["primitive"]
               >,
             );
           }}
-          value={primitive}>
+          value={primitive}
+        >
           {objectSymbol3dLayerResourcePrimitiveOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}

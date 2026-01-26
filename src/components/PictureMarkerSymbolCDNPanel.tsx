@@ -9,7 +9,9 @@ interface Props {
   pictureMarkerSymbol: PictureMarkerSymbol;
 }
 
-function PictureMarkerSymbolCDNPanel({ pictureMarkerSymbol }: Props): React.ReactElement {
+function PictureMarkerSymbolCDNPanel({
+  pictureMarkerSymbol,
+}: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async (): Promise<void> => {
@@ -41,7 +43,8 @@ const pictureMarkerSymbol = new PictureMarkerSymbol({
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}></calcite-action>
+          onClick={handleCopyClick}
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -51,7 +54,8 @@ const pictureMarkerSymbol = new PictureMarkerSymbol({
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}>
+        ref={alertRef}
+      >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

@@ -33,7 +33,11 @@ const pointSymbol3D = new PointSymbol3D({
 
   pointSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.href
+      ) {
         codeSnippet += `
   {
     type: "icon",
@@ -55,7 +59,11 @@ const pointSymbol3D = new PointSymbol3D({
     size: ${symbolLayer.size}
   },
   `;
-      } else if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.primitive) {
+      } else if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.primitive
+      ) {
         codeSnippet += `
     {
       type: "icon",
@@ -107,7 +115,10 @@ const pointSymbol3D = new PointSymbol3D({
       width: ${symbolLayer.width}
     },
     `;
-      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
+      } else if (
+        symbolLayer.material?.color &&
+        symbolLayer.resource?.primitive
+      ) {
         codeSnippet += `
     {
       type: "object",
@@ -136,7 +147,11 @@ const pointSymbol3D = new PointSymbol3D({
     }
 
     if (symbolLayer.type === "text") {
-      if (symbolLayer.background?.color && symbolLayer.halo?.color && symbolLayer.material?.color) {
+      if (
+        symbolLayer.background?.color &&
+        symbolLayer.halo?.color &&
+        symbolLayer.material?.color
+      ) {
         codeSnippet += `
     {
       type: "text",
@@ -187,7 +202,8 @@ const pointSymbol3D = new PointSymbol3D({
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}></calcite-action>
+          onClick={handleCopyClick}
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -197,7 +213,8 @@ const pointSymbol3D = new PointSymbol3D({
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}>
+        ref={alertRef}
+      >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

@@ -19,7 +19,13 @@ import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 import { point } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "./lib/styles";
 
 function SimpleMarkerSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
@@ -42,7 +48,8 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <MapElement graphics={graphics}></MapElement>;
@@ -80,7 +87,9 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]): void => {
+  const handleOutlineCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -100,7 +109,9 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]): void => {
+  const handleOutlineJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -110,7 +121,9 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineMiterLimitChange = (currentMiterLimitValue: string): void => {
+  const handleOutlineMiterLimitChange = (
+    currentMiterLimitValue: string,
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -120,7 +133,9 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]): void => {
+  const handleOutlineStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -152,7 +167,9 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleMarkerSymbol>["style"]): void => {
+  const handleStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleMarkerSymbol>["style"],
+  ): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.style = currentStyleValue;
     updateGraphics(newSimpleMarkerSymbol);
@@ -175,9 +192,16 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
       <calcite-shell-panel slot="panel-start" position="start" resizable>
         <calcite-panel>
           <div slot="header-content">Properties </div>
-          <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+          <calcite-label
+            slot="header-actions-end"
+            layout="inline"
+            style={viewSwitchLabelStyles}
+          >
             2D
-            <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
+            <calcite-switch
+              ref={viewSwitchRef}
+              oncalciteSwitchChange={handleSwitchChange}
+            ></calcite-switch>
             3D
           </calcite-label>
 
@@ -196,12 +220,18 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
               handleStyleChange={handleStyleChange}
               handleXoffsetChange={handleXoffsetChange}
               handleYoffsetChange={handleYoffsetChange}
-              scene={scene}></SimpleMarkerSymbolForm>
+              scene={scene}
+            ></SimpleMarkerSymbolForm>
           </div>
         </calcite-panel>
       </calcite-shell-panel>
 
-      <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+      <calcite-shell-panel
+        slot="panel-end"
+        position="end"
+        resizable
+        style={shellPanelStyles}
+      >
         <calcite-panel>
           <calcite-tabs>
             <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -210,13 +240,19 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
               <calcite-tab-title>JSON</calcite-tab-title>
             </calcite-tab-nav>
             <calcite-tab selected>
-              <SimpleMarkerSymbolESMPanel simpleMarkerSymbol={simpleMarkerSymbol}></SimpleMarkerSymbolESMPanel>
+              <SimpleMarkerSymbolESMPanel
+                simpleMarkerSymbol={simpleMarkerSymbol}
+              ></SimpleMarkerSymbolESMPanel>
             </calcite-tab>
             <calcite-tab>
-              <SimpleMarkerSymbolCDNPanel simpleMarkerSymbol={simpleMarkerSymbol}></SimpleMarkerSymbolCDNPanel>
+              <SimpleMarkerSymbolCDNPanel
+                simpleMarkerSymbol={simpleMarkerSymbol}
+              ></SimpleMarkerSymbolCDNPanel>
             </calcite-tab>
             <calcite-tab>
-              <SimpleMarkerSymbolJSONPanel simpleMarkerSymbol={simpleMarkerSymbol}></SimpleMarkerSymbolJSONPanel>
+              <SimpleMarkerSymbolJSONPanel
+                simpleMarkerSymbol={simpleMarkerSymbol}
+              ></SimpleMarkerSymbolJSONPanel>
             </calcite-tab>
           </calcite-tabs>
         </calcite-panel>

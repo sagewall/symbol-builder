@@ -46,7 +46,8 @@ function WaterSymbol3DLayerForm({
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -57,10 +58,13 @@ function WaterSymbol3DLayerForm({
             setWaterbodySize(event.target.value);
             handleWaterbodySizeChange(
               layerIndex,
-              event.target.value as InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"],
+              event.target.value as InstanceType<
+                typeof WaterSymbol3DLayer
+              >["waterbodySize"],
             );
           }}
-          value={waterbodySize}>
+          value={waterbodySize}
+        >
           {waterbodySizeOptions.map((option, index) =>
             option === "medium" ? (
               <calcite-option key={index} selected>
@@ -86,7 +90,8 @@ function WaterSymbol3DLayerForm({
           }}
           step={1}
           ticks={180}
-          value={waveDirection}></calcite-slider>
+          value={waveDirection}
+        ></calcite-slider>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -97,10 +102,13 @@ function WaterSymbol3DLayerForm({
             setWaveStrength(event.target.value);
             handleWaveStrengthChange(
               layerIndex,
-              event.target.value as InstanceType<typeof WaterSymbol3DLayer>["waveStrength"],
+              event.target.value as InstanceType<
+                typeof WaterSymbol3DLayer
+              >["waveStrength"],
             );
           }}
-          value={waveStrength}>
+          value={waveStrength}
+        >
           {waveStrengthOptions.map((option, index) =>
             option === "moderate" ? (
               <calcite-option key={index} selected>

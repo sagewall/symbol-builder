@@ -28,7 +28,8 @@ function Map({ graphics }: MapProps): React.ReactElement {
         onarcgisViewReadyChange={(event) => {
           handleArcgisViewReadyChange(event);
         }}
-        ref={viewElement}>
+        ref={viewElement}
+      >
         <calcite-action
           icon="zoom-to-object"
           scale="s"
@@ -36,8 +37,9 @@ function Map({ graphics }: MapProps): React.ReactElement {
           text="Zoom to Graphics"
           text-enabled
           onClick={async () => {
-            await viewElement.current?.goTo(viewElement.current.graphics);
-          }}></calcite-action>
+            await viewElement.current?.goTo(viewElement.current.graphics?.toArray());
+          }}
+        ></calcite-action>
       </arcgis-map>
     </>
   );

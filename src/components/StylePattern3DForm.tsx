@@ -8,10 +8,16 @@ import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
-  handleStyleChange: (layerIndex: number, value: InstanceType<typeof StylePattern3D>["style"]) => void;
+  handleStyleChange: (
+    layerIndex: number,
+    value: InstanceType<typeof StylePattern3D>["style"],
+  ) => void;
 }
 
-function StylePattern3DForm({ layerIndex, handleStyleChange }: Props): React.ReactElement {
+function StylePattern3DForm({
+  layerIndex,
+  handleStyleChange,
+}: Props): React.ReactElement {
   const [style, setStyle] = useState("solid");
 
   return (
@@ -22,9 +28,15 @@ function StylePattern3DForm({ layerIndex, handleStyleChange }: Props): React.Rea
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(layerIndex, event.target.value as InstanceType<typeof StylePattern3D>["style"]);
+            handleStyleChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof StylePattern3D
+              >["style"],
+            );
           }}
-          value={style}>
+          value={style}
+        >
           {fillOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}

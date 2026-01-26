@@ -18,13 +18,28 @@ import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
-  handleAnchorChange: (layerIndex: number, value: InstanceType<typeof PathSymbol3DLayer>["anchor"]) => void;
-  handleCapChange: (layerIndex: number, value: InstanceType<typeof PathSymbol3DLayer>["cap"]) => void;
+  handleAnchorChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["anchor"],
+  ) => void;
+  handleCapChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["cap"],
+  ) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleHeightChange: (layerIndex: number, value: string) => void;
-  handleJoinChange: (layerIndex: number, value: InstanceType<typeof PathSymbol3DLayer>["join"]) => void;
-  handlePathSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
-  handleProfileChange: (layerIndex: number, value: InstanceType<typeof PathSymbol3DLayer>["profile"]) => void;
+  handleJoinChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["join"],
+  ) => void;
+  handlePathSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleProfileChange: (
+    layerIndex: number,
+    value: InstanceType<typeof PathSymbol3DLayer>["profile"],
+  ) => void;
   handleProfileRotationChange: (
     layerIndex: number,
     value: InstanceType<typeof PathSymbol3DLayer>["profileRotation"],
@@ -61,9 +76,15 @@ function LineSymbol3DLayerForm({
           label={"anchor selection"}
           oncalciteSelectChange={(event) => {
             setAnchor(event.target.value);
-            handleAnchorChange(layerIndex, event.target.value as InstanceType<typeof PathSymbol3DLayer>["anchor"]);
+            handleAnchorChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["anchor"],
+            );
           }}
-          value={anchor}>
+          value={anchor}
+        >
           {pathSymbol3dLayerAnchorOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -76,9 +97,15 @@ function LineSymbol3DLayerForm({
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(layerIndex, event.target.value as InstanceType<typeof PathSymbol3DLayer>["cap"]);
+            handleCapChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["cap"],
+            );
           }}
-          value={cap}>
+          value={cap}
+        >
           {cap3DOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -93,7 +120,8 @@ function LineSymbol3DLayerForm({
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          value={castShadows}></calcite-switch>
+          value={castShadows}
+        ></calcite-switch>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -105,7 +133,8 @@ function LineSymbol3DLayerForm({
             setHeight(event.target.value);
             handleHeightChange(layerIndex, event.target.value);
           }}
-          value={height}></calcite-input-number>
+          value={height}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -117,7 +146,8 @@ function LineSymbol3DLayerForm({
             setWidth(event.target.value);
             handleWidthChange(layerIndex, event.target.value);
           }}
-          value={width}></calcite-input-number>
+          value={width}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -126,9 +156,15 @@ function LineSymbol3DLayerForm({
           label={"join selection"}
           oncalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(layerIndex, event.target.value as InstanceType<typeof PathSymbol3DLayer>["join"]);
+            handleJoinChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["join"],
+            );
           }}
-          value={join}>
+          value={join}
+        >
           {joinOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -138,7 +174,8 @@ function LineSymbol3DLayerForm({
       <calcite-block style={blockStyles} collapsible heading={"material"}>
         <PathSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
-          handleColorChange={handlePathSymbol3DLayerMaterialColorChange}></PathSymbol3DLayerMaterialForm>
+          handleColorChange={handlePathSymbol3DLayerMaterialColorChange}
+        ></PathSymbol3DLayerMaterialForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -147,9 +184,15 @@ function LineSymbol3DLayerForm({
           label={"profile selection"}
           oncalciteSelectChange={(event) => {
             setProfile(event.target.value);
-            handleProfileChange(layerIndex, event.target.value as InstanceType<typeof PathSymbol3DLayer>["profile"]);
+            handleProfileChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["profile"],
+            );
           }}
-          value={profile}>
+          value={profile}
+        >
           {profileOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -164,10 +207,13 @@ function LineSymbol3DLayerForm({
             setProfileRotation(event.target.value);
             handleProfileRotationChange(
               layerIndex,
-              event.target.value as InstanceType<typeof PathSymbol3DLayer>["profileRotation"],
+              event.target.value as InstanceType<
+                typeof PathSymbol3DLayer
+              >["profileRotation"],
             );
           }}
-          value={profileRotation}>
+          value={profileRotation}
+        >
           {rotationOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}

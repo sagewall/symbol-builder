@@ -35,7 +35,8 @@ ${JSON.stringify(textSymbol.toJSON(), null, 2)});`;
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}></calcite-action>
+          onClick={handleCopyClick}
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -45,7 +46,8 @@ ${JSON.stringify(textSymbol.toJSON(), null, 2)});`;
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}>
+        ref={alertRef}
+      >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

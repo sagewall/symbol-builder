@@ -9,7 +9,9 @@ interface Props {
   simpleFillSymbol: SimpleFillSymbol;
 }
 
-function SimpleFillSymbolESMPanel({ simpleFillSymbol }: Props): React.ReactElement {
+function SimpleFillSymbolESMPanel({
+  simpleFillSymbol,
+}: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async (): Promise<void> => {
@@ -47,7 +49,8 @@ const simpleFillSymbol = new SimpleFillSymbol({
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}></calcite-action>
+          onClick={handleCopyClick}
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -57,7 +60,8 @@ const simpleFillSymbol = new SimpleFillSymbol({
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}>
+        ref={alertRef}
+      >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

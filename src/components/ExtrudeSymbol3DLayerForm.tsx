@@ -10,10 +10,22 @@ import { blockStyles, labelStyles } from "./lib/styles";
 interface Props {
   layerIndex: number;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
-  handleExtrudeSymbol3DLayerEdgesColorChange: (layerIndex: number, value: string) => void;
-  handleExtrudeSymbol3DLayerEdgesExtensionLengthChange: (layerIndex: number, value: string) => void;
-  handleExtrudeSymbol3DLayerEdgesSizeChange: (layerIndex: number, value: string) => void;
-  handleExtrudeSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleExtrudeSymbol3DLayerEdgesColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleExtrudeSymbol3DLayerEdgesExtensionLengthChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleExtrudeSymbol3DLayerEdgesSizeChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleExtrudeSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
@@ -39,21 +51,26 @@ function FillSymbol3DLayerForm({
             setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          value={castShadows}></calcite-switch>
+          value={castShadows}
+        ></calcite-switch>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"edges"}>
         <Edges3DForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerEdgesColorChange}
-          handleExtensionLengthChange={handleExtrudeSymbol3DLayerEdgesExtensionLengthChange}
-          handleSizeChange={handleExtrudeSymbol3DLayerEdgesSizeChange}></Edges3DForm>
+          handleExtensionLengthChange={
+            handleExtrudeSymbol3DLayerEdgesExtensionLengthChange
+          }
+          handleSizeChange={handleExtrudeSymbol3DLayerEdgesSizeChange}
+        ></Edges3DForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} collapsible heading={"material"}>
         <ExtrudeSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
-          handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}></ExtrudeSymbol3DLayerMaterialForm>
+          handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}
+        ></ExtrudeSymbol3DLayerMaterialForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -65,7 +82,8 @@ function FillSymbol3DLayerForm({
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

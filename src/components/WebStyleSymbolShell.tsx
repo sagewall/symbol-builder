@@ -32,7 +32,13 @@ import {
   esriThematicTreesStyleNameOptions,
 } from "./lib/constants";
 import { point, polygon, polyline } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "./lib/styles";
 import type { GroupItem, ItemType } from "./lib/types";
 
 function WebStyleSymbolShell(): React.ReactElement {
@@ -40,17 +46,20 @@ function WebStyleSymbolShell(): React.ReactElement {
 
   const defaultPointWebStyleSymbol2D = new WebStyleSymbol({
     name: "Armadillo",
-    styleUrl: "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
   });
 
   const defaultPolygonWebStyleSymbol2D = new WebStyleSymbol({
     name: "A Crosshatch",
-    styleUrl: "https://www.arcgis.com/sharing/rest/content/items/807adef8568448318173798e15954ee5/data",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/807adef8568448318173798e15954ee5/data",
   });
 
   const defaultPolylineWebStyleSymbol2D = new WebStyleSymbol({
     name: "Aqueduct",
-    styleUrl: "https://www.arcgis.com/sharing/rest/content/items/971bd7dfb0684860957ab7844a245bc1/data",
+    styleUrl:
+      "https://www.arcgis.com/sharing/rest/content/items/971bd7dfb0684860957ab7844a245bc1/data",
   });
 
   const defaultWebStyleSymbol3D = new WebStyleSymbol({
@@ -58,11 +67,19 @@ function WebStyleSymbolShell(): React.ReactElement {
     styleName: "EsriIconsStyle",
   });
 
-  const [currentWebStyleSymbol, setCurrentWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
+  const [currentWebStyleSymbol, setCurrentWebStyleSymbol] = useState(
+    defaultPointWebStyleSymbol2D,
+  );
   const [groupItems, setGroupItems] = useState<GroupItem[]>([]);
-  const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(defaultPointWebStyleSymbol2D);
-  const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(defaultPolygonWebStyleSymbol2D);
-  const [polylineWebStyleSymbol, setPolylineWebStyleSymbol] = useState(defaultPolylineWebStyleSymbol2D);
+  const [pointWebStyleSymbol, setPointWebStyleSymbol] = useState(
+    defaultPointWebStyleSymbol2D,
+  );
+  const [polygonWebStyleSymbol, setPolygonWebStyleSymbol] = useState(
+    defaultPolygonWebStyleSymbol2D,
+  );
+  const [polylineWebStyleSymbol, setPolylineWebStyleSymbol] = useState(
+    defaultPolylineWebStyleSymbol2D,
+  );
 
   const pointGraphic = new Graphic({
     geometry: point,
@@ -82,7 +99,8 @@ function WebStyleSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -101,7 +119,10 @@ function WebStyleSymbolShell(): React.ReactElement {
     }
   };
 
-  const updateGraphics = (newWebStyleSymbol: WebStyleSymbol, itemType: ItemType): void => {
+  const updateGraphics = (
+    newWebStyleSymbol: WebStyleSymbol,
+    itemType: ItemType,
+  ): void => {
     if (itemType === "pointSymbol") {
       setPointWebStyleSymbol(newWebStyleSymbol);
       setCurrentWebStyleSymbol(newWebStyleSymbol);
@@ -158,7 +179,8 @@ function WebStyleSymbolShell(): React.ReactElement {
         break;
 
       case "EsriRealisticSignsandSignalsStyle":
-        newWebStyleSymbol.name = esriRealisticSignsAndSignalsStyleNameOptions[0];
+        newWebStyleSymbol.name =
+          esriRealisticSignsAndSignalsStyleNameOptions[0];
         break;
 
       case "EsriRealisticStreetSceneStyle":
@@ -193,7 +215,11 @@ function WebStyleSymbolShell(): React.ReactElement {
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
-  const handleCustomStyleChange = (currentStyleUrl: string, currentName: string, itemType: ItemType): void => {
+  const handleCustomStyleChange = (
+    currentStyleUrl: string,
+    currentName: string,
+    itemType: ItemType,
+  ): void => {
     const newWebStyleSymbol = new WebStyleSymbol();
     newWebStyleSymbol.name = currentName;
     newWebStyleSymbol.styleUrl = currentStyleUrl;
@@ -218,9 +244,12 @@ function WebStyleSymbolShell(): React.ReactElement {
   }
 
   const requestGroupItems = async (itemId: string): Promise<void> => {
-    const response = (await esriRequest(`https://www.arcgis.com/sharing/rest/content/groups/${itemId}?f=pjson`, {
-      responseType: "json",
-    })) as EsriGroupItemsResponse;
+    const response = (await esriRequest(
+      `https://www.arcgis.com/sharing/rest/content/groups/${itemId}?f=pjson`,
+      {
+        responseType: "json",
+      },
+    )) as EsriGroupItemsResponse;
     const sortedGroupItems = response.data.items
       .filter((item: GroupItem) => item.type === "Style")
       .sort((a: GroupItem, b: GroupItem) => a.title.localeCompare(b.title));
@@ -240,9 +269,16 @@ function WebStyleSymbolShell(): React.ReactElement {
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
-              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
+              <calcite-switch
+                ref={viewSwitchRef}
+                oncalciteSwitchChange={handleSwitchChange}
+              ></calcite-switch>
               3D
             </calcite-label>
 
@@ -252,18 +288,25 @@ function WebStyleSymbolShell(): React.ReactElement {
                   groupItems={groupItems}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
-                  handleCustomStyleChange={handleCustomStyleChange}></WebStyleSymbol2DForm>
+                  handleCustomStyleChange={handleCustomStyleChange}
+                ></WebStyleSymbol2DForm>
               ) : (
                 <WebStyleSymbol3DForm
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
-                  handleCustomStyleChange={handleCustomStyleChange}></WebStyleSymbol3DForm>
+                  handleCustomStyleChange={handleCustomStyleChange}
+                ></WebStyleSymbol3DForm>
               )}
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -272,13 +315,19 @@ function WebStyleSymbolShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <WebStyleSymbolESMPanel webStyleSymbol={currentWebStyleSymbol}></WebStyleSymbolESMPanel>
+                <WebStyleSymbolESMPanel
+                  webStyleSymbol={currentWebStyleSymbol}
+                ></WebStyleSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolCDNPanel webStyleSymbol={currentWebStyleSymbol}></WebStyleSymbolCDNPanel>
+                <WebStyleSymbolCDNPanel
+                  webStyleSymbol={currentWebStyleSymbol}
+                ></WebStyleSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <WebStyleSymbolJSONPanel webStyleSymbol={currentWebStyleSymbol}></WebStyleSymbolJSONPanel>
+                <WebStyleSymbolJSONPanel
+                  webStyleSymbol={currentWebStyleSymbol}
+                ></WebStyleSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

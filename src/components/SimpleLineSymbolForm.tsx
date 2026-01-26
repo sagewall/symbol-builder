@@ -12,15 +12,25 @@ import { blockStyles, labelStyles } from "./lib/styles";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 
 interface Props {
-  handleCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
+  handleCapChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ) => void;
   handleColorChange: (value: string) => void;
-  handleJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
+  handleJoinChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["join"],
+  ) => void;
   handleMarkerBlockToggle?: (value: HTMLCalciteBlockElement) => void;
   handleMarkerColorChange?: (value: string) => void;
-  handleMarkerPlacementChange?: (value: InstanceType<typeof LineSymbolMarker>["placement"]) => void;
-  handleMarkerStyleChange?: (value: InstanceType<typeof LineSymbolMarker>["style"]) => void;
+  handleMarkerPlacementChange?: (
+    value: InstanceType<typeof LineSymbolMarker>["placement"],
+  ) => void;
+  handleMarkerStyleChange?: (
+    value: InstanceType<typeof LineSymbolMarker>["style"],
+  ) => void;
   handleMiterLimitChange: (value: string) => void;
-  handleStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
+  handleStyleChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["style"],
+  ) => void;
   handleWidthChange: (value: string) => void;
   showMarker: boolean;
   solidOnly: boolean;
@@ -65,11 +75,13 @@ function SimpleLineSymbolForm({
           if (handleMarkerBlockToggle) {
             handleMarkerBlockToggle(event.target);
           }
-        }}>
+        }}
+      >
         <LineSymbolMarkerForm
           handleColorChange={handleMarkerColorChange}
           handlePlacementChange={handleMarkerPlacementChange}
-          handleStyleChange={handleMarkerStyleChange}></LineSymbolMarkerForm>
+          handleStyleChange={handleMarkerStyleChange}
+        ></LineSymbolMarkerForm>
       </calcite-block>
     );
   } else {
@@ -86,9 +98,14 @@ function SimpleLineSymbolForm({
           label={"style selection"}
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["style"]);
+            handleStyleChange(
+              event.target.value as InstanceType<
+                typeof SimpleLineSymbol
+              >["style"],
+            );
           }}
-          value={style}>
+          value={style}
+        >
           {lineStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -105,9 +122,14 @@ function SimpleLineSymbolForm({
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["cap"]);
+            handleCapChange(
+              event.target.value as InstanceType<
+                typeof SimpleLineSymbol
+              >["cap"],
+            );
           }}
-          value={cap}>
+          value={cap}
+        >
           {capOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -124,7 +146,8 @@ function SimpleLineSymbolForm({
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -133,9 +156,14 @@ function SimpleLineSymbolForm({
           label={"join selection"}
           oncalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(event.target.value as InstanceType<typeof SimpleLineSymbol>["join"]);
+            handleJoinChange(
+              event.target.value as InstanceType<
+                typeof SimpleLineSymbol
+              >["join"],
+            );
           }}
-          value={join}>
+          value={join}
+        >
           {joinOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -153,7 +181,8 @@ function SimpleLineSymbolForm({
             setMiterLimit(event.target.value);
             handleMiterLimitChange(event.target.value);
           }}
-          value={miterLimit}></calcite-input-number>
+          value={miterLimit}
+        ></calcite-input-number>
       </calcite-label>
 
       {styleBlock}
@@ -167,7 +196,8 @@ function SimpleLineSymbolForm({
             setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
-          value={width}></calcite-input-number>
+          value={width}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

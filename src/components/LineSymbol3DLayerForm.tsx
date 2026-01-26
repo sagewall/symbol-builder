@@ -15,10 +15,22 @@ import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
   layerIndex: number;
-  handleCapChange: (layerIndex: number, value: InstanceType<typeof LineSymbol3DLayer>["cap"]) => void;
-  handleJoinChange: (layerIndex: number, value: InstanceType<typeof LineSymbol3DLayer>["join"]) => void;
-  handleLineSymbol3DLayerMarkerBlockToggle: (layerIndex: number, currentMarkerBlock: HTMLCalciteBlockElement) => void;
-  handleLineSymbol3DLayerMarkerColorChange: (layerIndex: number, value: string) => void;
+  handleCapChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineSymbol3DLayer>["cap"],
+  ) => void;
+  handleJoinChange: (
+    layerIndex: number,
+    value: InstanceType<typeof LineSymbol3DLayer>["join"],
+  ) => void;
+  handleLineSymbol3DLayerMarkerBlockToggle: (
+    layerIndex: number,
+    currentMarkerBlock: HTMLCalciteBlockElement,
+  ) => void;
+  handleLineSymbol3DLayerMarkerColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
   handleLineSymbol3DLayerMarkerPlacementChange: (
     layerIndex: number,
     value: InstanceType<typeof LineStyleMarker3D>["placement"],
@@ -27,7 +39,10 @@ interface Props {
     layerIndex: number,
     value: InstanceType<typeof LineStyleMarker3D>["style"],
   ) => void;
-  handleLineSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleLineSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
   handleLineSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
     value: InstanceType<typeof LineStylePattern3D>["style"],
@@ -59,9 +74,15 @@ function LineSymbol3DLayerForm({
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
             setCap(event.target.value);
-            handleCapChange(layerIndex, event.target.value as InstanceType<typeof LineSymbol3DLayer>["cap"]);
+            handleCapChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof LineSymbol3DLayer
+              >["cap"],
+            );
           }}
-          value={cap}>
+          value={cap}
+        >
           {capOptions.map((option, index) =>
             option === "butt" ? (
               <calcite-option key={index} selected>
@@ -80,9 +101,15 @@ function LineSymbol3DLayerForm({
           label={"join selection"}
           oncalciteSelectChange={(event) => {
             setJoin(event.target.value);
-            handleJoinChange(layerIndex, event.target.value as InstanceType<typeof LineSymbol3DLayer>["join"]);
+            handleJoinChange(
+              layerIndex,
+              event.target.value as InstanceType<
+                typeof LineSymbol3DLayer
+              >["join"],
+            );
           }}
-          value={join}>
+          value={join}
+        >
           {joinOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -98,24 +125,28 @@ function LineSymbol3DLayerForm({
         }}
         oncalciteBlockOpen={(event) => {
           handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
-        }}>
+        }}
+      >
         <LineStyleMarker3DForm
           layerIndex={layerIndex}
           handleColorChange={handleLineSymbol3DLayerMarkerColorChange}
           handlePlacementChange={handleLineSymbol3DLayerMarkerPlacementChange}
-          handleStyleChange={handleLineSymbol3DLayerMarkerStyleChange}></LineStyleMarker3DForm>
+          handleStyleChange={handleLineSymbol3DLayerMarkerStyleChange}
+        ></LineStyleMarker3DForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} collapsible heading={"material"}>
         <LineSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
-          handleColorChange={handleLineSymbol3DLayerMaterialColorChange}></LineSymbol3DLayerMaterialForm>
+          handleColorChange={handleLineSymbol3DLayerMaterialColorChange}
+        ></LineSymbol3DLayerMaterialForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} collapsible heading={"pattern"}>
         <LineStylePattern3DForm
           layerIndex={layerIndex}
-          handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}></LineStylePattern3DForm>
+          handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}
+        ></LineStylePattern3DForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -127,7 +158,8 @@ function LineSymbol3DLayerForm({
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

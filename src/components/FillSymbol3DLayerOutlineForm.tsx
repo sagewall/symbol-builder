@@ -19,7 +19,11 @@ interface Props {
   ) => void;
   handlePatternCapChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>,
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["outline"]
+      >["patternCap"]
+    >,
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -47,12 +51,14 @@ function FillSymbol3DLayerOutlineForm({
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <LineStylePattern3DForm
         layerIndex={layerIndex}
-        handleStyleChange={handleLineSylePattern3DStyleChange}></LineStylePattern3DForm>
+        handleStyleChange={handleLineSylePattern3DStyleChange}
+      ></LineStylePattern3DForm>
 
       <calcite-label layout="default" style={labelStyles}>
         patternCap
@@ -63,11 +69,14 @@ function FillSymbol3DLayerOutlineForm({
             handlePatternCapChange(
               layerIndex,
               event.target.value as NonNullable<
-                NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]
+                NonNullable<
+                  InstanceType<typeof FillSymbol3DLayer>["outline"]
+                >["patternCap"]
               >,
             );
           }}
-          value={patternCap}>
+          value={patternCap}
+        >
           {capOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -83,7 +92,8 @@ function FillSymbol3DLayerOutlineForm({
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

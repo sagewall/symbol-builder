@@ -33,7 +33,8 @@ function Edges3DForm({
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -45,7 +46,8 @@ function Edges3DForm({
             setExtensionLength(event.target.value);
             handleExtensionLengthChange(layerIndex, event.target.value);
           }}
-          value={extensionLength}></calcite-input-number>
+          value={extensionLength}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -57,7 +59,8 @@ function Edges3DForm({
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

@@ -20,7 +20,13 @@ import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "./lib/styles";
 
 function SimpleLineSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
@@ -47,7 +53,8 @@ function SimpleLineSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(polylineGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -73,7 +80,9 @@ function SimpleLineSymbolShell(): React.ReactElement {
     setGraphics(newGraphics);
   };
 
-  const handleCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]): void => {
+  const handleCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     updateGraphics(newSimpleLineSymbol);
@@ -85,13 +94,17 @@ function SimpleLineSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]): void => {
+  const handleJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerBlockToggle = (currentMarkerBlock: HTMLCalciteBlockElement): void => {
+  const handleMarkerBlockToggle = (
+    currentMarkerBlock: HTMLCalciteBlockElement,
+  ): void => {
     if (currentMarkerBlock.heading === "marker") {
       const newSimpleLineSymbol = simpleLineSymbol.clone();
       if (currentMarkerBlock.expanded) {
@@ -127,7 +140,9 @@ function SimpleLineSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleMarkerStyleChange = (currentMarkerStyle: InstanceType<typeof LineSymbolMarker>["style"]): void => {
+  const handleMarkerStyleChange = (
+    currentMarkerStyle: InstanceType<typeof LineSymbolMarker>["style"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
       newSimpleLineSymbol.marker.style = currentMarkerStyle;
@@ -143,7 +158,9 @@ function SimpleLineSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleLineSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]): void => {
+  const handleStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     updateGraphics(newSimpleLineSymbol);
@@ -161,9 +178,16 @@ function SimpleLineSymbolShell(): React.ReactElement {
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
-              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
+              <calcite-switch
+                ref={viewSwitchRef}
+                oncalciteSwitchChange={handleSwitchChange}
+              ></calcite-switch>
               3D
             </calcite-label>
 
@@ -180,12 +204,18 @@ function SimpleLineSymbolShell(): React.ReactElement {
                 handleStyleChange={handleStyleChange}
                 handleWidthChange={handleWidthChange}
                 showMarker={true}
-                solidOnly={false}></SimpleLineSymbolForm>
+                solidOnly={false}
+              ></SimpleLineSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -194,13 +224,19 @@ function SimpleLineSymbolShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <SimpleLineSymbolESMPanel simpleLineSymbol={simpleLineSymbol}></SimpleLineSymbolESMPanel>
+                <SimpleLineSymbolESMPanel
+                  simpleLineSymbol={simpleLineSymbol}
+                ></SimpleLineSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleLineSymbolCDNPanel simpleLineSymbol={simpleLineSymbol}></SimpleLineSymbolCDNPanel>
+                <SimpleLineSymbolCDNPanel
+                  simpleLineSymbol={simpleLineSymbol}
+                ></SimpleLineSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleLineSymbolJSONPanel simpleLineSymbol={simpleLineSymbol}></SimpleLineSymbolJSONPanel>
+                <SimpleLineSymbolJSONPanel
+                  simpleLineSymbol={simpleLineSymbol}
+                ></SimpleLineSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

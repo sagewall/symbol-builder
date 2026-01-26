@@ -8,7 +8,10 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
-function TextSymbol3DLayerMaterialForm({ layerIndex, handleColorChange }: Props): React.ReactElement {
+function TextSymbol3DLayerMaterialForm({
+  layerIndex,
+  handleColorChange,
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#ffffff");
 
   return (
@@ -23,7 +26,8 @@ function TextSymbol3DLayerMaterialForm({ layerIndex, handleColorChange }: Props)
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
     </>
   );

@@ -18,7 +18,13 @@ import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
 import Scene from "./Scene";
 import { point } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "./lib/styles";
 
 function PictureMarkerSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
@@ -39,7 +45,8 @@ function PictureMarkerSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -53,7 +60,9 @@ function PictureMarkerSymbolShell(): React.ReactElement {
     }
   };
 
-  const updateGraphics = (newPictureMarkerSymbol: PictureMarkerSymbol): void => {
+  const updateGraphics = (
+    newPictureMarkerSymbol: PictureMarkerSymbol,
+  ): void => {
     setPictureMarkerSymbol(newPictureMarkerSymbol);
 
     const newPointGraphic = graphics.getItemAt(0)?.clone();
@@ -108,9 +117,16 @@ function PictureMarkerSymbolShell(): React.ReactElement {
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
-              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
+              <calcite-switch
+                ref={viewSwitchRef}
+                oncalciteSwitchChange={handleSwitchChange}
+              ></calcite-switch>
               3D
             </calcite-label>
 
@@ -121,12 +137,18 @@ function PictureMarkerSymbolShell(): React.ReactElement {
                 handleUrlChange={handleUrlChange}
                 handleWidthChange={handleWidthChange}
                 handleXoffsetChange={handleXoffsetChange}
-                handleYoffsetChange={handleYoffsetChange}></PictureMarkerSymbolForm>
+                handleYoffsetChange={handleYoffsetChange}
+              ></PictureMarkerSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -135,13 +157,19 @@ function PictureMarkerSymbolShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PictureMarkerSymbolESMPanel pictureMarkerSymbol={pictureMarkerSymbol}></PictureMarkerSymbolESMPanel>
+                <PictureMarkerSymbolESMPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolCDNPanel pictureMarkerSymbol={pictureMarkerSymbol}></PictureMarkerSymbolCDNPanel>
+                <PictureMarkerSymbolCDNPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureMarkerSymbolJSONPanel pictureMarkerSymbol={pictureMarkerSymbol}></PictureMarkerSymbolJSONPanel>
+                <PictureMarkerSymbolJSONPanel
+                  pictureMarkerSymbol={pictureMarkerSymbol}
+                ></PictureMarkerSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

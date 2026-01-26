@@ -8,7 +8,9 @@ interface Props {
 function MeshSymbol3DForm({ updateSymbolLayers }: Props): React.ReactElement {
   return (
     <>
-      <MeshSymbol3DSymbolLayersForm updateSymbolLayers={updateSymbolLayers}></MeshSymbol3DSymbolLayersForm>
+      <MeshSymbol3DSymbolLayersForm
+        updateSymbolLayers={updateSymbolLayers}
+      ></MeshSymbol3DSymbolLayersForm>
     </>
   );
 }

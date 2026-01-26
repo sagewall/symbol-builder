@@ -67,7 +67,8 @@ const meshSymbol3D = new MeshSymbol3D({
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}></calcite-action>
+          onClick={handleCopyClick}
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -77,7 +78,8 @@ const meshSymbol3D = new MeshSymbol3D({
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}>
+        ref={alertRef}
+      >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

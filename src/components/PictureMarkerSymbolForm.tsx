@@ -24,7 +24,9 @@ function PictureMarkerSymbolForm({
 }: Props): React.ReactElement {
   const [angle, setAngle] = useState(0);
   const [height, setHeight] = useState("100");
-  const [url, setUrl] = useState("https://sagewall.github.io/test-images/globie.png");
+  const [url, setUrl] = useState(
+    "https://sagewall.github.io/test-images/globie.png",
+  );
   const [width, setWidth] = useState("100");
   const [xoffset, setXoffset] = useState("0");
   const [yoffset, setYoffset] = useState("0");
@@ -44,7 +46,8 @@ function PictureMarkerSymbolForm({
           }}
           step={1}
           ticks={180}
-          value={angle}></calcite-slider>
+          value={angle}
+        ></calcite-slider>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -56,7 +59,8 @@ function PictureMarkerSymbolForm({
             setHeight(event.target.value);
             handleHeightChange(event.target.value);
           }}
-          value={height}></calcite-input-number>
+          value={height}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -68,7 +72,8 @@ function PictureMarkerSymbolForm({
             setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
-          value={width}></calcite-input-number>
+          value={width}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -79,7 +84,8 @@ function PictureMarkerSymbolForm({
             setUrl(event.target.value);
             handleUrlChange(event.target.value);
           }}
-          value={url}></calcite-input-text>
+          value={url}
+        ></calcite-input-text>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -90,7 +96,8 @@ function PictureMarkerSymbolForm({
             setXoffset(event.target.value);
             handleXoffsetChange(event.target.value);
           }}
-          value={xoffset}></calcite-input-number>
+          value={xoffset}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -101,7 +108,8 @@ function PictureMarkerSymbolForm({
             setYoffset(event.target.value);
             handleYoffsetChange(event.target.value);
           }}
-          value={yoffset}></calcite-input-number>
+          value={yoffset}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

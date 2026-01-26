@@ -8,7 +8,9 @@ interface Props {
 function LineSymbol3DForm({ updateSymbolLayers }: Props): React.ReactElement {
   return (
     <>
-      <LineSymbol3DSymbolLayersForm updateSymbolLayers={updateSymbolLayers}></LineSymbol3DSymbolLayersForm>
+      <LineSymbol3DSymbolLayersForm
+        updateSymbolLayers={updateSymbolLayers}
+      ></LineSymbol3DSymbolLayersForm>
     </>
   );
 }

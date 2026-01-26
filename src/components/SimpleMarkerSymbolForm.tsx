@@ -14,15 +14,23 @@ import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 interface Props {
   handleAngleChange: (value: number) => void;
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
+  handleOutlineCapChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
+  handleOutlineJoinChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["join"],
+  ) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
+  handleOutlineStyleChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["style"],
+  ) => void;
   handleOutlineWidthChange: (value: string) => void;
   handlePathChange: (value: string) => void;
   handleSizeChange: (value: string) => void;
-  handleStyleChange: (value: InstanceType<typeof SimpleMarkerSymbol>["style"]) => void;
+  handleStyleChange: (
+    value: InstanceType<typeof SimpleMarkerSymbol>["style"],
+  ) => void;
   handleXoffsetChange: (value: string) => void;
   handleYoffsetChange: (value: string) => void;
   scene: boolean;
@@ -67,7 +75,8 @@ function SimpleMarkerSymbolForm({
           }}
           step={1}
           ticks={180}
-          value={angle}></calcite-slider>
+          value={angle}
+        ></calcite-slider>
       </calcite-label>
       <calcite-label layout="default" style={labelStyles}>
         color
@@ -79,7 +88,8 @@ function SimpleMarkerSymbolForm({
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
       <calcite-block style={blockStyles} collapsible heading={"outline:"}>
         <SimpleLineSymbolForm
@@ -90,7 +100,8 @@ function SimpleMarkerSymbolForm({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
-          solidOnly={scene}></SimpleLineSymbolForm>
+          solidOnly={scene}
+        ></SimpleLineSymbolForm>
       </calcite-block>
       <calcite-label layout="default" style={labelStyles}>
         size
@@ -101,7 +112,8 @@ function SimpleMarkerSymbolForm({
             setSize(event.target.value);
             handleSizeChange(event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
       <calcite-label layout="default" style={labelStyles}>
         style
@@ -109,9 +121,14 @@ function SimpleMarkerSymbolForm({
           label={"style selection"}
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as InstanceType<typeof SimpleMarkerSymbol>["style"]);
+            handleStyleChange(
+              event.target.value as InstanceType<
+                typeof SimpleMarkerSymbol
+              >["style"],
+            );
           }}
-          value={style}>
+          value={style}
+        >
           {simpleMarkerSymbolStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
@@ -126,7 +143,8 @@ function SimpleMarkerSymbolForm({
               setPath(event.target.value);
               handlePathChange(event.target.value);
             }}
-            value={path}></calcite-input-text>
+            value={path}
+          ></calcite-input-text>
         </calcite-label>
       )}
       <calcite-label layout="default" style={labelStyles}>
@@ -137,7 +155,8 @@ function SimpleMarkerSymbolForm({
             setXoffset(event.target.value);
             handleXoffsetChange(event.target.value);
           }}
-          value={xoffset}></calcite-input-number>
+          value={xoffset}
+        ></calcite-input-number>
       </calcite-label>
       <calcite-label layout="default" style={labelStyles}>
         yoffset
@@ -147,7 +166,8 @@ function SimpleMarkerSymbolForm({
             setYoffset(event.target.value);
             handleYoffsetChange(event.target.value);
           }}
-          value={yoffset}></calcite-input-number>
+          value={yoffset}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

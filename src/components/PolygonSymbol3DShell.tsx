@@ -20,7 +20,12 @@ import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
 
 function PolygonSymbol3DShell(): React.ReactElement {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
@@ -33,7 +38,8 @@ function PolygonSymbol3DShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
@@ -52,7 +58,11 @@ function PolygonSymbol3DShell(): React.ReactElement {
 
   const updateSymbolLayers = (
     symbolLayers: Collection<
-      ExtrudeSymbol3DLayer | FillSymbol3DLayer | IconSymbol3DLayer | ObjectSymbol3DLayer | WaterSymbol3DLayer
+      | ExtrudeSymbol3DLayer
+      | FillSymbol3DLayer
+      | IconSymbol3DLayer
+      | ObjectSymbol3DLayer
+      | WaterSymbol3DLayer
     >,
   ): void => {
     const newPolygonSymbol3D = polygonSymbol3D.clone();
@@ -68,12 +78,19 @@ function PolygonSymbol3DShell(): React.ReactElement {
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
-              <PolygonSymbol3DForm updateSymbolLayers={updateSymbolLayers}></PolygonSymbol3DForm>
+              <PolygonSymbol3DForm
+                updateSymbolLayers={updateSymbolLayers}
+              ></PolygonSymbol3DForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -82,13 +99,19 @@ function PolygonSymbol3DShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PolygonSymbol3DESMPanel polygonSymbol3D={polygonSymbol3D}></PolygonSymbol3DESMPanel>
+                <PolygonSymbol3DESMPanel
+                  polygonSymbol3D={polygonSymbol3D}
+                ></PolygonSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PolygonSymbol3DCDNPanel polygonSymbol3D={polygonSymbol3D}></PolygonSymbol3DCDNPanel>
+                <PolygonSymbol3DCDNPanel
+                  polygonSymbol3D={polygonSymbol3D}
+                ></PolygonSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <PolygonSymbol3DJSONPanel polygonSymbol3D={polygonSymbol3D}></PolygonSymbol3DJSONPanel>
+                <PolygonSymbol3DJSONPanel
+                  polygonSymbol3D={polygonSymbol3D}
+                ></PolygonSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

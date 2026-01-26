@@ -17,7 +17,12 @@ import LineSymbol3DForm from "./LineSymbol3DForm";
 import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { polyline } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
 
 function LineSymbol3DShell(): React.ReactElement {
   const [lineSymbol3D, setLineSymbol3D] = useState(new LineSymbol3D());
@@ -30,7 +35,8 @@ function LineSymbol3DShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(lineGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
@@ -47,7 +53,9 @@ function LineSymbol3DShell(): React.ReactElement {
     setGraphics(newGraphics);
   };
 
-  const updateSymbolLayers = (symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>): void => {
+  const updateSymbolLayers = (
+    symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>,
+  ): void => {
     const newLineSymbol3D = lineSymbol3D.clone();
     newLineSymbol3D.symbolLayers.removeAll();
     newLineSymbol3D.symbolLayers.addMany(symbolLayers);
@@ -61,12 +69,19 @@ function LineSymbol3DShell(): React.ReactElement {
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
-              <LineSymbol3DForm updateSymbolLayers={updateSymbolLayers}></LineSymbol3DForm>
+              <LineSymbol3DForm
+                updateSymbolLayers={updateSymbolLayers}
+              ></LineSymbol3DForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -75,13 +90,19 @@ function LineSymbol3DShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <LineSymbol3DESMPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DESMPanel>
+                <LineSymbol3DESMPanel
+                  lineSymbol3D={lineSymbol3D}
+                ></LineSymbol3DESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DCDNPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DCDNPanel>
+                <LineSymbol3DCDNPanel
+                  lineSymbol3D={lineSymbol3D}
+                ></LineSymbol3DCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <LineSymbol3DJSONPanel lineSymbol3D={lineSymbol3D}></LineSymbol3DJSONPanel>
+                <LineSymbol3DJSONPanel
+                  lineSymbol3D={lineSymbol3D}
+                ></LineSymbol3DJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

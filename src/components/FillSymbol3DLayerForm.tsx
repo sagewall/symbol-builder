@@ -14,27 +14,55 @@ interface Props {
   layerIndex: number;
   isMeshSymbol3D: boolean;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
-  handleFillSymbol3DLayerEdgesColorChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerEdgesExtensionLengthChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerEdgesSizeChange: (layerIndex: number, value: string) => void;
-  handleFillSymbol3DLayerMaterialColorChange: (layerIndex: number, value: string) => void;
+  handleFillSymbol3DLayerEdgesColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleFillSymbol3DLayerEdgesExtensionLengthChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleFillSymbol3DLayerEdgesSizeChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
+  handleFillSymbol3DLayerMaterialColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]>,
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["material"]
+      >["colorMixMode"]
+    >,
   ) => void;
-  handleFillSymbol3DLayerOutlineColorChange: (layerIndex: number, value: string) => void;
+  handleFillSymbol3DLayerOutlineColorChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
   handleFillSymbol3DLayerOutlinePatternStyleChange: (
     layerIndex: number,
     value: InstanceType<typeof LineStylePattern3D>["style"],
   ) => void;
   handleFillSymbol3DLayerOutlinePatternCapChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["outline"]>["patternCap"]>,
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["outline"]
+      >["patternCap"]
+    >,
   ) => void;
-  handleFillSymbol3DLayerOutlineSizeChange: (layerIndex: number, value: string) => void;
+  handleFillSymbol3DLayerOutlineSizeChange: (
+    layerIndex: number,
+    value: string,
+  ) => void;
   handleFillSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["pattern"]>["style"]>,
+    value: NonNullable<
+      NonNullable<InstanceType<typeof FillSymbol3DLayer>["pattern"]>["style"]
+    >,
   ) => void;
 }
 
@@ -66,7 +94,8 @@ function FillSymbol3DLayerForm({
               setCastShadows(event.target.checked);
               handleCastShadowsChange(layerIndex, event.target.checked);
             }}
-            value={castShadows}></calcite-switch>
+            value={castShadows}
+          ></calcite-switch>
         </calcite-label>
       )}
 
@@ -75,8 +104,11 @@ function FillSymbol3DLayerForm({
           <Edges3DForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerEdgesColorChange}
-            handleExtensionLengthChange={handleFillSymbol3DLayerEdgesExtensionLengthChange}
-            handleSizeChange={handleFillSymbol3DLayerEdgesSizeChange}></Edges3DForm>
+            handleExtensionLengthChange={
+              handleFillSymbol3DLayerEdgesExtensionLengthChange
+            }
+            handleSizeChange={handleFillSymbol3DLayerEdgesSizeChange}
+          ></Edges3DForm>
         </calcite-block>
       )}
 
@@ -84,7 +116,10 @@ function FillSymbol3DLayerForm({
         <FillSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerMaterialColorChange}
-          handleColorMixModeChange={handleFillSymbol3DLayerMaterialColorMixModeChange}></FillSymbol3DLayerMaterialForm>
+          handleColorMixModeChange={
+            handleFillSymbol3DLayerMaterialColorMixModeChange
+          }
+        ></FillSymbol3DLayerMaterialForm>
       </calcite-block>
 
       {!isMeshSymbol3D && (
@@ -92,9 +127,14 @@ function FillSymbol3DLayerForm({
           <FillSymbol3DLayerOutlineForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerOutlineColorChange}
-            handleLineSylePattern3DStyleChange={handleFillSymbol3DLayerOutlinePatternStyleChange}
-            handlePatternCapChange={handleFillSymbol3DLayerOutlinePatternCapChange}
-            handleSizeChange={handleFillSymbol3DLayerOutlineSizeChange}></FillSymbol3DLayerOutlineForm>
+            handleLineSylePattern3DStyleChange={
+              handleFillSymbol3DLayerOutlinePatternStyleChange
+            }
+            handlePatternCapChange={
+              handleFillSymbol3DLayerOutlinePatternCapChange
+            }
+            handleSizeChange={handleFillSymbol3DLayerOutlineSizeChange}
+          ></FillSymbol3DLayerOutlineForm>
         </calcite-block>
       )}
 
@@ -102,7 +142,8 @@ function FillSymbol3DLayerForm({
         <calcite-block style={blockStyles} collapsible heading={"pattern"}>
           <StylePattern3DForm
             layerIndex={layerIndex}
-            handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}></StylePattern3DForm>
+            handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
+          ></StylePattern3DForm>
         </calcite-block>
       )}
     </>

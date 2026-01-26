@@ -29,7 +29,8 @@ function PointSymbol3DVerticalOffsetForm({
             setMaxWorldLength(event.target.value);
             handleMaxWorldLengthChange(event.target.value);
           }}
-          value={maxWorldLength}></calcite-input-number>
+          value={maxWorldLength}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -41,7 +42,8 @@ function PointSymbol3DVerticalOffsetForm({
             setMinWorldLength(event.target.value);
             handleMinWorldLengthChange(event.target.value);
           }}
-          value={minWorldLength}></calcite-input-number>
+          value={minWorldLength}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -53,7 +55,8 @@ function PointSymbol3DVerticalOffsetForm({
             setScreenLength(event.target.value);
             handleScreenLengthChange(event.target.value);
           }}
-          value={screenLength}></calcite-input-number>
+          value={screenLength}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

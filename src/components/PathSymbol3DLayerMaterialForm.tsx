@@ -8,7 +8,10 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
-function PathSymbol3DLayerMaterialForm({ layerIndex, handleColorChange }: Props): React.ReactElement {
+function PathSymbol3DLayerMaterialForm({
+  layerIndex,
+  handleColorChange,
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#007ac2");
 
   return (
@@ -25,7 +28,8 @@ function PathSymbol3DLayerMaterialForm({ layerIndex, handleColorChange }: Props)
             }
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
     </>
   );

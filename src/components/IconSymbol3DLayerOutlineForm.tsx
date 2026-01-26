@@ -10,7 +10,11 @@ interface Props {
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
-function IconSymbol3DLayerOutlineForm({ layerIndex, handleColorChange, handleSizeChange }: Props): React.ReactElement {
+function IconSymbol3DLayerOutlineForm({
+  layerIndex,
+  handleColorChange,
+  handleSizeChange,
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("1.5");
 
@@ -26,7 +30,8 @@ function IconSymbol3DLayerOutlineForm({ layerIndex, handleColorChange, handleSiz
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -38,7 +43,8 @@ function IconSymbol3DLayerOutlineForm({ layerIndex, handleColorChange, handleSiz
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

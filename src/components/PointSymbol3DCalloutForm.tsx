@@ -9,7 +9,10 @@ interface Props {
   handleSizeChange: (value: string) => void;
 }
 
-function PointSymbol3DCalloutForm({ handleColorChange, handleSizeChange }: Props): React.ReactElement {
+function PointSymbol3DCalloutForm({
+  handleColorChange,
+  handleSizeChange,
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#000000");
   const [size, setSize] = useState("1");
 
@@ -25,7 +28,8 @@ function PointSymbol3DCalloutForm({ handleColorChange, handleSizeChange }: Props
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -37,7 +41,8 @@ function PointSymbol3DCalloutForm({ handleColorChange, handleSizeChange }: Props
             setSize(event.target.value);
             handleSizeChange(event.target.value);
           }}
-          value={size}></calcite-input-number>
+          value={size}
+        ></calcite-input-number>
       </calcite-label>
     </>
   );

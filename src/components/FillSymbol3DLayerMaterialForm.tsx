@@ -12,7 +12,11 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
   handleColorMixModeChange: (
     layerIndex: number,
-    value: NonNullable<NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]>,
+    value: NonNullable<
+      NonNullable<
+        InstanceType<typeof FillSymbol3DLayer>["material"]
+      >["colorMixMode"]
+    >,
   ) => void;
 }
 
@@ -36,7 +40,8 @@ function FillSymbol3DLayerMaterialForm({
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -48,11 +53,14 @@ function FillSymbol3DLayerMaterialForm({
             handleColorMixModeChange(
               layerIndex,
               event.target.value as NonNullable<
-                NonNullable<InstanceType<typeof FillSymbol3DLayer>["material"]>["colorMixMode"]
+                NonNullable<
+                  InstanceType<typeof FillSymbol3DLayer>["material"]
+                >["colorMixMode"]
               >,
             );
           }}
-          value={colorMixMode}>
+          value={colorMixMode}
+        >
           {colorMixModeOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}

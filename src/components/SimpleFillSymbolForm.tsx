@@ -12,13 +12,21 @@ import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleColorChange: (value: string) => void;
-  handleOutlineCapChange: (value: InstanceType<typeof SimpleLineSymbol>["cap"]) => void;
+  handleOutlineCapChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ) => void;
   handleOutlineColorChange: (value: string) => void;
-  handleOutlineJoinChange: (value: InstanceType<typeof SimpleLineSymbol>["join"]) => void;
+  handleOutlineJoinChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["join"],
+  ) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
-  handleOutlineStyleChange: (value: InstanceType<typeof SimpleLineSymbol>["style"]) => void;
+  handleOutlineStyleChange: (
+    value: InstanceType<typeof SimpleLineSymbol>["style"],
+  ) => void;
   handleOutlineWidthChange: (value: string) => void;
-  handleStyleChange: (value: InstanceType<typeof SimpleFillSymbol>["style"]) => void;
+  handleStyleChange: (
+    value: InstanceType<typeof SimpleFillSymbol>["style"],
+  ) => void;
 }
 
 function SimpleFillSymbolForm({
@@ -46,7 +54,8 @@ function SimpleFillSymbolForm({
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}></calcite-input>
+          value={color}
+        ></calcite-input>
       </calcite-label>
 
       <calcite-block style={blockStyles} collapsible heading={"outline:"}>
@@ -58,7 +67,8 @@ function SimpleFillSymbolForm({
           handleStyleChange={handleOutlineStyleChange}
           handleWidthChange={handleOutlineWidthChange}
           showMarker={false}
-          solidOnly={false}></SimpleLineSymbolForm>
+          solidOnly={false}
+        ></SimpleLineSymbolForm>
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -67,9 +77,14 @@ function SimpleFillSymbolForm({
           label={"style selection"}
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
-            handleStyleChange(event.target.value as InstanceType<typeof SimpleFillSymbol>["style"]);
+            handleStyleChange(
+              event.target.value as InstanceType<
+                typeof SimpleFillSymbol
+              >["style"],
+            );
           }}
-          value={style}>
+          value={style}
+        >
           {fillOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}

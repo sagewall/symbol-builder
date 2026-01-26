@@ -17,7 +17,12 @@ import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
 
 function PictureFillSymbolShell(): React.ReactElement {
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
@@ -45,7 +50,8 @@ function PictureFillSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
@@ -67,7 +73,9 @@ function PictureFillSymbolShell(): React.ReactElement {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]): void => {
+  const handleOutlineCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -87,7 +95,9 @@ function PictureFillSymbolShell(): React.ReactElement {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]): void => {
+  const handleOutlineJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -97,7 +107,9 @@ function PictureFillSymbolShell(): React.ReactElement {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineMiterLimitChange = (currentMiterLimitValue: string): void => {
+  const handleOutlineMiterLimitChange = (
+    currentMiterLimitValue: string,
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -107,7 +119,9 @@ function PictureFillSymbolShell(): React.ReactElement {
     updateGraphics(newPictureFillSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]): void => {
+  const handleOutlineStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -183,12 +197,18 @@ function PictureFillSymbolShell(): React.ReactElement {
                 handleXOffsetChange={handleXOffsetChange}
                 handleXScaleChange={handleXScaleChange}
                 handleYOffsetChange={handleYOffsetChange}
-                handleYScaleChange={handleYScaleChange}></PictureFillSymbolForm>
+                handleYScaleChange={handleYScaleChange}
+              ></PictureFillSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -197,13 +217,19 @@ function PictureFillSymbolShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <PictureFillSymbolESMPanel pictureFillSymbol={pictureFillSymbol}></PictureFillSymbolESMPanel>
+                <PictureFillSymbolESMPanel
+                  pictureFillSymbol={pictureFillSymbol}
+                ></PictureFillSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureFillSymbolCDNPanel pictureFillSymbol={pictureFillSymbol}></PictureFillSymbolCDNPanel>
+                <PictureFillSymbolCDNPanel
+                  pictureFillSymbol={pictureFillSymbol}
+                ></PictureFillSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <PictureFillSymbolJSONPanel pictureFillSymbol={pictureFillSymbol}></PictureFillSymbolJSONPanel>
+                <PictureFillSymbolJSONPanel
+                  pictureFillSymbol={pictureFillSymbol}
+                ></PictureFillSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

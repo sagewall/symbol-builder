@@ -17,11 +17,18 @@ import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
 import type { FontData } from "./lib/types";
 
 function TextSymbolShell(): React.ReactElement {
-  const [font, setFont] = useState(new Font({ family: "Abril Fatface", size: 12 }));
+  const [font, setFont] = useState(
+    new Font({ family: "Abril Fatface", size: 12 }),
+  );
 
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
@@ -44,7 +51,8 @@ function TextSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(pointGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
@@ -66,13 +74,17 @@ function TextSymbolShell(): React.ReactElement {
     updateGraphics(newTextSymbol);
   };
 
-  const handleBackgroundColorChange = (currentBackgroundColor: string): void => {
+  const handleBackgroundColorChange = (
+    currentBackgroundColor: string,
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.backgroundColor = new Color(currentBackgroundColor);
     updateGraphics(newTextSymbol);
   };
 
-  const handleBorderLineColorChange = (currentBorderLineColor: string): void => {
+  const handleBorderLineColorChange = (
+    currentBorderLineColor: string,
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.borderLineColor = new Color(currentBorderLineColor);
     updateGraphics(newTextSymbol);
@@ -100,7 +112,9 @@ function TextSymbolShell(): React.ReactElement {
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontDecorationChange = (currentFontDecoration: InstanceType<typeof Font>["decoration"]): void => {
+  const handleFontDecorationChange = (
+    currentFontDecoration: InstanceType<typeof Font>["decoration"],
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.decoration = currentFontDecoration;
     setFont(newTextSymbol.font);
@@ -127,7 +141,9 @@ function TextSymbolShell(): React.ReactElement {
   };
 
   const handleHorizontalAlignmentChange = (
-    currentHorizontalAlignment: InstanceType<typeof TextSymbol>["horizontalAlignment"],
+    currentHorizontalAlignment: InstanceType<
+      typeof TextSymbol
+    >["horizontalAlignment"],
   ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.horizontalAlignment = currentHorizontalAlignment;
@@ -159,7 +175,9 @@ function TextSymbolShell(): React.ReactElement {
   };
 
   const handleVerticalAlignmentChange = (
-    currentVerticalAlignment: InstanceType<typeof TextSymbol>["verticalAlignment"],
+    currentVerticalAlignment: InstanceType<
+      typeof TextSymbol
+    >["verticalAlignment"],
   ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.verticalAlignment = currentVerticalAlignment;
@@ -196,19 +214,27 @@ function TextSymbolShell(): React.ReactElement {
                 handleFontSizeChange={handleFontSizeChange}
                 handleHaloColorChange={handleHaloColorChange}
                 handleHaloSizeChange={handleHaloSizeChange}
-                handleHorizontalAlignmentChange={handleHorizontalAlignmentChange}
+                handleHorizontalAlignmentChange={
+                  handleHorizontalAlignmentChange
+                }
                 handleKerningChange={handleKerningChange}
                 handleLineWidthChange={handleLineWidthChange}
                 handleRotatedChange={handleRotatedChange}
                 handleTextChange={handleTextChange}
                 handleVerticalAlignmentChange={handleVerticalAlignmentChange}
                 handleXOffsetChange={handleXOffsetChange}
-                handleYOffsetChange={handleYOffsetChange}></TextSymbolForm>
+                handleYOffsetChange={handleYOffsetChange}
+              ></TextSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -217,13 +243,19 @@ function TextSymbolShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <TextSymbolESMPanel textSymbol={textSymbol}></TextSymbolESMPanel>
+                <TextSymbolESMPanel
+                  textSymbol={textSymbol}
+                ></TextSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolCDNPanel textSymbol={textSymbol}></TextSymbolCDNPanel>
+                <TextSymbolCDNPanel
+                  textSymbol={textSymbol}
+                ></TextSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <TextSymbolJSONPanel textSymbol={textSymbol}></TextSymbolJSONPanel>
+                <TextSymbolJSONPanel
+                  textSymbol={textSymbol}
+                ></TextSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>

@@ -5,10 +5,14 @@ interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
-function PolygonSymbol3DForm({ updateSymbolLayers }: Props): React.ReactElement {
+function PolygonSymbol3DForm({
+  updateSymbolLayers,
+}: Props): React.ReactElement {
   return (
     <>
-      <PolygonSymbol3DSymbolLayersForm updateSymbolLayers={updateSymbolLayers}></PolygonSymbol3DSymbolLayersForm>
+      <PolygonSymbol3DSymbolLayersForm
+        updateSymbolLayers={updateSymbolLayers}
+      ></PolygonSymbol3DSymbolLayersForm>
     </>
   );
 }

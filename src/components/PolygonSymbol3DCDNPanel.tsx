@@ -9,7 +9,9 @@ interface Props {
   polygonSymbol3D: PolygonSymbol3D;
 }
 
-function PolygonSymbol3DCDNPanel({ polygonSymbol3D }: Props): React.ReactElement {
+function PolygonSymbol3DCDNPanel({
+  polygonSymbol3D,
+}: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
   const handleCopyClick = async (): Promise<void> => {
@@ -28,7 +30,11 @@ const polygonSymbol3D = new PolygonSymbol3D({
 
   polygonSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "fill") {
-      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.outline?.pattern) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.outline?.pattern
+      ) {
         codeSnippet += `
     {
       type: "fill",
@@ -88,7 +94,11 @@ const polygonSymbol3D = new PolygonSymbol3D({
     }
 
     if (symbolLayer.type === "icon") {
-      if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.href) {
+      if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.href
+      ) {
         codeSnippet += `
     {
       type: "icon",
@@ -110,7 +120,11 @@ const polygonSymbol3D = new PolygonSymbol3D({
       size: ${symbolLayer.size}
     },
     `;
-      } else if (symbolLayer.material?.color && symbolLayer.outline?.color && symbolLayer.resource?.primitive) {
+      } else if (
+        symbolLayer.material?.color &&
+        symbolLayer.outline?.color &&
+        symbolLayer.resource?.primitive
+      ) {
         codeSnippet += `
     {
       type: "icon",
@@ -161,7 +175,10 @@ const polygonSymbol3D = new PolygonSymbol3D({
       width: ${symbolLayer.width}
     },
     `;
-      } else if (symbolLayer.material?.color && symbolLayer.resource?.primitive) {
+      } else if (
+        symbolLayer.material?.color &&
+        symbolLayer.resource?.primitive
+      ) {
         codeSnippet += `
     {
       type: "object",
@@ -204,7 +221,8 @@ const polygonSymbol3D = new PolygonSymbol3D({
           text="Copy Snippet"
           textEnabled
           slot="header-actions-end"
-          onClick={handleCopyClick}></calcite-action>
+          onClick={handleCopyClick}
+        ></calcite-action>
 
         <pre style={jsonStyles}>{codeSnippet}</pre>
       </calcite-panel>
@@ -214,7 +232,8 @@ const polygonSymbol3D = new PolygonSymbol3D({
         icon="copy-to-clipboard"
         kind="success"
         label="Copied to clipboard"
-        ref={alertRef}>
+        ref={alertRef}
+      >
         <div slot="message">Copied to clipboard</div>
       </calcite-alert>
     </>

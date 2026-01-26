@@ -27,14 +27,18 @@ function PointSymbol3DForm({
       <calcite-block style={blockStyles} collapsible heading={"callout"}>
         <PointSymbol3DCalloutForm
           handleColorChange={handleCalloutColorChange}
-          handleSizeChange={handleCalloutSizeChange}></PointSymbol3DCalloutForm>
+          handleSizeChange={handleCalloutSizeChange}
+        ></PointSymbol3DCalloutForm>
       </calcite-block>
-      <PointSymbol3DSymbolLayersForm updateSymbolLayers={updateSymbolLayers}></PointSymbol3DSymbolLayersForm>
+      <PointSymbol3DSymbolLayersForm
+        updateSymbolLayers={updateSymbolLayers}
+      ></PointSymbol3DSymbolLayersForm>
       <calcite-block style={blockStyles} collapsible heading={"verticalOffset"}>
         <PointSymbol3DVerticalOffsetForm
           handleMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
           handleMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}
-          handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}></PointSymbol3DVerticalOffsetForm>
+          handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}
+        ></PointSymbol3DVerticalOffsetForm>
       </calcite-block>
     </>
   );

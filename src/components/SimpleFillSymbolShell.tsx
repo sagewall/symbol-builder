@@ -20,7 +20,13 @@ import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
-import { formStyles, shellPanelStyles, shellStyles, tabNavStyles, viewSwitchLabelStyles } from "./lib/styles";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "./lib/styles";
 
 function SimpleFillSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
@@ -44,7 +50,8 @@ function SimpleFillSymbolShell(): React.ReactElement {
   const graphicsCollection = new Collection();
   graphicsCollection.add(polygonGraphic);
 
-  const [graphics, setGraphics] = useState<Collection<Graphic>>(graphicsCollection);
+  const [graphics, setGraphics] =
+    useState<Collection<Graphic>>(graphicsCollection);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -77,7 +84,9 @@ function SimpleFillSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineCapChange = (currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]): void => {
+  const handleOutlineCapChange = (
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -97,7 +106,9 @@ function SimpleFillSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineJoinChange = (currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]): void => {
+  const handleOutlineJoinChange = (
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -107,7 +118,9 @@ function SimpleFillSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineMiterLimitChange = (currentMiterLimitValue: string): void => {
+  const handleOutlineMiterLimitChange = (
+    currentMiterLimitValue: string,
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -117,7 +130,9 @@ function SimpleFillSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleOutlineStyleChange = (currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]): void => {
+  const handleOutlineStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -137,7 +152,9 @@ function SimpleFillSymbolShell(): React.ReactElement {
     updateGraphics(newSimpleFillSymbol);
   };
 
-  const handleStyleChange = (currentStyleValue: InstanceType<typeof SimpleFillSymbol>["style"]): void => {
+  const handleStyleChange = (
+    currentStyleValue: InstanceType<typeof SimpleFillSymbol>["style"],
+  ): void => {
     const newSimpleFillSymbol = simpleFillSymbol.clone();
     newSimpleFillSymbol.style = currentStyleValue;
     updateGraphics(newSimpleFillSymbol);
@@ -149,9 +166,16 @@ function SimpleFillSymbolShell(): React.ReactElement {
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
-            <calcite-label slot="header-actions-end" layout="inline" style={viewSwitchLabelStyles}>
+            <calcite-label
+              slot="header-actions-end"
+              layout="inline"
+              style={viewSwitchLabelStyles}
+            >
               2D
-              <calcite-switch ref={viewSwitchRef} oncalciteSwitchChange={handleSwitchChange}></calcite-switch>
+              <calcite-switch
+                ref={viewSwitchRef}
+                oncalciteSwitchChange={handleSwitchChange}
+              ></calcite-switch>
               3D
             </calcite-label>
 
@@ -164,12 +188,18 @@ function SimpleFillSymbolShell(): React.ReactElement {
                 handleOutlineMiterLimitChange={handleOutlineMiterLimitChange}
                 handleOutlineStyleChange={handleOutlineStyleChange}
                 handleOutlineWidthChange={handleOutlineWidthChange}
-                handleStyleChange={handleStyleChange}></SimpleFillSymbolForm>
+                handleStyleChange={handleStyleChange}
+              ></SimpleFillSymbolForm>
             </div>
           </calcite-panel>
         </calcite-shell-panel>
 
-        <calcite-shell-panel slot="panel-end" position="end" resizable style={shellPanelStyles}>
+        <calcite-shell-panel
+          slot="panel-end"
+          position="end"
+          resizable
+          style={shellPanelStyles}
+        >
           <calcite-panel>
             <calcite-tabs>
               <calcite-tab-nav slot="title-group" style={tabNavStyles}>
@@ -178,13 +208,19 @@ function SimpleFillSymbolShell(): React.ReactElement {
                 <calcite-tab-title>JSON</calcite-tab-title>
               </calcite-tab-nav>
               <calcite-tab>
-                <SimpleFillSymbolESMPanel simpleFillSymbol={simpleFillSymbol}></SimpleFillSymbolESMPanel>
+                <SimpleFillSymbolESMPanel
+                  simpleFillSymbol={simpleFillSymbol}
+                ></SimpleFillSymbolESMPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleFillSymbolCDNPanel simpleFillSymbol={simpleFillSymbol}></SimpleFillSymbolCDNPanel>
+                <SimpleFillSymbolCDNPanel
+                  simpleFillSymbol={simpleFillSymbol}
+                ></SimpleFillSymbolCDNPanel>
               </calcite-tab>
               <calcite-tab>
-                <SimpleFillSymbolJSONPanel simpleFillSymbol={simpleFillSymbol}></SimpleFillSymbolJSONPanel>
+                <SimpleFillSymbolJSONPanel
+                  simpleFillSymbol={simpleFillSymbol}
+                ></SimpleFillSymbolJSONPanel>
               </calcite-tab>
             </calcite-tabs>
           </calcite-panel>
