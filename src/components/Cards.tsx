@@ -4,12 +4,7 @@ import "@esri/calcite-components/components/calcite-chip";
 import "@esri/calcite-components/components/calcite-shell";
 import "@esri/calcite-components/components/calcite-tooltip";
 import { symbols } from "./lib/constants";
-import {
-  cardFooterStyles,
-  cardStyles,
-  cardsStyles,
-  shellStyles,
-} from "./lib/styles";
+import { cardFooterStyles, cardStyles, cardsStyles } from "./lib/styles";
 
 const cards = symbols.map((symbol) => (
   <calcite-card label={symbol.name} style={cardStyles} key={symbol.name}>
@@ -132,11 +127,9 @@ const cards = symbols.map((symbol) => (
 function Cards(): React.ReactElement {
   return (
     <>
-      <calcite-shell style={shellStyles}>
-        <calcite-card-group label="Symbols" style={cardsStyles}>
-          {cards}
-        </calcite-card-group>
-      </calcite-shell>
+      <calcite-card-group label="Symbols" style={cardsStyles}>
+        {cards}
+      </calcite-card-group>
     </>
   );
 }

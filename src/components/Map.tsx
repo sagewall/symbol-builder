@@ -37,7 +37,9 @@ function Map({ graphics }: MapProps): React.ReactElement {
           text="Zoom to Graphics"
           text-enabled
           onClick={async () => {
-            await viewElement.current?.goTo(viewElement.current.graphics?.toArray());
+            await viewElement.current?.goTo(
+              viewElement.current.graphics?.toArray(),
+            );
           }}
         ></calcite-action>
       </arcgis-map>
