@@ -217,7 +217,7 @@ function WebStyleSymbol2DForm({
         await getStyleItemDataFromItem(groupItems[0]);
       })();
     }
-  }, []);
+  }, [groupItems]);
 
   return (
     <>
