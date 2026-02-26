@@ -2,7 +2,7 @@ import type Graphic from "@arcgis/core/Graphic.js";
 import type Collection from "@arcgis/core/core/Collection.js";
 import Point from "@arcgis/core/geometry/Point.js";
 import "@arcgis/map-components/components/arcgis-scene";
-import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-button";
 import { useRef } from "react";
 
 interface SceneViewProps {
@@ -30,18 +30,17 @@ function Scene({ graphics }: SceneViewProps): React.ReactElement {
         }}
         ref={viewElement}
       >
-        <calcite-action
-          icon="zoom-to-object"
-          scale="s"
+        <calcite-button
+          iconStart="zoom-to-object"
           slot="top-right"
-          text="Zoom to Graphics"
-          text-enabled
           onClick={async () => {
             await viewElement.current?.goTo(
               viewElement.current.graphics?.toArray(),
             );
           }}
-        ></calcite-action>
+        >
+          Zoom to Graphics
+        </calcite-button>
       </arcgis-scene>
     </>
   );
