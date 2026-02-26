@@ -9,7 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@arcgis/map-components": "^5.0.0-next.146",
+    "@arcgis/map-components": "^5.0.0",
     "@astrojs/netlify": "^6.6.4",
     "@astrojs/react": "^4.4.2",
     "@types/react": "^19.2.9",
