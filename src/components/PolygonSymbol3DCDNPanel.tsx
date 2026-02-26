@@ -1,18 +1,20 @@
-import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
+import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-alert";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   polygonSymbol3D: PolygonSymbol3D;
 }
 
-function PolygonSymbol3DCDNPanel({ polygonSymbol3D }: Props) {
+function PolygonSymbol3DCDNPanel({
+  polygonSymbol3D,
+}: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;
@@ -37,11 +39,11 @@ const polygonSymbol3D = new PolygonSymbol3D({
     {
       type: "fill",
       material: {
-        color: [${symbolLayer.material.color.toRgba()}],
+        color: [${symbolLayer.material.color.toRgba().toString()}],
         colorMixMode: "${symbolLayer.material.colorMixMode}",
       },
       outline: {
-        color: [${symbolLayer.outline.color.toRgba()}],
+        color: [${symbolLayer.outline.color.toRgba().toString()}],
         pattern: {
           type: "style",
           style: "${symbolLayer.outline.pattern.style}"
@@ -66,12 +68,12 @@ const polygonSymbol3D = new PolygonSymbol3D({
       castShadows: ${symbolLayer.castShadows},
       edges: {
         type: "solid",
-        color: [${symbolLayer.edges?.color?.toRgba()}],
+        color: [${symbolLayer.edges?.color?.toRgba().toString()}],
         extensionLength: ${symbolLayer.edges?.extensionLength},
         size: ${symbolLayer.edges?.size}
       },
       material: {
-        color: [${symbolLayer.material.color.toRgba()}],
+        color: [${symbolLayer.material.color.toRgba().toString()}],
       },
       size: ${symbolLayer.size}
     },
@@ -83,7 +85,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       codeSnippet += `
     {
       type: "water",
-      color: [${symbolLayer.color?.toRgba()}],
+      color: [${symbolLayer.color?.toRgba().toString()}],
       waterbodySize: "${symbolLayer.waterbodySize}",
       waveDirection: ${symbolLayer.waveDirection},
       waveStrength: "${symbolLayer.waveStrength}"
@@ -106,10 +108,10 @@ const polygonSymbol3D = new PolygonSymbol3D({
         y: ${symbolLayer.anchorPosition.y}
       },
       material: {
-        color: [${symbolLayer.material.color.toRgba()}]
+        color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       outline: {
-        color: [${symbolLayer.outline.color.toRgba()}],
+        color: [${symbolLayer.outline.color.toRgba().toString()}],
         size: ${symbolLayer.outline.size}
       },
       resource: {
@@ -132,10 +134,10 @@ const polygonSymbol3D = new PolygonSymbol3D({
         y: ${symbolLayer.anchorPosition.y}
       },
       material: {
-        color: [${symbolLayer.material.color.toRgba()}]
+        color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       outline: {
-        color: [${symbolLayer.outline.color.toRgba()}],
+        color: [${symbolLayer.outline.color.toRgba().toString()}],
         size: ${symbolLayer.outline.size}
       },
       resource: {
@@ -163,7 +165,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
-        color: [${symbolLayer.material.color.toRgba()}]
+        color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
         href: "${symbolLayer.resource.href}"
@@ -191,7 +193,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
-        color: [${symbolLayer.material.color.toRgba()}]
+        color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
         primitive: "${symbolLayer.resource.primitive}",

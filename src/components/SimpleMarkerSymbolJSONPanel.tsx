@@ -1,18 +1,20 @@
-import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-alert";
 import "@esri/calcite-components/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   simpleMarkerSymbol: SimpleMarkerSymbol;
 }
 
-function SimpleMarkerSymbolJSONPanel({ simpleMarkerSymbol }: Props) {
+function SimpleMarkerSymbolJSONPanel({
+  simpleMarkerSymbol,
+}: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;

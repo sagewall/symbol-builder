@@ -1,18 +1,18 @@
-import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
+import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-alert";
 import "@esri/calcite-components/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   lineSymbol3D: LineSymbol3D;
 }
 
-function LineSymbol3DJSONPanel({ lineSymbol3D }: Props) {
+function LineSymbol3DJSONPanel({ lineSymbol3D }: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;

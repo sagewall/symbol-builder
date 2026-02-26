@@ -1,13 +1,13 @@
-import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-switch";
 import { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
 import Edges3DForm from "./Edges3DForm";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
+import { blockStyles, labelStyles } from "./lib/styles";
 import StylePattern3DForm from "./StylePattern3DForm";
 
 interface Props {
@@ -16,19 +16,19 @@ interface Props {
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleFillSymbol3DLayerEdgesColorChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleFillSymbol3DLayerEdgesExtensionLengthChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleFillSymbol3DLayerEdgesSizeChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleFillSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleFillSymbol3DLayerMaterialColorMixModeChange: (
     layerIndex: number,
@@ -36,15 +36,15 @@ interface Props {
       NonNullable<
         InstanceType<typeof FillSymbol3DLayer>["material"]
       >["colorMixMode"]
-    >
+    >,
   ) => void;
   handleFillSymbol3DLayerOutlineColorChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleFillSymbol3DLayerOutlinePatternStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineStylePattern3D>["style"]
+    value: InstanceType<typeof LineStylePattern3D>["style"],
   ) => void;
   handleFillSymbol3DLayerOutlinePatternCapChange: (
     layerIndex: number,
@@ -52,17 +52,17 @@ interface Props {
       NonNullable<
         InstanceType<typeof FillSymbol3DLayer>["outline"]
       >["patternCap"]
-    >
+    >,
   ) => void;
   handleFillSymbol3DLayerOutlineSizeChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleFillSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
     value: NonNullable<
       NonNullable<InstanceType<typeof FillSymbol3DLayer>["pattern"]>["style"]
-    >
+    >,
   ) => void;
 }
 
@@ -80,7 +80,7 @@ function FillSymbol3DLayerForm({
   handleFillSymbol3DLayerOutlinePatternCapChange,
   handleFillSymbol3DLayerOutlineSizeChange,
   handleFillSymbol3DLayerPatternStyleChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [castShadows, setCastShadows] = useState(true);
 
   return (

@@ -1,4 +1,4 @@
-import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
@@ -7,8 +7,8 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import { useState } from "react";
-import { OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS } from "../lib/constants";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { objectSymbol3DLayerAnchorOptions } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
 import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
@@ -17,19 +17,19 @@ interface Props {
   layerIndex: number;
   handleAnchorChange: (
     layerIndex: number,
-    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"]
+    value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"],
   ) => void;
   handleObjectSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleObjectSymbol3DLayerAnchorPositionYChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleObjectSymbol3DLayerAnchorPositionZChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleDepthChange: (layerIndex: number, value: string) => void;
@@ -37,11 +37,11 @@ interface Props {
   handleHeightChange: (layerIndex: number, value: string) => void;
   handleObjectSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleObjectSymbol3DLayerResourceHrefChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleObjectSymbol3DLayerResourcePrimitiveChange: (
     layerIndex: number,
@@ -49,7 +49,7 @@ interface Props {
       NonNullable<
         InstanceType<typeof ObjectSymbol3DLayer>["resource"]
       >["primitive"]
-    >
+    >,
   ) => void;
   handleRollChange: (layerIndex: number, value: number) => void;
   handleTiltChange: (layerIndex: number, value: number) => void;
@@ -72,7 +72,7 @@ function ObjectSymbol3DLayerForm({
   handleRollChange,
   handleTiltChange,
   handleWidthChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [anchor, setAnchor] = useState("center");
   const [castShadows, setCastShadows] = useState(false);
   const [depth, setDepth] = useState("10");
@@ -94,12 +94,12 @@ function ObjectSymbol3DLayerForm({
               layerIndex,
               event.target.value as InstanceType<
                 typeof ObjectSymbol3DLayer
-              >["anchor"]
+              >["anchor"],
             );
           }}
           value={anchor}
         >
-          {OBJECT_SYMBOL_3D_LAYER_ANCHOR_OPTIONS.map((option, index) => (
+          {objectSymbol3DLayerAnchorOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

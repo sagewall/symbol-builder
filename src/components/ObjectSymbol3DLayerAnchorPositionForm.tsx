@@ -1,21 +1,21 @@
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
 import { useState } from "react";
-import { labelStyles } from "../lib/styles";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleObjectSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleObjectSymbol3DLayerAnchorPositionYChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleObjectSymbol3DLayerAnchorPositionZChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
 }
 
@@ -24,7 +24,7 @@ function ObjectSymbol3DLayerAnchorPositionForm({
   handleObjectSymbol3DLayerAnchorPositionXChange,
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [anchorPosition, setAnchorPosition] = useState({
     x: "0",
     y: "0",
@@ -41,7 +41,7 @@ function ObjectSymbol3DLayerAnchorPositionForm({
             setAnchorPosition({ ...anchorPosition, x: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionXChange(
               layerIndex,
-              event.target.value
+              event.target.value,
             );
           }}
           value={anchorPosition.x}
@@ -56,7 +56,7 @@ function ObjectSymbol3DLayerAnchorPositionForm({
             setAnchorPosition({ ...anchorPosition, y: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionYChange(
               layerIndex,
-              event.target.value
+              event.target.value,
             );
           }}
           value={anchorPosition.y}
@@ -71,7 +71,7 @@ function ObjectSymbol3DLayerAnchorPositionForm({
             setAnchorPosition({ ...anchorPosition, z: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionZChange(
               layerIndex,
-              event.target.value
+              event.target.value,
             );
           }}
           value={anchorPosition.z}

@@ -1,8 +1,8 @@
-import Color from "@arcgis/core/Color";
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import Color from "@arcgis/core/Color.js";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
+import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-panel";
 import "@esri/calcite-components/components/calcite-shell";
 import "@esri/calcite-components/components/calcite-shell-panel";
@@ -12,33 +12,32 @@ import "@esri/calcite-components/components/calcite-tab-nav";
 import "@esri/calcite-components/components/calcite-tab-title";
 import "@esri/calcite-components/components/calcite-tabs";
 import { useRef, useState } from "react";
-import { point } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-  viewSwitchLabelStyles,
-} from "../lib/styles";
-import Header from "./Header";
 import MapElement from "./Map";
 import Scene from "./Scene";
 import SimpleMarkerSymbolCDNPanel from "./SimpleMarkerSymbolCDNPanel";
 import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
+import { point } from "./lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+  viewSwitchLabelStyles,
+} from "./lib/styles";
 
-function SimpleMarkerSymbolShell() {
+function SimpleMarkerSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
 
   const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 })
+    new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 }),
   );
 
   const [simpleMarkerSymbol, setSimpleMarkerSymbol] = useState(
     new SimpleMarkerSymbol({
       outline: simpleLineSymbol,
-    })
+    }),
   );
 
   const pointGraphic = new Graphic({
@@ -58,13 +57,13 @@ function SimpleMarkerSymbolShell() {
     viewElement = <Scene graphics={graphics}></Scene>;
   }
 
-  const handleSwitchChange = () => {
+  const handleSwitchChange = (): void => {
     if (viewSwitchRef.current) {
       setScene((viewSwitchRef.current as HTMLCalciteSwitchElement).checked);
     }
   };
 
-  const updateGraphics = (newSimpleMarkerSymbol: SimpleMarkerSymbol) => {
+  const updateGraphics = (newSimpleMarkerSymbol: SimpleMarkerSymbol): void => {
     setSimpleMarkerSymbol(newSimpleMarkerSymbol);
 
     const newPointGraphic = graphics.getItemAt(0)?.clone();
@@ -76,21 +75,21 @@ function SimpleMarkerSymbolShell() {
     setGraphics(newGraphics);
   };
 
-  const handleAngleChange = (currentAngle: number) => {
+  const handleAngleChange = (currentAngle: number): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.angle = Number(currentAngle);
+    newSimpleMarkerSymbol.angle = currentAngle;
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleColorChange = (currentColor: string) => {
+  const handleColorChange = (currentColor: string): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.color = new Color(currentColor);
     updateGraphics(newSimpleMarkerSymbol);
   };
 
   const handleOutlineCapChange = (
-    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"]
-  ) => {
+    currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.cap = currentCapValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -100,7 +99,7 @@ function SimpleMarkerSymbolShell() {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineColorChange = (currentColor: string) => {
+  const handleOutlineColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.color = new Color(currentColor);
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -111,8 +110,8 @@ function SimpleMarkerSymbolShell() {
   };
 
   const handleOutlineJoinChange = (
-    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"]
-  ) => {
+    currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.join = currentJoinValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -122,7 +121,9 @@ function SimpleMarkerSymbolShell() {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineMiterLimitChange = (currentMiterLimitValue: string) => {
+  const handleOutlineMiterLimitChange = (
+    currentMiterLimitValue: string,
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -133,8 +134,8 @@ function SimpleMarkerSymbolShell() {
   };
 
   const handleOutlineStyleChange = (
-    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"]
-  ) => {
+    currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
+  ): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.style = currentStyleValue;
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -144,7 +145,7 @@ function SimpleMarkerSymbolShell() {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleOutlineWidthChange = (currentWidthValue: string) => {
+  const handleOutlineWidthChange = (currentWidthValue: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     newSimpleLineSymbol.width = Number(currentWidthValue);
     setSimpleLineSymbol(newSimpleLineSymbol);
@@ -154,33 +155,33 @@ function SimpleMarkerSymbolShell() {
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handlePathChange = (currentPathValue: string) => {
+  const handlePathChange = (currentPathValue: string): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.path = currentPathValue;
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleSizeChange = (currentSize: string) => {
+  const handleSizeChange = (currentSize: string): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.size = Number(currentSize);
     updateGraphics(newSimpleMarkerSymbol);
   };
 
   const handleStyleChange = (
-    currentStyleValue: InstanceType<typeof SimpleMarkerSymbol>["style"]
-  ) => {
+    currentStyleValue: InstanceType<typeof SimpleMarkerSymbol>["style"],
+  ): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.style = currentStyleValue;
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleXoffsetChange = (currentXOffset: string) => {
+  const handleXoffsetChange = (currentXOffset: string): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.xoffset = Number(currentXOffset);
     updateGraphics(newSimpleMarkerSymbol);
   };
 
-  const handleYoffsetChange = (currentYOffset: string) => {
+  const handleYoffsetChange = (currentYOffset: string): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.yoffset = Number(currentYOffset);
     updateGraphics(newSimpleMarkerSymbol);
@@ -188,7 +189,6 @@ function SimpleMarkerSymbolShell() {
 
   return (
     <calcite-shell style={shellStyles}>
-      <Header title="SimpleMarkerSymbol" backButton></Header>
       <calcite-shell-panel slot="panel-start" position="start" resizable>
         <calcite-panel>
           <div slot="header-content">Properties </div>

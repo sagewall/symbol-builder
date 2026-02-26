@@ -1,14 +1,14 @@
-import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D";
-import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer";
-import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
+import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
-import { CAP_OPTIONS, JOIN_OPTIONS } from "../lib/constants";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { capOptions, joinOptions } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
@@ -17,35 +17,35 @@ interface Props {
   layerIndex: number;
   handleCapChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineSymbol3DLayer>["cap"]
+    value: InstanceType<typeof LineSymbol3DLayer>["cap"],
   ) => void;
   handleJoinChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineSymbol3DLayer>["join"]
+    value: InstanceType<typeof LineSymbol3DLayer>["join"],
   ) => void;
   handleLineSymbol3DLayerMarkerBlockToggle: (
     layerIndex: number,
-    currentMarkerBlock: HTMLCalciteBlockElement
+    currentMarkerBlock: HTMLCalciteBlockElement,
   ) => void;
   handleLineSymbol3DLayerMarkerColorChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleLineSymbol3DLayerMarkerPlacementChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineStyleMarker3D>["placement"]
+    value: InstanceType<typeof LineStyleMarker3D>["placement"],
   ) => void;
   handleLineSymbol3DLayerMarkerStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineStyleMarker3D>["style"]
+    value: InstanceType<typeof LineStyleMarker3D>["style"],
   ) => void;
   handleLineSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleLineSymbol3DLayerPatternStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineStylePattern3D>["style"]
+    value: InstanceType<typeof LineStylePattern3D>["style"],
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -61,7 +61,7 @@ function LineSymbol3DLayerForm({
   handleLineSymbol3DLayerMaterialColorChange,
   handleLineSymbol3DLayerPatternStyleChange,
   handleSizeChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [cap, setCap] = useState("butt");
   const [join, setJoin] = useState("miter");
   const [size, setSize] = useState("3");
@@ -78,19 +78,19 @@ function LineSymbol3DLayerForm({
               layerIndex,
               event.target.value as InstanceType<
                 typeof LineSymbol3DLayer
-              >["cap"]
+              >["cap"],
             );
           }}
           value={cap}
         >
-          {CAP_OPTIONS.map((option, index) =>
+          {capOptions.map((option, index) =>
             option === "butt" ? (
               <calcite-option key={index} selected>
                 {option}
               </calcite-option>
             ) : (
               <calcite-option key={index}>{option}</calcite-option>
-            )
+            ),
           )}
         </calcite-select>
       </calcite-label>
@@ -105,12 +105,12 @@ function LineSymbol3DLayerForm({
               layerIndex,
               event.target.value as InstanceType<
                 typeof LineSymbol3DLayer
-              >["join"]
+              >["join"],
             );
           }}
           value={join}
         >
-          {JOIN_OPTIONS.map((option, index) => (
+          {joinOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

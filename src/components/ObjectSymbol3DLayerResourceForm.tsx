@@ -1,11 +1,11 @@
-import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import { useState } from "react";
-import { OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS } from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+import { objectSymbol3dLayerResourcePrimitiveOptions } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
@@ -16,7 +16,7 @@ interface Props {
       NonNullable<
         InstanceType<typeof ObjectSymbol3DLayer>["resource"]
       >["primitive"]
-    >
+    >,
   ) => void;
 }
 
@@ -24,7 +24,7 @@ function ObjectSymbol3DLayerResourceForm({
   layerIndex,
   handleHrefChange,
   handlePrimitiveChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [href, setHref] = useState("");
   const [primitive, setPrimitive] = useState("circle");
 
@@ -53,16 +53,14 @@ function ObjectSymbol3DLayerResourceForm({
                 NonNullable<
                   InstanceType<typeof ObjectSymbol3DLayer>["resource"]
                 >["primitive"]
-              >
+              >,
             );
           }}
           value={primitive}
         >
-          {OBJECT_SYMBOL_3D_LAYER_RESOURCE_PRIMITIVE_OPTIONS.map(
-            (option, index) => (
-              <calcite-option key={index}>{option}</calcite-option>
-            )
-          )}
+          {objectSymbol3dLayerResourcePrimitiveOptions.map((option, index) => (
+            <calcite-option key={index}>{option}</calcite-option>
+          ))}
         </calcite-select>
       </calcite-label>
     </>

@@ -1,15 +1,15 @@
-import type Font from "@arcgis/core/symbols/Font";
+import type Font from "@arcgis/core/symbols/Font.js";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import { useState } from "react";
-import { FONTS, FONT_DECORATION_OPTIONS } from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+import { fonts, fontDecorationOptions } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   handleDecorationChange: (
-    value: InstanceType<typeof Font>["decoration"]
+    value: InstanceType<typeof Font>["decoration"],
   ) => void;
   handleFontChange: (value: string) => void;
   handleSizeChange: (value: string) => void;
@@ -19,7 +19,7 @@ function FontForm({
   handleDecorationChange,
   handleFontChange,
   handleSizeChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [decoration, setDecoration] = useState("none");
   const [font, setFont] = useState("Arial Regular");
   const [size, setSize] = useState("12");
@@ -35,7 +35,7 @@ function FontForm({
           }}
           value={font}
         >
-          {FONTS.map((option, index) => (
+          {fonts.map((option, index) => (
             <calcite-option key={index} value={JSON.stringify(option)}>
               {option.name}
             </calcite-option>
@@ -50,12 +50,12 @@ function FontForm({
           oncalciteSelectChange={(event) => {
             setDecoration(event.target.value);
             handleDecorationChange(
-              event.target.value as InstanceType<typeof Font>["decoration"]
+              event.target.value as InstanceType<typeof Font>["decoration"],
             );
           }}
           value={decoration}
         >
-          {FONT_DECORATION_OPTIONS.map((option, index) => (
+          {fontDecorationOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

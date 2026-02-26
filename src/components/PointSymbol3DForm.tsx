@@ -1,6 +1,6 @@
-import type Collection from "@arcgis/core/core/Collection";
+import type Collection from "@arcgis/core/core/Collection.js";
 import "@esri/calcite-components/components/calcite-block";
-import { blockStyles } from "../lib/styles";
+import { blockStyles } from "./lib/styles";
 import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";
 import PointSymbol3DSymbolLayersForm from "./PointSymbol3DSymbolLayersForm";
 import PointSymbol3DVerticalOffsetForm from "./PointSymbol3DVerticalOffsetForm";
@@ -21,7 +21,7 @@ function PointSymbol3DForm({
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
   updateSymbolLayers,
-}: Props) {
+}: Props): React.ReactElement {
   return (
     <>
       <calcite-block style={blockStyles} collapsible heading={"callout"}>

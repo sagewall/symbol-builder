@@ -1,24 +1,24 @@
-import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import { useState } from "react";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { blockStyles, labelStyles } from "./lib/styles";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
   handleHeightChange: (value: string) => void;
   handleOutlineCapChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["cap"]
+    value: InstanceType<typeof SimpleLineSymbol>["cap"],
   ) => void;
   handleOutlineColorChange: (value: string) => void;
   handleOutlineJoinChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["join"]
+    value: InstanceType<typeof SimpleLineSymbol>["join"],
   ) => void;
   handleOutlineMiterLimitChange: (value: string) => void;
   handleOutlineStyleChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["style"]
+    value: InstanceType<typeof SimpleLineSymbol>["style"],
   ) => void;
   handleOutlineWidthChange: (value: string) => void;
   handleUrlChange: (value: string) => void;
@@ -43,10 +43,10 @@ function PictureFillSymbolForm({
   handleXScaleChange,
   handleYOffsetChange,
   handleYScaleChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [height, setHeight] = useState("75");
   const [url, setUrl] = useState(
-    "https://sagewall.github.io/test-images/globie.png"
+    "https://sagewall.github.io/test-images/globie.png",
   );
   const [width, setWidth] = useState("75");
   const [xoffset, setXoffset] = useState("0");

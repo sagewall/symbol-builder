@@ -1,27 +1,24 @@
-import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
+import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
 import "@esri/calcite-components/dist/components/calcite-input";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import { useState } from "react";
-import {
-  WATERBODY_SIZE_OPTIONS,
-  WAVE_STRENGTH_OPTIONS,
-} from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+import { waterbodySizeOptions, waveStrengthOptions } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleWaterbodySizeChange: (
     layerIndex: number,
-    value: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"]
+    value: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"],
   ) => void;
   handleWaveDirectionChange: (layerIndex: number, value: number) => void;
   handleWaveStrengthChange: (
     layerIndex: number,
-    value: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"]
+    value: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"],
   ) => void;
 }
 
@@ -31,7 +28,7 @@ function WaterSymbol3DLayerForm({
   handleWaterbodySizeChange,
   handleWaveDirectionChange,
   handleWaveStrengthChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#0077BE");
   const [waterbodySize, setWaterbodySize] = useState("medium");
   const [waveDirection, setWaveDirection] = useState(0);
@@ -44,9 +41,9 @@ function WaterSymbol3DLayerForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
-            handleColorChange(layerIndex, event.target.value as string);
+            handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
           value={color}
@@ -63,19 +60,19 @@ function WaterSymbol3DLayerForm({
               layerIndex,
               event.target.value as InstanceType<
                 typeof WaterSymbol3DLayer
-              >["waterbodySize"]
+              >["waterbodySize"],
             );
           }}
           value={waterbodySize}
         >
-          {WATERBODY_SIZE_OPTIONS.map((option, index) =>
+          {waterbodySizeOptions.map((option, index) =>
             option === "medium" ? (
               <calcite-option key={index} selected>
                 {option}
               </calcite-option>
             ) : (
               <calcite-option key={index}>{option}</calcite-option>
-            )
+            ),
           )}
         </calcite-select>
       </calcite-label>
@@ -107,19 +104,19 @@ function WaterSymbol3DLayerForm({
               layerIndex,
               event.target.value as InstanceType<
                 typeof WaterSymbol3DLayer
-              >["waveStrength"]
+              >["waveStrength"],
             );
           }}
           value={waveStrength}
         >
-          {WAVE_STRENGTH_OPTIONS.map((option, index) =>
+          {waveStrengthOptions.map((option, index) =>
             option === "moderate" ? (
               <calcite-option key={index} selected>
                 {option}
               </calcite-option>
             ) : (
               <calcite-option key={index}>{option}</calcite-option>
-            )
+            ),
           )}
         </calcite-select>
       </calcite-label>

@@ -1,18 +1,18 @@
-import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D";
+import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-alert";
 import "@esri/calcite-components/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   lineSymbol3D: LineSymbol3D;
 }
 
-function LineSymbol3DESMPanel({ lineSymbol3D }: Props) {
+function LineSymbol3DESMPanel({ lineSymbol3D }: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;
@@ -40,16 +40,21 @@ function LineSymbol3DESMPanel({ lineSymbol3D }: Props) {
 
   let codeSnippet = `\n`;
 
-  if (colorImport)
+  if (colorImport) {
     codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
-  if (lineSymbol3DImport)
+  }
+  if (lineSymbol3DImport) {
     codeSnippet += `import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";\n`;
-  if (lineSymbol3DLayerImport)
+  }
+  if (lineSymbol3DLayerImport) {
     codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`;
-  if (pathSymbol3DLayerImport)
+  }
+  if (pathSymbol3DLayerImport) {
     codeSnippet += `import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";\n`;
-  if (lineStylePattern3DImport)
+  }
+  if (lineStylePattern3DImport) {
     codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
+  }
 
   codeSnippet += `
 const lineSymbol3D = new LineSymbol3D({
@@ -64,12 +69,12 @@ const lineSymbol3D = new LineSymbol3D({
       cap: "${symbolLayer.cap}",
       join: "${symbolLayer.join}",
       marker: new LineStyleMarker3D({
-        color: new Color([${symbolLayer.marker.color?.toRgba()}]),
+        color: new Color([${(symbolLayer.marker.color?.toRgba() ?? []).toString()}]),
         placement: "${symbolLayer.marker.placement}",
         style: "${symbolLayer.marker.style}"
       }),
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       pattern: new LineStylePattern3D({
         style: "${symbolLayer.pattern?.style}"
@@ -83,7 +88,7 @@ const lineSymbol3D = new LineSymbol3D({
       cap: "${symbolLayer.cap}",
       join: "${symbolLayer.join}",
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       pattern: new LineStylePattern3D({
         style: "${symbolLayer.pattern?.style}"
@@ -104,7 +109,7 @@ const lineSymbol3D = new LineSymbol3D({
       height: ${symbolLayer.height},
       join: "${symbolLayer.join}",
       material: {
-        color: new Color([${symbolLayer.material.color.toRgba()}]),
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       profile: "${symbolLayer.profile}",
       profileRotation: "${symbolLayer.profileRotation}",

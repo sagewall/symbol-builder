@@ -1,5 +1,5 @@
-import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker";
-import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
+import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker.js";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-input-number";
@@ -7,33 +7,29 @@ import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
-import {
-  CAP_OPTIONS,
-  JOIN_OPTIONS,
-  LINE_STYLE_OPTIONS,
-} from "../lib/constants";
-import { blockStyles, labelStyles } from "../lib/styles";
+import { capOptions, joinOptions, lineStyleOptions } from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 
 interface Props {
   handleCapChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["cap"]
+    value: InstanceType<typeof SimpleLineSymbol>["cap"],
   ) => void;
   handleColorChange: (value: string) => void;
   handleJoinChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["join"]
+    value: InstanceType<typeof SimpleLineSymbol>["join"],
   ) => void;
   handleMarkerBlockToggle?: (value: HTMLCalciteBlockElement) => void;
   handleMarkerColorChange?: (value: string) => void;
   handleMarkerPlacementChange?: (
-    value: InstanceType<typeof LineSymbolMarker>["placement"]
+    value: InstanceType<typeof LineSymbolMarker>["placement"],
   ) => void;
   handleMarkerStyleChange?: (
-    value: InstanceType<typeof LineSymbolMarker>["style"]
+    value: InstanceType<typeof LineSymbolMarker>["style"],
   ) => void;
   handleMiterLimitChange: (value: string) => void;
   handleStyleChange: (
-    value: InstanceType<typeof SimpleLineSymbol>["style"]
+    value: InstanceType<typeof SimpleLineSymbol>["style"],
   ) => void;
   handleWidthChange: (value: string) => void;
   showMarker: boolean;
@@ -53,7 +49,7 @@ function SimpleLineSymbolForm({
   handleWidthChange,
   showMarker,
   solidOnly,
-}: Props) {
+}: Props): React.ReactElement {
   const [cap, setCap] = useState("round");
   const [color, setColor] = useState("#007ac2");
   const [join, setJoin] = useState("round");
@@ -105,12 +101,12 @@ function SimpleLineSymbolForm({
             handleStyleChange(
               event.target.value as InstanceType<
                 typeof SimpleLineSymbol
-              >["style"]
+              >["style"],
             );
           }}
           value={style}
         >
-          {LINE_STYLE_OPTIONS.map((option, index) => (
+          {lineStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
@@ -127,12 +123,14 @@ function SimpleLineSymbolForm({
           oncalciteSelectChange={(event) => {
             setCap(event.target.value);
             handleCapChange(
-              event.target.value as InstanceType<typeof SimpleLineSymbol>["cap"]
+              event.target.value as InstanceType<
+                typeof SimpleLineSymbol
+              >["cap"],
             );
           }}
           value={cap}
         >
-          {CAP_OPTIONS.map((option, index) => (
+          {capOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
@@ -143,9 +141,9 @@ function SimpleLineSymbolForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
-            handleColorChange(event.target.value as string);
+            handleColorChange(event.target.value);
           }}
           type="color"
           value={color}
@@ -161,12 +159,12 @@ function SimpleLineSymbolForm({
             handleJoinChange(
               event.target.value as InstanceType<
                 typeof SimpleLineSymbol
-              >["join"]
+              >["join"],
             );
           }}
           value={join}
         >
-          {JOIN_OPTIONS.map((option, index) => (
+          {joinOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

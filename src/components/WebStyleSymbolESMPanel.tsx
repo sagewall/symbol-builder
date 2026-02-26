@@ -1,18 +1,18 @@
-import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
+import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-action";
 import "@esri/calcite-components/dist/components/calcite-alert";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import { useRef } from "react";
-import { jsonStyles } from "../lib/styles";
+import { jsonStyles } from "./lib/styles";
 
 interface Props {
   webStyleSymbol: WebStyleSymbol;
 }
 
-function WebStyleSymbolESMPanel({ webStyleSymbol }: Props) {
+function WebStyleSymbolESMPanel({ webStyleSymbol }: Props): React.ReactElement {
   const alertRef = useRef<HTMLCalciteAlertElement>(null);
 
-  const handleCopyClick = async () => {
+  const handleCopyClick = async (): Promise<void> => {
     await navigator.clipboard.writeText(codeSnippet);
     if (alertRef.current) {
       alertRef.current.open = true;

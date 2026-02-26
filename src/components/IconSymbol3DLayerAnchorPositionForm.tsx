@@ -1,17 +1,17 @@
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import { useState } from "react";
-import { labelStyles } from "../lib/styles";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleIconSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
   handleIconSymbol3DLayerAnchorPositionYChange: (
     layerIndex: number,
-    value: string
+    value: string,
   ) => void;
 }
 
@@ -19,7 +19,7 @@ function IconSymbol3DLayerForm({
   layerIndex,
   handleIconSymbol3DLayerAnchorPositionXChange,
   handleIconSymbol3DLayerAnchorPositionYChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [anchorPosition, setAnchorPosition] = useState({ x: "0", y: "0" });
 
   return (
@@ -32,7 +32,7 @@ function IconSymbol3DLayerForm({
             setAnchorPosition({ ...anchorPosition, x: event.target.value });
             handleIconSymbol3DLayerAnchorPositionXChange(
               layerIndex,
-              event.target.value
+              event.target.value,
             );
           }}
           value={anchorPosition.x}
@@ -47,7 +47,7 @@ function IconSymbol3DLayerForm({
             setAnchorPosition({ ...anchorPosition, y: event.target.value });
             handleIconSymbol3DLayerAnchorPositionYChange(
               layerIndex,
-              event.target.value
+              event.target.value,
             );
           }}
           value={anchorPosition.y}

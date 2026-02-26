@@ -1,5 +1,5 @@
-import type Font from "@arcgis/core/symbols/Font";
-import type TextSymbol from "@arcgis/core/symbols/TextSymbol";
+import type Font from "@arcgis/core/symbols/Font.js";
+import type TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input";
 import "@esri/calcite-components/dist/components/calcite-input-number";
@@ -10,12 +10,12 @@ import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
 import { useState } from "react";
-import {
-  HORIZONTAL_ALIGNMENT_OPTIONS,
-  VERTICAL_ALIGNMENT_OPTIONS,
-} from "../lib/constants";
-import { blockStyles, labelStyles } from "../lib/styles";
 import FontForm from "./FontForm";
+import {
+  horizontalAlignmentOptions,
+  verticalAlignmentOptions,
+} from "./lib/constants";
+import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   handleAngleChange: (value: number) => void;
@@ -25,20 +25,20 @@ interface Props {
   handleColorChange: (value: string) => void;
   handleFontChange: (value: string) => void;
   handleFontDecorationChange: (
-    value: InstanceType<typeof Font>["decoration"]
+    value: InstanceType<typeof Font>["decoration"],
   ) => void;
   handleFontSizeChange: (value: string) => void;
   handleHaloColorChange: (value: string) => void;
   handleHaloSizeChange: (value: string) => void;
   handleHorizontalAlignmentChange: (
-    value: InstanceType<typeof TextSymbol>["horizontalAlignment"]
+    value: InstanceType<typeof TextSymbol>["horizontalAlignment"],
   ) => void;
   handleKerningChange: (value: boolean) => void;
   handleLineWidthChange: (value: string) => void;
   handleRotatedChange: (value: boolean) => void;
   handleTextChange: (value: string) => void;
   handleVerticalAlignmentChange: (
-    value: InstanceType<typeof TextSymbol>["verticalAlignment"]
+    value: InstanceType<typeof TextSymbol>["verticalAlignment"],
   ) => void;
   handleXOffsetChange: (value: string) => void;
   handleYOffsetChange: (value: string) => void;
@@ -63,7 +63,7 @@ function TextSymbolForm({
   handleVerticalAlignmentChange,
   handleXOffsetChange,
   handleYOffsetChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [angle, setAngle] = useState(0);
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
   const [borderLineColor, setBorderLineColor] = useState("#ffffff");
@@ -116,9 +116,9 @@ function TextSymbolForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setBackgroundColor(event.target.value.toString());
+              setBackgroundColor(event.target.value);
             }
-            handleBackgroundColorChange(event.target.value as string);
+            handleBackgroundColorChange(event.target.value);
           }}
           type="color"
           value={backgroundColor}
@@ -130,9 +130,9 @@ function TextSymbolForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setBorderLineColor(event.target.value.toString());
+              setBorderLineColor(event.target.value);
             }
-            handleBorderLineColorChange(event.target.value as string);
+            handleBorderLineColorChange(event.target.value);
           }}
           type="color"
           value={borderLineColor}
@@ -157,9 +157,9 @@ function TextSymbolForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
-            handleColorChange(event.target.value as string);
+            handleColorChange(event.target.value);
           }}
           type="color"
           value={color}
@@ -179,9 +179,9 @@ function TextSymbolForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setHaloColor(event.target.value.toString());
+              setHaloColor(event.target.value);
             }
-            handleHaloColorChange(event.target.value as string);
+            handleHaloColorChange(event.target.value);
           }}
           type="color"
           value={haloColor}
@@ -210,12 +210,12 @@ function TextSymbolForm({
             handleHorizontalAlignmentChange(
               event.target.value as InstanceType<
                 typeof TextSymbol
-              >["horizontalAlignment"]
+              >["horizontalAlignment"],
             );
           }}
           value={horizontalAlignment}
         >
-          {HORIZONTAL_ALIGNMENT_OPTIONS.map((option, index) => (
+          {horizontalAlignmentOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
@@ -230,12 +230,12 @@ function TextSymbolForm({
             handleVerticalAlignmentChange(
               event.target.value as InstanceType<
                 typeof TextSymbol
-              >["verticalAlignment"]
+              >["verticalAlignment"],
             );
           }}
           value={verticalAlignment}
         >
-          {VERTICAL_ALIGNMENT_OPTIONS.map((option, index) => (
+          {verticalAlignmentOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

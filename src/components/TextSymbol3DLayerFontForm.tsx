@@ -1,4 +1,4 @@
-import type Font from "@arcgis/core/symbols/Font";
+import type Font from "@arcgis/core/symbols/Font.js";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
@@ -6,27 +6,27 @@ import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
 import {
-  FONT_DECORATION_OPTIONS,
-  FONT_STYLE_OPTIONS,
-  FONT_WEIGHT_OPTIONS,
-} from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+  fontDecorationOptions,
+  fontStyleOptions,
+  fontWeightOptions,
+} from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 
 interface Props {
   layerIndex: number;
   handleDecorationChange: (
     layerIndex: number,
-    value: InstanceType<typeof Font>["decoration"]
+    value: InstanceType<typeof Font>["decoration"],
   ) => void;
   handleFamilyChange: (layerIndex: number, value: string) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
   handleStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof Font>["style"]
+    value: InstanceType<typeof Font>["style"],
   ) => void;
   handleWeightChange: (
     layerIndex: number,
-    value: InstanceType<typeof Font>["weight"]
+    value: InstanceType<typeof Font>["weight"],
   ) => void;
 }
 
@@ -37,7 +37,7 @@ function TextSymbol3DLayerFontForm({
   handleSizeChange,
   handleStyleChange,
   handleWeightChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [decoration, setDecoration] = useState("none");
   const [family, setFamily] = useState("sans-serif");
   const [size, setSize] = useState("9");
@@ -54,12 +54,12 @@ function TextSymbol3DLayerFontForm({
             setDecoration(event.target.value);
             handleDecorationChange(
               layerIndex,
-              event.target.value as InstanceType<typeof Font>["decoration"]
+              event.target.value as InstanceType<typeof Font>["decoration"],
             );
           }}
           value={decoration}
         >
-          {FONT_DECORATION_OPTIONS.map((option, index) => (
+          {fontDecorationOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
@@ -98,12 +98,12 @@ function TextSymbol3DLayerFontForm({
             setStyle(event.target.value);
             handleStyleChange(
               layerIndex,
-              event.target.value as InstanceType<typeof Font>["style"]
+              event.target.value as InstanceType<typeof Font>["style"],
             );
           }}
           value={style}
         >
-          {FONT_STYLE_OPTIONS.map((option, index) => (
+          {fontStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>
@@ -117,12 +117,12 @@ function TextSymbol3DLayerFontForm({
             setWeight(event.target.value);
             handleWeightChange(
               layerIndex,
-              event.target.value as InstanceType<typeof Font>["weight"]
+              event.target.value as InstanceType<typeof Font>["weight"],
             );
           }}
           value={weight}
         >
-          {FONT_WEIGHT_OPTIONS.map((option, index) => (
+          {fontWeightOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

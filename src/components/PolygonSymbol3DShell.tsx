@@ -1,11 +1,11 @@
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import type ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer";
-import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer";
-import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
-import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D";
-import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import type ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
+import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
+import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
@@ -14,21 +14,20 @@ import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
 import { useState } from "react";
-import { polygon } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-} from "../lib/styles";
-import Header from "./Header";
 import PolygonSymbol3DCDNPanel from "./PolygonSymbol3DCDNPanel";
 import PolygonSymbol3DESMPanel from "./PolygonSymbol3DESMPanel";
 import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
 import Scene from "./Scene";
+import { polygon } from "./lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
 
-function PolygonSymbol3DShell() {
+function PolygonSymbol3DShell(): React.ReactElement {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
 
   const polygonGraphic = new Graphic({
@@ -44,7 +43,7 @@ function PolygonSymbol3DShell() {
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
-  const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D) => {
+  const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D): void => {
     setPolygonSymbol3D(newPolygonSymbol3D);
 
     const newPolygonGraphic = graphics.getItemAt(0)?.clone();
@@ -59,13 +58,13 @@ function PolygonSymbol3DShell() {
 
   const updateSymbolLayers = (
     symbolLayers: Collection<
-      | FillSymbol3DLayer
       | ExtrudeSymbol3DLayer
-      | WaterSymbol3DLayer
+      | FillSymbol3DLayer
       | IconSymbol3DLayer
       | ObjectSymbol3DLayer
-    >
-  ) => {
+      | WaterSymbol3DLayer
+    >,
+  ): void => {
     const newPolygonSymbol3D = polygonSymbol3D.clone();
     newPolygonSymbol3D.symbolLayers.removeAll();
     newPolygonSymbol3D.symbolLayers.addMany(symbolLayers);
@@ -75,7 +74,6 @@ function PolygonSymbol3DShell() {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="PolygonSymbol3D" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>

@@ -1,6 +1,6 @@
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import "@esri/calcite-components/components/calcite-panel";
 import "@esri/calcite-components/components/calcite-shell";
@@ -10,21 +10,20 @@ import "@esri/calcite-components/components/calcite-tab-nav";
 import "@esri/calcite-components/components/calcite-tab-title";
 import "@esri/calcite-components/components/calcite-tabs";
 import { useState } from "react";
-import { mesh } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-} from "../lib/styles";
-import Header from "./Header";
 import MeshSymbol3DCDNPanel from "./MeshSymbol3DCDNPanel";
 import MeshSymbol3DESMPanel from "./MeshSymbol3DESMPanel";
 import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
 import Scene from "./Scene";
+import { mesh } from "./lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
 
-function MeshSymbol3DShell() {
+function MeshSymbol3DShell(): React.ReactElement {
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
 
   const meshGraphic = new Graphic({
@@ -40,7 +39,7 @@ function MeshSymbol3DShell() {
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
-  const updateGraphics = (newMeshSymbol3D: MeshSymbol3D) => {
+  const updateGraphics = (newMeshSymbol3D: MeshSymbol3D): void => {
     setMeshSymbol3D(newMeshSymbol3D);
 
     const newPolygonGraphic = graphics.getItemAt(0)?.clone();
@@ -52,7 +51,9 @@ function MeshSymbol3DShell() {
     setGraphics(newGraphics);
   };
 
-  const updateSymbolLayers = (symbolLayers: Collection<FillSymbol3DLayer>) => {
+  const updateSymbolLayers = (
+    symbolLayers: Collection<FillSymbol3DLayer>,
+  ): void => {
     const newMeshSymbol3D = meshSymbol3D.clone();
     newMeshSymbol3D.symbolLayers.removeAll();
     newMeshSymbol3D.symbolLayers.addMany(symbolLayers);
@@ -62,7 +63,6 @@ function MeshSymbol3DShell() {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="MeshSymbol3D" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>

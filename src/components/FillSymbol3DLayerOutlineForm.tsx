@@ -1,13 +1,13 @@
-import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer";
-import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
-import { CAP_OPTIONS } from "../lib/constants";
-import { labelStyles } from "../lib/styles";
+import { capOptions } from "./lib/constants";
+import { labelStyles } from "./lib/styles";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   handleColorChange: (layerIndex: number, value: string) => void;
   handleLineSylePattern3DStyleChange: (
     layerIndex: number,
-    value: InstanceType<typeof LineStylePattern3D>["style"]
+    value: InstanceType<typeof LineStylePattern3D>["style"],
   ) => void;
   handlePatternCapChange: (
     layerIndex: number,
@@ -23,7 +23,7 @@ interface Props {
       NonNullable<
         InstanceType<typeof FillSymbol3DLayer>["outline"]
       >["patternCap"]
-    >
+    >,
   ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
@@ -34,7 +34,7 @@ function FillSymbol3DLayerOutlineForm({
   handleLineSylePattern3DStyleChange,
   handlePatternCapChange,
   handleSizeChange,
-}: Props) {
+}: Props): React.ReactElement {
   const [color, setColor] = useState("#111111");
   const [patternCap, setPatternCap] = useState("butt");
   const [size, setSize] = useState("3");
@@ -46,9 +46,9 @@ function FillSymbol3DLayerOutlineForm({
         <calcite-input
           oncalciteInputInput={(event) => {
             if (event.target.value) {
-              setColor(event.target.value.toString());
+              setColor(event.target.value);
             }
-            handleColorChange(layerIndex, event.target.value as string);
+            handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
           value={color}
@@ -72,12 +72,12 @@ function FillSymbol3DLayerOutlineForm({
                 NonNullable<
                   InstanceType<typeof FillSymbol3DLayer>["outline"]
                 >["patternCap"]
-              >
+              >,
             );
           }}
           value={patternCap}
         >
-          {CAP_OPTIONS.map((option, index) => (
+          {capOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
           ))}
         </calcite-select>

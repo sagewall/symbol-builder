@@ -1,8 +1,8 @@
-import Color from "@arcgis/core/Color";
-import Graphic from "@arcgis/core/Graphic";
-import Collection from "@arcgis/core/core/Collection";
-import Font from "@arcgis/core/symbols/Font";
-import TextSymbol from "@arcgis/core/symbols/TextSymbol";
+import Color from "@arcgis/core/Color.js";
+import Graphic from "@arcgis/core/Graphic.js";
+import Collection from "@arcgis/core/core/Collection.js";
+import Font from "@arcgis/core/symbols/Font.js";
+import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-panel";
 import "@esri/calcite-components/dist/components/calcite-shell";
 import "@esri/calcite-components/dist/components/calcite-shell-panel";
@@ -11,24 +11,23 @@ import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
 import { useState } from "react";
-import { point } from "../lib/geometry";
-import {
-  formStyles,
-  shellPanelStyles,
-  shellStyles,
-  tabNavStyles,
-} from "../lib/styles";
-import type { FontData } from "../lib/types";
-import Header from "./Header";
 import Map from "./Map";
 import TextSymbolCDNPanel from "./TextSymbolCDNPanel";
 import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
+import { point } from "./lib/geometry";
+import {
+  formStyles,
+  shellPanelStyles,
+  shellStyles,
+  tabNavStyles,
+} from "./lib/styles";
+import type { FontData } from "./lib/types";
 
-function TextSymbolShell() {
+function TextSymbolShell(): React.ReactElement {
   const [font, setFont] = useState(
-    new Font({ family: "Abril Fatface", size: 12 })
+    new Font({ family: "Abril Fatface", size: 12 }),
   );
 
   const [textSymbol, setTextSymbol] = useState(
@@ -41,7 +40,7 @@ function TextSymbolShell() {
       haloSize: 0,
       kerning: false,
       text: "Hello World!",
-    })
+    }),
   );
 
   const pointGraphic = new Graphic({
@@ -57,7 +56,7 @@ function TextSymbolShell() {
 
   const viewElement = <Map graphics={graphics}></Map>;
 
-  const updateGraphics = (newTextSymbol: TextSymbol) => {
+  const updateGraphics = (newTextSymbol: TextSymbol): void => {
     setTextSymbol(newTextSymbol);
 
     const newPointGraphic = graphics.getItemAt(0)?.clone();
@@ -69,37 +68,41 @@ function TextSymbolShell() {
     setGraphics(newGraphics);
   };
 
-  const handleAngleChange = (currentAngle: number) => {
+  const handleAngleChange = (currentAngle: number): void => {
     const newTextSymbol = textSymbol.clone();
-    newTextSymbol.angle = Number(currentAngle);
+    newTextSymbol.angle = currentAngle;
     updateGraphics(newTextSymbol);
   };
 
-  const handleBackgroundColorChange = (currentBackgroundColor: string) => {
+  const handleBackgroundColorChange = (
+    currentBackgroundColor: string,
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.backgroundColor = new Color(currentBackgroundColor);
     updateGraphics(newTextSymbol);
   };
 
-  const handleBorderLineColorChange = (currentBorderLineColor: string) => {
+  const handleBorderLineColorChange = (
+    currentBorderLineColor: string,
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.borderLineColor = new Color(currentBorderLineColor);
     updateGraphics(newTextSymbol);
   };
 
-  const handleBorderLineSizeChange = (currentBorderLineSize: string) => {
+  const handleBorderLineSizeChange = (currentBorderLineSize: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.borderLineSize = Number(currentBorderLineSize);
     updateGraphics(newTextSymbol);
   };
 
-  const handleColorChange = (currentColor: string) => {
+  const handleColorChange = (currentColor: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.color = new Color(currentColor);
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontChange = (currentFontData: string) => {
+  const handleFontChange = (currentFontData: string): void => {
     const currentFontDataObject = JSON.parse(currentFontData) as FontData;
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.family = currentFontDataObject.font.family;
@@ -110,28 +113,28 @@ function TextSymbolShell() {
   };
 
   const handleFontDecorationChange = (
-    currentFontDecoration: InstanceType<typeof Font>["decoration"]
-  ) => {
+    currentFontDecoration: InstanceType<typeof Font>["decoration"],
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.decoration = currentFontDecoration;
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
-  const handleFontSizeChange = (currentFontSize: string) => {
+  const handleFontSizeChange = (currentFontSize: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.font.size = Number(currentFontSize);
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
-  const handleHaloColorChange = (currentHaloColor: string) => {
+  const handleHaloColorChange = (currentHaloColor: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.haloColor = new Color(currentHaloColor);
     updateGraphics(newTextSymbol);
   };
 
-  const handleHaloSizeChange = (currentHaloSize: string) => {
+  const handleHaloSizeChange = (currentHaloSize: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.haloSize = Number(currentHaloSize);
     updateGraphics(newTextSymbol);
@@ -140,32 +143,32 @@ function TextSymbolShell() {
   const handleHorizontalAlignmentChange = (
     currentHorizontalAlignment: InstanceType<
       typeof TextSymbol
-    >["horizontalAlignment"]
-  ) => {
+    >["horizontalAlignment"],
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.horizontalAlignment = currentHorizontalAlignment;
     updateGraphics(newTextSymbol);
   };
 
-  const handleKerningChange = (currentKerning: boolean) => {
+  const handleKerningChange = (currentKerning: boolean): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.kerning = currentKerning;
     updateGraphics(newTextSymbol);
   };
 
-  const handleLineWidthChange = (currentLineWidth: string) => {
+  const handleLineWidthChange = (currentLineWidth: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.lineWidth = Number(currentLineWidth);
     updateGraphics(newTextSymbol);
   };
 
-  const handleRotatedChange = (currentRotated: boolean) => {
+  const handleRotatedChange = (currentRotated: boolean): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.rotated = currentRotated;
     updateGraphics(newTextSymbol);
   };
 
-  const handleTextChange = (currentText: string) => {
+  const handleTextChange = (currentText: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.text = currentText;
     updateGraphics(newTextSymbol);
@@ -174,20 +177,20 @@ function TextSymbolShell() {
   const handleVerticalAlignmentChange = (
     currentVerticalAlignment: InstanceType<
       typeof TextSymbol
-    >["verticalAlignment"]
-  ) => {
+    >["verticalAlignment"],
+  ): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.verticalAlignment = currentVerticalAlignment;
     updateGraphics(newTextSymbol);
   };
 
-  const handleXOffsetChange = (currentXOffset: string) => {
+  const handleXOffsetChange = (currentXOffset: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.xoffset = Number(currentXOffset);
     updateGraphics(newTextSymbol);
   };
 
-  const handleYOffsetChange = (currentYOffset: string) => {
+  const handleYOffsetChange = (currentYOffset: string): void => {
     const newTextSymbol = textSymbol.clone();
     newTextSymbol.yoffset = Number(currentYOffset);
     updateGraphics(newTextSymbol);
@@ -196,7 +199,6 @@ function TextSymbolShell() {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <Header title="TextSymbol" backButton></Header>
         <calcite-shell-panel slot="panel-start" position="start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>

@@ -1,7 +1,6 @@
-import type Graphic from "@arcgis/core/Graphic";
-import type Collection from "@arcgis/core/core/Collection";
-import Point from "@arcgis/core/geometry/Point";
-import type { ArcgisMapCustomEvent } from "@arcgis/map-components";
+import type Graphic from "@arcgis/core/Graphic.js";
+import type Collection from "@arcgis/core/core/Collection.js";
+import Point from "@arcgis/core/geometry/Point.js";
 import "@arcgis/map-components/components/arcgis-map";
 import "@esri/calcite-components/components/calcite-action";
 import { useRef } from "react";
@@ -10,15 +9,15 @@ interface MapProps {
   graphics?: Collection<Graphic>;
 }
 
-function Map({ graphics }: MapProps) {
+function Map({ graphics }: MapProps): React.ReactElement {
   const viewElement = useRef<HTMLArcgisMapElement>(null);
 
-  const handleArcgisViewReadyChange = (event: ArcgisMapCustomEvent<void>) => {
-    event.target.center = new Point({
+  const handleArcgisViewReadyChange = (event: CustomEvent<void>): void => {
+    (event.target as HTMLArcgisMapElement).center = new Point({
       longitude: -117.1957098,
       latitude: 34.0564505,
     });
-    event.target.zoom = 18;
+    (event.target as HTMLArcgisMapElement).zoom = 18;
   };
 
   return (
@@ -37,8 +36,10 @@ function Map({ graphics }: MapProps) {
           slot="top-right"
           text="Zoom to Graphics"
           text-enabled
-          onClick={() => {
-            viewElement.current?.goTo(viewElement.current.graphics);
+          onClick={async () => {
+            await viewElement.current?.goTo(
+              viewElement.current.graphics?.toArray(),
+            );
           }}
         ></calcite-action>
       </arcgis-map>
