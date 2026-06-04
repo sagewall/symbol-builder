@@ -1,9 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "types": ["vite/client", "node"]
-  },
   "include": [
     ".astro/types.d.ts",
     "**/*",
@@ -12,5 +8,9 @@
     "./node_modules/@arcgis/map-components/dist/types/react.d.ts",
     "./types.d.ts"
   ],
-  "exclude": ["public", "./**/*.test.ts"]
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
 }
