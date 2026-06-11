@@ -12,7 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@arcgis/map-components": "5.1.0-next.126",
+    "@arcgis/map-components": "5.1.0-next.132",
     "@astrojs/netlify": "^7.0.12",
     "@astrojs/react": "^5.0.7",
     "@types/react": "^19.2.16",
