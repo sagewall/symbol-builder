@@ -1,9 +1,8 @@
 // @ts-check
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
-
-import cloudflare from "@astrojs/cloudflare";
 
 const { PUBLIC_BASE, PUBLIC_SITE } = loadEnv(
   process.env.NODE_ENV || "development",
