@@ -1,5 +1,5 @@
 import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
-import type { Symbol3DColorMixMode } from "@arcgis/core/symbols/support/types";
+import type { Symbol3DColorMixMode } from "@arcgis/core/symbols/support/types.js";
 import type {
   FillStyle,
   FontDecoration,
@@ -22,7 +22,7 @@ import type {
   TextVerticalAlignment,
   WaterBodySize,
   WaveStrength,
-} from "@arcgis/core/symbols/types";
+} from "@arcgis/core/symbols/types.js";
 import fontData from "./esri-labeling-page-data.json";
 
 export const capOptions: LineCap[] = ["round", "butt", "square"];

@@ -36,6 +36,7 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
 
   const [simpleMarkerSymbol, setSimpleMarkerSymbol] = useState(
     new SimpleMarkerSymbol({
+      color: "#007ac2",
       outline: simpleLineSymbol,
     }),
   );

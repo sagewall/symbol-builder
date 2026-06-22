@@ -2,20 +2,26 @@
   "name": "astro-symbol-builder",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
+    "dev:stop": "astro dev stop",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@arcgis/map-components": "^5.0.0",
-    "@astrojs/netlify": "^6.6.4",
-    "@astrojs/react": "^4.4.2",
-    "@types/react": "^19.2.9",
+    "@arcgis/map-components": "^5.1.0",
+    "@astrojs/react": "^6.0.0",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "astro": "^5.16.12",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "astro": "^7.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0"
   }
 }
