@@ -5,7 +5,8 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: cloudflare(),
   devToolbar: { enabled: false },
   integrations: [react()],
-  adapter: cloudflare(),
+  site: "https://symbol-builder.s46e.com",
 });
