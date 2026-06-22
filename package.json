@@ -9,11 +9,14 @@
     "dev": "astro dev",
     "dev:stop": "astro dev stop",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "npm run build && wrangler dev",
+    "astro": "astro",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@arcgis/map-components": "^5.1.0",
+    "@astrojs/cloudflare": "^14.0.0",
     "@astrojs/react": "^6.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -22,6 +25,7 @@
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@types/node": "^26.0.0"
+    "@types/node": "^26.0.0",
+    "wrangler": "^4.103.0"
   }
 }
