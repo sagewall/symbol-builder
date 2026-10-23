@@ -621,7 +621,7 @@ export const fontDecorationOptions: FontDecoration[] = [
   "line-through",
 ];
 
-export const fonts = fontData;
+export const fonts = fontData.fontList;
 
 export const fontFamilyOptions = [
   "Abril Fatface",

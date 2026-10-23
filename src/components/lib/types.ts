@@ -1,13 +1,10 @@
 import type Font from "@arcgis/core/symbols/Font.js";
 
 export type FontData = {
+  id: number;
   font: FontOptions;
-  status: number;
   staticName: string;
-  staticUrl: string;
-  serviceUrl: string;
   name: string;
-  dataUrl: string;
 };
 
 export type FontOptions = {
