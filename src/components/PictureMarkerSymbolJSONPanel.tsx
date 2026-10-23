@@ -1,5 +1,6 @@
 import type PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generatePictureMarkerSymbolJSONSnippet } from "./lib/snippets/pictureMarkerSymbol";
 
 interface Props {
   pictureMarkerSymbol: PictureMarkerSymbol;
@@ -8,11 +9,7 @@ interface Props {
 function PictureMarkerSymbolJSONPanel({
   pictureMarkerSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
-
-const pictureMarkerSymbol = PictureMarkerSymbol.fromJSON(
-${JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)});`;
+  const codeSnippet = generatePictureMarkerSymbolJSONSnippet(pictureMarkerSymbol);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }

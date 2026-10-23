@@ -1,5 +1,6 @@
 import type PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generatePictureMarkerSymbolCDNSnippet } from "./lib/snippets/pictureMarkerSymbol";
 
 interface Props {
   pictureMarkerSymbol: PictureMarkerSymbol;
@@ -8,17 +9,7 @@ interface Props {
 function PictureMarkerSymbolCDNPanel({
   pictureMarkerSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-const PictureMarkerSymbol = await $arcgis.import("@arcgis/core/symbols/PictureMarkerSymbol.js");
-
-const pictureMarkerSymbol = new PictureMarkerSymbol({
-  angle: ${pictureMarkerSymbol.angle},
-  height: ${pictureMarkerSymbol.height},
-  url: ${JSON.stringify(pictureMarkerSymbol.url)},
-  width: ${pictureMarkerSymbol.width},
-  xoffset: ${pictureMarkerSymbol.xoffset},
-  yoffset: ${pictureMarkerSymbol.yoffset}
-});`;
+  const codeSnippet = generatePictureMarkerSymbolCDNSnippet(pictureMarkerSymbol);
 
   return <CodeSnippetPanel title="CDN" codeSnippet={codeSnippet} />;
 }

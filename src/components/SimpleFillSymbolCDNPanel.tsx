@@ -1,5 +1,6 @@
 import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generateSimpleFillSymbolCDNSnippet } from "./lib/snippets/simpleFillSymbol";
 
 interface Props {
   simpleFillSymbol: SimpleFillSymbol;
@@ -8,21 +9,7 @@ interface Props {
 function SimpleFillSymbolCDNPanel({
   simpleFillSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-const SimpleFillSymbol = await $arcgis.import("@arcgis/core/symbols/SimpleFillSymbol.js");
-
-const simpleFillSymbol = new SimpleFillSymbol({
-  color: [${simpleFillSymbol.color.toRgba().toString()}],
-  outline: {
-    cap: "${simpleFillSymbol.outline?.cap}",
-    color: [${simpleFillSymbol.outline?.color?.toRgba().toString()}],
-    join: "${simpleFillSymbol.outline?.join}",
-    miterLimit: ${simpleFillSymbol.outline?.miterLimit},
-    style: "${simpleFillSymbol.outline?.style}",
-    width: ${simpleFillSymbol.outline?.width}
-  },
-  style: "${simpleFillSymbol.style}"
-});`;
+  const codeSnippet = generateSimpleFillSymbolCDNSnippet(simpleFillSymbol);
 
   return <CodeSnippetPanel title="CDN" codeSnippet={codeSnippet} />;
 }

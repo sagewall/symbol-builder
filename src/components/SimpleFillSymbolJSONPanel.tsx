@@ -1,5 +1,6 @@
 import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generateSimpleFillSymbolJSONSnippet } from "./lib/snippets/simpleFillSymbol";
 
 interface Props {
   simpleFillSymbol: SimpleFillSymbol;
@@ -8,11 +9,7 @@ interface Props {
 function SimpleFillSymbolJSONPanel({
   simpleFillSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
-
-const simpleFillSymbol = SimpleFillSymbol.fromJSON(
-${JSON.stringify(simpleFillSymbol.toJSON(), null, 2)});`;
+  const codeSnippet = generateSimpleFillSymbolJSONSnippet(simpleFillSymbol);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }

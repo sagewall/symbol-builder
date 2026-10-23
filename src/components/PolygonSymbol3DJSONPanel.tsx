@@ -1,5 +1,6 @@
 import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generatePolygonSymbol3DJSONSnippet } from "./lib/snippets/polygonSymbol3D";
 
 interface Props {
   polygonSymbol3D: PolygonSymbol3D;
@@ -8,11 +9,7 @@ interface Props {
 function PolygonSymbol3DJSONPanel({
   polygonSymbol3D,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
-
-const polygonSymbol3D = PolygonSymbol3D.fromJSON(
-${JSON.stringify(polygonSymbol3D.toJSON(), null, 2)});`;
+  const codeSnippet = generatePolygonSymbol3DJSONSnippet(polygonSymbol3D);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }

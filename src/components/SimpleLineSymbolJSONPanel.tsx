@@ -1,5 +1,6 @@
 import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generateSimpleLineSymbolJSONSnippet } from "./lib/snippets/simpleLineSymbol";
 
 interface Props {
   simpleLineSymbol: SimpleLineSymbol;
@@ -8,11 +9,7 @@ interface Props {
 function SimpleLineSymbolJSONPanel({
   simpleLineSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
-
-const simpleLineSymbol = SimpleLineSymbol.fromJSON(
-${JSON.stringify(simpleLineSymbol.toJSON(), null, 2)});`;
+  const codeSnippet = generateSimpleLineSymbolJSONSnippet(simpleLineSymbol);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }

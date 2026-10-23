@@ -1,5 +1,6 @@
 import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generateSimpleMarkerSymbolJSONSnippet } from "./lib/snippets/simpleMarkerSymbol";
 
 interface Props {
   simpleMarkerSymbol: SimpleMarkerSymbol;
@@ -8,11 +9,7 @@ interface Props {
 function SimpleMarkerSymbolJSONPanel({
   simpleMarkerSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
-
-const simpleMarkerSymbol = SimpleMarkerSymbol.fromJSON(
-${JSON.stringify(simpleMarkerSymbol.toJSON(), null, 2)});`;
+  const codeSnippet = generateSimpleMarkerSymbolJSONSnippet(simpleMarkerSymbol);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }

@@ -1,5 +1,6 @@
 import type PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generatePictureMarkerSymbolESMSnippet } from "./lib/snippets/pictureMarkerSymbol";
 
 interface Props {
   pictureMarkerSymbol: PictureMarkerSymbol;
@@ -8,17 +9,7 @@ interface Props {
 function PictureMarkerSymbolESMPanel({
   pictureMarkerSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
-
-const pictureMarkerSymbol = new PictureMarkerSymbol({
-  angle: ${pictureMarkerSymbol.angle},
-  height: ${pictureMarkerSymbol.height},
-  url: ${JSON.stringify(pictureMarkerSymbol.url)},
-  width: ${pictureMarkerSymbol.width},
-  xoffset: ${pictureMarkerSymbol.xoffset},
-  yoffset: ${pictureMarkerSymbol.yoffset}
-});`;
+  const codeSnippet = generatePictureMarkerSymbolESMSnippet(pictureMarkerSymbol);
 
   return <CodeSnippetPanel title="ESM / TypeScript" codeSnippet={codeSnippet} />;
 }

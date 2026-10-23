@@ -1,5 +1,6 @@
 import type PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generatePictureFillSymbolJSONSnippet } from "./lib/snippets/pictureFillSymbol";
 
 interface Props {
   pictureFillSymbol: PictureFillSymbol;
@@ -8,11 +9,7 @@ interface Props {
 function PictureFillSymbolJSONPanel({
   pictureFillSymbol,
 }: Props): React.ReactElement {
-  const codeSnippet = `
-import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
-
-const pictureFillSymbol = PictureFillSymbol.fromJSON(
-${JSON.stringify(pictureFillSymbol.toJSON(), null, 2)});`;
+  const codeSnippet = generatePictureFillSymbolJSONSnippet(pictureFillSymbol);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }

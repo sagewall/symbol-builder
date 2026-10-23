@@ -1,0 +1,200 @@
+import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
+
+export function generateLineSymbol3DCDNSnippet(lineSymbol3D: LineSymbol3D): string {
+  let codeSnippet = `
+const LineSymbol3D = await $arcgis.import("@arcgis/core/symbols/LineSymbol3D.js");
+
+const lineSymbol3D = new LineSymbol3D({
+  symbolLayers: [
+`;
+
+  lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
+    if (symbolLayer.type === "line") {
+      if (symbolLayer.material?.color && symbolLayer.marker) {
+        codeSnippet += `
+  {
+    type: "line",
+    cap: "${symbolLayer.cap}",
+    join: "${symbolLayer.join}",
+    marker: {
+      type: "style",
+      color: [${(symbolLayer.marker.color?.toRgba() ?? []).toString()}],
+      placement: "${symbolLayer.marker.placement}",
+      style: "${symbolLayer.marker.style}"
+    },
+    material: {
+      color: [${symbolLayer.material.color.toRgba().toString()}],
+    },
+    pattern: {
+      type: "style",
+      style: "${symbolLayer.pattern?.style}"
+    },
+    size: ${symbolLayer.size}
+  },
+    `;
+      } else if (symbolLayer.material?.color) {
+        codeSnippet += `
+  {
+    type: "line",
+    cap: "${symbolLayer.cap}",
+    join: "${symbolLayer.join}",
+    material: {
+      color: [${symbolLayer.material.color.toRgba().toString()}],
+    },
+    pattern: {
+      type: "style",
+      style: "${symbolLayer.pattern?.style}"
+    },
+    size: ${symbolLayer.size}
+  },
+  `;
+      }
+    }
+
+    if (symbolLayer.type === "path") {
+      if (symbolLayer.material?.color) {
+        codeSnippet += `
+  {
+    type: "path",
+    anchor: "${symbolLayer.anchor}",
+    cap: "${symbolLayer.cap}",
+    castShadows: "${symbolLayer.castShadows}",
+    height: ${symbolLayer.height},
+    join: "${symbolLayer.join}",
+    material: {
+      color: [${(symbolLayer.material?.color.toRgba() ?? []).toString()}],
+    },
+    profile: "${symbolLayer.profile}",
+    profileRotation: "${symbolLayer.profileRotation}",
+    width: ${symbolLayer.width}
+  },
+  `;
+      }
+    }
+  });
+
+  codeSnippet += `
+  ]
+});`;
+
+  return codeSnippet;
+}
+
+export function generateLineSymbol3DESMSnippet(lineSymbol3D: LineSymbol3D): string {
+  let colorImport = false;
+  const lineSymbol3DImport = true;
+  let lineSymbol3DLayerImport = false;
+  let pathSymbol3DLayerImport = false;
+  let lineStylePattern3DImport = false;
+
+  lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
+    if (symbolLayer.type === "line") {
+      colorImport = true;
+      lineSymbol3DLayerImport = true;
+      lineStylePattern3DImport = true;
+    }
+
+    if (symbolLayer.type === "path") {
+      colorImport = true;
+      pathSymbol3DLayerImport = true;
+    }
+  });
+
+  let codeSnippet = `\n`;
+
+  if (colorImport) {
+    codeSnippet += `import Color from "@arcgis/core/Color.js";\n`;
+  }
+  if (lineSymbol3DImport) {
+    codeSnippet += `import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";\n`;
+  }
+  if (lineSymbol3DLayerImport) {
+    codeSnippet += `import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";\n`;
+  }
+  if (pathSymbol3DLayerImport) {
+    codeSnippet += `import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";\n`;
+  }
+  if (lineStylePattern3DImport) {
+    codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
+  }
+
+  codeSnippet += `
+const lineSymbol3D = new LineSymbol3D({
+  symbolLayers: [
+`;
+
+  lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
+    if (symbolLayer.type === "line") {
+      if (symbolLayer.material?.color && symbolLayer.marker) {
+        codeSnippet += `
+    new LineSymbol3DLayer({
+      cap: "${symbolLayer.cap}",
+      join: "${symbolLayer.join}",
+      marker: new LineStyleMarker3D({
+        color: new Color([${(symbolLayer.marker.color?.toRgba() ?? []).toString()}]),
+        placement: "${symbolLayer.marker.placement}",
+        style: "${symbolLayer.marker.style}"
+      }),
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
+      },
+      pattern: new LineStylePattern3D({
+        style: "${symbolLayer.pattern?.style}"
+      }),
+      size: ${symbolLayer.size}
+    }),
+    `;
+      } else if (symbolLayer.material?.color) {
+        codeSnippet += `
+    new LineSymbol3DLayer({
+      cap: "${symbolLayer.cap}",
+      join: "${symbolLayer.join}",
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
+      },
+      pattern: new LineStylePattern3D({
+        style: "${symbolLayer.pattern?.style}"
+      }),
+      size: ${symbolLayer.size}
+    }),
+    `;
+      }
+    }
+
+    if (symbolLayer.type === "path") {
+      if (symbolLayer.material?.color) {
+        codeSnippet += `
+    new PathSymbol3DLayer({
+      anchor: "${symbolLayer.anchor}",
+      cap: "${symbolLayer.cap}",
+      castShadows: ${symbolLayer.castShadows},
+      height: ${symbolLayer.height},
+      join: "${symbolLayer.join}",
+      material: {
+        color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
+      },
+      profile: "${symbolLayer.profile}",
+      profileRotation: "${symbolLayer.profileRotation}",
+      width: ${symbolLayer.width}
+    }),
+    `;
+      }
+    }
+  });
+
+  codeSnippet += `
+  ]
+});`;
+
+  return codeSnippet;
+}
+
+export function generateLineSymbol3DJSONSnippet(lineSymbol3D: LineSymbol3D): string {
+  const codeSnippet = `
+import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
+
+const lineSymbol3D = LineSymbol3D.fromJSON(
+${JSON.stringify(lineSymbol3D.toJSON(), null, 2)});`;
+
+  return codeSnippet;
+}

@@ -1,16 +1,13 @@
 import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
 import CodeSnippetPanel from "./CodeSnippetPanel";
+import { generatePointSymbol3DJSONSnippet } from "./lib/snippets/pointSymbol3D";
 
 interface Props {
   pointSymbol3D: PointSymbol3D;
 }
 
 function PointSymbol3DJSONPanel({ pointSymbol3D }: Props): React.ReactElement {
-  const codeSnippet = `
-import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
-
-const pointSymbol3D = PointSymbol3D.fromJSON(
-${JSON.stringify(pointSymbol3D.toJSON(), null, 2)});`;
+  const codeSnippet = generatePointSymbol3DJSONSnippet(pointSymbol3D);
 
   return <CodeSnippetPanel title="JSON" codeSnippet={codeSnippet} />;
 }
