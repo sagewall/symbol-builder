@@ -30,7 +30,10 @@ import {
 function PolygonSymbol3DShell(): React.ReactElement {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
 
-  const { graphics, updatePreview } = useSymbolPreview(polygon, polygonSymbol3D);
+  const { graphics, updatePreview } = useSymbolPreview(
+    polygon,
+    polygonSymbol3D,
+  );
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 

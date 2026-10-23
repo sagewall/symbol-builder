@@ -36,7 +36,10 @@ function PictureMarkerSymbolShell(): React.ReactElement {
     }),
   );
 
-  const { graphics, updatePreview } = useSymbolPreview(point, pictureMarkerSymbol);
+  const { graphics, updatePreview } = useSymbolPreview(
+    point,
+    pictureMarkerSymbol,
+  );
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;

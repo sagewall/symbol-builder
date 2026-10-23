@@ -44,7 +44,10 @@ function SimpleLineSymbolShell(): React.ReactElement {
     }),
   );
 
-  const { graphics, updatePreview } = useSymbolPreview(polyline, simpleLineSymbol);
+  const { graphics, updatePreview } = useSymbolPreview(
+    polyline,
+    simpleLineSymbol,
+  );
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;

@@ -40,7 +40,10 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     }),
   );
 
-  const { graphics, updatePreview } = useSymbolPreview(point, simpleMarkerSymbol);
+  const { graphics, updatePreview } = useSymbolPreview(
+    point,
+    simpleMarkerSymbol,
+  );
 
   const [scene, setScene] = useState(false);
   let viewElement = <MapElement graphics={graphics}></MapElement>;
@@ -210,11 +213,7 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
         </calcite-panel>
       </calcite-shell-panel>
 
-      <calcite-shell-panel
-        slot="panel-end"
-        resizable
-        style={shellPanelStyles}
-      >
+      <calcite-shell-panel slot="panel-end" resizable style={shellPanelStyles}>
         <calcite-panel>
           <calcite-tabs>
             <calcite-tab-nav slot="title-group" style={tabNavStyles}>

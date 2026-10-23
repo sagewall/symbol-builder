@@ -24,7 +24,10 @@ export function useSymbolPreview(
   updatePreview: (symbol: Graphic["symbol"]) => void;
 } {
   const [graphics, setGraphics] = useState(
-    () => new Collection([new Graphic({ geometry: initialGeometry, symbol: initialSymbol })]),
+    () =>
+      new Collection([
+        new Graphic({ geometry: initialGeometry, symbol: initialSymbol }),
+      ]),
   );
 
   const updatePreview = (symbol: Graphic["symbol"]): void => {

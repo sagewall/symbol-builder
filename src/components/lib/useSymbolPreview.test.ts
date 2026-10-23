@@ -31,7 +31,10 @@ test("replaces the symbol without mutating the original graphic or collection", 
 
 test("supports text symbols and repeated preview replacements", () => {
   const original = new Collection([
-    new Graphic({ geometry: new Point(), symbol: new TextSymbol({ text: "original" }) }),
+    new Graphic({
+      geometry: new Point(),
+      symbol: new TextSymbol({ text: "original" }),
+    }),
   ]);
   const firstSymbol = new TextSymbol({ text: "first" });
   const lastSymbol = new TextSymbol({ text: "last" });
@@ -47,8 +50,8 @@ test("supports text symbols and repeated preview replacements", () => {
 test("fails explicitly if the preview graphic is missing", () => {
   const graphics = new Collection<Graphic>();
 
-  expect(() => replacePreviewSymbol(graphics, new SimpleMarkerSymbol())).toThrow(
-    "Symbol preview requires a graphic.",
-  );
+  expect(() =>
+    replacePreviewSymbol(graphics, new SimpleMarkerSymbol()),
+  ).toThrow("Symbol preview requires a graphic.");
   expect(graphics.length).toBe(0);
 });

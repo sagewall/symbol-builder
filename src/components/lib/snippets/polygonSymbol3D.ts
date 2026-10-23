@@ -1,6 +1,8 @@
 import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
 
-export function generatePolygonSymbol3DCDNSnippet(polygonSymbol3D: PolygonSymbol3D): string {
+export function generatePolygonSymbol3DCDNSnippet(
+  polygonSymbol3D: PolygonSymbol3D,
+): string {
   let codeSnippet = `
 const PolygonSymbol3D = await $arcgis.import("@arcgis/core/symbols/PolygonSymbol3D.js");
 
@@ -18,6 +20,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         codeSnippet += `
     {
       type: "fill",
+      castShadows: ${symbolLayer.castShadows},
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}],
         colorMixMode: "${symbolLayer.material.colorMixMode}",
@@ -194,7 +197,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
   return codeSnippet;
 }
 
-export function generatePolygonSymbol3DESMSnippet(polygonSymbol3D: PolygonSymbol3D): string {
+export function generatePolygonSymbol3DESMSnippet(
+  polygonSymbol3D: PolygonSymbol3D,
+): string {
   let colorImport = false;
   let extrudeSymbol3DLayerImport = false;
   let fillSymbol3DLayerImport = false;
@@ -291,6 +296,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       ) {
         codeSnippet += `
     new FillSymbol3DLayer({
+      castShadows: ${symbolLayer.castShadows},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
         colorMixMode: "${symbolLayer.material.colorMixMode}",
@@ -442,7 +448,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
   return codeSnippet;
 }
 
-export function generatePolygonSymbol3DJSONSnippet(polygonSymbol3D: PolygonSymbol3D): string {
+export function generatePolygonSymbol3DJSONSnippet(
+  polygonSymbol3D: PolygonSymbol3D,
+): string {
   const codeSnippet = `
 import PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
 

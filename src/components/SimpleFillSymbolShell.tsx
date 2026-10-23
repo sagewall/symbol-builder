@@ -41,7 +41,10 @@ function SimpleFillSymbolShell(): React.ReactElement {
     }),
   );
 
-  const { graphics, updatePreview } = useSymbolPreview(polygon, simpleFillSymbol);
+  const { graphics, updatePreview } = useSymbolPreview(
+    polygon,
+    simpleFillSymbol,
+  );
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;

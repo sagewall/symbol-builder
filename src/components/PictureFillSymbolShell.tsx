@@ -41,7 +41,10 @@ function PictureFillSymbolShell(): React.ReactElement {
     }),
   );
 
-  const { graphics, updatePreview } = useSymbolPreview(polygon, pictureFillSymbol);
+  const { graphics, updatePreview } = useSymbolPreview(
+    polygon,
+    pictureFillSymbol,
+  );
 
   const viewElement = <Map graphics={graphics}></Map>;
 

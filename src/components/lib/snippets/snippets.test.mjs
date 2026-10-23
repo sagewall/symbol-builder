@@ -88,17 +88,26 @@ test.each([true, false])(
   "LineSymbol3D ESM preserves line markers (enabled=%s)",
   async (markerEnabled) => {
     const symbol = new constructors.LineSymbol3D({
-      symbolLayers: [{
-        type: "line",
-        material: { color: "red" },
-        pattern: { type: "style", style: "solid" },
-        marker: markerEnabled
-          ? { type: "style", color: "blue", placement: "begin-end", style: "arrow" }
-          : null,
-      }],
+      symbolLayers: [
+        {
+          type: "line",
+          material: { color: "red" },
+          pattern: { type: "style", style: "solid" },
+          marker: markerEnabled
+            ? {
+                type: "style",
+                color: "blue",
+                placement: "begin-end",
+                style: "arrow",
+              }
+            : null,
+        },
+      ],
     });
-    const snippet = generators.LineSymbol3D.generateLineSymbol3DESMSnippet(symbol);
-    const markerImport = 'import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";';
+    const snippet =
+      generators.LineSymbol3D.generateLineSymbol3DESMSnippet(symbol);
+    const markerImport =
+      'import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";';
 
     expect(snippet.includes(markerImport)).toBe(markerEnabled);
     const result = await roundTrip("LineSymbol3D", "ESM", symbol);
@@ -114,20 +123,56 @@ test.each([true, false])(
   "LineSymbol3D CDN preserves path castShadows (value=%s)",
   async (castShadows) => {
     const symbol = new constructors.LineSymbol3D({
-      symbolLayers: [{
-        type: "path",
-        castShadows,
-        height: 5,
-        width: 3,
-        material: { color: "red" },
-        profile: "quad",
-      }],
+      symbolLayers: [
+        {
+          type: "path",
+          castShadows,
+          height: 5,
+          width: 3,
+          material: { color: "red" },
+          profile: "quad",
+        },
+      ],
     });
     const result = await roundTrip("LineSymbol3D", "CDN", symbol);
 
     expect(result.symbolLayers.length).toBe(1);
     const layer = result.symbolLayers.getItemAt(0);
     expect(layer.type).toBe("path");
+    expect(layer.castShadows).toBe(castShadows);
+    expect(typeof layer.castShadows).toBe("boolean");
+  },
+);
+
+test.each([
+  ["ESM", true],
+  ["ESM", false],
+  ["CDN", true],
+  ["CDN", false],
+])(
+  "PolygonSymbol3D %s preserves fill castShadows (value=%s)",
+  async (format, castShadows) => {
+    const symbol = new constructors.PolygonSymbol3D({
+      symbolLayers: [
+        {
+          type: "fill",
+          castShadows,
+          material: { color: "red", colorMixMode: "multiply" },
+          outline: {
+            color: "black",
+            pattern: { type: "style", style: "solid" },
+            patternCap: "round",
+            size: 3,
+          },
+          pattern: { type: "style", style: "solid" },
+        },
+      ],
+    });
+    const result = await roundTrip("PolygonSymbol3D", format, symbol);
+
+    expect(result.symbolLayers.length).toBe(1);
+    const layer = result.symbolLayers.getItemAt(0);
+    expect(layer.type).toBe("fill");
     expect(layer.castShadows).toBe(castShadows);
     expect(typeof layer.castShadows).toBe("boolean");
   },

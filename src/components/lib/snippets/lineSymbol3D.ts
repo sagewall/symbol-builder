@@ -1,6 +1,8 @@
 import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 
-export function generateLineSymbol3DCDNSnippet(lineSymbol3D: LineSymbol3D): string {
+export function generateLineSymbol3DCDNSnippet(
+  lineSymbol3D: LineSymbol3D,
+): string {
   let codeSnippet = `
 const LineSymbol3D = await $arcgis.import("@arcgis/core/symbols/LineSymbol3D.js");
 
@@ -80,7 +82,9 @@ const lineSymbol3D = new LineSymbol3D({
   return codeSnippet;
 }
 
-export function generateLineSymbol3DESMSnippet(lineSymbol3D: LineSymbol3D): string {
+export function generateLineSymbol3DESMSnippet(
+  lineSymbol3D: LineSymbol3D,
+): string {
   let colorImport = false;
   const lineSymbol3DImport = true;
   let lineSymbol3DLayerImport = false;
@@ -196,7 +200,9 @@ const lineSymbol3D = new LineSymbol3D({
   return codeSnippet;
 }
 
-export function generateLineSymbol3DJSONSnippet(lineSymbol3D: LineSymbol3D): string {
+export function generateLineSymbol3DJSONSnippet(
+  lineSymbol3D: LineSymbol3D,
+): string {
   const codeSnippet = `
 import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 
