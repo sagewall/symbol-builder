@@ -36,7 +36,7 @@ const pictureFillSymbol = new PictureFillSymbol({
     style: "${pictureFillSymbol.outline?.style}",
     width: ${pictureFillSymbol.outline?.width}
   }),
-  url: "${pictureFillSymbol.url}",
+  url: ${JSON.stringify(pictureFillSymbol.url)},
   width: ${pictureFillSymbol.width},
   xoffset: ${pictureFillSymbol.xoffset},
   xscale: ${pictureFillSymbol.xscale},

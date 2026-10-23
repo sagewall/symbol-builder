@@ -30,7 +30,7 @@ const textSymbol = new TextSymbol({
   color: [${textSymbol.color?.toRgba().toString()}],
   font: {
     decoration: "${textSymbol.font.decoration}",
-    family: "${textSymbol.font.family}",
+    family: ${JSON.stringify(textSymbol.font.family)},
     size: ${textSymbol.font.size},
     style: "${textSymbol.font.style}",
     weight: "${textSymbol.font.weight}"
@@ -41,7 +41,7 @@ const textSymbol = new TextSymbol({
   kerning: ${textSymbol.kerning},
   lineWidth: ${textSymbol.lineWidth},
   rotated: ${textSymbol.rotated},
-  text: "${textSymbol.text}",
+  text: ${JSON.stringify(textSymbol.text)},
   verticalAlignment: "${textSymbol.verticalAlignment}",
   xoffset: ${textSymbol.xoffset},
   yoffset: ${textSymbol.yoffset}

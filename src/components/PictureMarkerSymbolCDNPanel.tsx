@@ -27,7 +27,7 @@ const PictureMarkerSymbol = await $arcgis.import("@arcgis/core/symbols/PictureMa
 const pictureMarkerSymbol = new PictureMarkerSymbol({
   angle: ${pictureMarkerSymbol.angle},
   height: ${pictureMarkerSymbol.height},
-  url: "${pictureMarkerSymbol.url}",
+  url: ${JSON.stringify(pictureMarkerSymbol.url)},
   width: ${pictureMarkerSymbol.width},
   xoffset: ${pictureMarkerSymbol.xoffset},
   yoffset: ${pictureMarkerSymbol.yoffset}

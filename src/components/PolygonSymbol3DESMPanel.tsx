@@ -194,7 +194,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         if (symbolLayer.resource?.href) {
           codeSnippet += `
       resource: {
-        href: "${symbolLayer.resource?.href}",
+        href: ${JSON.stringify(symbolLayer.resource?.href)},
       },`;
         }
 
@@ -223,7 +223,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {
-        href: "${symbolLayer.resource.href}"
+        href: ${JSON.stringify(symbolLayer.resource.href)}
       },
       roll: ${symbolLayer.roll},
       tilt: ${symbolLayer.tilt},

@@ -54,7 +54,7 @@ const pointSymbol3D = new PointSymbol3D({
       size: ${symbolLayer.outline.size}
     },
     resource: {
-      href: "${symbolLayer.resource.href}",
+      href: ${JSON.stringify(symbolLayer.resource.href)},
     },
     size: ${symbolLayer.size}
   },
@@ -108,7 +108,7 @@ const pointSymbol3D = new PointSymbol3D({
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
-        href: "${symbolLayer.resource.href}"
+        href: ${JSON.stringify(symbolLayer.resource.href)}
       },
       roll: ${symbolLayer.roll},
       tilt: ${symbolLayer.tilt},
@@ -160,7 +160,7 @@ const pointSymbol3D = new PointSymbol3D({
       },
       font: {
         decoration: "${symbolLayer.font?.decoration}",
-        family: "${symbolLayer.font?.family}",
+        family: ${JSON.stringify(symbolLayer.font?.family)},
         size: ${symbolLayer.font?.size},
         style: "${symbolLayer.font?.style}",
         weight: "${symbolLayer.font?.weight}"
@@ -175,7 +175,7 @@ const pointSymbol3D = new PointSymbol3D({
         color: [${symbolLayer.material.color.toRgba().toString()}],
       },
       size: ${symbolLayer.size},
-      text: "${symbolLayer.text}",
+      text: ${JSON.stringify(symbolLayer.text)},
       verticalAlignment: "${symbolLayer.verticalAlignment}"
     },
     `;

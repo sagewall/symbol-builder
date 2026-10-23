@@ -37,7 +37,7 @@ const simpleMarkerSymbol = new SimpleMarkerSymbol({
     style: "${simpleMarkerSymbol.outline.style}",
     width: ${simpleMarkerSymbol.outline.width}
   }),
-  path: "${simpleMarkerSymbol.path}",
+  path: ${JSON.stringify(simpleMarkerSymbol.path)},
   size: ${simpleMarkerSymbol.size},
   style: "${simpleMarkerSymbol.style}",
   xoffset: ${simpleMarkerSymbol.xoffset},

@@ -26,16 +26,16 @@ function WebStyleSymbolCDNPanel({ webStyleSymbol }: Props): React.ReactElement {
 const WebStyleSymbol = await $arcgis.import("@arcgis/core/symbols/WebStyleSymbol.js");
 
 const webStyleSymbol = new WebStyleSymbol({
-  name: "${webStyleSymbol.name}",
-  styleName: "${webStyleSymbol.styleName}"
+  name: ${JSON.stringify(webStyleSymbol.name)},
+  styleName: ${JSON.stringify(webStyleSymbol.styleName)}
 });`;
   } else {
     codeSnippet = `
 const WebStyleSymbol = await $arcgis.import("@arcgis/core/symbols/WebStyleSymbol.js");
 
 const webStyleSymbol = new WebStyleSymbol({
-  name: "${webStyleSymbol.name}",
-  styleUrl: "${webStyleSymbol.styleUrl}"
+  name: ${JSON.stringify(webStyleSymbol.name)},
+  styleUrl: ${JSON.stringify(webStyleSymbol.styleUrl)}
 });`;
   }
 
