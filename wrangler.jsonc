@@ -4,7 +4,14 @@
   "compatibility_flags": ["global_fetch_strictly_public"],
   "name": "symbol-builder",
   "main": "@astrojs/cloudflare/entrypoints/server",
-  "previews": {},
+  "previews": {
+    "kv_namespaces": [
+      {
+        "binding": "SESSION",
+        "id": "ff629ce6a97846b2aa6c6d5097a6e687",
+      },
+    ],
+  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
