@@ -166,7 +166,7 @@ function TextSymbolForm({
         ></calcite-input>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"font"}>
+      <calcite-block style={blockStyles} expandable heading={"font"}>
         <FontForm
           handleDecorationChange={handleFontDecorationChange}
           handleFontChange={handleFontChange}

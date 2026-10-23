@@ -24,7 +24,7 @@ function PointSymbol3DForm({
 }: Props): React.ReactElement {
   return (
     <>
-      <calcite-block style={blockStyles} collapsible heading={"callout"}>
+      <calcite-block style={blockStyles} expandable heading={"callout"}>
         <PointSymbol3DCalloutForm
           handleColorChange={handleCalloutColorChange}
           handleSizeChange={handleCalloutSizeChange}
@@ -33,7 +33,7 @@ function PointSymbol3DForm({
       <PointSymbol3DSymbolLayersForm
         updateSymbolLayers={updateSymbolLayers}
       ></PointSymbol3DSymbolLayersForm>
-      <calcite-block style={blockStyles} collapsible heading={"verticalOffset"}>
+      <calcite-block style={blockStyles} expandable heading={"verticalOffset"}>
         <PointSymbol3DVerticalOffsetForm
           handleMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
           handleMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}

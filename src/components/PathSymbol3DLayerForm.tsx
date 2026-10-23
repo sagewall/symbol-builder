@@ -171,7 +171,7 @@ function LineSymbol3DLayerForm({
         </calcite-select>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <PathSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handlePathSymbol3DLayerMaterialColorChange}

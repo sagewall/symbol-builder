@@ -366,7 +366,7 @@ function LineSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "line") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
                 key={index}
               >
@@ -408,7 +408,7 @@ function LineSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "path") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
                 key={index}
               >
@@ -449,7 +449,7 @@ function LineSymbol3DSymbolLayersForm({
     <>
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"symbolLayers"}
         expanded
       >

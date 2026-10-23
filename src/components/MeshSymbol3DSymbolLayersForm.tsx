@@ -235,7 +235,7 @@ function MeshSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "fill") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
                 key={index}
               >
@@ -296,7 +296,7 @@ function MeshSymbol3DSymbolLayersForm({
     <>
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"symbolLayers"}
         expanded
       >

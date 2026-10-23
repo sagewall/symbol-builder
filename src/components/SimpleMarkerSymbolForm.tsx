@@ -91,7 +91,7 @@ function SimpleMarkerSymbolForm({
           value={color}
         ></calcite-input>
       </calcite-label>
-      <calcite-block style={blockStyles} collapsible heading={"outline:"}>
+      <calcite-block style={blockStyles} expandable heading={"outline:"}>
         <SimpleLineSymbolForm
           handleCapChange={handleOutlineCapChange}
           handleColorChange={handleOutlineColorChange}

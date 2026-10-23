@@ -654,7 +654,7 @@ function PointSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "icon") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
                 key={index}
               >
@@ -703,7 +703,7 @@ function PointSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "object") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
                 key={index}
               >
@@ -750,7 +750,7 @@ function PointSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "text") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
                 key={index}
               >
@@ -814,7 +814,7 @@ function PointSymbol3DSymbolLayersForm({
     <>
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"symbolLayers"}
         expanded
       >

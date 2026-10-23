@@ -64,7 +64,7 @@ function SimpleLineSymbolForm({
     markerBlock = (
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"marker"}
         oncalciteBlockClose={(event) => {
           if (handleMarkerBlockToggle) {

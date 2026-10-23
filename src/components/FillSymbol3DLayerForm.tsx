@@ -100,7 +100,7 @@ function FillSymbol3DLayerForm({
       )}
 
       {isMeshSymbol3D && (
-        <calcite-block style={blockStyles} collapsible heading={"edges"}>
+        <calcite-block style={blockStyles} expandable heading={"edges"}>
           <Edges3DForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerEdgesColorChange}
@@ -112,7 +112,7 @@ function FillSymbol3DLayerForm({
         </calcite-block>
       )}
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <FillSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerMaterialColorChange}
@@ -123,7 +123,7 @@ function FillSymbol3DLayerForm({
       </calcite-block>
 
       {!isMeshSymbol3D && (
-        <calcite-block style={blockStyles} collapsible heading={"outline"}>
+        <calcite-block style={blockStyles} expandable heading={"outline"}>
           <FillSymbol3DLayerOutlineForm
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerOutlineColorChange}
@@ -139,7 +139,7 @@ function FillSymbol3DLayerForm({
       )}
 
       {!isMeshSymbol3D && (
-        <calcite-block style={blockStyles} collapsible heading={"pattern"}>
+        <calcite-block style={blockStyles} expandable heading={"pattern"}>
           <StylePattern3DForm
             layerIndex={layerIndex}
             handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}

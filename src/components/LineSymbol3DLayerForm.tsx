@@ -118,7 +118,7 @@ function LineSymbol3DLayerForm({
 
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"marker"}
         oncalciteBlockClose={(event) => {
           handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
@@ -135,14 +135,14 @@ function LineSymbol3DLayerForm({
         ></LineStyleMarker3DForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <LineSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleLineSymbol3DLayerMaterialColorChange}
         ></LineSymbol3DLayerMaterialForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"pattern"}>
+      <calcite-block style={blockStyles} expandable heading={"pattern"}>
         <LineStylePattern3DForm
           layerIndex={layerIndex}
           handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}

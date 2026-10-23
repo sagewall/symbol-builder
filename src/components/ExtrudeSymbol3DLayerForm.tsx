@@ -55,7 +55,7 @@ function FillSymbol3DLayerForm({
         ></calcite-switch>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"edges"}>
+      <calcite-block style={blockStyles} expandable heading={"edges"}>
         <Edges3DForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerEdgesColorChange}
@@ -66,7 +66,7 @@ function FillSymbol3DLayerForm({
         ></Edges3DForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <ExtrudeSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}

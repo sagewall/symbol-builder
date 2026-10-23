@@ -101,7 +101,7 @@ function IconSymbol3DLayerForm({
       {anchor === "relative" && (
         <calcite-block
           style={blockStyles}
-          collapsible
+          expandable
           heading={"anchorPosition"}
         >
           <IconSymbol3DLayerAnchorPositionForm
@@ -136,14 +136,14 @@ function IconSymbol3DLayerForm({
         ></calcite-slider>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <IconSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
         ></IconSymbol3DLayerMaterialForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"outline"}>
+      <calcite-block style={blockStyles} expandable heading={"outline"}>
         <IconSymbol3DLayerOutlineForm
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
@@ -151,7 +151,7 @@ function IconSymbol3DLayerForm({
         ></IconSymbol3DLayerOutlineForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"resource"}>
+      <calcite-block style={blockStyles} expandable heading={"resource"}>
         <IconSymbol3DLayerResourceForm
           layerIndex={layerIndex}
           handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}

@@ -108,7 +108,7 @@ function ObjectSymbol3DLayerForm({
       {anchor === "relative" && (
         <calcite-block
           style={blockStyles}
-          collapsible
+          expandable
           heading={"anchorPosition"}
         >
           <ObjectSymbol3DLayerAnchorPositionForm
@@ -176,14 +176,14 @@ function ObjectSymbol3DLayerForm({
         ></calcite-input-number>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <ObjectSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleObjectSymbol3DLayerMaterialColorChange}
         ></ObjectSymbol3DLayerMaterialForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"resource"}>
+      <calcite-block style={blockStyles} expandable heading={"resource"}>
         <ObjectSymbol3DLayerResourceForm
           layerIndex={layerIndex}
           handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}

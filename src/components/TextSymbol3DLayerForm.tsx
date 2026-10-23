@@ -105,14 +105,14 @@ function TextSymbol3DLayerForm({
         ></calcite-input-text>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"background"}>
+      <calcite-block style={blockStyles} expandable heading={"background"}>
         <TextSymbol3DLayerBackgroundForm
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
         ></TextSymbol3DLayerBackgroundForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"font"}>
+      <calcite-block style={blockStyles} expandable heading={"font"}>
         <TextSymbol3DLayerFontForm
           layerIndex={layerIndex}
           handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
@@ -123,7 +123,7 @@ function TextSymbol3DLayerForm({
         ></TextSymbol3DLayerFontForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"halo"}>
+      <calcite-block style={blockStyles} expandable heading={"halo"}>
         <TextSymbol3DLayerHaloForm
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerHaloColorChange}
@@ -186,7 +186,7 @@ function TextSymbol3DLayerForm({
         ></calcite-input-number>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <TextSymbol3DLayerMaterialForm
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
