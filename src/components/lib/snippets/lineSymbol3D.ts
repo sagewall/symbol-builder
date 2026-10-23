@@ -58,7 +58,7 @@ const lineSymbol3D = new LineSymbol3D({
     type: "path",
     anchor: "${symbolLayer.anchor}",
     cap: "${symbolLayer.cap}",
-    castShadows: "${symbolLayer.castShadows}",
+    castShadows: ${symbolLayer.castShadows},
     height: ${symbolLayer.height},
     join: "${symbolLayer.join}",
     material: {

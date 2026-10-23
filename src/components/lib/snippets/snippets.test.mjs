@@ -110,6 +110,29 @@ test.each([true, false])(
   },
 );
 
+test.each([true, false])(
+  "LineSymbol3D CDN preserves path castShadows (value=%s)",
+  async (castShadows) => {
+    const symbol = new constructors.LineSymbol3D({
+      symbolLayers: [{
+        type: "path",
+        castShadows,
+        height: 5,
+        width: 3,
+        material: { color: "red" },
+        profile: "quad",
+      }],
+    });
+    const result = await roundTrip("LineSymbol3D", "CDN", symbol);
+
+    expect(result.symbolLayers.length).toBe(1);
+    const layer = result.symbolLayers.getItemAt(0);
+    expect(layer.type).toBe("path");
+    expect(layer.castShadows).toBe(castShadows);
+    expect(typeof layer.castShadows).toBe("boolean");
+  },
+);
+
 const resourceLayers = (value) => [
   {
     type: "icon",
