@@ -178,6 +178,43 @@ test.each([
   },
 );
 
+for (const format of formats) {
+  for (const markerEnabled of [true, false]) {
+    test.each([
+      { type: "style", style: "dash" },
+      { type: "template", dashTemplate: [10, 6, 2, 6] },
+      null,
+    ])(
+      `LineSymbol3D ${format} preserves pattern %j (marker=${markerEnabled})`,
+      async (pattern) => {
+        const symbol = new constructors.LineSymbol3D({
+          symbolLayers: [
+            {
+              type: "line",
+              material: { color: "red" },
+              pattern,
+              marker: markerEnabled
+                ? {
+                    type: "style",
+                    color: "blue",
+                    placement: "begin-end",
+                    style: "arrow",
+                  }
+                : null,
+            },
+          ],
+        });
+        const result = await roundTrip("LineSymbol3D", format, symbol);
+
+        expect(result.symbolLayers.length).toBe(1);
+        expect(
+          result.symbolLayers.getItemAt(0).pattern?.toJSON() ?? null,
+        ).toEqual(symbol.symbolLayers.getItemAt(0).pattern?.toJSON() ?? null);
+      },
+    );
+  }
+}
+
 const resourceLayers = (value) => [
   {
     type: "icon",

@@ -208,7 +208,7 @@ function LineSymbol3DSymbolLayersForm({
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
-    if (symbolLayer.pattern) {
+    if (symbolLayer.pattern?.type === "style") {
       symbolLayer.pattern.style = value as InstanceType<
         typeof LineStylePattern3D
       >["style"];

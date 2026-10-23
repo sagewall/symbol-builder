@@ -193,7 +193,11 @@ function WebStyleSymbol2DForm({
 
   const handleTabChange = async (event: CustomEvent): Promise<void> => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
-    if (tabNav.selectedTitle.tab === "standard") {
+    const selectedTitle = tabNav.selectedTitle;
+    if (!selectedTitle) {
+      return;
+    }
+    if (selectedTitle.tab === "standard") {
       setName("extent-hollow-gray");
       setStyleName("Esri2DPointSymbolsStyle");
       handleStyleNameChange(styleName);
@@ -261,16 +265,10 @@ function WebStyleSymbol2DForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "pointSymbol",
                         );
                       }}
@@ -294,16 +292,10 @@ function WebStyleSymbol2DForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "lineSymbol",
                         );
                       }}
@@ -327,16 +319,10 @@ function WebStyleSymbol2DForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "polygonSymbol",
                         );
                       }}
@@ -413,16 +399,10 @@ function WebStyleSymbol2DForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "pointSymbol",
                         );
                       }}
@@ -446,16 +426,10 @@ function WebStyleSymbol2DForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "lineSymbol",
                         );
                       }}
@@ -479,16 +453,10 @@ function WebStyleSymbol2DForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "polygonSymbol",
                         );
                       }}

@@ -1,4 +1,21 @@
 import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
+
+function generateLinePatternSnippet(
+  pattern: LineSymbol3DLayer["pattern"],
+  format: "CDN" | "ESM",
+): string {
+  if (!pattern) {
+    return "null";
+  }
+  const properties = JSON.stringify(pattern.toJSON());
+  if (format === "CDN") {
+    return properties;
+  }
+  const constructor =
+    pattern.type === "style" ? "LineStylePattern3D" : "LineTemplatePattern3D";
+  return `new ${constructor}(${properties})`;
+}
 
 export function generateLineSymbol3DCDNSnippet(
   lineSymbol3D: LineSymbol3D,
@@ -27,10 +44,7 @@ const lineSymbol3D = new LineSymbol3D({
     material: {
       color: [${symbolLayer.material.color.toRgba().toString()}],
     },
-    pattern: {
-      type: "style",
-      style: "${symbolLayer.pattern?.style}"
-    },
+    pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "CDN")},
     size: ${symbolLayer.size}
   },
     `;
@@ -43,10 +57,7 @@ const lineSymbol3D = new LineSymbol3D({
     material: {
       color: [${symbolLayer.material.color.toRgba().toString()}],
     },
-    pattern: {
-      type: "style",
-      style: "${symbolLayer.pattern?.style}"
-    },
+    pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "CDN")},
     size: ${symbolLayer.size}
   },
   `;
@@ -90,13 +101,19 @@ export function generateLineSymbol3DESMSnippet(
   let lineSymbol3DLayerImport = false;
   let pathSymbol3DLayerImport = false;
   let lineStylePattern3DImport = false;
+  let lineTemplatePattern3DImport = false;
   let lineStyleMarker3DImport = false;
 
   lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "line") {
       colorImport = true;
       lineSymbol3DLayerImport = true;
-      lineStylePattern3DImport = true;
+      if (symbolLayer.pattern?.type === "style") {
+        lineStylePattern3DImport = true;
+      }
+      if (symbolLayer.pattern?.type === "template") {
+        lineTemplatePattern3DImport = true;
+      }
       if (symbolLayer.material?.color && symbolLayer.marker) {
         lineStyleMarker3DImport = true;
       }
@@ -125,6 +142,9 @@ export function generateLineSymbol3DESMSnippet(
   if (lineStylePattern3DImport) {
     codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
   }
+  if (lineTemplatePattern3DImport) {
+    codeSnippet += `import LineTemplatePattern3D from "@arcgis/core/symbols/patterns/LineTemplatePattern3D.js";\n`;
+  }
   if (lineStyleMarker3DImport) {
     codeSnippet += `import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";\n`;
   }
@@ -149,9 +169,7 @@ const lineSymbol3D = new LineSymbol3D({
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
-      pattern: new LineStylePattern3D({
-        style: "${symbolLayer.pattern?.style}"
-      }),
+      pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "ESM")},
       size: ${symbolLayer.size}
     }),
     `;
@@ -163,9 +181,7 @@ const lineSymbol3D = new LineSymbol3D({
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
-      pattern: new LineStylePattern3D({
-        style: "${symbolLayer.pattern?.style}"
-      }),
+      pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "ESM")},
       size: ${symbolLayer.size}
     }),
     `;

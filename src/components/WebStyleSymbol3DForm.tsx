@@ -69,7 +69,11 @@ function WebStyleSymbolForm({
 
   const handleTabChange = async (event: CustomEvent): Promise<void> => {
     const tabNav = event.target as HTMLCalciteTabNavElement;
-    if (tabNav.selectedTitle.tab === "standard") {
+    const selectedTitle = tabNav.selectedTitle;
+    if (!selectedTitle) {
+      return;
+    }
+    if (selectedTitle.tab === "standard") {
       setName("Accessibility");
       setStyleName("EsriIconsStyle");
       handleStyleNameChange(styleName);
@@ -206,16 +210,10 @@ function WebStyleSymbolForm({
                     <calcite-list-item
                       key={index}
                       label={item.name}
-                      onClick={(event) => {
-                        const newName =
-                          (event.target as HTMLCalciteListItemElement).label ===
-                          undefined
-                            ? (event.target as HTMLImageElement).alt
-                            : (event.target as HTMLCalciteListItemElement)
-                                .label;
+                      onClick={() => {
                         handleCustomStyleChange(
                           styleUrl,
-                          newName,
+                          item.name,
                           "pointSymbol",
                         );
                       }}
