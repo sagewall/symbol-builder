@@ -86,12 +86,16 @@ export function generateLineSymbol3DESMSnippet(lineSymbol3D: LineSymbol3D): stri
   let lineSymbol3DLayerImport = false;
   let pathSymbol3DLayerImport = false;
   let lineStylePattern3DImport = false;
+  let lineStyleMarker3DImport = false;
 
   lineSymbol3D.symbolLayers.forEach((symbolLayer) => {
     if (symbolLayer.type === "line") {
       colorImport = true;
       lineSymbol3DLayerImport = true;
       lineStylePattern3DImport = true;
+      if (symbolLayer.material?.color && symbolLayer.marker) {
+        lineStyleMarker3DImport = true;
+      }
     }
 
     if (symbolLayer.type === "path") {
@@ -116,6 +120,9 @@ export function generateLineSymbol3DESMSnippet(lineSymbol3D: LineSymbol3D): stri
   }
   if (lineStylePattern3DImport) {
     codeSnippet += `import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";\n`;
+  }
+  if (lineStyleMarker3DImport) {
+    codeSnippet += `import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";\n`;
   }
 
   codeSnippet += `

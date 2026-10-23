@@ -84,6 +84,32 @@ for (const symbolType of symbolTypes) {
   }
 }
 
+test.each([true, false])(
+  "LineSymbol3D ESM preserves line markers (enabled=%s)",
+  async (markerEnabled) => {
+    const symbol = new constructors.LineSymbol3D({
+      symbolLayers: [{
+        type: "line",
+        material: { color: "red" },
+        pattern: { type: "style", style: "solid" },
+        marker: markerEnabled
+          ? { type: "style", color: "blue", placement: "begin-end", style: "arrow" }
+          : null,
+      }],
+    });
+    const snippet = generators.LineSymbol3D.generateLineSymbol3DESMSnippet(symbol);
+    const markerImport = 'import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";';
+
+    expect(snippet.includes(markerImport)).toBe(markerEnabled);
+    const result = await roundTrip("LineSymbol3D", "ESM", symbol);
+
+    expect(result.symbolLayers.length).toBe(1);
+    expect(result.symbolLayers.getItemAt(0).marker?.toJSON() ?? null).toEqual(
+      symbol.symbolLayers.getItemAt(0).marker?.toJSON() ?? null,
+    );
+  },
+);
+
 const resourceLayers = (value) => [
   {
     type: "icon",
