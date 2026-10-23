@@ -1,6 +1,4 @@
 import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-label";
@@ -20,6 +18,7 @@ import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -42,16 +41,7 @@ function SimpleFillSymbolShell(): React.ReactElement {
     }),
   );
 
-  const polygonGraphic = new Graphic({
-    geometry: polygon,
-    symbol: simpleFillSymbol,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(polygonGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(polygon, simpleFillSymbol);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -67,15 +57,7 @@ function SimpleFillSymbolShell(): React.ReactElement {
 
   const updateGraphics = (newSimpleFillSymbol: SimpleFillSymbol): void => {
     setSimpleFillSymbol(newSimpleFillSymbol);
-
-    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
-    if (newPolygonGraphic) {
-      newPolygonGraphic.symbol = newSimpleFillSymbol;
-    }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newPolygonGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newSimpleFillSymbol);
   };
 
   const handleColorChange = (currentColor: string): void => {

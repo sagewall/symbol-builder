@@ -1,6 +1,5 @@
 import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import type Collection from "@arcgis/core/core/Collection.js";
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
@@ -21,6 +20,7 @@ import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { point } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -48,30 +48,13 @@ function PointSymbol3DShell(): React.ReactElement {
     }),
   );
 
-  const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: pointSymbol3D,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(pointGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(point, pointSymbol3D);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D): void => {
     setPointSymbol3D(newPointSymbol3D);
-
-    const newPointGraphic = graphics.getItemAt(0)?.clone();
-    if (newPointGraphic) {
-      newPointGraphic.symbol = newPointSymbol3D;
-    }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newPointSymbol3D);
   };
 
   const handleCalloutColorChange = (currentColor: string): void => {

@@ -1,6 +1,4 @@
 import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-panel";
@@ -19,6 +17,7 @@ import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 import { point } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -41,16 +40,7 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     }),
   );
 
-  const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: simpleMarkerSymbol,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(pointGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(point, simpleMarkerSymbol);
 
   const [scene, setScene] = useState(false);
   let viewElement = <MapElement graphics={graphics}></MapElement>;
@@ -66,14 +56,7 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
 
   const updateGraphics = (newSimpleMarkerSymbol: SimpleMarkerSymbol): void => {
     setSimpleMarkerSymbol(newSimpleMarkerSymbol);
-
-    const newPointGraphic = graphics.getItemAt(0)?.clone();
-    if (newPointGraphic) {
-      newPointGraphic.symbol = newSimpleMarkerSymbol;
-    }
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newSimpleMarkerSymbol);
   };
 
   const handleAngleChange = (currentAngle: number): void => {

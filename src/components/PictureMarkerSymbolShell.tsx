@@ -1,5 +1,3 @@
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-panel";
@@ -18,6 +16,7 @@ import PictureMarkerSymbolForm from "./PictureMarkerSymbolForm";
 import PictureMarkerSymbolJSONPanel from "./PictureMarkerSymbolJSONPanel";
 import Scene from "./Scene";
 import { point } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -37,16 +36,7 @@ function PictureMarkerSymbolShell(): React.ReactElement {
     }),
   );
 
-  const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: pictureMarkerSymbol,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(pointGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(point, pictureMarkerSymbol);
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -64,15 +54,7 @@ function PictureMarkerSymbolShell(): React.ReactElement {
     newPictureMarkerSymbol: PictureMarkerSymbol,
   ): void => {
     setPictureMarkerSymbol(newPictureMarkerSymbol);
-
-    const newPointGraphic = graphics.getItemAt(0)?.clone();
-    if (newPointGraphic) {
-      newPointGraphic.symbol = newPictureMarkerSymbol;
-    }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newPictureMarkerSymbol);
   };
 
   const handleAngleChange = (currentAngle: number): void => {

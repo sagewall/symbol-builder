@@ -1,6 +1,4 @@
 import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-panel";
@@ -17,6 +15,7 @@ import PictureFillSymbolESMPanel from "./PictureFillSymbolESMPanel";
 import PictureFillSymbolForm from "./PictureFillSymbolForm";
 import PictureFillSymbolJSONPanel from "./PictureFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -42,29 +41,13 @@ function PictureFillSymbolShell(): React.ReactElement {
     }),
   );
 
-  const polygonGraphic = new Graphic({
-    geometry: polygon,
-    symbol: pictureFillSymbol,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(polygonGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(polygon, pictureFillSymbol);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
   const updateGraphics = (newPictureFillSymbol: PictureFillSymbol): void => {
     setPictureFillSymbol(newPictureFillSymbol);
-    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
-    if (newPolygonGraphic) {
-      newPolygonGraphic.symbol = newPictureFillSymbol;
-    }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newPolygonGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newPictureFillSymbol);
   };
 
   const handleHeightChange = (currentHeight: string): void => {

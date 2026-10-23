@@ -1,5 +1,4 @@
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import type Collection from "@arcgis/core/core/Collection.js";
 import type ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
@@ -20,6 +19,7 @@ import PolygonSymbol3DForm from "./PolygonSymbol3DForm";
 import PolygonSymbol3DJSONPanel from "./PolygonSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { polygon } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -30,30 +30,13 @@ import {
 function PolygonSymbol3DShell(): React.ReactElement {
   const [polygonSymbol3D, setPolygonSymbol3D] = useState(new PolygonSymbol3D());
 
-  const polygonGraphic = new Graphic({
-    geometry: polygon,
-    symbol: polygonSymbol3D,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(polygonGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(polygon, polygonSymbol3D);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newPolygonSymbol3D: PolygonSymbol3D): void => {
     setPolygonSymbol3D(newPolygonSymbol3D);
-
-    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
-    if (newPolygonGraphic) {
-      newPolygonGraphic.symbol = newPolygonSymbol3D;
-    }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newPolygonGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newPolygonSymbol3D);
   };
 
   const updateSymbolLayers = (

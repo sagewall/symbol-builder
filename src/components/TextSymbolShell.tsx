@@ -1,6 +1,4 @@
 import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
 import Font from "@arcgis/core/symbols/Font.js";
 import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-panel";
@@ -17,6 +15,7 @@ import TextSymbolESMPanel from "./TextSymbolESMPanel";
 import TextSymbolForm from "./TextSymbolForm";
 import TextSymbolJSONPanel from "./TextSymbolJSONPanel";
 import { point } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -43,29 +42,13 @@ function TextSymbolShell(): React.ReactElement {
     }),
   );
 
-  const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: textSymbol,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(pointGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(point, textSymbol);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
   const updateGraphics = (newTextSymbol: TextSymbol): void => {
     setTextSymbol(newTextSymbol);
-
-    const newPointGraphic = graphics.getItemAt(0)?.clone();
-    if (newPointGraphic) {
-      newPointGraphic.symbol = newTextSymbol;
-    }
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newTextSymbol);
   };
 
   const handleAngleChange = (currentAngle: number): void => {
