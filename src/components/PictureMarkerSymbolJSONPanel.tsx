@@ -24,7 +24,7 @@ function PictureMarkerSymbolJSONPanel({
   const codeSnippet = `
 import PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 
-const textSymbolSymbol = PictureMarkerSymbol.fromJSON(
+const pictureMarkerSymbol = PictureMarkerSymbol.fromJSON(
 ${JSON.stringify(pictureMarkerSymbol.toJSON(), null, 2)});`;
 
   return (

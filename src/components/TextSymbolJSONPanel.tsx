@@ -22,7 +22,7 @@ function TextSymbolJSONPanel({ textSymbol }: Props): React.ReactElement {
   const codeSnippet = `
 import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 
-const textSymbolSymbol = TextSymbol.fromJSON(
+const textSymbol = TextSymbol.fromJSON(
 ${JSON.stringify(textSymbol.toJSON(), null, 2)});`;
 
   return (

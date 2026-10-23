@@ -24,7 +24,7 @@ function SimpleFillSymbolJSONPanel({
   const codeSnippet = `
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol.js";
 
-const webStyleSymbolSymbol = WebStyleSymbol.fromJSON(
+const webStyleSymbol = WebStyleSymbol.fromJSON(
 ${JSON.stringify(webStyleSymbol.toJSON(), null, 2)});`;
 
   return (

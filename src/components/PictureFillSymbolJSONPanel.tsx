@@ -24,7 +24,7 @@ function PictureFillSymbolJSONPanel({
   const codeSnippet = `
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
 
-const textSymbolSymbol = PictureFillSymbol.fromJSON(
+const pictureFillSymbol = PictureFillSymbol.fromJSON(
 ${JSON.stringify(pictureFillSymbol.toJSON(), null, 2)});`;
 
   return (
