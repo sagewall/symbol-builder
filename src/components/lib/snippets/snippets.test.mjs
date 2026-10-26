@@ -239,6 +239,138 @@ for (const format of formats) {
   }
 }
 
+const layerCases = [
+  {
+    symbolType: "MeshSymbol3D",
+    description: "fill layer",
+    symbolLayers: [
+      {
+        type: "fill",
+        castShadows: false,
+        edges: { type: "solid", color: "black", extensionLength: 2, size: 1.5 },
+        material: { color: "red", colorMixMode: "replace" },
+        pattern: { type: "style", style: "solid" },
+      },
+    ],
+    verify: (symbol) => {
+      const layer = symbol.symbolLayers.getItemAt(0);
+      expect(layer.type).toBe("fill");
+      expect(layer.castShadows).toBe(false);
+      expect(layer.edges.extensionLength).toBe(2);
+      expect(layer.edges.size).toBe(1.5);
+      expect(layer.material.colorMixMode).toBe("replace");
+      expect(layer.pattern.style).toBe("solid");
+    },
+  },
+  {
+    symbolType: "PolygonSymbol3D",
+    description: "extrude layer",
+    symbolLayers: [
+      {
+        type: "extrude",
+        castShadows: false,
+        edges: { type: "solid", color: "black", extensionLength: 4, size: 2 },
+        material: { color: "red" },
+        size: 17,
+      },
+    ],
+    verify: (symbol) => {
+      const layer = symbol.symbolLayers.getItemAt(0);
+      expect(layer.type).toBe("extrude");
+      expect(layer.castShadows).toBe(false);
+      expect(layer.edges.extensionLength).toBe(4);
+      expect(layer.edges.size).toBe(2);
+      expect(layer.size).toBe(17);
+    },
+  },
+  {
+    symbolType: "PolygonSymbol3D",
+    description: "water layer",
+    symbolLayers: [
+      {
+        type: "water",
+        color: "blue",
+        waterbodySize: "large",
+        waveDirection: 73,
+        waveStrength: "moderate",
+      },
+    ],
+    verify: (symbol) => {
+      const layer = symbol.symbolLayers.getItemAt(0);
+      expect(layer.type).toBe("water");
+      expect(layer.waterbodySize).toBe("large");
+      expect(layer.waveDirection).toBe(73);
+      expect(layer.waveStrength).toBe("moderate");
+    },
+  },
+];
+
+for (const layerCase of layerCases) {
+  for (const format of formats) {
+    test(`${layerCase.symbolType} ${format} preserves ${layerCase.description} properties`, async () => {
+      const symbol = new constructors[layerCase.symbolType]({
+        symbolLayers: layerCase.symbolLayers,
+      });
+      const result = await roundTrip(layerCase.symbolType, format, symbol);
+
+      expect(result.symbolLayers.length).toBe(layerCase.symbolLayers.length);
+      layerCase.verify(result);
+    });
+  }
+}
+
+for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"]) {
+  for (const format of formats) {
+    test(`${symbolType} ${format} preserves primitive icon and object resources`, async () => {
+      const symbol = new constructors[symbolType]({
+        symbolLayers: [
+          {
+            type: "icon",
+            anchor: "center",
+            anchorPosition: { x: 0, y: 0 },
+            angle: 28,
+            material: { color: "red" },
+            outline: { color: "black", size: 1.5 },
+            resource: { primitive: "kite" },
+            size: 16,
+          },
+          {
+            type: "object",
+            anchor: "center",
+            anchorPosition: { x: 0, y: 0, z: 0 },
+            castShadows: false,
+            depth: 8,
+            heading: 13,
+            height: 11,
+            material: { color: "blue" },
+            resource: { primitive: "cube" },
+            roll: 7,
+            tilt: 9,
+            width: 10,
+          },
+        ],
+      });
+      const result = await roundTrip(symbolType, format, symbol);
+      const icon = result.symbolLayers.getItemAt(0);
+      const object = result.symbolLayers.getItemAt(1);
+
+      expect(result.symbolLayers.length).toBe(2);
+      expect(icon.type).toBe("icon");
+      expect(icon.resource.primitive).toBe("kite");
+      expect(icon.angle).toBe(28);
+      expect(object.type).toBe("object");
+      expect(object.resource.primitive).toBe("cube");
+      expect(object.castShadows).toBe(false);
+      expect(object.depth).toBe(8);
+      expect(object.heading).toBe(13);
+      expect(object.height).toBe(11);
+      expect(object.roll).toBe(7);
+      expect(object.tilt).toBe(9);
+      expect(object.width).toBe(10);
+    });
+  }
+}
+
 const resourceLayers = (value) => [
   {
     type: "icon",
