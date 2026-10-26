@@ -178,6 +178,30 @@ test.each([
   },
 );
 
+test.each([
+  ["PointSymbol3D", "CDN"],
+  ["PolygonSymbol3D", "CDN"],
+  ["PolygonSymbol3D", "ESM"],
+])("%s %s preserves URL-backed icon angle", async (symbolType, format) => {
+  const symbol = new constructors[symbolType]({
+    symbolLayers: [
+      {
+        type: "icon",
+        anchor: "center",
+        anchorPosition: { x: 0, y: 0 },
+        angle: 47,
+        material: { color: "red" },
+        outline: { color: "black", size: 1 },
+        resource: { href: "https://example.com/icon.svg" },
+        size: 12,
+      },
+    ],
+  });
+  const result = await roundTrip(symbolType, format, symbol);
+
+  expect(result.symbolLayers.getItemAt(0).angle).toBe(47);
+});
+
 for (const format of formats) {
   for (const markerEnabled of [true, false]) {
     test.each([

@@ -90,6 +90,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         x: ${symbolLayer.anchorPosition.x},
         y: ${symbolLayer.anchorPosition.y}
       },
+      angle: ${symbolLayer.angle},
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
@@ -116,6 +117,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         x: ${symbolLayer.anchorPosition.x},
         y: ${symbolLayer.anchorPosition.y}
       },
+      angle: ${symbolLayer.angle},
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
@@ -356,6 +358,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         x: ${symbolLayer.anchorPosition.x},
         y: ${symbolLayer.anchorPosition.y}
       },
+      angle: ${symbolLayer.angle},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
