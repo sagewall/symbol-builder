@@ -13,18 +13,27 @@ const symbolTypes = [
   "SimpleMarkerSymbol",
   "TextSymbol",
   "WebStyleSymbol",
-];
-const formats = ["CDN", "ESM", "JSON"];
+] as const;
+type SymbolType = (typeof symbolTypes)[number];
+const formats = ["CDN", "ESM", "JSON"] as const;
+type Format = (typeof formats)[number];
+type OccludedVisibilityMode = "adaptive" | "hidden" | "visible";
 const specialStrings = [
   'A "quoted" label',
   "C:\\symbols\\test",
   "first\nsecond",
   'quotes " and \\ backslashes\nwith a newline',
   "",
-];
-const constructors = {};
-const generators = {};
-const generatorModules = import.meta.glob("./*.ts", { eager: true });
+] as const;
+type SnippetGenerator = (symbol: any) => string;
+type ArcGISSymbolConstructor = new (properties?: any) => any;
+type GeneratorModule = Record<string, SnippetGenerator>;
+const constructors = {} as Record<SymbolType, ArcGISSymbolConstructor>;
+const generators = {} as Record<SymbolType, GeneratorModule>;
+const generatorModules = import.meta.glob<GeneratorModule>(
+  ["./*.ts", "!./*.test.ts"],
+  { eager: true },
+);
 
 for (const symbolType of symbolTypes) {
   constructors[symbolType] = (
@@ -34,25 +43,33 @@ for (const symbolType of symbolTypes) {
   generators[symbolType] = generatorModules[`./${moduleName}.ts`];
 }
 
-async function executeSnippet(snippet, variableName, format) {
+async function executeSnippet(
+  snippet: string,
+  variableName: string,
+  format: Format,
+): Promise<any> {
   const prefix = format === "CDN" ? 'import $arcgis from "test:arcgis";\n' : "";
   const module = new SourceTextModule(
     `${prefix}${snippet}\nexport default ${variableName};`,
   );
-  await module.link(async (specifier) => {
+  await module.link(async (specifier: string) => {
     const value =
       specifier === "test:arcgis"
-        ? { import: async (path) => (await import(path)).default }
+        ? { import: async (path: string) => (await import(path)).default }
         : (await import(specifier)).default;
     return new SyntheticModule(["default"], function () {
       this.setExport("default", value);
     });
   });
   await module.evaluate();
-  return module.namespace.default;
+  return (module.namespace as Record<string, any>).default;
 }
 
-async function roundTrip(symbolType, format, symbol) {
+async function roundTrip(
+  symbolType: SymbolType,
+  format: Format,
+  symbol: any,
+): Promise<any> {
   const generate =
     generators[symbolType][`generate${symbolType}${format}Snippet`];
   const before = symbol.toJSON();
@@ -84,29 +101,51 @@ for (const symbolType of symbolTypes) {
   }
 }
 
-test.each(formats)("LineSymbol3D %s preserves worldSized", async (format) => {
-  for (const worldSized of [true, false]) {
-    const symbol = new constructors.LineSymbol3D({
-      worldSized,
-      symbolLayers: [
-        {
-          type: "line",
-          material: { color: "red" },
-          pattern: { type: "style", style: "solid" },
-          size: 6,
-        },
-      ],
+test.each(["CDN", "ESM"] as const)(
+  "PictureFillSymbol %s omits an unspecified outline",
+  async (format) => {
+    const symbol = new constructors.PictureFillSymbol({
+      url: "https://example.com/fill.png",
     });
-    const result = await roundTrip("LineSymbol3D", format, symbol);
+    const snippet =
+      generators.PictureFillSymbol[`generatePictureFillSymbol${format}Snippet`](
+        symbol,
+      );
 
-    expect(result.worldSized).toBe(worldSized);
-    expect(result.symbolLayers.getItemAt(0).size).toBe(6);
-  }
-});
+    expect(snippet).not.toContain("outline:");
+    const result = await roundTrip("PictureFillSymbol", format, symbol);
+    expect(result.outline?.toJSON() ?? null).toEqual(
+      symbol.outline?.toJSON() ?? null,
+    );
+  },
+);
+
+test.each(formats)(
+  "LineSymbol3D %s preserves worldSized",
+  async (format: Format) => {
+    for (const worldSized of [true, false]) {
+      const symbol = new constructors.LineSymbol3D({
+        worldSized,
+        symbolLayers: [
+          {
+            type: "line",
+            material: { color: "red" },
+            pattern: { type: "style", style: "solid" },
+            size: 6,
+          },
+        ],
+      });
+      const result = await roundTrip("LineSymbol3D", format, symbol);
+
+      expect(result.worldSized).toBe(worldSized);
+      expect(result.symbolLayers.getItemAt(0).size).toBe(6);
+    }
+  },
+);
 
 test.each([true, false])(
   "LineSymbol3D ESM preserves line markers (enabled=%s)",
-  async (markerEnabled) => {
+  async (markerEnabled: boolean) => {
     const symbol = new constructors.LineSymbol3D({
       symbolLayers: [
         {
@@ -141,7 +180,7 @@ test.each([true, false])(
 
 test.each([true, false])(
   "LineSymbol3D CDN preserves path castShadows (value=%s)",
-  async (castShadows) => {
+  async (castShadows: boolean) => {
     const symbol = new constructors.LineSymbol3D({
       symbolLayers: [
         {
@@ -169,7 +208,7 @@ test.each([
   ["ESM", false],
   ["CDN", true],
   ["CDN", false],
-])(
+] as const)(
   "PolygonSymbol3D %s preserves fill castShadows (value=%s)",
   async (format, castShadows) => {
     const symbol = new constructors.PolygonSymbol3D({
@@ -200,7 +239,7 @@ test.each([
 
 test.each(formats)(
   "WebStyleSymbol %s preserves named-style portal URL",
-  async (format) => {
+  async (format: Format) => {
     const portalUrl = "https://enterprise.example.com/portal";
     const symbol = new constructors.WebStyleSymbol({
       name: "Accessibility",
@@ -226,27 +265,35 @@ test.each([
   ["PointSymbol3D", "CDN"],
   ["PolygonSymbol3D", "CDN"],
   ["PolygonSymbol3D", "ESM"],
-])("%s %s preserves URL-backed icon angle", async (symbolType, format) => {
-  const symbol = new constructors[symbolType]({
-    symbolLayers: [
-      {
-        type: "icon",
-        anchor: "center",
-        anchorPosition: { x: 0, y: 0 },
-        angle: 47,
-        material: { color: "red" },
-        outline: { color: "black", size: 1 },
-        resource: { href: "https://example.com/icon.svg" },
-        size: 12,
-      },
-    ],
-  });
-  const result = await roundTrip(symbolType, format, symbol);
+] as const)(
+  "%s %s preserves URL-backed icon angle",
+  async (symbolType, format) => {
+    const symbol = new constructors[symbolType]({
+      symbolLayers: [
+        {
+          type: "icon",
+          anchor: "center",
+          anchorPosition: { x: 0, y: 0 },
+          angle: 47,
+          material: { color: "red" },
+          outline: { color: "black", size: 1 },
+          resource: { href: "https://example.com/icon.svg" },
+          size: 12,
+        },
+      ],
+    });
+    const result = await roundTrip(symbolType, format, symbol);
 
-  expect(result.symbolLayers.getItemAt(0).angle).toBe(47);
-});
+    expect(result.symbolLayers.getItemAt(0).angle).toBe(47);
+  },
+);
 
-const occludedVisibilityCases = [
+interface OccludedVisibilityCase {
+  symbolType: "PointSymbol3D" | "PolygonSymbol3D";
+  symbolLayers: (mode: OccludedVisibilityMode) => Record<string, unknown>[];
+}
+
+const occludedVisibilityCases: OccludedVisibilityCase[] = [
   {
     symbolType: "PointSymbol3D",
     symbolLayers: (mode) => [
@@ -301,7 +348,7 @@ const occludedVisibilityCases = [
 
 for (const { symbolType, symbolLayers } of occludedVisibilityCases) {
   for (const format of formats) {
-    for (const mode of ["adaptive", "hidden", "visible"]) {
+    for (const mode of ["adaptive", "hidden", "visible"] as const) {
       test(`${symbolType} ${format} preserves occludedVisibility=${mode}`, async () => {
         const symbol = new constructors[symbolType]({
           symbolLayers: symbolLayers(mode),
@@ -333,7 +380,7 @@ for (const { symbolType, symbolLayers } of occludedVisibilityCases) {
         expect(
           Array.from(
             result.symbolLayers,
-            (layer) => layer.occludedVisibility?.mode ?? null,
+            (layer: any) => layer.occludedVisibility?.mode ?? null,
           ),
         ).toEqual(symbolLayers(mode).map(() => mode));
       });
@@ -347,7 +394,7 @@ for (const format of formats) {
       { type: "style", style: "dash" },
       { type: "template", dashTemplate: [10, 6, 2, 6] },
       null,
-    ])(
+    ] as const)(
       `LineSymbol3D ${format} preserves pattern %j (marker=${markerEnabled})`,
       async (pattern) => {
         const symbol = new constructors.LineSymbol3D({
@@ -378,7 +425,14 @@ for (const format of formats) {
   }
 }
 
-const layerCases = [
+interface LayerCase {
+  symbolType: "MeshSymbol3D" | "PolygonSymbol3D";
+  description: string;
+  symbolLayers: Record<string, unknown>[];
+  verify: (symbol: any) => void;
+}
+
+const layerCases: LayerCase[] = [
   {
     symbolType: "MeshSymbol3D",
     description: "fill layer",
@@ -458,7 +512,7 @@ for (const layerCase of layerCases) {
   }
 }
 
-for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"]) {
+for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"] as const) {
   for (const format of formats) {
     test(`${symbolType} ${format} preserves primitive icon and object resources`, async () => {
       const symbol = new constructors[symbolType]({
@@ -510,7 +564,7 @@ for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"]) {
   }
 }
 
-const resourceLayers = (value) => [
+const resourceLayers = (value: string): Record<string, unknown>[] => [
   {
     type: "icon",
     anchorPosition: { x: 0, y: 0 },
@@ -524,21 +578,34 @@ const resourceLayers = (value) => [
     resource: { href: `https://example.com/${value}` },
   },
 ];
-const resourceValues = (symbol) =>
-  Array.from(symbol.symbolLayers, (layer) => layer.resource.href);
-const stringCases = [
+const resourceValues = (symbol: any): string[] =>
+  Array.from(
+    symbol.symbolLayers,
+    (layer: any) => layer.resource.href as string,
+  );
+interface StringCase {
+  symbolType: SymbolType;
+  field: string;
+  properties: (value: string) => Record<string, unknown>;
+  values: (symbol: any) => unknown;
+  allowEmpty?: boolean;
+}
+
+const stringCases: StringCase[] = [
   {
     symbolType: "TextSymbol",
     field: "text and font family",
     properties: (value) => ({ text: value, font: { family: value } }),
     values: (symbol) => [symbol.text, symbol.font.family],
   },
-  ...["PictureFillSymbol", "PictureMarkerSymbol"].map((symbolType) => ({
-    symbolType,
-    field: "url",
-    properties: (value) => ({ url: `https://example.com/${value}` }),
-    values: (symbol) => symbol.url,
-  })),
+  ...(["PictureFillSymbol", "PictureMarkerSymbol"] as const).map(
+    (symbolType) => ({
+      symbolType,
+      field: "url",
+      properties: (value: string) => ({ url: `https://example.com/${value}` }),
+      values: (symbol: any) => symbol.url,
+    }),
+  ),
   {
     symbolType: "SimpleMarkerSymbol",
     field: "path",
@@ -581,10 +648,10 @@ const stringCases = [
       return [layer.text, layer.font.family];
     },
   },
-  ...["PointSymbol3D", "PolygonSymbol3D"].map((symbolType) => ({
+  ...(["PointSymbol3D", "PolygonSymbol3D"] as const).map((symbolType) => ({
     symbolType,
     field: "icon and object resource href",
-    properties: (value) => ({ symbolLayers: resourceLayers(value) }),
+    properties: (value: string) => ({ symbolLayers: resourceLayers(value) }),
     values: resourceValues,
     allowEmpty: false,
   })),
