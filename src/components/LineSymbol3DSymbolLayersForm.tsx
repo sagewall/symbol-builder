@@ -373,7 +373,7 @@ function LineSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
 
@@ -415,7 +415,7 @@ function LineSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <PathSymbol3DLayerForm
@@ -457,7 +457,7 @@ function LineSymbol3DSymbolLayersForm({
           id="add-layer-chip"
           icon="add-layer"
           label="Add Layer"
-          slot="control"
+          slot="content-end"
           value="Information"
           style={chipStyles}
         ></calcite-chip>

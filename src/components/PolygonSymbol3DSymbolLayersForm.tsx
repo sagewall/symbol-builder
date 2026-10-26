@@ -829,7 +829,7 @@ function PolygonSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
 
@@ -866,7 +866,7 @@ function PolygonSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <FillSymbol3DLayerForm
@@ -920,7 +920,7 @@ function PolygonSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <IconSymbol3DLayerForm
@@ -971,7 +971,7 @@ function PolygonSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <ObjectSymbol3DLayerForm
@@ -1019,7 +1019,7 @@ function PolygonSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <WaterSymbol3DLayerForm
@@ -1056,7 +1056,7 @@ function PolygonSymbol3DSymbolLayersForm({
           id="add-layer-chip"
           icon="add-layer"
           label="Add layer"
-          slot="control"
+          slot="content-end"
           value="Information"
           style={chipStyles}
         ></calcite-chip>

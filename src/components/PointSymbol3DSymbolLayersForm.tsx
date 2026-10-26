@@ -688,7 +688,7 @@ function PointSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
 
@@ -740,7 +740,7 @@ function PointSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <ObjectSymbol3DLayerForm
@@ -787,7 +787,7 @@ function PointSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <TextSymbol3DLayerForm
@@ -855,7 +855,7 @@ function PointSymbol3DSymbolLayersForm({
           id="add-layer-chip"
           icon="add-layer"
           label="Add layer"
-          slot="control"
+          slot="content-end"
           value="Information"
           style={chipStyles}
         ></calcite-chip>

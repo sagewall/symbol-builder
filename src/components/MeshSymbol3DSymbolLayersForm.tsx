@@ -242,7 +242,7 @@ function MeshSymbol3DSymbolLayersForm({
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
 
@@ -304,7 +304,7 @@ function MeshSymbol3DSymbolLayersForm({
           id="add-layer-chip"
           icon="add-layer"
           label="Add layer"
-          slot="control"
+          slot="content-end"
           value="Information"
           style={chipStyles}
         ></calcite-chip>
