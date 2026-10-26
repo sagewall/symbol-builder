@@ -1,5 +1,8 @@
 import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
-import type { Symbol3DColorMixMode } from "@arcgis/core/symbols/support/types.js";
+import type {
+  OccludedVisibilityMode,
+  Symbol3DColorMixMode,
+} from "@arcgis/core/symbols/support/types.js";
 import type {
   FillStyle,
   FontDecoration,
@@ -760,6 +763,12 @@ export const objectSymbol3dLayerResourcePrimitiveOptions: ObjectSymbol3DLayerPri
     "diamond",
     "tetrahedron",
   ];
+
+export const occludedVisibilityOptions: OccludedVisibilityMode[] = [
+  "adaptive",
+  "hidden",
+  "visible",
+];
 
 export const pathSymbol3dLayerAnchorOptions: PathSymbol3DLayerAnchor[] = [
   "center",

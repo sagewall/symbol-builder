@@ -1,5 +1,6 @@
 import type Font from "@arcgis/core/symbols/Font.js";
 import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
+import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
@@ -9,6 +10,7 @@ import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
 import {
   horizontalAlignmentOptions,
+  occludedVisibilityOptions,
   verticalAlignmentOptions,
 } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
@@ -60,6 +62,10 @@ interface Props {
     layerIndex: number,
     value: string,
   ) => void;
+  handleOccludedVisibilityChange: (
+    layerIndex: number,
+    value: OccludedVisibilityMode,
+  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
   handleTextChange: (layerIndex: number, value: string) => void;
   handleVerticalAlignmentChange: (
@@ -80,6 +86,7 @@ function TextSymbol3DLayerForm({
   handleHorizontalAlignmentChange,
   handleLineHeightChange,
   handleTextSymbol3DLayerMaterialColorChange,
+  handleOccludedVisibilityChange,
   handleSizeChange,
   handleTextChange,
   handleVerticalAlignmentChange,
@@ -87,6 +94,8 @@ function TextSymbol3DLayerForm({
 }: Props): React.ReactElement {
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [lineHeight, setLineHeight] = useState("1");
+  const [occludedVisibility, setOccludedVisibility] =
+    useState<OccludedVisibilityMode>("adaptive");
   const [size, setSize] = useState("9");
   const [text, setText] = useState("Hello World!");
   const [verticalAlignment, setVerticalAlignment] = useState("baseline");
@@ -192,6 +201,25 @@ function TextSymbol3DLayerForm({
           handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
         ></TextSymbol3DLayerMaterialForm>
       </calcite-block>
+
+      <calcite-label layout="default" style={labelStyles}>
+        occludedVisibility
+        <calcite-select
+          label="Occluded visibility selection"
+          oncalciteSelectChange={(event) => {
+            const mode = event.target.value as OccludedVisibilityMode;
+            setOccludedVisibility(mode);
+            handleOccludedVisibilityChange(layerIndex, mode);
+          }}
+          value={occludedVisibility}
+        >
+          {occludedVisibilityOptions.map((option) => (
+            <calcite-option key={option} value={option}>
+              {option}
+            </calcite-option>
+          ))}
+        </calcite-select>
+      </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
         size

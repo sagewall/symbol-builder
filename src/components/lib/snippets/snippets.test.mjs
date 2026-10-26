@@ -222,6 +222,101 @@ test.each([
   expect(result.symbolLayers.getItemAt(0).angle).toBe(47);
 });
 
+const occludedVisibilityCases = [
+  {
+    symbolType: "PointSymbol3D",
+    symbolLayers: (mode) => [
+      {
+        type: "icon",
+        anchor: "center",
+        anchorPosition: { x: 0, y: 0 },
+        material: { color: "red" },
+        occludedVisibility: { mode },
+        outline: { color: "black", size: 1 },
+        resource: { href: "https://example.com/icon.svg" },
+        size: 12,
+      },
+      {
+        type: "text",
+        text: "Label",
+        font: { family: "Arial", size: 9 },
+        background: { color: "white" },
+        halo: { color: "black", size: 1 },
+        material: { color: "red" },
+        occludedVisibility: { mode },
+        size: 9,
+      },
+    ],
+  },
+  {
+    symbolType: "PolygonSymbol3D",
+    symbolLayers: (mode) => [
+      {
+        type: "icon",
+        anchor: "center",
+        anchorPosition: { x: 0, y: 0 },
+        material: { color: "red" },
+        occludedVisibility: { mode },
+        outline: { color: "black", size: 1 },
+        resource: { href: "https://example.com/icon.svg" },
+        size: 12,
+      },
+      {
+        type: "icon",
+        anchor: "center",
+        anchorPosition: { x: 0, y: 0 },
+        material: { color: "blue" },
+        occludedVisibility: { mode },
+        outline: { color: "black", size: 1 },
+        resource: { primitive: "circle" },
+        size: 12,
+      },
+    ],
+  },
+];
+
+for (const { symbolType, symbolLayers } of occludedVisibilityCases) {
+  for (const format of formats) {
+    for (const mode of ["adaptive", "hidden", "visible"]) {
+      test(`${symbolType} ${format} preserves occludedVisibility=${mode}`, async () => {
+        const symbol = new constructors[symbolType]({
+          symbolLayers: symbolLayers(mode),
+        });
+        const generate =
+          generators[symbolType][`generate${symbolType}${format}Snippet`];
+        const snippet = generate(symbol);
+        const result = await roundTrip(symbolType, format, symbol);
+
+        if (format === "JSON") {
+          expect(snippet).toMatch(
+            /"occludedVisibility": \{\n\s+"mode": "[^"]+"\n\s+\},?/,
+          );
+        } else {
+          expect(snippet).toMatch(
+            /^([ \t]*)occludedVisibility: \{\n\1  mode: "[^"]+"\n\1\},?$/m,
+          );
+          expect(
+            [...snippet.matchAll(/^([ \t]*)occludedVisibility: \{/gm)].map(
+              ([, indentation]) => indentation,
+            ),
+          ).toEqual(
+            [...snippet.matchAll(/^([ \t]*)material: \{/gm)].map(
+              ([, indentation]) => indentation,
+            ),
+          );
+        }
+        expect(result.symbolLayers.length).toBe(symbolLayers(mode).length);
+        expect(
+          Array.from(
+            result.symbolLayers,
+            (layer) => layer.occludedVisibility?.mode ?? null,
+          ),
+        ).toEqual(symbolLayers(mode).map(() => mode));
+      });
+    }
+  }
+}
+
 for (const format of formats) {
   for (const markerEnabled of [true, false]) {
     test.each([

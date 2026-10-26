@@ -4,6 +4,7 @@ import Font from "@arcgis/core/symbols/Font.js";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
+import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-chip";
@@ -158,6 +159,19 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleIconSymbol3DLayerOccludedVisibilityChange = (
+    layerIndex: number,
+    value: OccludedVisibilityMode,
+  ): void => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex,
+    ) as IconSymbol3DLayer;
+    symbolLayer.occludedVisibility = { mode: value };
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -598,6 +612,19 @@ function PointSymbol3DSymbolLayersForm({
     updateSymbolLayers(newSymbolLayers);
   };
 
+  const handleTextSymbol3DLayerOccludedVisibilityChange = (
+    layerIndex: number,
+    value: OccludedVisibilityMode,
+  ): void => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex,
+    ) as TextSymbol3DLayer;
+    symbolLayer.occludedVisibility = { mode: value };
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
   const handleTextSymbol3DLayerSizeChange = (
     layerIndex: number,
     value: string,
@@ -681,6 +708,9 @@ function PointSymbol3DSymbolLayersForm({
                   }
                   handleIconSymbol3DLayerMaterialColorChange={
                     handleIconSymbol3DLayerMaterialColorChange
+                  }
+                  handleOccludedVisibilityChange={
+                    handleIconSymbol3DLayerOccludedVisibilityChange
                   }
                   handleIconSymbol3DLayerOutlineColorChange={
                     handleIconSymbol3DLayerOutlineColorChange
@@ -794,6 +824,9 @@ function PointSymbol3DSymbolLayersForm({
                   }
                   handleTextSymbol3DLayerMaterialColorChange={
                     handleTextSymbol3DLayerMaterialColorChange
+                  }
+                  handleOccludedVisibilityChange={
+                    handleTextSymbol3DLayerOccludedVisibilityChange
                   }
                   handleSizeChange={handleTextSymbol3DLayerSizeChange}
                   handleTextChange={handleTextSymbol3DLayerTextChange}

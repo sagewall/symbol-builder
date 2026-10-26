@@ -34,6 +34,9 @@ const pointSymbol3D = new PointSymbol3D({
     material: {
       color: [${symbolLayer.material.color.toRgba().toString()}]
     },
+    occludedVisibility: {
+      mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
+    },
     outline: {
       color: [${symbolLayer.outline.color.toRgba().toString()}],
       size: ${symbolLayer.outline.size}
@@ -60,6 +63,9 @@ const pointSymbol3D = new PointSymbol3D({
       angle: ${symbolLayer.angle},
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}]
+      },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
       },
       outline: {
         color: [${symbolLayer.outline.color.toRgba().toString()}],
@@ -158,6 +164,9 @@ const pointSymbol3D = new PointSymbol3D({
       lineHeight: ${symbolLayer.lineHeight},
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}],
+      },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
       },
       size: ${symbolLayer.size},
       text: ${JSON.stringify(symbolLayer.text)},
@@ -263,6 +272,9 @@ const pointSymbol3D = new PointSymbol3D({
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
+      },
       outline: {
         color: new Color([${symbolLayer.outline.color.toRgba().toString()}]),
         size: ${symbolLayer.outline.size}
@@ -288,6 +300,9 @@ const pointSymbol3D = new PointSymbol3D({
       angle: ${symbolLayer.angle},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
+      },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
       },
       outline: {
         color: new Color([${symbolLayer.outline.color.toRgba().toString()}]),
@@ -383,6 +398,9 @@ const pointSymbol3D = new PointSymbol3D({
       lineHeight: ${symbolLayer.lineHeight},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
+      },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
       },
       size: ${symbolLayer.size},
       text: ${JSON.stringify(symbolLayer.text)},

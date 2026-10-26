@@ -5,6 +5,7 @@ import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
+import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.js";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
@@ -458,6 +459,19 @@ function PolygonSymbol3DSymbolLayersForm({
     if (symbolLayer.material) {
       symbolLayer.material.color = new Color(value);
     }
+    setSymbolLayers(newSymbolLayers);
+    updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleIconSymbol3DLayerOccludedVisibilityChange = (
+    layerIndex: number,
+    value: OccludedVisibilityMode,
+  ): void => {
+    const newSymbolLayers = symbolLayers.clone();
+    const symbolLayer = newSymbolLayers.getItemAt(
+      layerIndex,
+    ) as IconSymbol3DLayer;
+    symbolLayer.occludedVisibility = { mode: value };
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
@@ -925,6 +939,9 @@ function PolygonSymbol3DSymbolLayersForm({
                   }
                   handleIconSymbol3DLayerMaterialColorChange={
                     handleIconSymbol3DLayerMaterialColorChange
+                  }
+                  handleOccludedVisibilityChange={
+                    handleIconSymbol3DLayerOccludedVisibilityChange
                   }
                   handleIconSymbol3DLayerOutlineColorChange={
                     handleIconSymbol3DLayerOutlineColorChange

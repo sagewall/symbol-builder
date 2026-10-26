@@ -94,6 +94,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
+      },
       outline: {
         color: [${symbolLayer.outline.color.toRgba().toString()}],
         size: ${symbolLayer.outline.size}
@@ -120,6 +123,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
       angle: ${symbolLayer.angle},
       material: {
         color: [${symbolLayer.material.color.toRgba().toString()}]
+      },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
       },
       outline: {
         color: [${symbolLayer.outline.color.toRgba().toString()}],
@@ -361,6 +367,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
       angle: ${symbolLayer.angle},
       material: {
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
+      },
+      occludedVisibility: {
+        mode: ${JSON.stringify(symbolLayer.occludedVisibility?.mode ?? "adaptive")}
       },
       outline: {
         color: new Color([${symbolLayer.outline.color.toRgba().toString()}]),
