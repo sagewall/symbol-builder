@@ -166,7 +166,10 @@ function WebStyleSymbolShell(): React.ReactElement {
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
-  const handleStyleNameChange = (currentStyleName: string): void => {
+  const handleStyleNameChange = (
+    currentStyleName: string,
+    currentPortalUrl?: string,
+  ): void => {
     const newWebStyleSymbol = new WebStyleSymbol();
 
     switch (currentStyleName) {
@@ -212,6 +215,10 @@ function WebStyleSymbolShell(): React.ReactElement {
     }
 
     newWebStyleSymbol.styleName = currentStyleName;
+    const portalUrl = currentPortalUrl?.trim();
+    if (portalUrl) {
+      newWebStyleSymbol.portal = { url: portalUrl };
+    }
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 

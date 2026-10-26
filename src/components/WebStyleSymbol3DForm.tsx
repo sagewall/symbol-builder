@@ -27,7 +27,7 @@ import type { ItemType, WebStyleSymbolItem } from "./lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
-  handleStyleNameChange: (value: string) => void;
+  handleStyleNameChange: (value: string, portalUrl?: string) => void;
   handleCustomStyleChange: (
     styleUrl: string,
     name: string,
@@ -46,6 +46,7 @@ function WebStyleSymbolForm({
     WebStyleSymbolItem[]
   >([]);
   const [styleName, setStyleName] = useState("EsriIconsStyle");
+  const [portalUrl, setPortalUrl] = useState("");
   const [styleUrl, setStyleUrl] = useState("");
 
   async function getStyleItemDataFromUrl(url: string): Promise<void> {
@@ -76,7 +77,7 @@ function WebStyleSymbolForm({
     if (selectedTitle.tab === "standard") {
       setName("Accessibility");
       setStyleName("EsriIconsStyle");
-      handleStyleNameChange(styleName);
+      handleStyleNameChange("EsriIconsStyle", portalUrl);
     } else {
       setName("");
       setStyleUrl(
@@ -174,7 +175,7 @@ function WebStyleSymbolForm({
               label={"styleName selection"}
               oncalciteSelectChange={(event) => {
                 setStyleName(event.target.value);
-                handleStyleNameChange(event.target.value);
+                handleStyleNameChange(event.target.value, portalUrl);
                 updateNames(event.target.value);
               }}
               value={styleName}
@@ -183,6 +184,19 @@ function WebStyleSymbolForm({
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
             </calcite-select>
+          </calcite-label>
+
+          <calcite-label layout="default" style={labelStyles}>
+            portal URL (optional)
+            <calcite-input-text
+              label="Portal URL"
+              oncalciteInputTextChange={(event) => {
+                setPortalUrl(event.target.value);
+                handleStyleNameChange(styleName, event.target.value);
+              }}
+              placeholder="https://www.arcgis.com"
+              value={portalUrl}
+            ></calcite-input-text>
           </calcite-label>
         </calcite-tab>
         <calcite-tab tab="custom">

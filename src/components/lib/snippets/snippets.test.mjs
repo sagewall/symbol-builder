@@ -198,6 +198,30 @@ test.each([
   },
 );
 
+test.each(formats)(
+  "WebStyleSymbol %s preserves named-style portal URL",
+  async (format) => {
+    const portalUrl = "https://enterprise.example.com/portal";
+    const symbol = new constructors.WebStyleSymbol({
+      name: "Accessibility",
+      styleName: "EsriIconsStyle",
+      portal: { url: portalUrl },
+    });
+    const generate =
+      generators.WebStyleSymbol[`generateWebStyleSymbol${format}Snippet`];
+    const snippet = generate(symbol);
+    const result = await roundTrip("WebStyleSymbol", format, symbol);
+
+    expect(result.styleName).toBe("EsriIconsStyle");
+    expect(result.portal?.url).toBe(portalUrl);
+    if (format !== "JSON") {
+      expect(snippet).toContain(
+        `portal: { url: ${JSON.stringify(portalUrl)} },`,
+      );
+    }
+  },
+);
+
 test.each([
   ["PointSymbol3D", "CDN"],
   ["PolygonSymbol3D", "CDN"],

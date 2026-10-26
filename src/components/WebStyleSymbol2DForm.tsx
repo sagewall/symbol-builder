@@ -20,7 +20,7 @@ import type { GroupItem, ItemType, WebStyleSymbolItem } from "./lib/types";
 interface Props {
   groupItems: GroupItem[];
   handleNameChange: (value: string) => void;
-  handleStyleNameChange: (value: string) => void;
+  handleStyleNameChange: (value: string, portalUrl?: string) => void;
   handleCustomStyleChange: (
     styleUrl: string,
     name: string,
@@ -46,6 +46,7 @@ function WebStyleSymbol2DForm({
     WebStyleSymbolItem[]
   >([]);
   const [styleName, setStyleName] = useState("Esri2DPointSymbolsStyle");
+  const [portalUrl, setPortalUrl] = useState("");
   const [styleUrl, setStyleUrl] = useState(
     "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
   );
@@ -200,7 +201,7 @@ function WebStyleSymbol2DForm({
     if (selectedTitle.tab === "standard") {
       setName("extent-hollow-gray");
       setStyleName("Esri2DPointSymbolsStyle");
-      handleStyleNameChange(styleName);
+      handleStyleNameChange("Esri2DPointSymbolsStyle", portalUrl);
     } else {
       setAgolStyle("Animals");
       setName("");
@@ -363,7 +364,7 @@ function WebStyleSymbol2DForm({
               label={"styleName selection"}
               oncalciteSelectChange={(event) => {
                 setStyleName(event.target.value);
-                handleStyleNameChange(event.target.value);
+                handleStyleNameChange(event.target.value, portalUrl);
               }}
               value={styleName}
             >
@@ -371,6 +372,19 @@ function WebStyleSymbol2DForm({
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
             </calcite-select>
+          </calcite-label>
+
+          <calcite-label layout="default" style={labelStyles}>
+            portal URL (optional)
+            <calcite-input-text
+              label="Portal URL"
+              oncalciteInputTextChange={(event) => {
+                setPortalUrl(event.target.value);
+                handleStyleNameChange(styleName, event.target.value);
+              }}
+              placeholder="https://www.arcgis.com"
+              value={portalUrl}
+            ></calcite-input-text>
           </calcite-label>
         </calcite-tab>
 
