@@ -1,20 +1,25 @@
 import type PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
 
-export function generatePictureFillSymbolCDNSnippet(pictureFillSymbol: PictureFillSymbol): string {
+export function generatePictureFillSymbolCDNSnippet(
+  pictureFillSymbol: PictureFillSymbol,
+): string {
+  const outline = pictureFillSymbol.outline;
+  const outlineSnippet = outline
+    ? `  outline: {
+    cap: ${JSON.stringify(outline.cap)},
+    color: ${JSON.stringify(outline.color?.toJSON() ?? null)},
+    join: ${JSON.stringify(outline.join)},
+    miterLimit: ${outline.miterLimit},
+    style: ${JSON.stringify(outline.style)},
+    width: ${outline.width}
+  },\n`
+    : "";
   const codeSnippet = `
 const PictureFillSymbol = await $arcgis.import("@arcgis/core/symbols/PictureFillSymbol.js");
 
 const pictureFillSymbol = new PictureFillSymbol({
   height: ${pictureFillSymbol.height},
-  outline: {
-    cap: "${pictureFillSymbol.outline?.cap}",
-    color: ${JSON.stringify(pictureFillSymbol.outline?.color?.toJSON())},
-    join: "${pictureFillSymbol.outline?.join}",
-    miterLimit: ${pictureFillSymbol.outline?.miterLimit},
-    style: "${pictureFillSymbol.outline?.style}",
-    width: ${pictureFillSymbol.outline?.width}
-  },
-  url: ${JSON.stringify(pictureFillSymbol.url)},
+${outlineSnippet}  url: ${JSON.stringify(pictureFillSymbol.url)},
   width: ${pictureFillSymbol.width},
   xoffset: ${pictureFillSymbol.xoffset},
   xscale: ${pictureFillSymbol.xscale},
@@ -25,23 +30,33 @@ const pictureFillSymbol = new PictureFillSymbol({
   return codeSnippet;
 }
 
-export function generatePictureFillSymbolESMSnippet(pictureFillSymbol: PictureFillSymbol): string {
+export function generatePictureFillSymbolESMSnippet(
+  pictureFillSymbol: PictureFillSymbol,
+): string {
+  const outline = pictureFillSymbol.outline;
+  const colorImport = outline
+    ? `import Color from "@arcgis/core/Color.js";\n`
+    : "";
+  const lineSymbolImport = outline
+    ? `import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";\n`
+    : "";
+  const outlineSnippet = outline
+    ? `  outline: new SimpleLineSymbol({
+    cap: ${JSON.stringify(outline.cap)},
+    color: ${outline.color ? `new Color([${outline.color.toRgba().toString()}])` : "null"},
+    join: ${JSON.stringify(outline.join)},
+    miterLimit: ${outline.miterLimit},
+    style: ${JSON.stringify(outline.style)},
+    width: ${outline.width}
+  }),\n`
+    : "";
   const codeSnippet = `
-import Color from "@arcgis/core/Color.js";
-import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
-import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
+${colorImport}import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
+${lineSymbolImport}
 
 const pictureFillSymbol = new PictureFillSymbol({
   height: ${pictureFillSymbol.height},
-  outline: new SimpleLineSymbol({
-    cap: "${pictureFillSymbol.outline?.cap}",
-    color: new Color([${(pictureFillSymbol.outline?.color?.toRgba() ?? []).toString()}]),
-    join: "${pictureFillSymbol.outline?.join}",
-    miterLimit: ${pictureFillSymbol.outline?.miterLimit},
-    style: "${pictureFillSymbol.outline?.style}",
-    width: ${pictureFillSymbol.outline?.width}
-  }),
-  url: ${JSON.stringify(pictureFillSymbol.url)},
+${outlineSnippet}  url: ${JSON.stringify(pictureFillSymbol.url)},
   width: ${pictureFillSymbol.width},
   xoffset: ${pictureFillSymbol.xoffset},
   xscale: ${pictureFillSymbol.xscale},
@@ -52,7 +67,9 @@ const pictureFillSymbol = new PictureFillSymbol({
   return codeSnippet;
 }
 
-export function generatePictureFillSymbolJSONSnippet(pictureFillSymbol: PictureFillSymbol): string {
+export function generatePictureFillSymbolJSONSnippet(
+  pictureFillSymbol: PictureFillSymbol,
+): string {
   const codeSnippet = `
 import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol.js";
 

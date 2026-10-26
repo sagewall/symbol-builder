@@ -8,13 +8,16 @@ function generateLinePatternSnippet(
   if (!pattern) {
     return "null";
   }
-  const properties = JSON.stringify(pattern.toJSON());
   if (format === "CDN") {
-    return properties;
+    return JSON.stringify(pattern.toJSON());
   }
   const constructor =
     pattern.type === "style" ? "LineStylePattern3D" : "LineTemplatePattern3D";
-  return `new ${constructor}(${properties})`;
+  const properties =
+    pattern.type === "style"
+      ? { style: pattern.style }
+      : { dashTemplate: pattern.dashTemplate };
+  return `new ${constructor}(${JSON.stringify(properties)})`;
 }
 
 export function generateLineSymbol3DCDNSnippet(

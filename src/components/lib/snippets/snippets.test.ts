@@ -567,15 +567,27 @@ for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"] as const) {
 const resourceLayers = (value: string): Record<string, unknown>[] => [
   {
     type: "icon",
+    anchor: "center",
     anchorPosition: { x: 0, y: 0 },
+    angle: 0,
     material: { color: "red" },
     outline: { color: "black", size: 1 },
     resource: { href: `https://example.com/${value}` },
+    size: 12,
   },
   {
     type: "object",
+    anchor: "center",
+    anchorPosition: { x: 0, y: 0, z: 0 },
+    castShadows: false,
+    depth: 10,
+    heading: 0,
+    height: 10,
     material: { color: "blue" },
     resource: { href: `https://example.com/${value}` },
+    roll: 0,
+    tilt: 0,
+    width: 10,
   },
 ];
 const resourceValues = (symbol: any): string[] =>
