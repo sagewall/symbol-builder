@@ -6,7 +6,9 @@
     "node": ">=22.23.4"
   },
   "scripts": {
-    "test": "vitest run --execArgv=--experimental-vm-modules",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run --execArgv=--experimental-vm-modules",
+    "test:e2e": "playwright test",
     "dev": "astro dev",
     "dev:stop": "astro dev stop",
     "build": "astro build",
@@ -34,6 +36,7 @@
     "workerd@1.20261019.1": true
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.5",
     "vitest": "^5.0.5",
     "wrangler": "^4.152.0"
