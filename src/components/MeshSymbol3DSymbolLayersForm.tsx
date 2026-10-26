@@ -5,12 +5,11 @@ import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
 import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import "@esri/calcite-components/components/calcite-chip";
-import "@esri/calcite-components/components/calcite-tooltip";
 import React, { useState } from "react";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
-import { blockStyles, chipStyles } from "./lib/styles";
+import { blockStyles } from "./lib/styles";
 
 interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -300,27 +299,25 @@ function MeshSymbol3DSymbolLayersForm({
         heading={"symbolLayers"}
         expanded
       >
-        <calcite-chip
-          id="add-layer-chip"
-          icon="add-layer"
-          label="Add layer"
-          slot="content-end"
-          value="Information"
-          style={chipStyles}
-        ></calcite-chip>
-        <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
-        </calcite-tooltip>
-
-        <calcite-action
-          onClick={() => addFillSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="cube"
-          text-enabled
-          text="Add FillSymbol3DLayer"
-        ></calcite-action>
+        <calcite-action-menu
+          label="Add symbol layer"
+          placement="bottom-end"
+          slot="actions-end"
+        >
+          <calcite-action
+            icon="add-layer"
+            label="Add symbol layer"
+            slot="trigger"
+            text="Add layer"
+          ></calcite-action>
+          <calcite-action
+            onClick={() => addFillSymbol3DLayer()}
+            icon="cube"
+            label="Add FillSymbol3DLayer"
+            text-enabled
+            text="Add FillSymbol3DLayer"
+          ></calcite-action>
+        </calcite-action-menu>
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>

@@ -6,12 +6,11 @@ import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
 import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.js";
 import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import "@esri/calcite-components/components/calcite-chip";
-import "@esri/calcite-components/components/calcite-tooltip";
 import React, { useState } from "react";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
-import { blockStyles, chipStyles } from "./lib/styles";
+import { blockStyles } from "./lib/styles";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 
@@ -851,43 +850,41 @@ function PointSymbol3DSymbolLayersForm({
         heading={"symbolLayers"}
         expanded
       >
-        <calcite-chip
-          id="add-layer-chip"
-          icon="add-layer"
-          label="Add layer"
-          slot="content-end"
-          value="Information"
-          style={chipStyles}
-        ></calcite-chip>
-        <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
-        </calcite-tooltip>
+        <calcite-action-menu
+          label="Add symbol layer"
+          placement="bottom-end"
+          slot="actions-end"
+        >
+          <calcite-action
+            icon="add-layer"
+            label="Add symbol layer"
+            slot="trigger"
+            text="Add layer"
+          ></calcite-action>
+          <calcite-action
+            onClick={() => addIconSymbol3DLayer()}
+            icon="point"
+            label="Add IconSymbol3DLayer"
+            text-enabled
+            text="Add IconSymbol3DLayer"
+          ></calcite-action>
 
-        <calcite-action
-          onClick={() => addIconSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="point"
-          text-enabled
-          text="Add IconSymbol3DLayer"
-        ></calcite-action>
+          <calcite-action
+            onClick={() => addObjectSymbol3DLayer()}
+            icon="point"
+            label="Add ObjectSymbol3DLayer"
+            text-enabled
+            text="Add ObjectSymbol3DLayer"
+          ></calcite-action>
 
-        <calcite-action
-          onClick={() => addObjectSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="point"
-          text-enabled
-          text="Add ObjectSymbol3DLayer"
-        ></calcite-action>
-
-        <calcite-action
-          onClick={() => addTextSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="text"
-          text-enabled
-          text="Add TextSymbol3DLayer"
-        ></calcite-action>
+          <calcite-action
+            onClick={() => addTextSymbol3DLayer()}
+            icon="text"
+            label="Add TextSymbol3DLayer"
+            text-enabled
+            text="Add TextSymbol3DLayer"
+          ></calcite-action>
+        </calcite-action-menu>
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>

@@ -5,11 +5,10 @@ import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import "@esri/calcite-components/components/calcite-chip";
-import "@esri/calcite-components/components/calcite-tooltip";
 import React, { useState } from "react";
-import { blockStyles, chipStyles } from "./lib/styles";
+import { blockStyles } from "./lib/styles";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
 
@@ -453,35 +452,33 @@ function LineSymbol3DSymbolLayersForm({
         heading={"symbolLayers"}
         expanded
       >
-        <calcite-chip
-          id="add-layer-chip"
-          icon="add-layer"
-          label="Add Layer"
-          slot="content-end"
-          value="Information"
-          style={chipStyles}
-        ></calcite-chip>
-        <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
-        </calcite-tooltip>
+        <calcite-action-menu
+          label="Add symbol layer"
+          placement="bottom-end"
+          slot="actions-end"
+        >
+          <calcite-action
+            icon="add-layer"
+            label="Add symbol layer"
+            slot="trigger"
+            text="Add layer"
+          ></calcite-action>
+          <calcite-action
+            onClick={() => addLineSymbol3DLayer()}
+            icon="line"
+            label="Add LineSymbol3DLayer"
+            text-enabled
+            text="Add LineSymbol3DLayer"
+          ></calcite-action>
 
-        <calcite-action
-          onClick={() => addLineSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="line"
-          text-enabled
-          text="Add LineSymbol3DLayer"
-        ></calcite-action>
-
-        <calcite-action
-          onClick={() => addPathSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="line"
-          text-enabled
-          text="Add PathSymbol3DLayer"
-        ></calcite-action>
+          <calcite-action
+            onClick={() => addPathSymbol3DLayer()}
+            icon="line"
+            label="Add PathSymbol3DLayer"
+            text-enabled
+            text="Add PathSymbol3DLayer"
+          ></calcite-action>
+        </calcite-action-menu>
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>
