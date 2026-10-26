@@ -24,6 +24,7 @@ export function generateLineSymbol3DCDNSnippet(
 const LineSymbol3D = await $arcgis.import("@arcgis/core/symbols/LineSymbol3D.js");
 
 const lineSymbol3D = new LineSymbol3D({
+  worldSized: ${lineSymbol3D.worldSized},
   symbolLayers: [
 `;
 
@@ -151,6 +152,7 @@ export function generateLineSymbol3DESMSnippet(
 
   codeSnippet += `
 const lineSymbol3D = new LineSymbol3D({
+  worldSized: ${lineSymbol3D.worldSized},
   symbolLayers: [
 `;
 

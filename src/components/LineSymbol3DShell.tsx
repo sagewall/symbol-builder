@@ -36,6 +36,12 @@ function LineSymbol3DShell(): React.ReactElement {
     updatePreview(newLineSymbol3D);
   };
 
+  const handleWorldSizedChange = (value: boolean): void => {
+    const newLineSymbol3D = lineSymbol3D.clone();
+    newLineSymbol3D.worldSized = value;
+    updateGraphics(newLineSymbol3D);
+  };
+
   const updateSymbolLayers = (
     symbolLayers: Collection<LineSymbol3DLayer | PathSymbol3DLayer>,
   ): void => {
@@ -53,7 +59,9 @@ function LineSymbol3DShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <LineSymbol3DForm
+                handleWorldSizedChange={handleWorldSizedChange}
                 updateSymbolLayers={updateSymbolLayers}
+                worldSized={lineSymbol3D.worldSized}
               ></LineSymbol3DForm>
             </div>
           </calcite-panel>

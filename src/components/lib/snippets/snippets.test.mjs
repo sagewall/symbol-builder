@@ -84,6 +84,26 @@ for (const symbolType of symbolTypes) {
   }
 }
 
+test.each(formats)("LineSymbol3D %s preserves worldSized", async (format) => {
+  for (const worldSized of [true, false]) {
+    const symbol = new constructors.LineSymbol3D({
+      worldSized,
+      symbolLayers: [
+        {
+          type: "line",
+          material: { color: "red" },
+          pattern: { type: "style", style: "solid" },
+          size: 6,
+        },
+      ],
+    });
+    const result = await roundTrip("LineSymbol3D", format, symbol);
+
+    expect(result.worldSized).toBe(worldSized);
+    expect(result.symbolLayers.getItemAt(0).size).toBe(6);
+  }
+});
+
 test.each([true, false])(
   "LineSymbol3D ESM preserves line markers (enabled=%s)",
   async (markerEnabled) => {
