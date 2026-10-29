@@ -84,7 +84,7 @@ const pointSymbol3D = new PointSymbol3D({
         codeSnippet += `
     {
       type: "object",
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
@@ -113,7 +113,7 @@ const pointSymbol3D = new PointSymbol3D({
         codeSnippet += `
     {
       type: "object",
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
@@ -309,7 +309,7 @@ const pointSymbol3D = new PointSymbol3D({
       if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
@@ -337,7 +337,7 @@ const pointSymbol3D = new PointSymbol3D({
       ) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},

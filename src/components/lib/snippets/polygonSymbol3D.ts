@@ -145,7 +145,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         codeSnippet += `
     {
       type: "object",
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
@@ -174,7 +174,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
         codeSnippet += `
     {
       type: "object",
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
@@ -402,7 +402,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       if (symbolLayer.material?.color && symbolLayer.resource?.href) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
@@ -430,7 +430,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       ) {
         codeSnippet += `
     new ObjectSymbol3DLayer({
-      anchor: "${symbolLayer.anchor}",
+      anchor: ${JSON.stringify(symbolLayer.anchor)},
       anchorPosition: {
         x: ${symbolLayer.anchorPosition?.x},
         y: ${symbolLayer.anchorPosition?.y},
