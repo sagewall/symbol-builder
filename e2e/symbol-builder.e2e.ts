@@ -745,6 +745,71 @@ test("editing a simple marker updates its JSON snippet", async ({ page }) => {
   await expect(snippet).toContainText('"size": 24');
 });
 
+test("editing a simple line updates its JSON snippet", async ({ page }) => {
+  await page.goto("/simple-line-symbol");
+  await showJSON(page);
+  await fillNumber(page, "width input", "4");
+
+  await expect.poll(async () => (await readSymbolJSON(page)).width).toBe(4);
+});
+
+test("editing a simple fill updates its JSON snippet", async ({ page }) => {
+  await page.goto("/simple-fill-symbol");
+  await selectProperty(page, "style selection", "cross");
+  await showJSON(page);
+
+  await expect
+    .poll(async () => (await readSymbolJSON(page)).style)
+    .toBe("esriSFSCross");
+});
+
+test("editing a picture marker resource updates its JSON snippet", async ({
+  page,
+}) => {
+  await page.route("https://assets.test/**", (route) => route.abort());
+  await page.goto("/picture-marker-symbol");
+  const urlInput = page.getByRole("textbox", {
+    name: "url input",
+    exact: true,
+  });
+  await urlInput.fill("https://assets.test/marker.png");
+  await urlInput.press("Enter");
+  await showJSON(page);
+
+  await expect
+    .poll(async () => (await readSymbolJSON(page)).url)
+    .toBe("https://assets.test/marker.png");
+});
+
+test("editing a picture fill resource updates its JSON snippet", async ({
+  page,
+}) => {
+  await page.route("https://assets.test/**", (route) => route.abort());
+  await page.goto("/picture-fill-symbol");
+  const urlInput = page.getByRole("textbox", {
+    name: "url input",
+    exact: true,
+  });
+  await urlInput.fill("https://assets.test/fill.png");
+  await urlInput.press("Enter");
+  await showJSON(page);
+
+  await expect
+    .poll(async () => (await readSymbolJSON(page)).url)
+    .toBe("https://assets.test/fill.png");
+});
+
+test("CIM Symbol Builder page embeds the CIM editor", async ({ page }) => {
+  await page.goto("/cim-symbol");
+  const editor = page.locator('iframe[title="CIM Symbol Builder"]');
+
+  await expect(editor).toBeVisible();
+  await expect(editor).toHaveAttribute(
+    "src",
+    "https://esri.github.io/cim-symbol-builder-js/",
+  );
+});
+
 const layerEditors = [
   { route: "/line-symbol-3d", action: "Add LineSymbol3DLayer" },
   { route: "/mesh-symbol-3d", action: "Add FillSymbol3DLayer" },
