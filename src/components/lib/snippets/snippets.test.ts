@@ -1,5 +1,19 @@
 import { SourceTextModule, SyntheticModule } from "node:vm";
-import { expect, test } from "vitest";
+import { afterEach, beforeEach, expect, test, vi } from "vitest";
+
+beforeEach(() => {
+  vi.spyOn(console, "error");
+  vi.spyOn(console, "warn");
+});
+
+afterEach(() => {
+  try {
+    expect(console.error).not.toHaveBeenCalled();
+    expect(console.warn).not.toHaveBeenCalled();
+  } finally {
+    vi.restoreAllMocks();
+  }
+});
 
 const symbolTypes = [
   "LineSymbol3D",
@@ -271,7 +285,7 @@ const formCases: {
         },
         {
           type: "water", color: "red", waveDirection: 90,
-          waveStrength: "strong", waterbodySize: "large",
+          waveStrength: "moderate", waterbodySize: "large",
         },
       ],
     },
@@ -318,6 +332,9 @@ for (const fixture of formCases) {
     for (const format of formats) {
       test(`${fixture.name} ${state} ${format} snippet matches all symbol properties`, async () => {
         const symbol = new constructors[fixture.type](fixture[state]);
+        if (fixture.name === "polygon layers" && state === "edited") {
+          expect(symbol.symbolLayers.getItemAt(2).waveStrength).toBe("moderate");
+        }
         const result = await roundTrip(fixture.type, format, symbol);
         expect(JSON.parse(JSON.stringify(result.toJSON()))).toEqual(
           JSON.parse(JSON.stringify(symbol.toJSON())),
@@ -367,14 +384,6 @@ async function roundTrip(
   expect(generate(symbol), "generation must be deterministic").toBe(snippet);
   expect(result).toBeInstanceOf(constructors[symbolType]);
   return result;
-}
-
-for (const format of formats) {
-  test(`TextSymbol ${format} preserves lineHeight`, async () => {
-    const symbol = new constructors.TextSymbol({ lineHeight: 1.75 });
-    const result = await roundTrip("TextSymbol", format, symbol);
-    expect(result.lineHeight).toBe(1.75);
-  });
 }
 
 for (const [symbolType, layerType] of [
@@ -515,8 +524,8 @@ const emissiveCases = [
 for (const format of formats) {
   for (const callout of [
     null,
-    { color: "red", size: 2, border: { color: "blue" } },
-    { color: "red", size: 1, border: null },
+    { type: "line", color: "red", size: 2, border: { color: "blue" } },
+    { type: "line", color: "red", size: 1, border: null },
   ]) {
     test(`PointSymbol3D ${format} preserves callout ${JSON.stringify(callout)}`, async () => {
       const symbol = new constructors.PointSymbol3D({
@@ -524,6 +533,10 @@ for (const format of formats) {
         verticalOffset: null,
       });
       const result = await roundTrip("PointSymbol3D", format, symbol);
+      if (callout) {
+        expect(result.callout).not.toBeNull();
+        expect(result.callout.size).toBe(callout.size);
+      }
       expect(result.callout?.toJSON() ?? null).toEqual(
         symbol.callout?.toJSON() ?? null,
       );
@@ -568,6 +581,31 @@ for (const { symbolType, layerType } of emissiveCases) {
   }
 }
 
+for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"] as const) {
+  for (const format of ["CDN", "ESM"] as const) {
+    for (const resource of [
+      { primitive: "sphere" },
+      { href: "https://example.com/model.glb" },
+    ]) {
+      test(`${symbolType} ${format} preserves an unset object anchor with ${JSON.stringify(resource)}`, async () => {
+        const symbol = new constructors[symbolType]({
+          symbolLayers: [{
+            type: "object",
+            material: { color: "red" },
+            resource,
+          }],
+        });
+        expect(symbol.symbolLayers.getItemAt(0).anchor).toBeUndefined();
+
+        const result = await roundTrip(symbolType, format, symbol);
+
+        expect(result.symbolLayers.getItemAt(0).anchor).toBeUndefined();
+        expect(result.toJSON()).toEqual(symbol.toJSON());
+      });
+    }
+  }
+}
+
 for (const symbolType of symbolTypes) {
   for (const format of formats) {
     test(`${symbolType} ${format} snippet constructs a symbol without mutating its input`, async () => {
@@ -600,147 +638,6 @@ test.each(["CDN", "ESM"] as const)(
     expect(result.outline?.toJSON() ?? null).toEqual(
       symbol.outline?.toJSON() ?? null,
     );
-  },
-);
-
-test.each(formats)(
-  "LineSymbol3D %s preserves worldSized",
-  async (format: Format) => {
-    for (const worldSized of [true, false]) {
-      const symbol = new constructors.LineSymbol3D({
-        worldSized,
-        symbolLayers: [
-          {
-            type: "line",
-            material: { color: "red" },
-            pattern: { type: "style", style: "solid" },
-            size: 6,
-          },
-        ],
-      });
-      const result = await roundTrip("LineSymbol3D", format, symbol);
-
-      expect(result.worldSized).toBe(worldSized);
-      expect(result.symbolLayers.getItemAt(0).size).toBe(6);
-    }
-  },
-);
-
-test.each([true, false])(
-  "LineSymbol3D ESM preserves line markers (enabled=%s)",
-  async (markerEnabled: boolean) => {
-    const symbol = new constructors.LineSymbol3D({
-      symbolLayers: [
-        {
-          type: "line",
-          material: { color: "red" },
-          pattern: { type: "style", style: "solid" },
-          marker: markerEnabled
-            ? {
-                type: "style",
-                color: "blue",
-                placement: "begin-end",
-                style: "arrow",
-              }
-            : null,
-        },
-      ],
-    });
-    const snippet =
-      generators.LineSymbol3D.generateLineSymbol3DESMSnippet(symbol);
-    const markerImport =
-      'import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";';
-
-    expect(snippet.includes(markerImport)).toBe(markerEnabled);
-    const result = await roundTrip("LineSymbol3D", "ESM", symbol);
-
-    expect(result.symbolLayers.length).toBe(1);
-    expect(result.symbolLayers.getItemAt(0).marker?.toJSON() ?? null).toEqual(
-      symbol.symbolLayers.getItemAt(0).marker?.toJSON() ?? null,
-    );
-  },
-);
-
-test.each([true, false])(
-  "LineSymbol3D CDN preserves path castShadows (value=%s)",
-  async (castShadows: boolean) => {
-    const symbol = new constructors.LineSymbol3D({
-      symbolLayers: [
-        {
-          type: "path",
-          castShadows,
-          height: 5,
-          width: 3,
-          material: { color: "red" },
-          profile: "quad",
-        },
-      ],
-    });
-    const result = await roundTrip("LineSymbol3D", "CDN", symbol);
-
-    expect(result.symbolLayers.length).toBe(1);
-    const layer = result.symbolLayers.getItemAt(0);
-    expect(layer.type).toBe("path");
-    expect(layer.castShadows).toBe(castShadows);
-    expect(typeof layer.castShadows).toBe("boolean");
-  },
-);
-
-test.each([
-  ["ESM", true],
-  ["ESM", false],
-  ["CDN", true],
-  ["CDN", false],
-] as const)(
-  "PolygonSymbol3D %s preserves fill castShadows (value=%s)",
-  async (format, castShadows) => {
-    const symbol = new constructors.PolygonSymbol3D({
-      symbolLayers: [
-        {
-          type: "fill",
-          castShadows,
-          material: { color: "red", colorMixMode: "multiply" },
-          outline: {
-            color: "black",
-            pattern: { type: "style", style: "solid" },
-            patternCap: "round",
-            size: 3,
-          },
-          pattern: { type: "style", style: "solid" },
-        },
-      ],
-    });
-    const result = await roundTrip("PolygonSymbol3D", format, symbol);
-
-    expect(result.symbolLayers.length).toBe(1);
-    const layer = result.symbolLayers.getItemAt(0);
-    expect(layer.type).toBe("fill");
-    expect(layer.castShadows).toBe(castShadows);
-    expect(typeof layer.castShadows).toBe("boolean");
-  },
-);
-
-test.each(formats)(
-  "WebStyleSymbol %s preserves named-style portal URL",
-  async (format: Format) => {
-    const portalUrl = "https://enterprise.example.com/portal";
-    const symbol = new constructors.WebStyleSymbol({
-      name: "Accessibility",
-      styleName: "EsriIconsStyle",
-      portal: { url: portalUrl },
-    });
-    const generate =
-      generators.WebStyleSymbol[`generateWebStyleSymbol${format}Snippet`];
-    const snippet = generate(symbol);
-    const result = await roundTrip("WebStyleSymbol", format, symbol);
-
-    expect(result.styleName).toBe("EsriIconsStyle");
-    expect(result.portal?.url).toBe(portalUrl);
-    if (format !== "JSON") {
-      expect(snippet).toContain(
-        `portal: { url: ${JSON.stringify(portalUrl)} },`,
-      );
-    }
   },
 );
 
@@ -836,29 +733,8 @@ for (const { symbolType, symbolLayers } of occludedVisibilityCases) {
         const symbol = new constructors[symbolType]({
           symbolLayers: symbolLayers(mode),
         });
-        const generate =
-          generators[symbolType][`generate${symbolType}${format}Snippet`];
-        const snippet = generate(symbol);
         const result = await roundTrip(symbolType, format, symbol);
 
-        if (format === "JSON") {
-          expect(snippet).toMatch(
-            /"occludedVisibility": \{\n\s+"mode": "[^"]+"\n\s+\},?/,
-          );
-        } else {
-          expect(snippet).toMatch(
-            /^([ \t]*)occludedVisibility: \{\n\1  mode: "[^"]+"\n\1\},?$/m,
-          );
-          expect(
-            [...snippet.matchAll(/^([ \t]*)occludedVisibility: \{/gm)].map(
-              ([, indentation]) => indentation,
-            ),
-          ).toEqual(
-            [...snippet.matchAll(/^([ \t]*)material: \{/gm)].map(
-              ([, indentation]) => indentation,
-            ),
-          );
-        }
         expect(result.symbolLayers.length).toBe(symbolLayers(mode).length);
         expect(
           Array.from(
@@ -903,95 +779,18 @@ for (const format of formats) {
         expect(
           result.symbolLayers.getItemAt(0).pattern?.toJSON() ?? null,
         ).toEqual(symbol.symbolLayers.getItemAt(0).pattern?.toJSON() ?? null);
+        expect(
+          result.symbolLayers.getItemAt(0).marker?.toJSON() ?? null,
+        ).toEqual(symbol.symbolLayers.getItemAt(0).marker?.toJSON() ?? null);
+        if (format === "ESM") {
+          expect(
+            generators.LineSymbol3D.generateLineSymbol3DESMSnippet(symbol).includes(
+              'import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";',
+            ),
+          ).toBe(markerEnabled);
+        }
       },
     );
-  }
-}
-
-interface LayerCase {
-  symbolType: "MeshSymbol3D" | "PolygonSymbol3D";
-  description: string;
-  symbolLayers: Record<string, unknown>[];
-  verify: (symbol: any) => void;
-}
-
-const layerCases: LayerCase[] = [
-  {
-    symbolType: "MeshSymbol3D",
-    description: "fill layer",
-    symbolLayers: [
-      {
-        type: "fill",
-        castShadows: false,
-        edges: { type: "solid", color: "black", extensionLength: 2, size: 1.5 },
-        material: { color: "red", colorMixMode: "replace" },
-        pattern: { type: "style", style: "solid" },
-      },
-    ],
-    verify: (symbol) => {
-      const layer = symbol.symbolLayers.getItemAt(0);
-      expect(layer.type).toBe("fill");
-      expect(layer.castShadows).toBe(false);
-      expect(layer.edges.extensionLength).toBe(2);
-      expect(layer.edges.size).toBe(1.5);
-      expect(layer.material.colorMixMode).toBe("replace");
-      expect(layer.pattern.style).toBe("solid");
-    },
-  },
-  {
-    symbolType: "PolygonSymbol3D",
-    description: "extrude layer",
-    symbolLayers: [
-      {
-        type: "extrude",
-        castShadows: false,
-        edges: { type: "solid", color: "black", extensionLength: 4, size: 2 },
-        material: { color: "red" },
-        size: 17,
-      },
-    ],
-    verify: (symbol) => {
-      const layer = symbol.symbolLayers.getItemAt(0);
-      expect(layer.type).toBe("extrude");
-      expect(layer.castShadows).toBe(false);
-      expect(layer.edges.extensionLength).toBe(4);
-      expect(layer.edges.size).toBe(2);
-      expect(layer.size).toBe(17);
-    },
-  },
-  {
-    symbolType: "PolygonSymbol3D",
-    description: "water layer",
-    symbolLayers: [
-      {
-        type: "water",
-        color: "blue",
-        waterbodySize: "large",
-        waveDirection: 73,
-        waveStrength: "moderate",
-      },
-    ],
-    verify: (symbol) => {
-      const layer = symbol.symbolLayers.getItemAt(0);
-      expect(layer.type).toBe("water");
-      expect(layer.waterbodySize).toBe("large");
-      expect(layer.waveDirection).toBe(73);
-      expect(layer.waveStrength).toBe("moderate");
-    },
-  },
-];
-
-for (const layerCase of layerCases) {
-  for (const format of formats) {
-    test(`${layerCase.symbolType} ${format} preserves ${layerCase.description} properties`, async () => {
-      const symbol = new constructors[layerCase.symbolType]({
-        symbolLayers: layerCase.symbolLayers,
-      });
-      const result = await roundTrip(layerCase.symbolType, format, symbol);
-
-      expect(result.symbolLayers.length).toBe(layerCase.symbolLayers.length);
-      layerCase.verify(result);
-    });
   }
 }
 

@@ -69,6 +69,9 @@ test("requires explicit mappings and declarations for every catalog", () => {
   expect(() =>
     readCatalogs(fixtureSource.replace('["one",]', "[123]")),
   ).toThrow("nonempty strings");
+  expect(() =>
+    readCatalogs(fixtureSource.replace('["one",]', "[]")),
+  ).toThrow("nonempty strings");
 });
 
 test("reports membership differences and duplicates without comparing order", () => {
@@ -131,6 +134,8 @@ test("rejects absent, ambiguous, unofficial, and incomplete search results", asy
     { results: [] },
     { results: [official, official] },
     { results: [{ ...official, owner: "someone_else" }] },
+    { results: [{ ...official, type: "Feature Service" }] },
+    { results: [{ ...official, id: "invalid-item-id" }] },
     { results: [{ ...official, typeKeywords: ["OtherStyle"] }] },
     { results: [official], nextStart: 101 },
     {},
@@ -147,6 +152,7 @@ test("rejects HTTP, ArcGIS, invalid JSON, and network failures", async () => {
     async () => response({ error: { code: 403, message: "Forbidden" } }),
     async () => response(null),
     async () => response([]),
+    async () => new Response("{", { status: 200 }),
     async () => {
       throw new Error("Network unavailable");
     },

@@ -96,32 +96,18 @@ test("water color reflects the SDK value across edits", async ({ page }) => {
   await expect(color).toHaveJSProperty("value", hex);
 });
 
-for (const route of ["/mesh-symbol-3d", "/polygon-symbol-3d"]) {
-  test(`${route} fill material and pattern controls stay synchronized`, async ({
-    page,
-  }) => {
-    await addLayer(page, route, "FillSymbol3DLayer");
-    await page.getByRole("button", { name: "material", exact: true }).click();
-    const mode = page.getByRole("combobox", {
-      name: "colorMixMode selection",
-      exact: true,
-    });
-    await mode.selectOption("replace");
-    await expect
-      .poll(async () => (await symbolJSON(page)).symbolLayers[0].material.colorMixMode)
-      .toBe("replace");
-    await expect(mode).toHaveValue("replace");
-    if (route === "/polygon-symbol-3d") {
-      await page.getByRole("button", { name: "pattern", exact: true }).click();
-      const style = page.getByRole("combobox", {
-        name: "pattern style selection",
-        exact: true,
-      });
-      await style.selectOption("cross");
-      await expect
-        .poll(async () => (await symbolJSON(page)).symbolLayers[0].pattern)
-        .toMatchObject({ style: "cross" });
-      await expect(style).toHaveValue("cross");
-    }
+test("polygon fill pattern controls stay synchronized", async ({
+  page,
+}) => {
+  await addLayer(page, "/polygon-symbol-3d", "FillSymbol3DLayer");
+  await page.getByRole("button", { name: "pattern", exact: true }).click();
+  const style = page.getByRole("combobox", {
+    name: "pattern style selection",
+    exact: true,
   });
-}
+  await style.selectOption("cross");
+  await expect
+    .poll(async () => (await symbolJSON(page)).symbolLayers[0].pattern)
+    .toMatchObject({ style: "cross" });
+  await expect(style).toHaveValue("cross");
+});

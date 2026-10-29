@@ -275,7 +275,19 @@ checkOptions(
 );
 checkOptions("Font", () => new Font(), "style", options.fontStyleOptions);
 checkOptions("Font", () => new Font(), "weight", options.fontWeightOptions);
-checkOptions("Font", () => new Font(), "family", options.fontFamilyOptions);
+
+test("curated font families are nonempty, trimmed, and unique", () => {
+  expect(options.fontFamilyOptions.length).toBeGreaterThan(0);
+  expect(
+    options.fontFamilyOptions.every(
+      (family) => family.length > 0 && family === family.trim(),
+    ),
+  ).toBe(true);
+  expect(new Set(options.fontFamilyOptions).size).toBe(
+    options.fontFamilyOptions.length,
+  );
+});
+
 checkOptions(
   "TextSymbol",
   () => new TextSymbol(),

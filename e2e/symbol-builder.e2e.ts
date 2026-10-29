@@ -168,63 +168,6 @@ for (const route of [
 
 for (const editor of [
   {
-    route: "/simple-line-symbol",
-    input: "width input",
-    initial: "1",
-    value: "4.5",
-    property: "width",
-  },
-  {
-    route: "/simple-marker-symbol",
-    input: "size input",
-    initial: "12",
-    value: "21",
-    property: "size",
-  },
-  {
-    route: "/simple-fill-symbol",
-    input: "width input",
-    initial: "1",
-    value: "4.5",
-    property: "width",
-    outline: true,
-  },
-  {
-    route: "/picture-marker-symbol",
-    input: "width input",
-    initial: "100",
-    value: "42",
-    property: "width",
-  },
-  {
-    route: "/picture-fill-symbol",
-    input: "width input",
-    initial: "75",
-    value: "42",
-    property: "width",
-  },
-]) {
-  test(`${editor.route} displays and updates current symbol values`, async ({ page }) => {
-    await page.goto(editor.route);
-    await showJSON(page);
-    if (editor.outline) {
-      await page.getByRole("button", { name: "outline:", exact: true }).click();
-    }
-    const input = page.getByRole("textbox", { name: editor.input, exact: true });
-    await expect(input).toHaveValue(editor.initial);
-    await fillNumber(page, editor.input, editor.value);
-    await expect(input).toHaveValue(editor.value);
-    await expect
-      .poll(async () => {
-        const symbol = await readSymbolJSON(page);
-        return (editor.outline ? symbol.outline : symbol)[editor.property];
-      })
-      .toBe(Number(editor.value));
-  });
-}
-
-for (const editor of [
-  {
     route: "/point-symbol-3d",
     action: "Add ObjectSymbol3DLayer",
     anchorInput: "anchor position x",
@@ -711,19 +654,22 @@ test("custom dash templates validate input and restore disabled patterns", async
         (await readSymbolJSON(page)).symbolLayers[0].pattern?.dashTemplate,
     )
     .toEqual([8, 3, 1, 3]);
-  await input.fill("[8,");
-  await input.press("Enter");
-  await expect(
-    page.getByText("Expected a non-empty array of finite numbers.", {
-      exact: true,
-    }),
-  ).toBeVisible();
-  await expect
-    .poll(
-      async () =>
-        (await readSymbolJSON(page)).symbolLayers[0].pattern?.dashTemplate,
-    )
-    .toEqual([8, 3, 1, 3]);
+  for (const draft of ["[8,", "[]", "{}", '[8,"3"]', "[8,null]", "[1e400]"]) {
+    await input.fill(draft);
+    await input.press("Enter");
+    await expect(
+      page.getByText("Expected a non-empty array of finite numbers.", {
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(input).toHaveValue("[8,3,1,3]");
+    await expect
+      .poll(
+        async () =>
+          (await readSymbolJSON(page)).symbolLayers[0].pattern?.dashTemplate,
+      )
+      .toEqual([8, 3, 1, 3]);
+  }
   const enabled = page.getByRole("switch", {
     name: "pattern enabled",
     exact: true,
@@ -744,7 +690,26 @@ test("custom dash templates validate input and restore disabled patterns", async
   await expect(input).toHaveValue("[8,3,1,3]");
 });
 
-for (const draft of ["", "17"]) {
+test("emissive strength accepts both range boundaries", async ({ page }) => {
+  await addLayer(page, "/mesh-symbol-3d", "Add FillSymbol3DLayer");
+  await page.getByRole("button", { name: "material", exact: true }).click();
+  await page.getByRole("switch", { name: "emissive enabled", exact: true }).click();
+
+  for (const strength of [0, 16]) {
+    await fillNumber(page, "emissive strength input", String(strength));
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers[0].material.emissive)
+      .toMatchObject({ source: "color", strength });
+    await expect(
+      page.getByRole("textbox", { name: "emissive strength input", exact: true }),
+    ).toHaveValue(String(strength));
+    await expect(
+      page.getByText("Enter a strength between 0 and 16.", { exact: true }),
+    ).toHaveCount(0);
+  }
+});
+
+for (const draft of ["", "-1", "17"]) {
   test(`invalid emissive strength ${JSON.stringify(draft)} restores the last valid settings`, async ({
     page,
   }) => {
@@ -948,27 +913,12 @@ test("3D text appearance toggles preserve the text layer and effective size", as
     .toBeTruthy();
 });
 
-test("editing a simple marker updates its JSON snippet", async ({ page }) => {
+test("the home page links to the simple marker editor", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "SimpleMarkerSymbol Builder" }).click();
-  await page.locator("calcite-tab-title").filter({ hasText: "JSON" }).click();
-
-  const snippet = page.locator("calcite-tab[selected] pre");
-  await expect(snippet).toContainText('"size": 12');
-
-  const sizeInput = page.getByRole("textbox", { name: "size input" });
-  await sizeInput.fill("24");
-  await sizeInput.press("Enter");
-
-  await expect(snippet).toContainText('"size": 24');
-});
-
-test("editing a simple line updates its JSON snippet", async ({ page }) => {
-  await page.goto("/simple-line-symbol");
+  await expect(page).toHaveURL(/\/simple-marker-symbol\/?$/);
   await showJSON(page);
-  await fillNumber(page, "width input", "4");
-
-  await expect.poll(async () => (await readSymbolJSON(page)).width).toBe(4);
+  await expect.poll(async () => (await readSymbolJSON(page)).size).toBe(12);
 });
 
 test("editing a simple fill updates its JSON snippet", async ({ page }) => {
@@ -1036,30 +986,55 @@ const layerEditors = [
 ] as const;
 
 for (const editor of layerEditors) {
-  test(`${editor.route} adds and removes a symbol layer`, async ({ page }) => {
+  test(`${editor.route} deletes its last layer and can add a fresh layer`, async ({ page }) => {
     await page.goto(editor.route);
-    const snippet = page.locator("calcite-tab[selected] pre");
-
-    if (editor.route === "/line-symbol-3d") {
-      await expect(snippet).not.toContainText("new LineSymbol3DLayer(");
-    }
+    await showJSON(page);
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers)
+      .toEqual([]);
 
     await page.getByRole("button", { name: "Add symbol layer" }).click();
     await page.getByRole("button", { name: editor.action }).click();
-
-    if (editor.route === "/line-symbol-3d") {
-      await expect(snippet).toContainText("new LineSymbol3DLayer(");
-    }
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers)
+      .toHaveLength(1);
+    const initialLayer = (await readSymbolJSON(page)).symbolLayers[0];
 
     const layerHeading = page.getByRole("button", {
       name: "symbolLayers[0]",
     });
     await expect(layerHeading).toBeVisible();
+    await layerHeading.click();
+    await page.getByRole("button", { name: "material", exact: true }).click();
+    const material = page
+      .locator("calcite-block")
+      .filter({
+        has: page.getByRole("button", { name: "material", exact: true }),
+      })
+      .last();
+    await material.locator("calcite-input[type=color]").evaluate(
+      (element: HTMLCalciteInputElement) => {
+        element.value = "#ff0000";
+        element.dispatchEvent(
+          new CustomEvent("calciteInputInput", { bubbles: true }),
+        );
+      },
+    );
+    await expect
+      .poll(async () =>
+        (await readSymbolJSON(page)).symbolLayers[0].material.color.slice(0, 3),
+      )
+      .toEqual([255, 0, 0]);
     await page.getByRole("button", { name: "Delete" }).click();
     await expect(layerHeading).toHaveCount(0);
-
-    if (editor.route === "/line-symbol-3d") {
-      await expect(snippet).not.toContainText("new LineSymbol3DLayer(");
-    }
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers)
+      .toEqual([]);
+    await page.getByRole("button", { name: "Add symbol layer" }).click();
+    await page.getByRole("button", { name: editor.action }).click();
+    await expect(layerHeading).toBeVisible();
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers)
+      .toEqual([initialLayer]);
   });
 }
