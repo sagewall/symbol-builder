@@ -7,7 +7,7 @@ export function generatePictureFillSymbolCDNSnippet(
   const outlineSnippet = outline
     ? `  outline: {
     cap: ${JSON.stringify(outline.cap)},
-    color: ${JSON.stringify(outline.color?.toJSON() ?? null)},
+    color: ${JSON.stringify(outline.color?.toRgba() ?? null)},
     join: ${JSON.stringify(outline.join)},
     miterLimit: ${outline.miterLimit},
     style: ${JSON.stringify(outline.style)},
