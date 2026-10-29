@@ -1,6 +1,4 @@
-import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import type Collection from "@arcgis/core/core/Collection.js";
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
@@ -21,6 +19,8 @@ import PointSymbol3DForm from "./PointSymbol3DForm";
 import PointSymbol3DJSONPanel from "./PointSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { point } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
+import { cloneSymbolLayers } from "./lib/symbolLayerKeys";
 import {
   formStyles,
   shellPanelStyles,
@@ -29,10 +29,6 @@ import {
 } from "./lib/styles";
 
 function PointSymbol3DShell(): React.ReactElement {
-  const [lineCallout3D, setLineCallout3D] = useState(
-    new LineCallout3D({ size: 1 }),
-  );
-
   const [symbol3DVerticalOffset, setSymbol3DVerticalOffset] = useState(
     new Symbol3DVerticalOffset({
       maxWorldLength: 100,
@@ -43,55 +39,35 @@ function PointSymbol3DShell(): React.ReactElement {
 
   const [pointSymbol3D, setPointSymbol3D] = useState(
     new PointSymbol3D({
-      callout: lineCallout3D,
+      callout: new LineCallout3D({ size: 1 }),
       verticalOffset: symbol3DVerticalOffset,
     }),
   );
 
-  const pointGraphic = new Graphic({
-    geometry: point,
-    symbol: pointSymbol3D,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(pointGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(point, pointSymbol3D);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newPointSymbol3D: PointSymbol3D): void => {
     setPointSymbol3D(newPointSymbol3D);
+    updatePreview(newPointSymbol3D);
+  };
 
-    const newPointGraphic = graphics.getItemAt(0)?.clone();
-    if (newPointGraphic) {
-      newPointGraphic.symbol = newPointSymbol3D;
+  const handleCalloutChange = (value: LineCallout3D | null): void => {
+    const newPointSymbol3D = pointSymbol3D.clone();
+    newPointSymbol3D.symbolLayers = cloneSymbolLayers(pointSymbol3D.symbolLayers);
+    newPointSymbol3D.callout = value;
+    updateGraphics(newPointSymbol3D);
+  };
+
+  const handleVerticalOffsetEnabledChange = (enabled: boolean): void => {
+    const next = pointSymbol3D.clone();
+    next.symbolLayers = cloneSymbolLayers(pointSymbol3D.symbolLayers);
+    if (pointSymbol3D.verticalOffset) {
+      setSymbol3DVerticalOffset(pointSymbol3D.verticalOffset.clone());
     }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newPointGraphic);
-    setGraphics(newGraphics);
-  };
-
-  const handleCalloutColorChange = (currentColor: string): void => {
-    const newLineCallout3D = lineCallout3D.clone();
-    newLineCallout3D.color = new Color(currentColor);
-    setLineCallout3D(newLineCallout3D);
-
-    const newPointSymbol3D = pointSymbol3D.clone();
-    newPointSymbol3D.callout = newLineCallout3D;
-    updateGraphics(newPointSymbol3D);
-  };
-
-  const handleCalloutSizeChange = (currentSize: string): void => {
-    const newLineCallout3D = lineCallout3D.clone();
-    newLineCallout3D.size = Number(currentSize);
-    setLineCallout3D(newLineCallout3D);
-
-    const newPointSymbol3D = pointSymbol3D.clone();
-    newPointSymbol3D.callout = newLineCallout3D;
-    updateGraphics(newPointSymbol3D);
+    next.verticalOffset = enabled ? symbol3DVerticalOffset.clone() : null;
+    updateGraphics(next);
   };
 
   const updateSymbolLayers = (
@@ -108,11 +84,13 @@ function PointSymbol3DShell(): React.ReactElement {
   const handleVerticalOffsetMaxWorldLengthChange = (
     currentMaxWorldLength: string,
   ): void => {
-    const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
+    const newSymbol3DVerticalOffset = (
+      pointSymbol3D.verticalOffset ?? symbol3DVerticalOffset
+    ).clone();
     newSymbol3DVerticalOffset.maxWorldLength = Number(currentMaxWorldLength);
-    setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
 
     const newPointSymbol3D = pointSymbol3D.clone();
+    newPointSymbol3D.symbolLayers = cloneSymbolLayers(pointSymbol3D.symbolLayers);
     newPointSymbol3D.verticalOffset = newSymbol3DVerticalOffset;
     updateGraphics(newPointSymbol3D);
   };
@@ -120,11 +98,13 @@ function PointSymbol3DShell(): React.ReactElement {
   const handleVerticalOffsetMinWorldLengthChange = (
     currentMinWorldLength: string,
   ): void => {
-    const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
+    const newSymbol3DVerticalOffset = (
+      pointSymbol3D.verticalOffset ?? symbol3DVerticalOffset
+    ).clone();
     newSymbol3DVerticalOffset.minWorldLength = Number(currentMinWorldLength);
-    setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
 
     const newPointSymbol3D = pointSymbol3D.clone();
+    newPointSymbol3D.symbolLayers = cloneSymbolLayers(pointSymbol3D.symbolLayers);
     newPointSymbol3D.verticalOffset = newSymbol3DVerticalOffset;
     updateGraphics(newPointSymbol3D);
   };
@@ -132,11 +112,13 @@ function PointSymbol3DShell(): React.ReactElement {
   const handleVerticalOffsetScreenLengthChange = (
     currentScreenLength: string,
   ): void => {
-    const newSymbol3DVerticalOffset = symbol3DVerticalOffset.clone();
+    const newSymbol3DVerticalOffset = (
+      pointSymbol3D.verticalOffset ?? symbol3DVerticalOffset
+    ).clone();
     newSymbol3DVerticalOffset.screenLength = Number(currentScreenLength);
-    setSymbol3DVerticalOffset(newSymbol3DVerticalOffset);
 
     const newPointSymbol3D = pointSymbol3D.clone();
+    newPointSymbol3D.symbolLayers = cloneSymbolLayers(pointSymbol3D.symbolLayers);
     newPointSymbol3D.verticalOffset = newSymbol3DVerticalOffset;
     updateGraphics(newPointSymbol3D);
   };
@@ -144,13 +126,18 @@ function PointSymbol3DShell(): React.ReactElement {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <calcite-shell-panel slot="panel-start" position="start" resizable>
+        <calcite-shell-panel slot="panel-start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <PointSymbol3DForm
-                handleCalloutColorChange={handleCalloutColorChange}
-                handleCalloutSizeChange={handleCalloutSizeChange}
+                symbolLayers={pointSymbol3D.symbolLayers}
+                callout={pointSymbol3D.callout}
+                handleCalloutChange={handleCalloutChange}
+                verticalOffset={pointSymbol3D.verticalOffset}
+                handleVerticalOffsetEnabledChange={
+                  handleVerticalOffsetEnabledChange
+                }
                 handleVerticalOffsetMaxWorldLengthChange={
                   handleVerticalOffsetMaxWorldLengthChange
                 }
@@ -168,7 +155,6 @@ function PointSymbol3DShell(): React.ReactElement {
 
         <calcite-shell-panel
           slot="panel-end"
-          position="end"
           resizable
           style={shellPanelStyles}
         >

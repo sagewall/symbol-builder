@@ -1,18 +1,25 @@
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
-import { useState } from "react";
+import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
 import { labelStyles } from "./lib/styles";
+import Symbol3DEmissiveForm, {
+  type EmissiveChangeHandler,
+} from "./Symbol3DEmissiveForm";
 
 interface Props {
+  symbolLayer: PathSymbol3DLayer;
+  handleEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
 function PathSymbol3DLayerMaterialForm({
+  symbolLayer,
+  handleEmissiveChange,
   layerIndex,
   handleColorChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#007ac2");
+  const color = symbolLayer.material?.color?.toHex() ?? "#ffffff";
 
   return (
     <>
@@ -20,9 +27,7 @@ function PathSymbol3DLayerMaterialForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             if (handleColorChange) {
               handleColorChange(layerIndex, event.target.value);
             }
@@ -31,6 +36,13 @@ function PathSymbol3DLayerMaterialForm({
           value={color}
         ></calcite-input>
       </calcite-label>
+      {handleEmissiveChange && (
+        <Symbol3DEmissiveForm
+          emissive={symbolLayer.material?.emissive}
+          layerIndex={layerIndex}
+          handleChange={handleEmissiveChange}
+        />
+      )}
     </>
   );
 }

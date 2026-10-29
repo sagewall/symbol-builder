@@ -2,12 +2,18 @@ import "@esri/calcite-components/dist/components/calcite-block";
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import { useState } from "react";
-import Edges3DForm from "./Edges3DForm";
+import type ExtrudeSymbol3DLayer from "@arcgis/core/symbols/ExtrudeSymbol3DLayer.js";
+import Edges3DForm, { type EdgesChangeHandler } from "./Edges3DForm";
+import type Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
 import ExtrudeSymbol3DLayerMaterialForm from "./ExtrudeSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: ExtrudeSymbol3DLayer;
+  edges: Edges3D | null | undefined;
+  handleEdgesChange: EdgesChangeHandler;
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
   handleExtrudeSymbol3DLayerEdgesColorChange: (
@@ -30,6 +36,10 @@ interface Props {
 }
 
 function FillSymbol3DLayerForm({
+  symbolLayer,
+  edges,
+  handleEdgesChange,
+  handleMaterialEmissiveChange,
   layerIndex,
   handleCastShadowsChange,
   handleExtrudeSymbol3DLayerEdgesColorChange,
@@ -38,8 +48,8 @@ function FillSymbol3DLayerForm({
   handleExtrudeSymbol3DLayerMaterialColorChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [castShadows, setCastShadows] = useState(true);
-  const [size, setSize] = useState("20");
+  const { castShadows } = symbolLayer;
+  const size = String(symbolLayer.size);
 
   return (
     <>
@@ -48,15 +58,15 @@ function FillSymbol3DLayerForm({
         <calcite-switch
           checked={castShadows}
           oncalciteSwitchChange={(event) => {
-            setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          value={castShadows}
         ></calcite-switch>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"edges"}>
+      <calcite-block style={blockStyles} expandable heading={"edges"}>
         <Edges3DForm
+          edges={edges}
+          handleEdgesChange={handleEdgesChange}
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerEdgesColorChange}
           handleExtensionLengthChange={
@@ -66,8 +76,10 @@ function FillSymbol3DLayerForm({
         ></Edges3DForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <ExtrudeSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
+          handleEmissiveChange={handleMaterialEmissiveChange}
           layerIndex={layerIndex}
           handleColorChange={handleExtrudeSymbol3DLayerMaterialColorChange}
         ></ExtrudeSymbol3DLayerMaterialForm>
@@ -79,7 +91,6 @@ function FillSymbol3DLayerForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}

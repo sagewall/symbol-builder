@@ -6,12 +6,12 @@ import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { simpleMarkerSymbolStyleOptions } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 
 interface Props {
+  symbol: SimpleMarkerSymbol;
   handleAngleChange: (value: number) => void;
   handleColorChange: (value: string) => void;
   handleOutlineCapChange: (
@@ -37,6 +37,7 @@ interface Props {
 }
 
 function SimpleMarkerSymbolForm({
+  symbol,
   handleAngleChange,
   handleColorChange,
   handleOutlineCapChange,
@@ -52,13 +53,7 @@ function SimpleMarkerSymbolForm({
   handleYoffsetChange,
   scene,
 }: Props): React.ReactElement {
-  const [angle, setAngle] = useState(0);
-  const [color, setColor] = useState("#007ac2");
-  const [path, setPath] = useState("");
-  const [size, setSize] = useState("12");
-  const [style, setStyle] = useState("circle");
-  const [xoffset, setXoffset] = useState("0");
-  const [yoffset, setYoffset] = useState("0");
+  const { angle, path, size, style, xoffset, yoffset } = symbol;
 
   return (
     <>
@@ -70,7 +65,6 @@ function SimpleMarkerSymbolForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setAngle(event.target.value as number);
             handleAngleChange(event.target.value as number);
           }}
           step={1}
@@ -82,37 +76,36 @@ function SimpleMarkerSymbolForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}
+          value={symbol.color?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
-      <calcite-block style={blockStyles} collapsible heading={"outline:"}>
-        <SimpleLineSymbolForm
-          handleCapChange={handleOutlineCapChange}
-          handleColorChange={handleOutlineColorChange}
-          handleJoinChange={handleOutlineJoinChange}
-          handleMiterLimitChange={handleOutlineMiterLimitChange}
-          handleStyleChange={handleOutlineStyleChange}
-          handleWidthChange={handleOutlineWidthChange}
-          showMarker={false}
-          solidOnly={scene}
-        ></SimpleLineSymbolForm>
-      </calcite-block>
+      {symbol.outline && (
+        <calcite-block style={blockStyles} expandable heading={"outline:"}>
+          <SimpleLineSymbolForm
+            symbol={symbol.outline}
+            handleCapChange={handleOutlineCapChange}
+            handleColorChange={handleOutlineColorChange}
+            handleJoinChange={handleOutlineJoinChange}
+            handleMiterLimitChange={handleOutlineMiterLimitChange}
+            handleStyleChange={handleOutlineStyleChange}
+            handleWidthChange={handleOutlineWidthChange}
+            showMarker={false}
+            solidOnly={scene}
+          ></SimpleLineSymbolForm>
+        </calcite-block>
+      )}
       <calcite-label layout="default" style={labelStyles}>
         size
         <calcite-input-number
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(event.target.value);
           }}
-          value={size}
+          value={String(size)}
         ></calcite-input-number>
       </calcite-label>
       <calcite-label layout="default" style={labelStyles}>
@@ -120,7 +113,6 @@ function SimpleMarkerSymbolForm({
         <calcite-select
           label={"style selection"}
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             handleStyleChange(
               event.target.value as InstanceType<
                 typeof SimpleMarkerSymbol
@@ -140,10 +132,9 @@ function SimpleMarkerSymbolForm({
           <calcite-input-text
             label={"path input"}
             oncalciteInputTextChange={(event) => {
-              setPath(event.target.value);
               handlePathChange(event.target.value);
             }}
-            value={path}
+            value={path ?? ""}
           ></calcite-input-text>
         </calcite-label>
       )}
@@ -152,10 +143,9 @@ function SimpleMarkerSymbolForm({
         <calcite-input-number
           label={"xoffset input"}
           oncalciteInputNumberChange={(event) => {
-            setXoffset(event.target.value);
             handleXoffsetChange(event.target.value);
           }}
-          value={xoffset}
+          value={String(xoffset)}
         ></calcite-input-number>
       </calcite-label>
       <calcite-label layout="default" style={labelStyles}>
@@ -163,10 +153,9 @@ function SimpleMarkerSymbolForm({
         <calcite-input-number
           label={"yoffset input"}
           oncalciteInputNumberChange={(event) => {
-            setYoffset(event.target.value);
             handleYoffsetChange(event.target.value);
           }}
-          value={yoffset}
+          value={String(yoffset)}
         ></calcite-input-number>
       </calcite-label>
     </>

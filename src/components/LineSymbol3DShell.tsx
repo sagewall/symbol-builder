@@ -1,5 +1,4 @@
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import type Collection from "@arcgis/core/core/Collection.js";
 import LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
@@ -17,6 +16,8 @@ import LineSymbol3DForm from "./LineSymbol3DForm";
 import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { polyline } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
+import { cloneSymbolLayers } from "./lib/symbolLayerKeys";
 import {
   formStyles,
   shellPanelStyles,
@@ -27,30 +28,20 @@ import {
 function LineSymbol3DShell(): React.ReactElement {
   const [lineSymbol3D, setLineSymbol3D] = useState(new LineSymbol3D());
 
-  const lineGraphic = new Graphic({
-    geometry: polyline,
-    symbol: lineSymbol3D,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(lineGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(polyline, lineSymbol3D);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newLineSymbol3D: LineSymbol3D): void => {
     setLineSymbol3D(newLineSymbol3D);
+    updatePreview(newLineSymbol3D);
+  };
 
-    const newLineGraphic = graphics.getItemAt(0)?.clone();
-    if (newLineGraphic) {
-      newLineGraphic.symbol = newLineSymbol3D;
-    }
-
-    const newGraphics = new Collection();
-    newGraphics.add(newLineGraphic);
-    setGraphics(newGraphics);
+  const handleWorldSizedChange = (value: boolean): void => {
+    const newLineSymbol3D = lineSymbol3D.clone();
+    newLineSymbol3D.symbolLayers = cloneSymbolLayers(lineSymbol3D.symbolLayers);
+    newLineSymbol3D.worldSized = value;
+    updateGraphics(newLineSymbol3D);
   };
 
   const updateSymbolLayers = (
@@ -65,12 +56,15 @@ function LineSymbol3DShell(): React.ReactElement {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <calcite-shell-panel slot="panel-start" position="start" resizable>
+        <calcite-shell-panel slot="panel-start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <LineSymbol3DForm
+                symbolLayers={lineSymbol3D.symbolLayers}
+                handleWorldSizedChange={handleWorldSizedChange}
                 updateSymbolLayers={updateSymbolLayers}
+                worldSized={lineSymbol3D.worldSized}
               ></LineSymbol3DForm>
             </div>
           </calcite-panel>
@@ -78,7 +72,6 @@ function LineSymbol3DShell(): React.ReactElement {
 
         <calcite-shell-panel
           slot="panel-end"
-          position="end"
           resizable
           style={shellPanelStyles}
         >

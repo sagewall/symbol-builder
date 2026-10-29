@@ -166,7 +166,11 @@ function WebStyleSymbolShell(): React.ReactElement {
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
-  const handleStyleNameChange = (currentStyleName: string): void => {
+  const handleStyleNameChange = (
+    currentStyleName: string,
+    currentPortalUrl?: string,
+    currentName?: string,
+  ): void => {
     const newWebStyleSymbol = new WebStyleSymbol();
 
     switch (currentStyleName) {
@@ -211,7 +215,15 @@ function WebStyleSymbolShell(): React.ReactElement {
         newWebStyleSymbol.name = esri2DPointSymbolsStyleNameOptions[0];
     }
 
+    if (currentName !== undefined) {
+      newWebStyleSymbol.name = currentName;
+    }
+
     newWebStyleSymbol.styleName = currentStyleName;
+    const portalUrl = currentPortalUrl?.trim();
+    if (portalUrl) {
+      newWebStyleSymbol.portal = { url: portalUrl };
+    }
     updateGraphics(newWebStyleSymbol, "pointSymbol");
   };
 
@@ -266,7 +278,7 @@ function WebStyleSymbolShell(): React.ReactElement {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <calcite-shell-panel slot="panel-start" position="start" resizable>
+        <calcite-shell-panel slot="panel-start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <calcite-label
@@ -285,6 +297,7 @@ function WebStyleSymbolShell(): React.ReactElement {
             <div style={formStyles}>
               {!scene ? (
                 <WebStyleSymbol2DForm
+                  symbol={currentWebStyleSymbol}
                   groupItems={groupItems}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
@@ -292,6 +305,7 @@ function WebStyleSymbolShell(): React.ReactElement {
                 ></WebStyleSymbol2DForm>
               ) : (
                 <WebStyleSymbol3DForm
+                  symbol={currentWebStyleSymbol}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
                   handleCustomStyleChange={handleCustomStyleChange}
@@ -303,7 +317,6 @@ function WebStyleSymbolShell(): React.ReactElement {
 
         <calcite-shell-panel
           slot="panel-end"
-          position="end"
           resizable
           style={shellPanelStyles}
         >

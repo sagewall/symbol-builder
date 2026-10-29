@@ -1,19 +1,23 @@
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
+import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-slider";
-import { useState } from "react";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
 import IconSymbol3DLayerResourceForm from "./IconSymbol3DLayerResourceForm";
-import { iconSymbol3dLayerAnchorOptions } from "./lib/constants";
+import {
+  iconSymbol3dLayerAnchorOptions,
+  occludedVisibilityOptions,
+} from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: IconSymbol3DLayer;
   layerIndex: number;
   handleIconSymbol3DLayerAnchorChange: (
     layerIndex: number,
@@ -34,6 +38,10 @@ interface Props {
   handleIconSymbol3DLayerMaterialColorChange: (
     layerIndex: number,
     value: string,
+  ) => void;
+  handleOccludedVisibilityChange: (
+    layerIndex: number,
+    value: OccludedVisibilityMode,
   ) => void;
   handleIconSymbol3DLayerOutlineColorChange: (
     layerIndex: number,
@@ -59,21 +67,22 @@ interface Props {
 }
 
 function IconSymbol3DLayerForm({
+  symbolLayer,
   layerIndex,
   handleIconSymbol3DLayerAnchorChange,
   handleIconSymbol3DLayerAnchorPositionXChange,
   handleIconSymbol3DLayerAngleChange,
   handleIconSymbol3DLayerAnchorPositionYChange,
   handleIconSymbol3DLayerMaterialColorChange,
+  handleOccludedVisibilityChange,
   handleIconSymbol3DLayerOutlineColorChange,
   handleIconSymbol3DLayerOutlineSizeChange,
   handleIconSymbol3DLayerResourceHrefChange,
   handleIconSymbol3DLayerResourcePrimitiveChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [anchor, setAnchor] = useState("center");
-  const [angle, setAngle] = useState(0);
-  const [size, setSize] = useState("12");
+  const { anchor, angle, occludedVisibility } = symbolLayer;
+  const size = String(symbolLayer.size);
 
   return (
     <>
@@ -82,7 +91,6 @@ function IconSymbol3DLayerForm({
         <calcite-select
           label={"anchor selection"}
           oncalciteSelectChange={(event) => {
-            setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -101,10 +109,11 @@ function IconSymbol3DLayerForm({
       {anchor === "relative" && (
         <calcite-block
           style={blockStyles}
-          collapsible
+          expandable
           heading={"anchorPosition"}
         >
           <IconSymbol3DLayerAnchorPositionForm
+            symbolLayer={symbolLayer}
             layerIndex={layerIndex}
             handleIconSymbol3DLayerAnchorPositionXChange={
               handleIconSymbol3DLayerAnchorPositionXChange
@@ -124,7 +133,6 @@ function IconSymbol3DLayerForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setAngle(event.target.value as number);
             handleIconSymbol3DLayerAngleChange(
               layerIndex,
               event.target.value as number,
@@ -136,23 +144,44 @@ function IconSymbol3DLayerForm({
         ></calcite-slider>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <IconSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
         ></IconSymbol3DLayerMaterialForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"outline"}>
+      <calcite-label layout="default" style={labelStyles}>
+        occludedVisibility
+        <calcite-select
+          label="Occluded visibility selection"
+          oncalciteSelectChange={(event) => {
+            const mode = event.target.value as OccludedVisibilityMode;
+            handleOccludedVisibilityChange(layerIndex, mode);
+          }}
+          value={occludedVisibility?.mode ?? "adaptive"}
+        >
+          {occludedVisibilityOptions.map((option) => (
+            <calcite-option key={option} value={option}>
+              {option}
+            </calcite-option>
+          ))}
+        </calcite-select>
+      </calcite-label>
+
+      <calcite-block style={blockStyles} expandable heading={"outline"}>
         <IconSymbol3DLayerOutlineForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
           handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
         ></IconSymbol3DLayerOutlineForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"resource"}>
+      <calcite-block style={blockStyles} expandable heading={"resource"}>
         <IconSymbol3DLayerResourceForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
           handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
@@ -165,7 +194,6 @@ function IconSymbol3DLayerForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}

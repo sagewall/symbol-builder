@@ -1,19 +1,23 @@
 import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
-import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { capOptions, joinOptions } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
-import LineStylePattern3DForm from "./LineStylePattern3DForm";
+import LinePattern3DForm, {
+  type LinePatternChangeHandler,
+} from "./LinePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
+  symbolLayer: LineSymbol3DLayer;
+  marker: LineStyleMarker3D | null | undefined;
+  pattern: LineSymbol3DLayer["pattern"];
+  handlePatternChange: LinePatternChangeHandler;
   layerIndex: number;
   handleCapChange: (
     layerIndex: number,
@@ -43,14 +47,14 @@ interface Props {
     layerIndex: number,
     value: string,
   ) => void;
-  handleLineSymbol3DLayerPatternStyleChange: (
-    layerIndex: number,
-    value: InstanceType<typeof LineStylePattern3D>["style"],
-  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
 function LineSymbol3DLayerForm({
+  symbolLayer,
+  marker,
+  pattern,
+  handlePatternChange,
   layerIndex,
   handleCapChange,
   handleJoinChange,
@@ -59,12 +63,10 @@ function LineSymbol3DLayerForm({
   handleLineSymbol3DLayerMarkerPlacementChange,
   handleLineSymbol3DLayerMarkerStyleChange,
   handleLineSymbol3DLayerMaterialColorChange,
-  handleLineSymbol3DLayerPatternStyleChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [cap, setCap] = useState("butt");
-  const [join, setJoin] = useState("miter");
-  const [size, setSize] = useState("3");
+  const { cap, join } = symbolLayer;
+  const size = String(symbolLayer.size);
 
   return (
     <>
@@ -73,7 +75,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
-            setCap(event.target.value);
             handleCapChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -83,15 +84,9 @@ function LineSymbol3DLayerForm({
           }}
           value={cap}
         >
-          {capOptions.map((option, index) =>
-            option === "butt" ? (
-              <calcite-option key={index} selected>
-                {option}
-              </calcite-option>
-            ) : (
-              <calcite-option key={index}>{option}</calcite-option>
-            ),
-          )}
+          {capOptions.map((option) => (
+            <calcite-option key={option} value={option}>{option}</calcite-option>
+          ))}
         </calcite-select>
       </calcite-label>
 
@@ -100,7 +95,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"join selection"}
           oncalciteSelectChange={(event) => {
-            setJoin(event.target.value);
             handleJoinChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -118,8 +112,9 @@ function LineSymbol3DLayerForm({
 
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"marker"}
+        expanded={!!symbolLayer.marker}
         oncalciteBlockClose={(event) => {
           handleLineSymbol3DLayerMarkerBlockToggle(layerIndex, event.target);
         }}
@@ -128,6 +123,7 @@ function LineSymbol3DLayerForm({
         }}
       >
         <LineStyleMarker3DForm
+          marker={marker}
           layerIndex={layerIndex}
           handleColorChange={handleLineSymbol3DLayerMarkerColorChange}
           handlePlacementChange={handleLineSymbol3DLayerMarkerPlacementChange}
@@ -135,18 +131,20 @@ function LineSymbol3DLayerForm({
         ></LineStyleMarker3DForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <LineSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleColorChange={handleLineSymbol3DLayerMaterialColorChange}
         ></LineSymbol3DLayerMaterialForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"pattern"}>
-        <LineStylePattern3DForm
+      <calcite-block style={blockStyles} expandable heading={"pattern"}>
+        <LinePattern3DForm
           layerIndex={layerIndex}
-          handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}
-        ></LineStylePattern3DForm>
+          pattern={pattern}
+          handleChange={handlePatternChange}
+        />
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -155,7 +153,6 @@ function LineSymbol3DLayerForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}

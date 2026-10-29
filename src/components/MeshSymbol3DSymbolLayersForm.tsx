@@ -1,22 +1,27 @@
-import Color from "@arcgis/core/Color.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import { colorWithAlpha } from "./lib/color";
+import type Collection from "@arcgis/core/core/Collection.js";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
 import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import "@esri/calcite-components/components/calcite-chip";
-import "@esri/calcite-components/components/calcite-tooltip";
-import React, { useState } from "react";
+import React from "react";
+import type MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
-import { blockStyles, chipStyles } from "./lib/styles";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
+import type { EdgesChangeHandler } from "./Edges3DForm";
+import { blockStyles } from "./lib/styles";
+import { cloneSymbolLayers, getSymbolLayerKey } from "./lib/symbolLayerKeys";
 
 interface Props {
+  symbolLayers: MeshSymbol3D["symbolLayers"];
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
 function MeshSymbol3DSymbolLayersForm({
+  symbolLayers,
   updateSymbolLayers,
 }: Props): React.ReactElement {
   const createNewFillSymbol3DLayer = (): FillSymbol3DLayer => {
@@ -35,20 +40,16 @@ function MeshSymbol3DSymbolLayersForm({
     return newFillSymbol3DLayer;
   };
 
-  const [symbolLayers, setSymbolLayers] = useState(new Collection());
-
   const addFillSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const fillSymbol3DLayer = createNewFillSymbol3DLayer();
     newSymbolLayers.add(fillSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const deleteSymbol3DLayer = (index: number): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     newSymbolLayers.removeAt(index);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -56,12 +57,11 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: boolean,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     symbolLayer.castShadows = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -69,14 +69,13 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
-      symbolLayer.edges.color = new Color(value);
+      symbolLayer.edges.color = colorWithAlpha(value, symbolLayer.edges.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -84,14 +83,13 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.extensionLength = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -99,14 +97,13 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
       symbolLayer.edges.size = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -114,14 +111,13 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -133,14 +129,13 @@ function MeshSymbol3DSymbolLayersForm({
       >["colorMixMode"]
     >,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.material) {
       symbolLayer.material.colorMixMode = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -148,14 +143,13 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
-      symbolLayer.outline.color = new Color(value);
+      symbolLayer.outline.color = colorWithAlpha(value, symbolLayer.outline.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -163,7 +157,7 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof LineStylePattern3D>["style"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -171,7 +165,6 @@ function MeshSymbol3DSymbolLayersForm({
       symbolLayer.outline.pattern.style = value;
     }
 
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -183,14 +176,13 @@ function MeshSymbol3DSymbolLayersForm({
       >["patternCap"]
     >,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.patternCap = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -198,14 +190,13 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -213,15 +204,30 @@ function MeshSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof StylePattern3D>["style"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.pattern) {
       symbolLayer.pattern.style = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleEdgesChange: EdgesChangeHandler = (index, value) => {
+    const layers = cloneSymbolLayers(symbolLayers);
+    (layers.getItemAt(index) as FillSymbol3DLayer).edges = value;
+    updateSymbolLayers(layers);
+  };
+
+  const handleMaterialEmissiveChange: EmissiveChangeHandler = (
+    index,
+    value,
+  ) => {
+    const layers = cloneSymbolLayers(symbolLayers);
+    const layer = layers.getItemAt(index) as FillSymbol3DLayer;
+    if (layer.material) layer.material.emissive = value;
+    updateSymbolLayers(layers);
   };
 
   const createSymbol3DLayerCollectionForm = ():
@@ -235,18 +241,22 @@ function MeshSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "fill") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
 
                 <FillSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
+                  edges={symbolLayer.edges}
+                  handleEdgesChange={handleEdgesChange}
+                  handleMaterialEmissiveChange={handleMaterialEmissiveChange}
                   layerIndex={index}
                   isMeshSymbol3D={true}
                   handleCastShadowsChange={
@@ -296,31 +306,29 @@ function MeshSymbol3DSymbolLayersForm({
     <>
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"symbolLayers"}
         expanded
       >
-        <calcite-chip
-          id="add-layer-chip"
-          icon="add-layer"
-          label="Add layer"
-          slot="control"
-          value="Information"
-          style={chipStyles}
-        ></calcite-chip>
-        <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
-        </calcite-tooltip>
-
-        <calcite-action
-          onClick={() => addFillSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="cube"
-          text-enabled
-          text="Add FillSymbol3DLayer"
-        ></calcite-action>
+        <calcite-action-menu
+          label="Add symbol layer"
+          placement="bottom-end"
+          slot="actions-end"
+        >
+          <calcite-action
+            icon="add-layer"
+            label="Add symbol layer"
+            slot="trigger"
+            text="Add layer"
+          ></calcite-action>
+          <calcite-action
+            onClick={() => addFillSymbol3DLayer()}
+            icon="cube"
+            label="Add FillSymbol3DLayer"
+            text-enabled
+            text="Add FillSymbol3DLayer"
+          ></calcite-action>
+        </calcite-action-menu>
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>

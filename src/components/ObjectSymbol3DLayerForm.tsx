@@ -6,14 +6,16 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import { useState } from "react";
 import { objectSymbol3DLayerAnchorOptions } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
 
 interface Props {
+  symbolLayer: ObjectSymbol3DLayer;
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleAnchorChange: (
     layerIndex: number,
@@ -57,6 +59,8 @@ interface Props {
 }
 
 function ObjectSymbol3DLayerForm({
+  symbolLayer,
+  handleMaterialEmissiveChange,
   layerIndex,
   handleAnchorChange,
   handleObjectSymbol3DLayerAnchorPositionXChange,
@@ -73,14 +77,10 @@ function ObjectSymbol3DLayerForm({
   handleTiltChange,
   handleWidthChange,
 }: Props): React.ReactElement {
-  const [anchor, setAnchor] = useState("center");
-  const [castShadows, setCastShadows] = useState(false);
-  const [depth, setDepth] = useState("10");
-  const [heading, setHeading] = useState(0);
-  const [height, setHeight] = useState("10");
-  const [roll, setRoll] = useState(0);
-  const [tilt, setTilt] = useState(0);
-  const [width, setWidth] = useState("10");
+  const { anchor, castShadows, heading, roll, tilt } = symbolLayer;
+  const depth = String(symbolLayer.depth ?? "");
+  const height = String(symbolLayer.height ?? "");
+  const width = String(symbolLayer.width ?? "");
 
   return (
     <>
@@ -89,7 +89,6 @@ function ObjectSymbol3DLayerForm({
         <calcite-select
           label={"anchor selection"}
           oncalciteSelectChange={(event) => {
-            setAnchor(event.target.value);
             handleAnchorChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -97,7 +96,7 @@ function ObjectSymbol3DLayerForm({
               >["anchor"],
             );
           }}
-          value={anchor}
+          value={anchor ?? ""}
         >
           {objectSymbol3DLayerAnchorOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
@@ -108,10 +107,11 @@ function ObjectSymbol3DLayerForm({
       {anchor === "relative" && (
         <calcite-block
           style={blockStyles}
-          collapsible
+          expandable
           heading={"anchorPosition"}
         >
           <ObjectSymbol3DLayerAnchorPositionForm
+            symbolLayer={symbolLayer}
             layerIndex={layerIndex}
             handleObjectSymbol3DLayerAnchorPositionXChange={
               handleObjectSymbol3DLayerAnchorPositionXChange
@@ -130,10 +130,9 @@ function ObjectSymbol3DLayerForm({
         castShadows
         <calcite-switch
           oncalciteSwitchChange={(event) => {
-            setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          value={castShadows}
+          checked={castShadows}
         ></calcite-switch>
       </calcite-label>
 
@@ -143,7 +142,6 @@ function ObjectSymbol3DLayerForm({
           label={"depth input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setDepth(event.target.value);
             handleDepthChange(layerIndex, event.target.value);
           }}
           value={depth}
@@ -156,7 +154,6 @@ function ObjectSymbol3DLayerForm({
           label={"height input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setHeight(event.target.value);
             handleHeightChange(layerIndex, event.target.value);
           }}
           value={height}
@@ -169,22 +166,24 @@ function ObjectSymbol3DLayerForm({
           label={"width input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
             handleWidthChange(layerIndex, event.target.value);
           }}
           value={width}
         ></calcite-input-number>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <ObjectSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
+          handleEmissiveChange={handleMaterialEmissiveChange}
           layerIndex={layerIndex}
           handleColorChange={handleObjectSymbol3DLayerMaterialColorChange}
         ></ObjectSymbol3DLayerMaterialForm>
       </calcite-block>
 
-      <calcite-block style={blockStyles} collapsible heading={"resource"}>
+      <calcite-block style={blockStyles} expandable heading={"resource"}>
         <ObjectSymbol3DLayerResourceForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleHrefChange={handleObjectSymbol3DLayerResourceHrefChange}
           handlePrimitiveChange={
@@ -201,12 +200,11 @@ function ObjectSymbol3DLayerForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setHeading(event.target.value as number);
             handleHeadingChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={90}
-          value={heading}
+          value={heading ?? 0}
         ></calcite-slider>
       </calcite-label>
 
@@ -218,12 +216,11 @@ function ObjectSymbol3DLayerForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setRoll(event.target.value as number);
             handleRollChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={90}
-          value={roll}
+          value={roll ?? 0}
         ></calcite-slider>
       </calcite-label>
 
@@ -235,12 +232,11 @@ function ObjectSymbol3DLayerForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setTilt(event.target.value as number);
             handleTiltChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={90}
-          value={tilt}
+          value={tilt ?? 0}
         ></calcite-slider>
       </calcite-label>
     </>

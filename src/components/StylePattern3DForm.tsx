@@ -2,11 +2,12 @@ import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import { fillOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: FillSymbol3DLayer;
   layerIndex: number;
   handleStyleChange: (
     layerIndex: number,
@@ -15,19 +16,19 @@ interface Props {
 }
 
 function StylePattern3DForm({
+  symbolLayer,
   layerIndex,
   handleStyleChange,
 }: Props): React.ReactElement {
-  const [style, setStyle] = useState("solid");
+  const style = symbolLayer.pattern?.style ?? "solid";
 
   return (
     <>
       <calcite-label layout="default" style={labelStyles}>
         style
         <calcite-select
-          label={"cap selection"}
+          label="pattern style selection"
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             handleStyleChange(
               layerIndex,
               event.target.value as InstanceType<

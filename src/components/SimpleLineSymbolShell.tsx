@@ -1,6 +1,3 @@
-import Color from "@arcgis/core/Color.js";
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-label";
@@ -20,6 +17,8 @@ import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
+import { colorWithAlpha } from "./lib/color";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -45,16 +44,10 @@ function SimpleLineSymbolShell(): React.ReactElement {
     }),
   );
 
-  const polylineGraphic = new Graphic({
-    geometry: polyline,
-    symbol: simpleLineSymbol,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(polylineGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(
+    polyline,
+    simpleLineSymbol,
+  );
 
   const [scene, setScene] = useState(false);
   let viewElement = <Map graphics={graphics}></Map>;
@@ -70,14 +63,7 @@ function SimpleLineSymbolShell(): React.ReactElement {
 
   const updateGraphics = (newSimpleLineSymbol: SimpleLineSymbol): void => {
     setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newPolylineGraphic = graphics.getItemAt(0)?.clone();
-    if (newPolylineGraphic) {
-      newPolylineGraphic.symbol = newSimpleLineSymbol;
-    }
-    const newGraphics = new Collection();
-    newGraphics.add(newPolylineGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newSimpleLineSymbol);
   };
 
   const handleCapChange = (
@@ -90,7 +76,10 @@ function SimpleLineSymbolShell(): React.ReactElement {
 
   const handleColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.color = new Color(currentColor);
+    newSimpleLineSymbol.color = colorWithAlpha(
+      currentColor,
+      newSimpleLineSymbol.color,
+    );
     updateGraphics(newSimpleLineSymbol);
   };
 
@@ -121,7 +110,10 @@ function SimpleLineSymbolShell(): React.ReactElement {
   const handleMarkerColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
-      newSimpleLineSymbol.marker.color = new Color(currentColor);
+      newSimpleLineSymbol.marker.color = colorWithAlpha(
+        currentColor,
+        newSimpleLineSymbol.marker.color,
+      );
     }
 
     setLineSymbolMarker(newSimpleLineSymbol.marker!);
@@ -175,7 +167,7 @@ function SimpleLineSymbolShell(): React.ReactElement {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <calcite-shell-panel slot="panel-start" position="start" resizable>
+        <calcite-shell-panel slot="panel-start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <calcite-label
@@ -193,6 +185,8 @@ function SimpleLineSymbolShell(): React.ReactElement {
 
             <div style={formStyles}>
               <SimpleLineSymbolForm
+                symbol={simpleLineSymbol}
+                marker={lineSymbolMarker}
                 handleCapChange={handleCapChange}
                 handleColorChange={handleColorChange}
                 handleJoinChange={handleJoinChange}
@@ -212,7 +206,6 @@ function SimpleLineSymbolShell(): React.ReactElement {
 
         <calcite-shell-panel
           slot="panel-end"
-          position="end"
           resizable
           style={shellPanelStyles}
         >

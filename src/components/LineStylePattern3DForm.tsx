@@ -2,11 +2,11 @@ import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePatt
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { lineStyleOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  styleValue: LineStylePattern3D["style"];
   layerIndex: number;
   handleStyleChange: (
     layerIndex: number,
@@ -15,19 +15,17 @@ interface Props {
 }
 
 function LineStylePattern3DForm({
+  styleValue,
   layerIndex,
   handleStyleChange,
 }: Props): React.ReactElement {
-  const [style, setStyle] = useState("solid");
-
   return (
     <>
       <calcite-label layout="default" style={labelStyles}>
         style
         <calcite-select
-          label={"join selection"}
+          label="pattern style selection"
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             handleStyleChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -35,7 +33,7 @@ function LineStylePattern3DForm({
               >["style"],
             );
           }}
-          value={style}
+          value={styleValue}
         >
           {lineStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>

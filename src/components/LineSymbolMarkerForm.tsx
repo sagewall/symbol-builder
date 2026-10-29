@@ -3,11 +3,11 @@ import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { markerPlacementOptions, markerStyleOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  marker: LineSymbolMarker;
   handleColorChange: ((value: string) => void) | undefined;
   handlePlacementChange:
     | ((value: InstanceType<typeof LineSymbolMarker>["placement"]) => void)
@@ -18,13 +18,12 @@ interface Props {
 }
 
 function LineSymbolMarkerForm({
+  marker,
   handleColorChange,
   handlePlacementChange,
   handleStyleChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#007ac2");
-  const [placement, setPlacement] = useState("begin-end");
-  const [style, setStyle] = useState("arrow");
+  const { placement, style } = marker;
 
   return (
     <>
@@ -32,15 +31,12 @@ function LineSymbolMarkerForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
             if (handleColorChange) {
               handleColorChange(event.target.value);
             }
           }}
           type="color"
-          value={color}
+          value={marker.color?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
 
@@ -49,7 +45,6 @@ function LineSymbolMarkerForm({
         <calcite-select
           label={"marker placement selection"}
           oncalciteSelectChange={(event) => {
-            setPlacement(event.target.value);
             if (handlePlacementChange) {
               handlePlacementChange(
                 event.target.value as InstanceType<
@@ -71,7 +66,6 @@ function LineSymbolMarkerForm({
         <calcite-select
           label={"marker style selection"}
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             if (handleStyleChange) {
               handleStyleChange(
                 event.target.value as InstanceType<

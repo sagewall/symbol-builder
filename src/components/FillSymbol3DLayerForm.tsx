@@ -3,14 +3,19 @@ import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePatt
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-switch";
-import { useState } from "react";
-import Edges3DForm from "./Edges3DForm";
+import Edges3DForm, { type EdgesChangeHandler } from "./Edges3DForm";
+import type Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
 import { blockStyles, labelStyles } from "./lib/styles";
 import StylePattern3DForm from "./StylePattern3DForm";
 
 interface Props {
+  symbolLayer: FillSymbol3DLayer;
+  edges?: Edges3D | null;
+  handleEdgesChange?: EdgesChangeHandler;
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   isMeshSymbol3D: boolean;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
@@ -67,6 +72,10 @@ interface Props {
 }
 
 function FillSymbol3DLayerForm({
+  symbolLayer,
+  edges,
+  handleEdgesChange,
+  handleMaterialEmissiveChange,
   layerIndex,
   isMeshSymbol3D,
   handleCastShadowsChange,
@@ -81,7 +90,7 @@ function FillSymbol3DLayerForm({
   handleFillSymbol3DLayerOutlineSizeChange,
   handleFillSymbol3DLayerPatternStyleChange,
 }: Props): React.ReactElement {
-  const [castShadows, setCastShadows] = useState(true);
+  const { castShadows } = symbolLayer;
 
   return (
     <>
@@ -91,17 +100,17 @@ function FillSymbol3DLayerForm({
           <calcite-switch
             checked={castShadows}
             oncalciteSwitchChange={(event) => {
-              setCastShadows(event.target.checked);
               handleCastShadowsChange(layerIndex, event.target.checked);
             }}
-            value={castShadows}
           ></calcite-switch>
         </calcite-label>
       )}
 
-      {isMeshSymbol3D && (
-        <calcite-block style={blockStyles} collapsible heading={"edges"}>
+      {isMeshSymbol3D && handleEdgesChange && (
+        <calcite-block style={blockStyles} expandable heading={"edges"}>
           <Edges3DForm
+            edges={edges}
+            handleEdgesChange={handleEdgesChange}
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerEdgesColorChange}
             handleExtensionLengthChange={
@@ -112,8 +121,12 @@ function FillSymbol3DLayerForm({
         </calcite-block>
       )}
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <FillSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
+          handleEmissiveChange={
+            isMeshSymbol3D ? handleMaterialEmissiveChange : undefined
+          }
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerMaterialColorChange}
           handleColorMixModeChange={
@@ -123,8 +136,9 @@ function FillSymbol3DLayerForm({
       </calcite-block>
 
       {!isMeshSymbol3D && (
-        <calcite-block style={blockStyles} collapsible heading={"outline"}>
+        <calcite-block style={blockStyles} expandable heading={"outline"}>
           <FillSymbol3DLayerOutlineForm
+            symbolLayer={symbolLayer}
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerOutlineColorChange}
             handleLineSylePattern3DStyleChange={
@@ -139,8 +153,9 @@ function FillSymbol3DLayerForm({
       )}
 
       {!isMeshSymbol3D && (
-        <calcite-block style={blockStyles} collapsible heading={"pattern"}>
+        <calcite-block style={blockStyles} expandable heading={"pattern"}>
           <StylePattern3DForm
+            symbolLayer={symbolLayer}
             layerIndex={layerIndex}
             handleStyleChange={handleFillSymbol3DLayerPatternStyleChange}
           ></StylePattern3DForm>

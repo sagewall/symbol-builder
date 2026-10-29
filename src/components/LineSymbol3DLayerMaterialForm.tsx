@@ -1,18 +1,20 @@
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
-import { useState } from "react";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: LineSymbol3DLayer;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
 function LineSymbol3DLayerMaterialForm({
+  symbolLayer,
   layerIndex,
   handleColorChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#007ac2");
+  const color = symbolLayer.material?.color?.toHex() ?? "#ffffff";
 
   return (
     <>
@@ -20,9 +22,7 @@ function LineSymbol3DLayerMaterialForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
