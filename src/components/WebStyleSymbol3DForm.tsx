@@ -9,7 +9,7 @@ import "@esri/calcite-components/dist/components/calcite-tab";
 import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   esriIconsStyleNameOptions,
   esriInfrastructureStyleNameOptions,
@@ -27,7 +27,11 @@ import type { ItemType, WebStyleSymbolItem } from "./lib/types";
 
 interface Props {
   handleNameChange: (value: string) => void;
-  handleStyleNameChange: (value: string, portalUrl?: string) => void;
+  handleStyleNameChange: (
+    value: string,
+    portalUrl?: string,
+    name?: string,
+  ) => void;
   handleCustomStyleChange: (
     styleUrl: string,
     name: string,
@@ -49,6 +53,13 @@ function WebStyleSymbolForm({
   const [portalUrl, setPortalUrl] = useState("");
   const [styleUrl, setStyleUrl] = useState("");
   const requestId = useRef(0);
+
+  useEffect(
+    () => () => {
+      requestId.current += 1;
+    },
+    [],
+  );
 
   async function getStyleItemDataFromUrl(url: string): Promise<void> {
     const currentRequestId = ++requestId.current;
@@ -83,6 +94,7 @@ function WebStyleSymbolForm({
     if (selectedTitle.tab === "standard") {
       requestId.current += 1;
       setName("Accessibility");
+      setNames(esriIconsStyleNameOptions);
       setStyleName("EsriIconsStyle");
       handleStyleNameChange("EsriIconsStyle", portalUrl);
     } else {
@@ -201,7 +213,7 @@ function WebStyleSymbolForm({
               oncalciteInputTextChange={(event) => {
                 requestId.current += 1;
                 setPortalUrl(event.target.value);
-                handleStyleNameChange(styleName, event.target.value);
+                handleStyleNameChange(styleName, event.target.value, name);
               }}
               placeholder="https://www.arcgis.com"
               value={portalUrl}

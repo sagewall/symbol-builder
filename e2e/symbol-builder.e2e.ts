@@ -187,6 +187,109 @@ for (const is3D of [false, true]) {
     });
 }
 
+test("ignores a pending 2D WebStyle response after switching to 3D", async ({
+    page,
+}) => {
+    let releaseResponse: (() => void) | undefined;
+    let signalRequest: (() => void) | undefined;
+    let signalResponse: (() => void) | undefined;
+    const requestStarted = new Promise<void>((resolve) => {
+      signalRequest = resolve;
+    });
+    const responseReleased = new Promise<void>((resolve) => {
+      releaseResponse = resolve;
+    });
+    const responseFinished = new Promise<void>((resolve) => {
+      signalResponse = resolve;
+    });
+
+    await page.route("https://styles.test/**", async (route) => {
+      signalRequest?.();
+      await responseReleased;
+      await route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          items: [
+            {
+              itemType: "pointSymbol",
+              name: "Late 2D result",
+              thumbnail: { href: "/resources/test.png" },
+            },
+          ],
+        }),
+      });
+      signalResponse?.();
+    });
+
+    await page.goto("/web-style-symbol");
+    await page.locator("calcite-tab-title").filter({ hasText: "Custom" }).click();
+    const urlInput = page.getByRole("textbox", {
+      name: "url input",
+      exact: true,
+    });
+    await urlInput.fill("https://styles.test/late/data");
+    await urlInput.press("Enter");
+    await requestStarted;
+
+    await page.getByRole("switch").click();
+    await showJSON(page);
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).name)
+      .toBe("Accessibility");
+
+    releaseResponse?.();
+    await responseFinished;
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).name)
+      .toBe("Accessibility");
+});
+
+test("restores standard 3D names after returning from Custom", async ({
+    page,
+}) => {
+    await page.goto("/web-style-symbol");
+    await page.getByRole("switch").click();
+    await selectProperty(
+      page,
+      "styleName selection",
+      "EsriInfrastructureStyle",
+    );
+    await page.locator("calcite-tab-title").filter({ hasText: "Custom" }).click();
+    await page.locator("calcite-tab-title").filter({ hasText: "Standard" }).click();
+    await selectProperty(page, "name selection", "Accessibility");
+    await showJSON(page);
+
+    await expect
+      .poll(async () => await readSymbolJSON(page))
+      .toMatchObject({ name: "Accessibility", styleName: "EsriIconsStyle" });
+});
+
+test("preserves the selected 3D name when changing portal URL", async ({
+    page,
+}) => {
+    await page.goto("/web-style-symbol");
+    await page.getByRole("switch").click();
+    await selectProperty(
+      page,
+      "styleName selection",
+      "EsriInfrastructureStyle",
+    );
+    await selectProperty(page, "name selection", "Cell_Phone_Antenna");
+    const portalInput = page.getByRole("textbox", {
+      name: "Portal URL",
+      exact: true,
+    });
+    await portalInput.fill("https://portal.example.test");
+    await showJSON(page);
+
+    await expect
+      .poll(async () => await readSymbolJSON(page))
+      .toMatchObject({
+        name: "Cell_Phone_Antenna",
+        portal: { url: "https://portal.example.test" },
+      });
+});
+
 const emissiveEditors = [
   { route: "/mesh-symbol-3d", action: "Add FillSymbol3DLayer" },
   { route: "/polygon-symbol-3d", action: "Add ExtrudeSymbol3DLayer" },

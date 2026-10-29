@@ -169,6 +169,7 @@ function WebStyleSymbolShell(): React.ReactElement {
   const handleStyleNameChange = (
     currentStyleName: string,
     currentPortalUrl?: string,
+    currentName?: string,
   ): void => {
     const newWebStyleSymbol = new WebStyleSymbol();
 
@@ -212,6 +213,10 @@ function WebStyleSymbolShell(): React.ReactElement {
 
       default:
         newWebStyleSymbol.name = esri2DPointSymbolsStyleNameOptions[0];
+    }
+
+    if (currentName !== undefined) {
+      newWebStyleSymbol.name = currentName;
     }
 
     newWebStyleSymbol.styleName = currentStyleName;

@@ -20,7 +20,11 @@ import type { GroupItem, ItemType, WebStyleSymbolItem } from "./lib/types";
 interface Props {
   groupItems: GroupItem[];
   handleNameChange: (value: string) => void;
-  handleStyleNameChange: (value: string, portalUrl?: string) => void;
+  handleStyleNameChange: (
+    value: string,
+    portalUrl?: string,
+    name?: string,
+  ) => void;
   handleCustomStyleChange: (
     styleUrl: string,
     name: string,
@@ -51,6 +55,13 @@ function WebStyleSymbol2DForm({
     "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
   );
   const requestId = useRef(0);
+
+  useEffect(
+    () => () => {
+      requestId.current += 1;
+    },
+    [],
+  );
 
   const getStyleItemDataFromItem = useCallback(
     async (groupItem: GroupItem) => {
@@ -398,7 +409,7 @@ function WebStyleSymbol2DForm({
               label="Portal URL"
               oncalciteInputTextChange={(event) => {
                 setPortalUrl(event.target.value);
-                handleStyleNameChange(styleName, event.target.value);
+                handleStyleNameChange(styleName, event.target.value, name);
               }}
               placeholder="https://www.arcgis.com"
               value={portalUrl}
