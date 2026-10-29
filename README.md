@@ -34,6 +34,8 @@ Editable property controls read their values from the current SDK symbol or symb
 
 Local form state is reserved for UI state, pending catalog requests, and saved settings for disabled optional features. RGB color edits preserve the existing alpha value; the text-symbol background and border opacity sliders edit alpha separately.
 
+Snippet tests execute the generated ESM, CDN, and JSON code and compare the reconstructed SDK symbols with the originals. Browser snippet-consistency tests also check the rendered snippets before and after form edits across the local symbol types and 3D layer variants.
+
 ## Symbol Property Options
 
 Enum options in `src/components/lib/constants.ts` use exhaustive registries checked against the owning SDK property types. Registry insertion order controls UI order, and the derived option arrays are read-only and frozen.
