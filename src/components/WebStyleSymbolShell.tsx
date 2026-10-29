@@ -297,6 +297,7 @@ function WebStyleSymbolShell(): React.ReactElement {
             <div style={formStyles}>
               {!scene ? (
                 <WebStyleSymbol2DForm
+                  symbol={currentWebStyleSymbol}
                   groupItems={groupItems}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
@@ -304,6 +305,7 @@ function WebStyleSymbolShell(): React.ReactElement {
                 ></WebStyleSymbol2DForm>
               ) : (
                 <WebStyleSymbol3DForm
+                  symbol={currentWebStyleSymbol}
                   handleNameChange={handleNameChange}
                   handleStyleNameChange={handleStyleNameChange}
                   handleCustomStyleChange={handleCustomStyleChange}

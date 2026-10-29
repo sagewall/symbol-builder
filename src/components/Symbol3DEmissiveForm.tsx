@@ -14,55 +14,44 @@ export type EmissiveChangeHandler = (
 ) => void;
 
 interface Props {
+  emissive: Symbol3DEmissive | null | undefined;
   layerIndex: number;
   handleChange: EmissiveChangeHandler;
 }
 
 export default function Symbol3DEmissiveForm({
+  emissive,
   layerIndex,
   handleChange,
 }: Props) {
-  const [enabled, setEnabled] = useState(false);
-  const [source, setSource] = useState<Symbol3DEmissive["source"]>("color");
-  const [strength, setStrength] = useState("1");
-  const [error, setError] = useState(false);
-  const settingsRef = useRef({ source, strength });
-  const validSettingsRef = useRef({ source, strength });
+  const [saved, setSaved] = useState(
+    emissive?.clone() ?? new Symbol3DEmissive({ source: "color", strength: 1 }),
+  );
+  const source = emissive?.source ?? saved.source;
+  const strength = String(emissive?.strength ?? saved.strength);
+  const sourceInput = useRef<HTMLCalciteSelectElement>(null);
+  const strengthInput = useRef<HTMLCalciteInputNumberElement>(null);
 
   const update = (
-    active: boolean,
-    changes: Partial<typeof settingsRef.current> = {},
+    changes: Partial<Pick<Symbol3DEmissive, "source" | "strength">>,
   ) => {
-    const next = { ...settingsRef.current, ...changes };
-    settingsRef.current = next;
-    setSource(next.source);
-    setStrength(next.strength);
-    if (!active) {
-      setEnabled(false);
-      setError(false);
-      handleChange(layerIndex, null);
-      return;
-    }
-    const numericStrength = Number(next.strength);
+    const next = (emissive ?? saved).clone();
+    // Calcite can defer select events until another edit shares the same React batch.
+    // Include both current inputs so a source edit cannot overwrite pending strength.
+    const currentStrength = strengthInput.current?.value;
     if (
-      !next.strength.trim() ||
-      !Number.isFinite(numericStrength) ||
-      numericStrength < 0 ||
-      numericStrength > 16
+      currentStrength?.trim() &&
+      Number.isFinite(Number(currentStrength)) &&
+      Number(currentStrength) >= 0 &&
+      Number(currentStrength) <= 16
     ) {
-      setError(true);
-      return;
+      next.strength = Number(currentStrength);
     }
-    validSettingsRef.current = next;
-    setEnabled(true);
-    setError(false);
-    handleChange(
-      layerIndex,
-      new Symbol3DEmissive({
-        source: next.source,
-        strength: numericStrength,
-      }),
-    );
+    if (sourceInput.current) {
+      next.source = sourceInput.current.value as Symbol3DEmissive["source"];
+    }
+    Object.assign(next, changes);
+    handleChange(layerIndex, next);
   };
 
   return (
@@ -71,26 +60,28 @@ export default function Symbol3DEmissiveForm({
         emissive
         <calcite-switch
           label="emissive enabled"
-          checked={enabled}
+          checked={!!emissive}
           oncalciteSwitchChange={(event) => {
-            update(
-              event.target.checked,
-              event.target.checked ? validSettingsRef.current : {},
+            if (emissive) setSaved(emissive.clone());
+            handleChange(
+              layerIndex,
+              event.target.checked ? saved.clone() : null,
             );
           }}
         ></calcite-switch>
       </calcite-label>
-      {enabled && (
+      {emissive && (
         <>
           <calcite-label layout="default" style={labelStyles}>
             source
             <calcite-select
+              ref={sourceInput}
               label="emissive source selection"
               value={source}
               oncalciteSelectChange={(event) => {
                 const nextSource = event.target
                   .value as Symbol3DEmissive["source"];
-                update(true, { source: nextSource });
+                update({ source: nextSource });
               }}
             >
               {emissiveSourceOptions.map((option) => (
@@ -103,17 +94,28 @@ export default function Symbol3DEmissiveForm({
           <calcite-label layout="default" style={labelStyles}>
             strength
             <calcite-input-number
+              ref={strengthInput}
               label="emissive strength input"
               min={0}
               max={16}
               step={0.1}
               value={strength}
-              status={error ? "invalid" : "idle"}
-              validationMessage={
-                error ? "Enter a strength between 0 and 16." : undefined
-              }
               oncalciteInputNumberChange={(event) => {
-                update(true, { strength: event.target.value });
+                const value = Number(event.target.value);
+                if (
+                  !event.target.value.trim() ||
+                  !Number.isFinite(value) ||
+                  value < 0 ||
+                  value > 16
+                ) {
+                  event.target.status = "invalid";
+                  event.target.validationMessage = "Enter a strength between 0 and 16.";
+                  event.target.value = strength;
+                  return;
+                }
+                event.target.status = "idle";
+                event.target.validationMessage = "";
+                update({ strength: value });
               }}
             ></calcite-input-number>
           </calcite-label>

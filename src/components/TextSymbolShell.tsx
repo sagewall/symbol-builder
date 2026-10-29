@@ -23,18 +23,15 @@ import {
   tabNavStyles,
 } from "./lib/styles";
 import type { FontData } from "./lib/types";
+import { colorWithAlpha } from "./lib/color";
 
 function TextSymbolShell(): React.ReactElement {
-  const [font, setFont] = useState(
-    new Font({ family: "Abril Fatface", size: 12 }),
-  );
-
   const [textSymbol, setTextSymbol] = useState(
     new TextSymbol({
       backgroundColor: [255, 255, 255, 0],
       borderLineColor: [255, 255, 255, 0],
       borderLineSize: 0,
-      font,
+      font: new Font({ family: "Abril Fatface", size: 12 }),
       haloColor: "#ffffff",
       haloSize: 0,
       kerning: false,
@@ -63,9 +60,10 @@ function TextSymbolShell(): React.ReactElement {
     currentBackgroundColor: string,
   ): void => {
     const newTextSymbol = symbolRef.current.clone();
-    const color = new Color(currentBackgroundColor);
-    color.a = newTextSymbol.backgroundColor?.a ?? 1;
-    newTextSymbol.backgroundColor = color;
+    newTextSymbol.backgroundColor = colorWithAlpha(
+      currentBackgroundColor,
+      newTextSymbol.backgroundColor,
+    );
     updateGraphics(newTextSymbol);
   };
 
@@ -81,9 +79,10 @@ function TextSymbolShell(): React.ReactElement {
     currentBorderLineColor: string,
   ): void => {
     const newTextSymbol = symbolRef.current.clone();
-    const color = new Color(currentBorderLineColor);
-    color.a = newTextSymbol.borderLineColor?.a ?? 1;
-    newTextSymbol.borderLineColor = color;
+    newTextSymbol.borderLineColor = colorWithAlpha(
+      currentBorderLineColor,
+      newTextSymbol.borderLineColor,
+    );
     updateGraphics(newTextSymbol);
   };
 
@@ -104,7 +103,7 @@ function TextSymbolShell(): React.ReactElement {
 
   const handleColorChange = (currentColor: string): void => {
     const newTextSymbol = symbolRef.current.clone();
-    newTextSymbol.color = new Color(currentColor);
+    newTextSymbol.color = colorWithAlpha(currentColor, newTextSymbol.color);
     updateGraphics(newTextSymbol);
   };
 
@@ -114,7 +113,6 @@ function TextSymbolShell(): React.ReactElement {
     newTextSymbol.font.family = currentFontDataObject.font.family;
     newTextSymbol.font.style = currentFontDataObject.font.style;
     newTextSymbol.font.weight = currentFontDataObject.font.weight;
-    setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
@@ -123,7 +121,6 @@ function TextSymbolShell(): React.ReactElement {
   ) => {
     const next = symbolRef.current.clone();
     next.font.set(value);
-    setFont(next.font);
     updateGraphics(next);
   };
 
@@ -132,20 +129,21 @@ function TextSymbolShell(): React.ReactElement {
   ): void => {
     const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.font.decoration = currentFontDecoration;
-    setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
   const handleFontSizeChange = (currentFontSize: string): void => {
     const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.font.size = Number(currentFontSize);
-    setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
   const handleHaloColorChange = (currentHaloColor: string): void => {
     const newTextSymbol = symbolRef.current.clone();
-    newTextSymbol.haloColor = new Color(currentHaloColor);
+    newTextSymbol.haloColor = colorWithAlpha(
+      currentHaloColor,
+      newTextSymbol.haloColor,
+    );
     updateGraphics(newTextSymbol);
   };
 
@@ -225,10 +223,7 @@ function TextSymbolShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <TextSymbolForm
-                font={textSymbol.font}
-                lineWidth={String(textSymbol.lineWidth)}
-                backgroundOpacity={textSymbol.backgroundColor?.a ?? 1}
-                borderLineOpacity={textSymbol.borderLineColor?.a ?? 1}
+                symbol={textSymbol}
                 handleFontPropertiesChange={handleFontPropertiesChange}
                 handleAngleChange={handleAngleChange}
                 handleBackgroundColorChange={handleBackgroundColorChange}

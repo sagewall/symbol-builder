@@ -3,7 +3,6 @@ import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import {
   lineStyleMarker3dStyleOptions,
   markerPlacementOptions,
@@ -11,6 +10,7 @@ import {
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  marker: LineStyleMarker3D | null | undefined;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handlePlacementChange: (
@@ -24,14 +24,15 @@ interface Props {
 }
 
 function LineStyleMarker3DForm({
+  marker,
   layerIndex,
   handleColorChange,
   handlePlacementChange,
   handleStyleChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#007ac2");
-  const [placement, setPlacement] = useState("begin-end");
-  const [style, setStyle] = useState("arrow");
+  const color = marker?.color?.toHex() ?? "#007ac2";
+  const placement = marker?.placement ?? "begin-end";
+  const style = marker?.style ?? "arrow";
 
   return (
     <>
@@ -39,9 +40,7 @@ function LineStyleMarker3DForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
@@ -54,7 +53,6 @@ function LineStyleMarker3DForm({
         <calcite-select
           label={"placement selection"}
           oncalciteSelectChange={(event) => {
-            setPlacement(event.target.value);
             handlePlacementChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -75,7 +73,6 @@ function LineStyleMarker3DForm({
         <calcite-select
           label={"style selection"}
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             handleStyleChange(
               layerIndex,
               event.target.value as InstanceType<

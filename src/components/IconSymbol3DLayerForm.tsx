@@ -6,7 +6,6 @@ import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-slider";
-import { useState } from "react";
 import IconSymbol3DLayerAnchorPositionForm from "./IconSymbol3DLayerAnchorPositionForm";
 import IconSymbol3DLayerMaterialForm from "./IconSymbol3DLayerMaterialForm";
 import IconSymbol3DLayerOutlineForm from "./IconSymbol3DLayerOutlineForm";
@@ -18,6 +17,7 @@ import {
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: IconSymbol3DLayer;
   layerIndex: number;
   handleIconSymbol3DLayerAnchorChange: (
     layerIndex: number,
@@ -67,6 +67,7 @@ interface Props {
 }
 
 function IconSymbol3DLayerForm({
+  symbolLayer,
   layerIndex,
   handleIconSymbol3DLayerAnchorChange,
   handleIconSymbol3DLayerAnchorPositionXChange,
@@ -80,11 +81,8 @@ function IconSymbol3DLayerForm({
   handleIconSymbol3DLayerResourcePrimitiveChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [anchor, setAnchor] = useState("center");
-  const [angle, setAngle] = useState(0);
-  const [occludedVisibility, setOccludedVisibility] =
-    useState<OccludedVisibilityMode>("adaptive");
-  const [size, setSize] = useState("12");
+  const { anchor, angle, occludedVisibility } = symbolLayer;
+  const size = String(symbolLayer.size);
 
   return (
     <>
@@ -93,7 +91,6 @@ function IconSymbol3DLayerForm({
         <calcite-select
           label={"anchor selection"}
           oncalciteSelectChange={(event) => {
-            setAnchor(event.target.value);
             handleIconSymbol3DLayerAnchorChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -116,6 +113,7 @@ function IconSymbol3DLayerForm({
           heading={"anchorPosition"}
         >
           <IconSymbol3DLayerAnchorPositionForm
+            symbolLayer={symbolLayer}
             layerIndex={layerIndex}
             handleIconSymbol3DLayerAnchorPositionXChange={
               handleIconSymbol3DLayerAnchorPositionXChange
@@ -135,7 +133,6 @@ function IconSymbol3DLayerForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setAngle(event.target.value as number);
             handleIconSymbol3DLayerAngleChange(
               layerIndex,
               event.target.value as number,
@@ -149,6 +146,7 @@ function IconSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"material"}>
         <IconSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerMaterialColorChange}
         ></IconSymbol3DLayerMaterialForm>
@@ -160,10 +158,9 @@ function IconSymbol3DLayerForm({
           label="Occluded visibility selection"
           oncalciteSelectChange={(event) => {
             const mode = event.target.value as OccludedVisibilityMode;
-            setOccludedVisibility(mode);
             handleOccludedVisibilityChange(layerIndex, mode);
           }}
-          value={occludedVisibility}
+          value={occludedVisibility?.mode ?? "adaptive"}
         >
           {occludedVisibilityOptions.map((option) => (
             <calcite-option key={option} value={option}>
@@ -175,6 +172,7 @@ function IconSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"outline"}>
         <IconSymbol3DLayerOutlineForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleColorChange={handleIconSymbol3DLayerOutlineColorChange}
           handleSizeChange={handleIconSymbol3DLayerOutlineSizeChange}
@@ -183,6 +181,7 @@ function IconSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"resource"}>
         <IconSymbol3DLayerResourceForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleHrefChange={handleIconSymbol3DLayerResourceHrefChange}
           handlePrimitiveChange={handleIconSymbol3DLayerResourcePrimitiveChange}
@@ -195,7 +194,6 @@ function IconSymbol3DLayerForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}

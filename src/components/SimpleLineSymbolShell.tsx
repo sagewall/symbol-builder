@@ -1,4 +1,3 @@
-import Color from "@arcgis/core/Color.js";
 import LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/components/calcite-label";
@@ -18,6 +17,7 @@ import SimpleLineSymbolESMPanel from "./SimpleLineSymbolESMPanel";
 import SimpleLineSymbolForm from "./SimpleLineSymbolForm";
 import SimpleLineSymbolJSONPanel from "./SimpleLineSymbolJSONPanel";
 import { polyline } from "./lib/geometry";
+import { colorWithAlpha } from "./lib/color";
 import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
@@ -76,7 +76,10 @@ function SimpleLineSymbolShell(): React.ReactElement {
 
   const handleColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.color = new Color(currentColor);
+    newSimpleLineSymbol.color = colorWithAlpha(
+      currentColor,
+      newSimpleLineSymbol.color,
+    );
     updateGraphics(newSimpleLineSymbol);
   };
 
@@ -107,7 +110,10 @@ function SimpleLineSymbolShell(): React.ReactElement {
   const handleMarkerColorChange = (currentColor: string): void => {
     const newSimpleLineSymbol = simpleLineSymbol.clone();
     if (newSimpleLineSymbol.marker) {
-      newSimpleLineSymbol.marker.color = new Color(currentColor);
+      newSimpleLineSymbol.marker.color = colorWithAlpha(
+        currentColor,
+        newSimpleLineSymbol.marker.color,
+      );
     }
 
     setLineSymbolMarker(newSimpleLineSymbol.marker!);
@@ -179,6 +185,8 @@ function SimpleLineSymbolShell(): React.ReactElement {
 
             <div style={formStyles}>
               <SimpleLineSymbolForm
+                symbol={simpleLineSymbol}
+                marker={lineSymbolMarker}
                 handleCapChange={handleCapChange}
                 handleColorChange={handleColorChange}
                 handleJoinChange={handleJoinChange}

@@ -1,4 +1,3 @@
-import Color from "@arcgis/core/Color.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-panel";
@@ -17,6 +16,7 @@ import SimpleMarkerSymbolESMPanel from "./SimpleMarkerSymbolESMPanel";
 import SimpleMarkerSymbolForm from "./SimpleMarkerSymbolForm";
 import SimpleMarkerSymbolJSONPanel from "./SimpleMarkerSymbolJSONPanel";
 import { point } from "./lib/geometry";
+import { colorWithAlpha } from "./lib/color";
 import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
@@ -29,14 +29,10 @@ import {
 function SimpleMarkerSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
 
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 }),
-  );
-
   const [simpleMarkerSymbol, setSimpleMarkerSymbol] = useState(
     new SimpleMarkerSymbol({
       color: "#007ac2",
-      outline: simpleLineSymbol,
+      outline: new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 }),
     }),
   );
 
@@ -62,6 +58,13 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
     updatePreview(newSimpleMarkerSymbol);
   };
 
+  const updateOutline = (change: (outline: SimpleLineSymbol) => void): void => {
+    const next = simpleMarkerSymbol.clone();
+    if (!next.outline) throw new Error("Cannot edit a missing outline.");
+    change(next.outline);
+    updateGraphics(next);
+  };
+
   const handleAngleChange = (currentAngle: number): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
     newSimpleMarkerSymbol.angle = currentAngle;
@@ -70,76 +73,55 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
 
   const handleColorChange = (currentColor: string): void => {
     const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.color = new Color(currentColor);
+    newSimpleMarkerSymbol.color = colorWithAlpha(
+      currentColor,
+      newSimpleMarkerSymbol.color,
+    );
     updateGraphics(newSimpleMarkerSymbol);
   };
 
   const handleOutlineCapChange = (
     currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.cap = currentCapValue;
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    updateOutline((outline) => {
+      outline.cap = currentCapValue;
+    });
   };
 
   const handleOutlineColorChange = (currentColor: string): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.color = new Color(currentColor);
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    updateOutline((outline) => {
+      outline.color = colorWithAlpha(currentColor, outline.color);
+    });
   };
 
   const handleOutlineJoinChange = (
     currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.join = currentJoinValue;
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    updateOutline((outline) => {
+      outline.join = currentJoinValue;
+    });
   };
 
   const handleOutlineMiterLimitChange = (
     currentMiterLimitValue: string,
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    updateOutline((outline) => {
+      outline.miterLimit = Number(currentMiterLimitValue);
+    });
   };
 
   const handleOutlineStyleChange = (
     currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.style = currentStyleValue;
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    updateOutline((outline) => {
+      outline.style = currentStyleValue;
+    });
   };
 
   const handleOutlineWidthChange = (currentWidthValue: string): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.width = Number(currentWidthValue);
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleMarkerSymbol = simpleMarkerSymbol.clone();
-    newSimpleMarkerSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleMarkerSymbol);
+    updateOutline((outline) => {
+      outline.width = Number(currentWidthValue);
+    });
   };
 
   const handlePathChange = (currentPathValue: string): void => {
@@ -194,6 +176,7 @@ function SimpleMarkerSymbolShell(): React.ReactElement {
 
           <div style={formStyles}>
             <SimpleMarkerSymbolForm
+              symbol={simpleMarkerSymbol}
               handleAngleChange={handleAngleChange}
               handleColorChange={handleColorChange}
               handleOutlineCapChange={handleOutlineCapChange}

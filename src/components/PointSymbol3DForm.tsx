@@ -1,4 +1,5 @@
 import type Collection from "@arcgis/core/core/Collection.js";
+import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
 import type LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D.js";
 import type Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";
 import "@esri/calcite-components/components/calcite-block";
@@ -10,6 +11,7 @@ import PointSymbol3DSymbolLayersForm from "./PointSymbol3DSymbolLayersForm";
 import PointSymbol3DVerticalOffsetForm from "./PointSymbol3DVerticalOffsetForm";
 
 interface Props {
+  symbolLayers: PointSymbol3D["symbolLayers"];
   callout: LineCallout3D | null | undefined;
   handleCalloutChange: (value: LineCallout3D | null) => void;
   verticalOffset: Symbol3DVerticalOffset | null | undefined;
@@ -21,6 +23,7 @@ interface Props {
 }
 
 function PointSymbol3DForm({
+  symbolLayers,
   callout,
   handleCalloutChange,
   verticalOffset,
@@ -39,6 +42,7 @@ function PointSymbol3DForm({
         ></PointSymbol3DCalloutForm>
       </calcite-block>
       <PointSymbol3DSymbolLayersForm
+        symbolLayers={symbolLayers}
         updateSymbolLayers={updateSymbolLayers}
       ></PointSymbol3DSymbolLayersForm>
       <calcite-block style={blockStyles} expandable heading={"verticalOffset"}>

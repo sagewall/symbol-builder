@@ -1,5 +1,6 @@
 import Color from "@arcgis/core/Color.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import { colorWithAlpha } from "./lib/color";
+import type Collection from "@arcgis/core/core/Collection.js";
 import Font from "@arcgis/core/symbols/Font.js";
 import IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
@@ -8,7 +9,8 @@ import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import React, { useState } from "react";
+import React from "react";
+import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
 import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
 import { cloneSymbolLayers, getSymbolLayerKey } from "./lib/symbolLayerKeys";
@@ -17,10 +19,12 @@ import TextSymbol3DLayerForm from "./TextSymbol3DLayerForm";
 import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 
 interface Props {
+  symbolLayers: PointSymbol3D["symbolLayers"];
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
 function PointSymbol3DSymbolLayersForm({
+  symbolLayers,
   updateSymbolLayers,
 }: Props): React.ReactElement {
   const createNewIconSymbol3DLayer = (): IconSymbol3DLayer => {
@@ -64,13 +68,10 @@ function PointSymbol3DSymbolLayersForm({
     return newTextSymbol3DLayer;
   };
 
-  const [symbolLayers, setSymbolLayers] = useState(new Collection());
-
   const addIconSymbol3DLayer = (): void => {
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const iconSymbol3DLayer = createNewIconSymbol3DLayer();
     newSymbolLayers.add(iconSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -78,7 +79,6 @@ function PointSymbol3DSymbolLayersForm({
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const objectSymbol3DLayer = createNewObjectSymbol3DLayer();
     newSymbolLayers.add(objectSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -86,14 +86,12 @@ function PointSymbol3DSymbolLayersForm({
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const textSymbol3DLayer = createNewTextSymbol3DLayer();
     newSymbolLayers.add(textSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const deleteSymbol3DLayer = (index: number): void => {
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     newSymbolLayers.removeAt(index);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -106,7 +104,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     symbolLayer.anchor = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -119,7 +116,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.x = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -132,7 +128,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     symbolLayer.angle = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -145,7 +140,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     symbolLayer.anchorPosition.y = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -158,9 +152,8 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -173,7 +166,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     symbolLayer.occludedVisibility = { mode: value };
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -186,9 +178,8 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     if (symbolLayer.outline) {
-      symbolLayer.outline.color = new Color(value);
+      symbolLayer.outline.color = colorWithAlpha(value, symbolLayer.outline.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -203,7 +194,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -218,7 +208,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.resource) {
       symbolLayer.resource.href = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -237,7 +226,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.resource) {
       symbolLayer.resource.primitive = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -250,7 +238,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as IconSymbol3DLayer;
     symbolLayer.size = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -263,7 +250,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.anchor = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -278,7 +264,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.x = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -293,7 +278,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.y = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -308,7 +292,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.anchorPosition) {
       symbolLayer.anchorPosition.z = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -321,7 +304,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.castShadows = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -334,7 +316,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.depth = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -347,7 +328,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.heading = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -360,7 +340,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.height = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -373,9 +352,8 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -390,7 +368,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.resource) {
       symbolLayer.resource.href = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -409,7 +386,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.resource) {
       symbolLayer.resource.primitive = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -422,7 +398,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.roll = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -435,7 +410,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.tilt = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -448,7 +422,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as ObjectSymbol3DLayer;
     symbolLayer.width = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -461,9 +434,8 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     if (symbolLayer.background) {
-      symbolLayer.background.color = new Color(value);
+      symbolLayer.background.color = colorWithAlpha(value, symbolLayer.background.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -478,7 +450,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.font) {
       symbolLayer.font.decoration = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -493,7 +464,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.font) {
       symbolLayer.font.family = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -508,7 +478,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.font) {
       symbolLayer.font.style = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -523,7 +492,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.font) {
       symbolLayer.font.weight = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -536,9 +504,8 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     if (symbolLayer.halo) {
-      symbolLayer.halo.color = new Color(value);
+      symbolLayer.halo.color = colorWithAlpha(value, symbolLayer.halo.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -553,7 +520,6 @@ function PointSymbol3DSymbolLayersForm({
     if (symbolLayer.halo) {
       symbolLayer.halo.size = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -566,7 +532,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     symbolLayer.horizontalAlignment = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -579,7 +544,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     symbolLayer.lineHeight = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -592,9 +556,8 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -607,7 +570,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     symbolLayer.occludedVisibility = { mode: value };
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -620,7 +582,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     symbolLayer.size = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -633,7 +594,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     symbolLayer.text = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -646,7 +606,6 @@ function PointSymbol3DSymbolLayersForm({
       layerIndex,
     ) as TextSymbol3DLayer;
     symbolLayer.verticalAlignment = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -656,7 +615,6 @@ function PointSymbol3DSymbolLayersForm({
   ) => {
     const layers = cloneSymbolLayers(symbolLayers);
     (layers.getItemAt(index) as TextSymbol3DLayer).set(value);
-    setSymbolLayers(layers);
     updateSymbolLayers(layers);
   };
 
@@ -667,7 +625,6 @@ function PointSymbol3DSymbolLayersForm({
     const layers = cloneSymbolLayers(symbolLayers);
     const layer = layers.getItemAt(index) as ObjectSymbol3DLayer;
     if (layer.material) layer.material.emissive = value;
-    setSymbolLayers(layers);
     updateSymbolLayers(layers);
   };
 
@@ -700,6 +657,7 @@ function PointSymbol3DSymbolLayersForm({
                 ></calcite-action>
 
                 <IconSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
                   layerIndex={index}
                   handleIconSymbol3DLayerAnchorChange={
                     handleIconSymbol3DLayerAnchorChange
@@ -751,6 +709,7 @@ function PointSymbol3DSymbolLayersForm({
                   text="Delete"
                 ></calcite-action>
                 <ObjectSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
                   handleMaterialEmissiveChange={handleMaterialEmissiveChange}
                   layerIndex={index}
                   handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}

@@ -52,6 +52,7 @@ function MeshSymbol3DShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <MeshSymbol3DForm
+                symbolLayers={meshSymbol3D.symbolLayers}
                 updateSymbolLayers={updateSymbolLayers}
               ></MeshSymbol3DForm>
             </div>

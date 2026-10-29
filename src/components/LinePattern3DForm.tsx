@@ -6,7 +6,7 @@ import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { linePatternTypeOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
@@ -30,26 +30,20 @@ export default function LinePattern3DForm({
   const [saved, setSaved] = useState(
     pattern?.clone() ?? new LineStylePattern3D(),
   );
-  const [style, setStyle] = useState<LineStylePattern3D["style"]>(
+  const [savedStyle, setSavedStyle] = useState<LineStylePattern3D["style"]>(
     pattern?.type === "style" ? pattern.style : "solid",
   );
-  const validTemplateRef = useRef(
+  const [savedTemplate, setSavedTemplate] = useState(
     pattern?.type === "template" ? [...pattern.dashTemplate] : [10, 6, 2, 6],
   );
-  const [template, setTemplate] = useState(
-    JSON.stringify(validTemplateRef.current),
-  );
-  const [error, setError] = useState(false);
 
   const update = (next: LineSymbol3DLayer["pattern"]) => {
-    if (next) setSaved(next);
     handleChange(layerIndex, next);
   };
 
-  const updateTemplate = (value: string) => {
-    setTemplate(value);
+  const updateTemplate = (input: HTMLCalciteInputTextElement) => {
     try {
-      const values: unknown = JSON.parse(value);
+      const values: unknown = JSON.parse(input.value);
       if (
         !Array.isArray(values) ||
         !values.length ||
@@ -59,11 +53,16 @@ export default function LinePattern3DForm({
       )
         throw new Error();
       const next = new LineTemplatePattern3D({ dashTemplate: values });
-      validTemplateRef.current = [...next.dashTemplate];
-      setError(false);
+      input.value = JSON.stringify(next.dashTemplate);
+      input.status = "idle";
+      input.validationMessage = "";
       update(next);
     } catch {
-      setError(true);
+      input.status = "invalid";
+      input.validationMessage = "Expected a non-empty array of finite numbers.";
+      input.value = JSON.stringify(
+        pattern?.type === "template" ? pattern.dashTemplate : savedTemplate,
+      );
     }
   };
 
@@ -75,10 +74,7 @@ export default function LinePattern3DForm({
           label="pattern enabled"
           checked={!!pattern}
           oncalciteSwitchChange={(event) => {
-            if (event.target.checked && saved.type === "template") {
-              setTemplate(JSON.stringify(saved.dashTemplate));
-              setError(false);
-            }
+            if (pattern) setSaved(pattern.clone());
             update(event.target.checked ? saved.clone() : null);
           }}
         ></calcite-switch>
@@ -91,14 +87,14 @@ export default function LinePattern3DForm({
               label="pattern type selection"
               value={pattern.type}
               oncalciteSelectChange={(event) => {
+                if (pattern.type === "style") setSavedStyle(pattern.style);
+                else setSavedTemplate([...pattern.dashTemplate]);
                 if (event.target.value === "style")
-                  update(new LineStylePattern3D({ style }));
+                  update(new LineStylePattern3D({ style: savedStyle }));
                 else {
-                  setTemplate(JSON.stringify(validTemplateRef.current));
-                  setError(false);
                   update(
                     new LineTemplatePattern3D({
-                      dashTemplate: validTemplateRef.current,
+                      dashTemplate: savedTemplate,
                     }),
                   );
                 }
@@ -116,7 +112,6 @@ export default function LinePattern3DForm({
               layerIndex={layerIndex}
               styleValue={pattern.style}
               handleStyleChange={(_, value) => {
-                setStyle(value);
                 update(new LineStylePattern3D({ style: value }));
               }}
             />
@@ -125,15 +120,9 @@ export default function LinePattern3DForm({
               dashTemplate
               <calcite-input-text
                 label="dashTemplate input"
-                value={template}
-                status={error ? "invalid" : "idle"}
-                validationMessage={
-                  error
-                    ? "Expected a non-empty array of finite numbers."
-                    : undefined
-                }
+                value={JSON.stringify(pattern.dashTemplate)}
                 oncalciteInputTextChange={(event) =>
-                  updateTemplate(event.target.value)
+                  updateTemplate(event.target)
                 }
               ></calcite-input-text>
             </calcite-label>

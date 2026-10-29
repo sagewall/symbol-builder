@@ -1,4 +1,5 @@
 import esriRequest from "@arcgis/core/request.js";
+import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-list";
@@ -18,6 +19,7 @@ import { labelStyles } from "./lib/styles";
 import type { GroupItem, ItemType, WebStyleSymbolItem } from "./lib/types";
 
 interface Props {
+  symbol: WebStyleSymbol;
   groupItems: GroupItem[];
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (
@@ -33,28 +35,29 @@ interface Props {
 }
 
 function WebStyleSymbol2DForm({
+  symbol,
   groupItems,
   handleNameChange,
   handleStyleNameChange,
   handleCustomStyleChange,
 }: Props): React.ReactElement {
-  const [agolStyle, setAgolStyle] = useState("Animals");
   const [lineWebStyleSymbolItems, setLineWebStyleSymbolItems] = useState<
     WebStyleSymbolItem[]
   >([]);
-  const [name, setName] = useState("");
   const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<
     WebStyleSymbolItem[]
   >([]);
   const [polygonWebStyleSymbolItems, setPolygonWebStyleSymbolItems] = useState<
     WebStyleSymbolItem[]
   >([]);
-  const [styleName, setStyleName] = useState("Esri2DPointSymbolsStyle");
-  const [portalUrl, setPortalUrl] = useState("");
-  const [styleUrl, setStyleUrl] = useState(
-    "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
-  );
+  const [styleUrl, setStyleUrl] = useState(symbol.styleUrl ?? "");
   const requestId = useRef(0);
+  const name = symbol.name ?? "";
+  const styleName = symbol.styleName ?? "";
+  const portalUrl = symbol.portal?.url ?? "";
+  const agolStyle =
+    groupItems.find((item) => styleUrl.includes(`/items/${item.id}/data`))
+      ?.id ?? "";
 
   useEffect(
     () => () => {
@@ -74,6 +77,9 @@ function WebStyleSymbol2DForm({
         (styleItem) => styleItem.title === groupItem.title,
       );
       if (styleItem?.id) {
+        setStyleUrl(
+          `https://www.arcgis.com/sharing/rest/content/items/${styleItem.id}/data`,
+        );
         try {
           const response = await esriRequest(
             `https://www.arcgis.com/sharing/rest/content/items/${styleItem.id}/data?f=pjson`,
@@ -225,12 +231,8 @@ function WebStyleSymbol2DForm({
     }
     if (selectedTitle.tab === "standard") {
       requestId.current += 1;
-      setName("extent-hollow-gray");
-      setStyleName("Esri2DPointSymbolsStyle");
       handleStyleNameChange("Esri2DPointSymbolsStyle", portalUrl);
     } else {
-      setAgolStyle("Animals");
-      setName("");
       setLineWebStyleSymbolItems([]);
       setPolygonWebStyleSymbolItems([]);
       setStyleUrl(
@@ -267,7 +269,6 @@ function WebStyleSymbol2DForm({
             <calcite-select
               label={"styleName selection"}
               oncalciteSelectChange={async (event) => {
-                setAgolStyle(event.target.value);
                 await handleAgolSyleChange(event.target.value);
               }}
               value={agolStyle}
@@ -376,11 +377,17 @@ function WebStyleSymbol2DForm({
             <calcite-select
               label={"name selection"}
               oncalciteSelectChange={(event) => {
-                setName(event.target.value);
                 handleNameChange(event.target.value);
               }}
               value={name}
             >
+              {!esri2DPointSymbolsStyleNameOptions.some(
+                (option) => option === name,
+              ) && (
+                <calcite-option value={name} disabled>
+                  {name}
+                </calcite-option>
+              )}
               {esri2DPointSymbolsStyleNameOptions.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -392,11 +399,15 @@ function WebStyleSymbol2DForm({
             <calcite-select
               label={"styleName selection"}
               oncalciteSelectChange={(event) => {
-                setStyleName(event.target.value);
                 handleStyleNameChange(event.target.value, portalUrl);
               }}
               value={styleName}
             >
+              {!styleName && (
+                <calcite-option value="" disabled>
+                  Custom
+                </calcite-option>
+              )}
               {webStyleSymbols2DStyleOptions.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -408,8 +419,11 @@ function WebStyleSymbol2DForm({
             <calcite-input-text
               label="Portal URL"
               oncalciteInputTextChange={(event) => {
-                setPortalUrl(event.target.value);
-                handleStyleNameChange(styleName, event.target.value, name);
+                handleStyleNameChange(
+                  styleName || "Esri2DPointSymbolsStyle",
+                  event.target.value,
+                  name,
+                );
               }}
               placeholder="https://www.arcgis.com"
               value={portalUrl}

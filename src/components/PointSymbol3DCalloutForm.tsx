@@ -6,6 +6,7 @@ import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-switch";
 import { useState } from "react";
 import { labelStyles } from "./lib/styles";
+import { colorWithAlpha } from "./lib/color";
 
 interface Props {
   callout: LineCallout3D | null | undefined;
@@ -19,12 +20,15 @@ function PointSymbol3DCalloutForm({
   const [saved, setSaved] = useState(
     callout?.clone() ?? new LineCallout3D({ size: 1 }),
   );
-  const [borderColor, setBorderColor] = useState("#ffffff");
+  const [savedBorder, setSavedBorder] = useState(
+    callout?.border
+      ? { color: callout.border.color?.clone() ?? new Color("#ffffff") }
+      : { color: new Color("#ffffff") },
+  );
 
   const update = (change: (value: LineCallout3D) => void) => {
     const next = (callout ?? saved).clone();
     change(next);
-    setSaved(next);
     handleChange(next);
   };
 
@@ -35,9 +39,10 @@ function PointSymbol3DCalloutForm({
         <calcite-switch
           label="callout enabled"
           checked={!!callout}
-          oncalciteSwitchChange={(event) =>
-            handleChange(event.target.checked ? saved.clone() : null)
-          }
+          oncalciteSwitchChange={(event) => {
+            if (callout) setSaved(callout.clone());
+            handleChange(event.target.checked ? saved.clone() : null);
+          }}
         ></calcite-switch>
       </calcite-label>
       {callout && (
@@ -48,7 +53,7 @@ function PointSymbol3DCalloutForm({
               oncalciteInputInput={(event) => {
                 if (event.target.value)
                   update((next) => {
-                    next.color = new Color(event.target.value);
+                    next.color = colorWithAlpha(event.target.value, next.color);
                   });
               }}
               type="color"
@@ -74,13 +79,18 @@ function PointSymbol3DCalloutForm({
             <calcite-switch
               label="callout border enabled"
               checked={!!callout.border}
-              oncalciteSwitchChange={(event) =>
+              oncalciteSwitchChange={(event) => {
+                if (callout.border) {
+                  setSavedBorder({
+                    color: callout.border.color?.clone() ?? new Color("#ffffff"),
+                  });
+                }
                 update((next) => {
                   next.border = event.target.checked
-                    ? { color: borderColor }
+                    ? { color: savedBorder.color.clone() }
                     : null;
-                })
-              }
+                });
+              }}
             ></calcite-switch>
           </calcite-label>
           {callout.border && (
@@ -89,12 +99,13 @@ function PointSymbol3DCalloutForm({
               <calcite-input
                 label="callout border color input"
                 type="color"
-                value={callout.border.color?.toHex() ?? borderColor}
+                value={callout.border.color?.toHex() ?? "#ffffff"}
                 oncalciteInputInput={(event) => {
                   if (!event.target.value) return;
-                  setBorderColor(event.target.value);
                   update((next) => {
-                    next.border = { color: event.target.value };
+                    next.border = {
+                      color: colorWithAlpha(event.target.value, next.border?.color),
+                    };
                   });
                 }}
               ></calcite-input>

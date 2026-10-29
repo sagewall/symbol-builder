@@ -3,11 +3,11 @@ import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { iconSymbol3dLayerResourcePrimitiveOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: IconSymbol3DLayer;
   layerIndex: number;
   handleHrefChange: (layerIndex: number, value: string) => void;
   handlePrimitiveChange: (
@@ -21,12 +21,13 @@ interface Props {
 }
 
 function IconSymbol3DLayerResourceForm({
+  symbolLayer,
   layerIndex,
   handleHrefChange,
   handlePrimitiveChange,
 }: Props): React.ReactElement {
-  const [href, setHref] = useState("");
-  const [primitive, setPrimitive] = useState("circle");
+  const href = symbolLayer.resource?.href ?? "";
+  const primitive = symbolLayer.resource?.primitive ?? "";
 
   return (
     <>
@@ -35,7 +36,6 @@ function IconSymbol3DLayerResourceForm({
         <calcite-input-text
           label={"url input"}
           oncalciteInputTextChange={(event) => {
-            setHref(event.target.value);
             handleHrefChange(layerIndex, event.target.value);
           }}
           value={href}
@@ -46,7 +46,6 @@ function IconSymbol3DLayerResourceForm({
         <calcite-select
           label={"primitive selection"}
           oncalciteSelectChange={(event) => {
-            setPrimitive(event.target.value);
             handlePrimitiveChange(
               layerIndex,
               event.target.value as NonNullable<

@@ -117,6 +117,7 @@ function PictureMarkerSymbolShell(): React.ReactElement {
 
             <div style={formStyles}>
               <PictureMarkerSymbolForm
+                symbol={pictureMarkerSymbol}
                 handleAngleChange={handleAngleChange}
                 handleHeightChange={handleHeightChange}
                 handleUrlChange={handleUrlChange}

@@ -6,12 +6,13 @@ import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { capOptions, joinOptions, lineStyleOptions } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import LineSymbolMarkerForm from "./LineSymbolMarkerForm";
 
 interface Props {
+  symbol: SimpleLineSymbol;
+  marker?: LineSymbolMarker;
   handleCapChange: (
     value: InstanceType<typeof SimpleLineSymbol>["cap"],
   ) => void;
@@ -37,6 +38,8 @@ interface Props {
 }
 
 function SimpleLineSymbolForm({
+  symbol,
+  marker,
   handleCapChange,
   handleColorChange,
   handleJoinChange,
@@ -50,17 +53,12 @@ function SimpleLineSymbolForm({
   showMarker,
   solidOnly,
 }: Props): React.ReactElement {
-  const [cap, setCap] = useState("round");
-  const [color, setColor] = useState("#007ac2");
-  const [join, setJoin] = useState("round");
-  const [miterLimit, setMiterLimit] = useState("1");
-  const [style, setStyle] = useState("solid");
-  const [width, setWidth] = useState("1");
+  const { cap, join, miterLimit, style, width } = symbol;
 
   let markerBlock;
   let styleBlock;
 
-  if (showMarker) {
+  if (showMarker && marker) {
     markerBlock = (
       <calcite-block
         style={blockStyles}
@@ -78,6 +76,7 @@ function SimpleLineSymbolForm({
         }}
       >
         <LineSymbolMarkerForm
+          marker={symbol.marker ?? marker}
           handleColorChange={handleMarkerColorChange}
           handlePlacementChange={handleMarkerPlacementChange}
           handleStyleChange={handleMarkerStyleChange}
@@ -97,7 +96,6 @@ function SimpleLineSymbolForm({
         <calcite-select
           label={"style selection"}
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             handleStyleChange(
               event.target.value as InstanceType<
                 typeof SimpleLineSymbol
@@ -121,7 +119,6 @@ function SimpleLineSymbolForm({
         <calcite-select
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
-            setCap(event.target.value);
             handleCapChange(
               event.target.value as InstanceType<
                 typeof SimpleLineSymbol
@@ -140,13 +137,10 @@ function SimpleLineSymbolForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}
+          value={symbol.color?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
 
@@ -155,7 +149,6 @@ function SimpleLineSymbolForm({
         <calcite-select
           label={"join selection"}
           oncalciteSelectChange={(event) => {
-            setJoin(event.target.value);
             handleJoinChange(
               event.target.value as InstanceType<
                 typeof SimpleLineSymbol
@@ -178,10 +171,9 @@ function SimpleLineSymbolForm({
           label={"miterLimit input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setMiterLimit(event.target.value);
             handleMiterLimitChange(event.target.value);
           }}
-          value={miterLimit}
+          value={String(miterLimit)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -193,10 +185,9 @@ function SimpleLineSymbolForm({
           label={"width input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
-          value={width}
+          value={String(width)}
         ></calcite-input-number>
       </calcite-label>
     </>

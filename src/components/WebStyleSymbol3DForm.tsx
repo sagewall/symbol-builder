@@ -1,4 +1,5 @@
 import esriRequest from "@arcgis/core/request.js";
+import type WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-input-text";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-list";
@@ -26,6 +27,7 @@ import { labelStyles } from "./lib/styles";
 import type { ItemType, WebStyleSymbolItem } from "./lib/types";
 
 interface Props {
+  symbol: WebStyleSymbol;
   handleNameChange: (value: string) => void;
   handleStyleNameChange: (
     value: string,
@@ -40,19 +42,20 @@ interface Props {
 }
 
 function WebStyleSymbolForm({
+  symbol,
   handleNameChange,
   handleStyleNameChange,
   handleCustomStyleChange,
 }: Props): React.ReactElement {
-  const [name, setName] = useState("Accessibility");
-  const [names, setNames] = useState(esriIconsStyleNameOptions);
   const [pointWebStyleSymbolItems, setPointWebStyleSymbolItems] = useState<
     WebStyleSymbolItem[]
   >([]);
-  const [styleName, setStyleName] = useState("EsriIconsStyle");
-  const [portalUrl, setPortalUrl] = useState("");
-  const [styleUrl, setStyleUrl] = useState("");
+  const [styleUrl, setStyleUrl] = useState(symbol.styleUrl ?? "");
   const requestId = useRef(0);
+  const name = symbol.name ?? "";
+  const styleName = symbol.styleName ?? "";
+  const portalUrl = symbol.portal?.url ?? "";
+  const names = getNames(styleName);
 
   useEffect(
     () => () => {
@@ -93,12 +96,8 @@ function WebStyleSymbolForm({
     }
     if (selectedTitle.tab === "standard") {
       requestId.current += 1;
-      setName("Accessibility");
-      setNames(esriIconsStyleNameOptions);
-      setStyleName("EsriIconsStyle");
       handleStyleNameChange("EsriIconsStyle", portalUrl);
     } else {
-      setName("");
       setStyleUrl(
         "https://www.arcgis.com/sharing/rest/content/items/9b8e84d1c01349f28d57502af601e37f/data",
       );
@@ -108,58 +107,39 @@ function WebStyleSymbolForm({
     }
   };
 
-  const updateNames = (styleName: string): void => {
+  function getNames(styleName: string | null | undefined): readonly string[] {
     switch (styleName) {
       case "EsriIconsStyle":
-        setNames(esriIconsStyleNameOptions);
-        setName(esriIconsStyleNameOptions[0]);
-        break;
+        return esriIconsStyleNameOptions;
 
       case "EsriInfrastructureStyle":
-        setNames(esriInfrastructureStyleNameOptions);
-        setName(esriInfrastructureStyleNameOptions[0]);
-        break;
+        return esriInfrastructureStyleNameOptions;
 
       case "EsriRealisticSignsandSignalsStyle":
-        setNames(esriRealisticSignsAndSignalsStyleNameOptions);
-        setName(esriRealisticSignsAndSignalsStyleNameOptions[0]);
-        break;
+        return esriRealisticSignsAndSignalsStyleNameOptions;
 
       case "EsriRealisticStreetSceneStyle":
-        setNames(esriRealisticStreetSceneStyleNameOptions);
-        setName(esriRealisticStreetSceneStyleNameOptions[0]);
-        break;
+        return esriRealisticStreetSceneStyleNameOptions;
 
       case "EsriRealisticTransportationStyle":
-        setNames(esriRealisticTransportationStyleNameOptions);
-        setName(esriRealisticTransportationStyleNameOptions[0]);
-        break;
+        return esriRealisticTransportationStyleNameOptions;
 
       case "EsriRealisticTreesStyle":
-        setNames(esriRealisticTreesStyleNameOptions);
-        setName(esriRealisticTreesStyleNameOptions[0]);
-        break;
+        return esriRealisticTreesStyleNameOptions;
 
       case "EsriRecreationStyle":
-        setNames(esriRecreationStyleNameOptions);
-        setName(esriRecreationStyleNameOptions[0]);
-        break;
+        return esriRecreationStyleNameOptions;
 
       case "EsriThematicShapesStyle":
-        setNames(esriThematicShapesStyleNameOptions);
-        setName(esriThematicShapesStyleNameOptions[0]);
-        break;
+        return esriThematicShapesStyleNameOptions;
 
       case "EsriThematicTreesStyle":
-        setNames(esriThematicTreesStyleNameOptions);
-        setName(esriThematicTreesStyleNameOptions[0]);
-        break;
+        return esriThematicTreesStyleNameOptions;
 
       default:
-        setNames(esriIconsStyleNameOptions);
-        setName(esriIconsStyleNameOptions[0]);
+        return esriIconsStyleNameOptions;
     }
-  };
+  }
 
   return (
     <>
@@ -177,11 +157,15 @@ function WebStyleSymbolForm({
             <calcite-select
               label={"name selection"}
               oncalciteSelectChange={(event) => {
-                setName(event.target.value);
                 handleNameChange(event.target.value);
               }}
               value={name}
             >
+              {!names.includes(name) && (
+                <calcite-option value={name} disabled>
+                  {name}
+                </calcite-option>
+              )}
               {names.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -194,12 +178,15 @@ function WebStyleSymbolForm({
               label={"styleName selection"}
               oncalciteSelectChange={(event) => {
                 requestId.current += 1;
-                setStyleName(event.target.value);
                 handleStyleNameChange(event.target.value, portalUrl);
-                updateNames(event.target.value);
               }}
               value={styleName}
             >
+              {!styleName && (
+                <calcite-option value="" disabled>
+                  Custom
+                </calcite-option>
+              )}
               {webStyleSymbols3DStyleOptions.map((option, index) => (
                 <calcite-option key={index}>{option}</calcite-option>
               ))}
@@ -212,8 +199,11 @@ function WebStyleSymbolForm({
               label="Portal URL"
               oncalciteInputTextChange={(event) => {
                 requestId.current += 1;
-                setPortalUrl(event.target.value);
-                handleStyleNameChange(styleName, event.target.value, name);
+                handleStyleNameChange(
+                  styleName || "EsriIconsStyle",
+                  event.target.value,
+                  name,
+                );
               }}
               placeholder="https://www.arcgis.com"
               value={portalUrl}

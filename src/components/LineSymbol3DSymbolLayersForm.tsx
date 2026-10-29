@@ -1,5 +1,6 @@
-import Color from "@arcgis/core/Color.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import { colorWithAlpha } from "./lib/color";
+import type Collection from "@arcgis/core/core/Collection.js";
+import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
@@ -16,10 +17,12 @@ import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import type { LinePatternChangeHandler } from "./LinePattern3DForm";
 
 interface Props {
+  symbolLayers: LineSymbol3D["symbolLayers"];
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
 function LineSymbol3DSymbolLayersForm({
+  symbolLayers,
   updateSymbolLayers,
 }: Props): React.ReactElement {
   const createNewLineSymbol3DLayer = (): LineSymbol3DLayer => {
@@ -42,8 +45,6 @@ function LineSymbol3DSymbolLayersForm({
     return newPathSymbol3DLayer;
   };
 
-  const [symbolLayers, setSymbolLayers] = useState(new Collection());
-
   const [lineStyleMarker3Ds, setLineStyleMarker3Ds] = useState<
     Map<number, LineStyleMarker3D>
   >(() => new Map());
@@ -52,7 +53,6 @@ function LineSymbol3DSymbolLayersForm({
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const lineSymbol3DLayer = createNewLineSymbol3DLayer();
     newSymbolLayers.add(lineSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
 
     const newLineStyleMarker3D = new LineStyleMarker3D({
@@ -72,7 +72,6 @@ function LineSymbol3DSymbolLayersForm({
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const pathSymbol3DLayer = createNewPathSymbol3DLayer();
     newSymbolLayers.add(pathSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -85,7 +84,6 @@ function LineSymbol3DSymbolLayersForm({
       newLineStyleMarker3Ds.delete(getSymbolLayerKey(removedLayer));
       setLineStyleMarker3Ds(newLineStyleMarker3Ds);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -98,7 +96,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as LineSymbol3DLayer;
     symbolLayer.cap = value as InstanceType<typeof LineSymbol3DLayer>["cap"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -111,7 +108,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as LineSymbol3DLayer;
     symbolLayer.join = value as InstanceType<typeof LineSymbol3DLayer>["join"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -138,7 +134,6 @@ function LineSymbol3DSymbolLayersForm({
       setLineStyleMarker3Ds(newLineStyleMarker3Ds);
       symbolLayer.marker = null;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -151,9 +146,8 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as LineSymbol3DLayer;
     if (symbolLayer.marker) {
-      symbolLayer.marker.color = new Color(value);
+      symbolLayer.marker.color = colorWithAlpha(value, symbolLayer.marker.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -170,7 +164,6 @@ function LineSymbol3DSymbolLayersForm({
         typeof LineStyleMarker3D
       >["placement"];
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -187,7 +180,6 @@ function LineSymbol3DSymbolLayersForm({
         typeof LineStyleMarker3D
       >["style"];
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -200,16 +192,14 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as LineSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const handlePatternChange: LinePatternChangeHandler = (index, value) => {
     const layers = cloneSymbolLayers(symbolLayers);
     (layers.getItemAt(index) as LineSymbol3DLayer).pattern = value;
-    setSymbolLayers(layers);
     updateSymbolLayers(layers);
   };
 
@@ -222,7 +212,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as LineSymbol3DLayer;
     symbolLayer.size = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -237,7 +226,6 @@ function LineSymbol3DSymbolLayersForm({
     symbolLayer.anchor = value as InstanceType<
       typeof PathSymbol3DLayer
     >["anchor"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -250,7 +238,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.cap = value as InstanceType<typeof PathSymbol3DLayer>["cap"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -263,7 +250,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.castShadows = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -276,7 +262,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.height = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -289,7 +274,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.join = value as InstanceType<typeof PathSymbol3DLayer>["join"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -302,9 +286,8 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as PathSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -319,7 +302,6 @@ function LineSymbol3DSymbolLayersForm({
     symbolLayer.profile = value as InstanceType<
       typeof PathSymbol3DLayer
     >["profile"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -334,7 +316,6 @@ function LineSymbol3DSymbolLayersForm({
     symbolLayer.profileRotation = value as InstanceType<
       typeof PathSymbol3DLayer
     >["profileRotation"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -347,7 +328,6 @@ function LineSymbol3DSymbolLayersForm({
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.width = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -358,7 +338,6 @@ function LineSymbol3DSymbolLayersForm({
     const layers = cloneSymbolLayers(symbolLayers);
     const layer = layers.getItemAt(index) as PathSymbol3DLayer;
     if (layer.material) layer.material.emissive = value;
-    setSymbolLayers(layers);
     updateSymbolLayers(layers);
   };
 
@@ -385,6 +364,11 @@ function LineSymbol3DSymbolLayersForm({
                 ></calcite-action>
 
                 <LineSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
+                  marker={
+                    symbolLayer.marker ??
+                    lineStyleMarker3Ds.get(getSymbolLayerKey(symbolLayer))
+                  }
                   pattern={symbolLayer.pattern}
                   handlePatternChange={handlePatternChange}
                   layerIndex={index}
@@ -425,6 +409,7 @@ function LineSymbol3DSymbolLayersForm({
                   text="Delete"
                 ></calcite-action>
                 <PathSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
                   handleMaterialEmissiveChange={handleMaterialEmissiveChange}
                   layerIndex={index}
                   handleAnchorChange={handlePathSymbol3DLayerAnchorChange}

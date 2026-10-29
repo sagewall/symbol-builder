@@ -9,7 +9,7 @@ import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
 import "@esri/calcite-components/dist/components/calcite-switch";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import FontForm from "./FontForm";
 import {
   horizontalAlignmentOptions,
@@ -18,10 +18,7 @@ import {
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
-  font: Font;
-  lineWidth: string;
-  backgroundOpacity: number;
-  borderLineOpacity: number;
+  symbol: TextSymbol;
   handleFontPropertiesChange: (
     value: Partial<Pick<Font, "family" | "style" | "weight">>,
   ) => void;
@@ -55,10 +52,7 @@ interface Props {
 }
 
 function TextSymbolForm({
-  font,
-  lineWidth,
-  backgroundOpacity,
-  borderLineOpacity,
+  symbol,
   handleFontPropertiesChange,
   handleAngleChange,
   handleBackgroundColorChange,
@@ -82,21 +76,23 @@ function TextSymbolForm({
   handleXOffsetChange,
   handleYOffsetChange,
 }: Props): React.ReactElement {
-  const [angle, setAngle] = useState(0);
-  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
-  const [borderLineColor, setBorderLineColor] = useState("#ffffff");
-  const [borderLineSize, setBorderLineSize] = useState("0");
-  const [color, setColor] = useState("#000000");
-  const [haloColor, setHaloColor] = useState("#ffffff");
-  const [haloSize, setHaloSize] = useState("0");
-  const [horizontalAlignment, setHorizontalAlignment] = useState("center");
-  const [kerning, setKerning] = useState(false);
-  const [lineHeight, setLineHeight] = useState("1");
-  const [rotated, setRotated] = useState(false);
-  const [text, setText] = useState("Hello World!");
-  const [verticalAlignment, setVerticalAlignment] = useState("baseline");
-  const [xoffset, setXoffset] = useState("0");
-  const [yoffset, setYoffset] = useState("0");
+  const lineHeightInput = useRef<HTMLCalciteInputNumberElement>(null);
+  useEffect(() => {
+    // SDK normalization can leave the prop unchanged after the input changes.
+    if (lineHeightInput.current) {
+      lineHeightInput.current.value = String(symbol.lineHeight);
+    }
+  }, [symbol]);
+
+  const {
+    angle,
+    font,
+    horizontalAlignment,
+    kerning,
+    rotated,
+    text,
+    verticalAlignment,
+  } = symbol;
 
   return (
     <>
@@ -105,7 +101,6 @@ function TextSymbolForm({
         <calcite-input-text
           label={"text input"}
           oncalciteInputTextChange={(event) => {
-            setText(event.target.value);
             handleTextChange(event.target.value);
           }}
           value={text}
@@ -120,7 +115,6 @@ function TextSymbolForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setAngle(event.target.value as number);
             handleAngleChange(event.target.value as number);
           }}
           step={1}
@@ -133,13 +127,10 @@ function TextSymbolForm({
         backgroundColor
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setBackgroundColor(event.target.value);
-            }
             handleBackgroundColorChange(event.target.value);
           }}
           type="color"
-          value={backgroundColor}
+          value={symbol.backgroundColor?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
 
@@ -153,7 +144,7 @@ function TextSymbolForm({
             handleBackgroundOpacityChange(event.target.value as number);
           }}
           step={0.01}
-          value={backgroundOpacity}
+          value={symbol.backgroundColor?.a ?? 0}
         ></calcite-slider>
       </calcite-label>
 
@@ -161,13 +152,10 @@ function TextSymbolForm({
         borderLineColor
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setBorderLineColor(event.target.value);
-            }
             handleBorderLineColorChange(event.target.value);
           }}
           type="color"
-          value={borderLineColor}
+          value={symbol.borderLineColor?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
 
@@ -181,7 +169,7 @@ function TextSymbolForm({
             handleBorderLineOpacityChange(event.target.value as number);
           }}
           step={0.01}
-          value={borderLineOpacity}
+          value={symbol.borderLineColor?.a ?? 0}
         ></calcite-slider>
       </calcite-label>
 
@@ -191,10 +179,11 @@ function TextSymbolForm({
           label={"borderLineSize input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setBorderLineSize(event.target.value);
             handleBorderLineSizeChange(event.target.value);
           }}
-          value={borderLineSize}
+          value={
+            symbol.borderLineSize == null ? "" : String(symbol.borderLineSize)
+          }
         ></calcite-input-number>
       </calcite-label>
 
@@ -202,13 +191,10 @@ function TextSymbolForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
             handleColorChange(event.target.value);
           }}
           type="color"
-          value={color}
+          value={symbol.color?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
 
@@ -226,13 +212,10 @@ function TextSymbolForm({
         haloColor
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setHaloColor(event.target.value);
-            }
             handleHaloColorChange(event.target.value);
           }}
           type="color"
-          value={haloColor}
+          value={symbol.haloColor?.toHex() ?? ""}
         ></calcite-input>
       </calcite-label>
 
@@ -242,10 +225,9 @@ function TextSymbolForm({
           label={"haloSize input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setHaloSize(event.target.value);
             handleHaloSizeChange(event.target.value);
           }}
-          value={haloSize}
+          value={symbol.haloSize == null ? "" : String(symbol.haloSize)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -254,7 +236,6 @@ function TextSymbolForm({
         <calcite-select
           label={"horizontalAlignment selection"}
           oncalciteSelectChange={(event) => {
-            setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
               event.target.value as InstanceType<
                 typeof TextSymbol
@@ -274,7 +255,6 @@ function TextSymbolForm({
         <calcite-select
           label={"verticalAlignment selection"}
           oncalciteSelectChange={(event) => {
-            setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
               event.target.value as InstanceType<
                 typeof TextSymbol
@@ -292,25 +272,25 @@ function TextSymbolForm({
       <calcite-label layout="default" style={labelStyles}>
         kerning
         <calcite-switch
+          checked={kerning}
           oncalciteSwitchChange={(event) => {
-            setKerning(event.target.checked);
             handleKerningChange(event.target.checked);
           }}
-          value={kerning}
         ></calcite-switch>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
         lineHeight
         <calcite-input-number
+          ref={lineHeightInput}
           label="lineHeight input"
-          min={0}
+          min={0.1}
+          max={4}
           step={0.1}
           oncalciteInputNumberChange={(event) => {
-            setLineHeight(event.target.value);
             handleLineHeightChange(event.target.value);
           }}
-          value={lineHeight}
+          value={String(symbol.lineHeight)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -322,18 +302,17 @@ function TextSymbolForm({
           oncalciteInputNumberChange={(event) => {
             handleLineWidthChange(event.target.value);
           }}
-          value={lineWidth}
+          value={String(symbol.lineWidth)}
         ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
         rotated
         <calcite-switch
+          checked={rotated}
           oncalciteSwitchChange={(event) => {
-            setRotated(event.target.checked);
             handleRotatedChange(event.target.checked);
           }}
-          value={rotated}
         ></calcite-switch>
       </calcite-label>
 
@@ -342,10 +321,9 @@ function TextSymbolForm({
         <calcite-input-number
           label={"xoffset input"}
           oncalciteInputNumberChange={(event) => {
-            setXoffset(event.target.value);
             handleXOffsetChange(event.target.value);
           }}
-          value={xoffset}
+          value={String(symbol.xoffset)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -354,10 +332,9 @@ function TextSymbolForm({
         <calcite-input-number
           label={"yoffset input"}
           oncalciteInputNumberChange={(event) => {
-            setYoffset(event.target.value);
             handleYOffsetChange(event.target.value);
           }}
-          value={yoffset}
+          value={String(symbol.yoffset)}
         ></calcite-input-number>
       </calcite-label>
     </>

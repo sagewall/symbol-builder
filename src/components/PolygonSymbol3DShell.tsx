@@ -65,6 +65,7 @@ function PolygonSymbol3DShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <PolygonSymbol3DForm
+                symbolLayers={polygonSymbol3D.symbolLayers}
                 updateSymbolLayers={updateSymbolLayers}
               ></PolygonSymbol3DForm>
             </div>

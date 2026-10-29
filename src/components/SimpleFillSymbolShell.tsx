@@ -1,4 +1,3 @@
-import Color from "@arcgis/core/Color.js";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
 import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import "@esri/calcite-components/dist/components/calcite-label";
@@ -18,6 +17,7 @@ import SimpleFillSymbolESMPanel from "./SimpleFillSymbolESMPanel";
 import SimpleFillSymbolForm from "./SimpleFillSymbolForm";
 import SimpleFillSymbolJSONPanel from "./SimpleFillSymbolJSONPanel";
 import { polygon } from "./lib/geometry";
+import { colorWithAlpha } from "./lib/color";
 import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
@@ -30,14 +30,10 @@ import {
 function SimpleFillSymbolShell(): React.ReactElement {
   const viewSwitchRef = useRef(null);
 
-  const [simpleLineSymbol, setSimpleLineSymbol] = useState(
-    new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 }),
-  );
-
   const [simpleFillSymbol, setSimpleFillSymbol] = useState(
     new SimpleFillSymbol({
       color: "#007ac2",
-      outline: simpleLineSymbol,
+      outline: new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 }),
     }),
   );
 
@@ -63,78 +59,64 @@ function SimpleFillSymbolShell(): React.ReactElement {
     updatePreview(newSimpleFillSymbol);
   };
 
+  const updateOutline = (change: (outline: SimpleLineSymbol) => void): void => {
+    const next = simpleFillSymbol.clone();
+    if (!next.outline) throw new Error("Cannot edit a missing outline.");
+    change(next.outline);
+    updateGraphics(next);
+  };
+
   const handleColorChange = (currentColor: string): void => {
     const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.color = new Color(currentColor);
+    newSimpleFillSymbol.color = colorWithAlpha(
+      currentColor,
+      newSimpleFillSymbol.color,
+    );
     updateGraphics(newSimpleFillSymbol);
   };
 
   const handleOutlineCapChange = (
     currentCapValue: InstanceType<typeof SimpleLineSymbol>["cap"],
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.cap = currentCapValue;
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleFillSymbol);
+    updateOutline((outline) => {
+      outline.cap = currentCapValue;
+    });
   };
 
   const handleOutlineColorChange = (currentColor: string): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.color = new Color(currentColor);
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleFillSymbol);
+    updateOutline((outline) => {
+      outline.color = colorWithAlpha(currentColor, outline.color);
+    });
   };
 
   const handleOutlineJoinChange = (
     currentJoinValue: InstanceType<typeof SimpleLineSymbol>["join"],
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.join = currentJoinValue;
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleFillSymbol);
+    updateOutline((outline) => {
+      outline.join = currentJoinValue;
+    });
   };
 
   const handleOutlineMiterLimitChange = (
     currentMiterLimitValue: string,
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.miterLimit = Number(currentMiterLimitValue);
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleFillSymbol);
+    updateOutline((outline) => {
+      outline.miterLimit = Number(currentMiterLimitValue);
+    });
   };
 
   const handleOutlineStyleChange = (
     currentStyleValue: InstanceType<typeof SimpleLineSymbol>["style"],
   ): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.style = currentStyleValue;
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleFillSymbol);
+    updateOutline((outline) => {
+      outline.style = currentStyleValue;
+    });
   };
 
   const handleOutlineWidthChange = (currentWidthValue: string): void => {
-    const newSimpleLineSymbol = simpleLineSymbol.clone();
-    newSimpleLineSymbol.width = Number(currentWidthValue);
-    setSimpleLineSymbol(newSimpleLineSymbol);
-
-    const newSimpleFillSymbol = simpleFillSymbol.clone();
-    newSimpleFillSymbol.outline = newSimpleLineSymbol;
-    updateGraphics(newSimpleFillSymbol);
+    updateOutline((outline) => {
+      outline.width = Number(currentWidthValue);
+    });
   };
 
   const handleStyleChange = (
@@ -166,6 +148,7 @@ function SimpleFillSymbolShell(): React.ReactElement {
 
             <div style={formStyles}>
               <SimpleFillSymbolForm
+                symbol={simpleFillSymbol}
                 handleColorChange={handleColorChange}
                 handleOutlineCapChange={handleOutlineCapChange}
                 handleOutlineColorChange={handleOutlineColorChange}

@@ -3,7 +3,7 @@ import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
+import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
 import {
   fontDecorationOptions,
   fontStyleOptions,
@@ -12,6 +12,7 @@ import {
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: TextSymbol3DLayer;
   layerIndex: number;
   handleDecorationChange: (
     layerIndex: number,
@@ -29,16 +30,17 @@ interface Props {
 }
 
 function TextSymbol3DLayerFontForm({
+  symbolLayer,
   layerIndex,
   handleDecorationChange,
   handleFamilyChange,
   handleStyleChange,
   handleWeightChange,
 }: Props): React.ReactElement {
-  const [decoration, setDecoration] = useState("none");
-  const [family, setFamily] = useState("sans-serif");
-  const [style, setStyle] = useState("normal");
-  const [weight, setWeight] = useState("normal");
+  const decoration = symbolLayer.font?.decoration ?? "none";
+  const family = symbolLayer.font?.family ?? "sans-serif";
+  const style = symbolLayer.font?.style ?? "normal";
+  const weight = symbolLayer.font?.weight ?? "normal";
 
   return (
     <>
@@ -47,7 +49,6 @@ function TextSymbol3DLayerFontForm({
         <calcite-select
           label={"font decoration selection"}
           oncalciteSelectChange={(event) => {
-            setDecoration(event.target.value);
             handleDecorationChange(
               layerIndex,
               event.target.value as InstanceType<typeof Font>["decoration"],
@@ -66,7 +67,6 @@ function TextSymbol3DLayerFontForm({
         <calcite-input-text
           label={"font family input"}
           oncalciteInputTextChange={(event) => {
-            setFamily(event.target.value);
             handleFamilyChange(layerIndex, event.target.value);
           }}
           value={family}
@@ -78,7 +78,6 @@ function TextSymbol3DLayerFontForm({
         <calcite-select
           label={"font style selection"}
           oncalciteSelectChange={(event) => {
-            setStyle(event.target.value);
             handleStyleChange(
               layerIndex,
               event.target.value as InstanceType<typeof Font>["style"],
@@ -97,7 +96,6 @@ function TextSymbol3DLayerFontForm({
         <calcite-select
           label={"font weight selection"}
           oncalciteSelectChange={(event) => {
-            setWeight(event.target.value);
             handleWeightChange(
               layerIndex,
               event.target.value as InstanceType<typeof Font>["weight"],

@@ -1,5 +1,5 @@
-import Color from "@arcgis/core/Color.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import { colorWithAlpha } from "./lib/color";
+import type Collection from "@arcgis/core/core/Collection.js";
 import FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
 import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
@@ -7,7 +7,8 @@ import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
 import "@esri/calcite-components/components/calcite-action";
 import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import React, { useState } from "react";
+import React from "react";
+import type MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import FillSymbol3DLayerForm from "./FillSymbol3DLayerForm";
 import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import type { EdgesChangeHandler } from "./Edges3DForm";
@@ -15,10 +16,12 @@ import { blockStyles } from "./lib/styles";
 import { cloneSymbolLayers, getSymbolLayerKey } from "./lib/symbolLayerKeys";
 
 interface Props {
+  symbolLayers: MeshSymbol3D["symbolLayers"];
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
 function MeshSymbol3DSymbolLayersForm({
+  symbolLayers,
   updateSymbolLayers,
 }: Props): React.ReactElement {
   const createNewFillSymbol3DLayer = (): FillSymbol3DLayer => {
@@ -37,20 +40,16 @@ function MeshSymbol3DSymbolLayersForm({
     return newFillSymbol3DLayer;
   };
 
-  const [symbolLayers, setSymbolLayers] = useState(new Collection());
-
   const addFillSymbol3DLayer = (): void => {
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const fillSymbol3DLayer = createNewFillSymbol3DLayer();
     newSymbolLayers.add(fillSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const deleteSymbol3DLayer = (index: number): void => {
     const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     newSymbolLayers.removeAt(index);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -63,7 +62,6 @@ function MeshSymbol3DSymbolLayersForm({
       layerIndex,
     ) as FillSymbol3DLayer;
     symbolLayer.castShadows = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -76,9 +74,8 @@ function MeshSymbol3DSymbolLayersForm({
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.edges) {
-      symbolLayer.edges.color = new Color(value);
+      symbolLayer.edges.color = colorWithAlpha(value, symbolLayer.edges.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -93,7 +90,6 @@ function MeshSymbol3DSymbolLayersForm({
     if (symbolLayer.edges) {
       symbolLayer.edges.extensionLength = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -108,7 +104,6 @@ function MeshSymbol3DSymbolLayersForm({
     if (symbolLayer.edges) {
       symbolLayer.edges.size = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -121,9 +116,8 @@ function MeshSymbol3DSymbolLayersForm({
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -142,7 +136,6 @@ function MeshSymbol3DSymbolLayersForm({
     if (symbolLayer.material) {
       symbolLayer.material.colorMixMode = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -155,9 +148,8 @@ function MeshSymbol3DSymbolLayersForm({
       layerIndex,
     ) as FillSymbol3DLayer;
     if (symbolLayer.outline) {
-      symbolLayer.outline.color = new Color(value);
+      symbolLayer.outline.color = colorWithAlpha(value, symbolLayer.outline.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -173,7 +165,6 @@ function MeshSymbol3DSymbolLayersForm({
       symbolLayer.outline.pattern.style = value;
     }
 
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -192,7 +183,6 @@ function MeshSymbol3DSymbolLayersForm({
     if (symbolLayer.outline) {
       symbolLayer.outline.patternCap = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -207,7 +197,6 @@ function MeshSymbol3DSymbolLayersForm({
     if (symbolLayer.outline) {
       symbolLayer.outline.size = Number(value);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -222,14 +211,12 @@ function MeshSymbol3DSymbolLayersForm({
     if (symbolLayer.pattern) {
       symbolLayer.pattern.style = value;
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const handleEdgesChange: EdgesChangeHandler = (index, value) => {
     const layers = cloneSymbolLayers(symbolLayers);
     (layers.getItemAt(index) as FillSymbol3DLayer).edges = value;
-    setSymbolLayers(layers);
     updateSymbolLayers(layers);
   };
 
@@ -240,7 +227,6 @@ function MeshSymbol3DSymbolLayersForm({
     const layers = cloneSymbolLayers(symbolLayers);
     const layer = layers.getItemAt(index) as FillSymbol3DLayer;
     if (layer.material) layer.material.emissive = value;
-    setSymbolLayers(layers);
     updateSymbolLayers(layers);
   };
 
@@ -267,6 +253,7 @@ function MeshSymbol3DSymbolLayersForm({
                 ></calcite-action>
 
                 <FillSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
                   edges={symbolLayer.edges}
                   handleEdgesChange={handleEdgesChange}
                   handleMaterialEmissiveChange={handleMaterialEmissiveChange}

@@ -1,9 +1,10 @@
 import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
-import { useState } from "react";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: ObjectSymbol3DLayer;
   layerIndex: number;
   handleObjectSymbol3DLayerAnchorPositionXChange: (
     layerIndex: number,
@@ -20,16 +21,13 @@ interface Props {
 }
 
 function ObjectSymbol3DLayerAnchorPositionForm({
+  symbolLayer,
   layerIndex,
   handleObjectSymbol3DLayerAnchorPositionXChange,
   handleObjectSymbol3DLayerAnchorPositionYChange,
   handleObjectSymbol3DLayerAnchorPositionZChange,
 }: Props): React.ReactElement {
-  const [anchorPosition, setAnchorPosition] = useState({
-    x: "0",
-    y: "0",
-    z: "0",
-  });
+  const anchorPosition = symbolLayer.anchorPosition;
 
   return (
     <>
@@ -38,13 +36,12 @@ function ObjectSymbol3DLayerAnchorPositionForm({
         <calcite-input-number
           label={"anchor position x"}
           oncalciteInputNumberChange={(event) => {
-            setAnchorPosition({ ...anchorPosition, x: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionXChange(
               layerIndex,
               event.target.value,
             );
           }}
-          value={anchorPosition.x}
+          value={String(anchorPosition?.x ?? 0)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -53,13 +50,12 @@ function ObjectSymbol3DLayerAnchorPositionForm({
         <calcite-input-number
           label={"anchor position y"}
           oncalciteInputNumberChange={(event) => {
-            setAnchorPosition({ ...anchorPosition, y: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionYChange(
               layerIndex,
               event.target.value,
             );
           }}
-          value={anchorPosition.y}
+          value={String(anchorPosition?.y ?? 0)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -68,13 +64,12 @@ function ObjectSymbol3DLayerAnchorPositionForm({
         <calcite-input-number
           label={"anchor position z"}
           oncalciteInputNumberChange={(event) => {
-            setAnchorPosition({ ...anchorPosition, z: event.target.value });
             handleObjectSymbol3DLayerAnchorPositionZChange(
               layerIndex,
               event.target.value,
             );
           }}
-          value={anchorPosition.z}
+          value={String(anchorPosition?.z ?? 0)}
         ></calcite-input-number>
       </calcite-label>
     </>

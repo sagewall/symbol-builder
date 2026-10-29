@@ -28,6 +28,12 @@ Set `PLAYWRIGHT_BASE_URL` to run browser tests against an existing server withou
 
 Browser tests use one Playwright worker to avoid timeouts observed when running multiple browser instances concurrently.
 
+## Symbol Forms
+
+Editable property controls read their values from the current SDK symbol or symbol layer, including nested outlines, resources, fonts, and anchor positions. Keep property defaults in symbol construction rather than duplicating them in form state. Calcite switches use `checked` for boolean properties.
+
+Local form state is reserved for UI state, pending catalog requests, and saved settings for disabled optional features. RGB color edits preserve the existing alpha value; the text-symbol background and border opacity sliders edit alpha separately.
+
 ## Symbol Property Options
 
 Enum options in `src/components/lib/constants.ts` use exhaustive registries checked against the owning SDK property types. Registry insertion order controls UI order, and the derived option arrays are read-only and frozen.

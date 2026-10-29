@@ -10,7 +10,7 @@ import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-switch";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   horizontalAlignmentOptions,
   occludedVisibilityOptions,
@@ -107,13 +107,18 @@ function TextSymbol3DLayerForm({
       size: symbolLayer.halo?.size ?? 0,
     }),
   );
-  const [horizontalAlignment, setHorizontalAlignment] = useState("center");
-  const [lineHeight, setLineHeight] = useState("1");
-  const [occludedVisibility, setOccludedVisibility] =
-    useState<OccludedVisibilityMode>("adaptive");
-  const [size, setSize] = useState("9");
-  const [text, setText] = useState("Hello World!");
-  const [verticalAlignment, setVerticalAlignment] = useState("baseline");
+  const { horizontalAlignment, occludedVisibility, text, verticalAlignment } =
+    symbolLayer;
+  const lineHeight = String(symbolLayer.lineHeight);
+  const size = String(symbolLayer.size);
+  const lineHeightInput = useRef<HTMLCalciteInputNumberElement>(null);
+
+  useEffect(() => {
+    // React skips unchanged props when the SDK normalizes repeated edits.
+    if (lineHeightInput.current) {
+      lineHeightInput.current.value = String(symbolLayer.lineHeight);
+    }
+  }, [symbolLayer]);
 
   return (
     <>
@@ -122,10 +127,9 @@ function TextSymbol3DLayerForm({
         <calcite-input-text
           label={"text input"}
           oncalciteInputTextChange={(event) => {
-            setText(event.target.value);
             handleTextChange(layerIndex, event.target.value);
           }}
-          value={text}
+          value={text ?? ""}
         ></calcite-input-text>
       </calcite-label>
 
@@ -148,7 +152,7 @@ function TextSymbol3DLayerForm({
         </calcite-label>
         {symbolLayer.background && (
           <TextSymbol3DLayerBackgroundForm
-            colorValue={symbolLayer.background.color?.toHex()}
+            colorValue={symbolLayer.background.color?.toHex() ?? "#aaaaaa"}
             layerIndex={layerIndex}
             handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
           ></TextSymbol3DLayerBackgroundForm>
@@ -157,6 +161,7 @@ function TextSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"font"}>
         <TextSymbol3DLayerFontForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
           handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
@@ -192,7 +197,7 @@ function TextSymbol3DLayerForm({
         </calcite-label>
         {symbolLayer.halo && (
           <TextSymbol3DLayerHaloForm
-            colorValue={symbolLayer.halo.color?.toHex()}
+            colorValue={symbolLayer.halo.color?.toHex() ?? "#000000"}
             sizeValue={symbolLayer.halo.size}
             layerIndex={layerIndex}
             handleColorChange={handleTextSymbol3DLayerHaloColorChange}
@@ -206,7 +211,6 @@ function TextSymbol3DLayerForm({
         <calcite-select
           label={"horizontalAlignment selection"}
           oncalciteSelectChange={(event) => {
-            setHorizontalAlignment(event.target.value);
             handleHorizontalAlignmentChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -227,7 +231,6 @@ function TextSymbol3DLayerForm({
         <calcite-select
           label={"verticalAlignment selection"}
           oncalciteSelectChange={(event) => {
-            setVerticalAlignment(event.target.value);
             handleVerticalAlignmentChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -246,10 +249,11 @@ function TextSymbol3DLayerForm({
       <calcite-label layout="default" style={labelStyles}>
         lineHeight
         <calcite-input-number
+          ref={lineHeightInput}
+          min={0.1}
+          max={4}
           label={"lineHeight input"}
-          min={0}
           oncalciteInputNumberChange={(event) => {
-            setLineHeight(event.target.value);
             handleLineHeightChange(layerIndex, event.target.value);
           }}
           value={lineHeight}
@@ -258,6 +262,7 @@ function TextSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"material"}>
         <TextSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
           layerIndex={layerIndex}
           handleColorChange={handleTextSymbol3DLayerMaterialColorChange}
         ></TextSymbol3DLayerMaterialForm>
@@ -269,10 +274,9 @@ function TextSymbol3DLayerForm({
           label="Occluded visibility selection"
           oncalciteSelectChange={(event) => {
             const mode = event.target.value as OccludedVisibilityMode;
-            setOccludedVisibility(mode);
             handleOccludedVisibilityChange(layerIndex, mode);
           }}
-          value={occludedVisibility}
+          value={occludedVisibility?.mode ?? "adaptive"}
         >
           {occludedVisibilityOptions.map((option) => (
             <calcite-option key={option} value={option}>
@@ -288,7 +292,6 @@ function TextSymbol3DLayerForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}

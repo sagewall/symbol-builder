@@ -17,6 +17,7 @@ import LineSymbol3DJSONPanel from "./LineSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { polyline } from "./lib/geometry";
 import { useSymbolPreview } from "./lib/useSymbolPreview";
+import { cloneSymbolLayers } from "./lib/symbolLayerKeys";
 import {
   formStyles,
   shellPanelStyles,
@@ -38,6 +39,7 @@ function LineSymbol3DShell(): React.ReactElement {
 
   const handleWorldSizedChange = (value: boolean): void => {
     const newLineSymbol3D = lineSymbol3D.clone();
+    newLineSymbol3D.symbolLayers = cloneSymbolLayers(lineSymbol3D.symbolLayers);
     newLineSymbol3D.worldSized = value;
     updateGraphics(newLineSymbol3D);
   };
@@ -59,6 +61,7 @@ function LineSymbol3DShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <LineSymbol3DForm
+                symbolLayers={lineSymbol3D.symbolLayers}
                 handleWorldSizedChange={handleWorldSizedChange}
                 updateSymbolLayers={updateSymbolLayers}
                 worldSized={lineSymbol3D.worldSized}

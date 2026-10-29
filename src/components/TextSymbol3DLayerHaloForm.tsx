@@ -1,12 +1,11 @@
 import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
-import { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
-  colorValue?: string;
-  sizeValue?: number;
+  colorValue: string;
+  sizeValue: number;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
@@ -19,22 +18,17 @@ function TextSymbol3DLayerHaloForm({
   handleColorChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#000000");
-  const [size, setSize] = useState("0");
-
   return (
     <>
       <calcite-label layout="default" style={labelStyles}>
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={colorValue ?? color}
+          value={colorValue}
         ></calcite-input>
       </calcite-label>
 
@@ -44,10 +38,9 @@ function TextSymbol3DLayerHaloForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={sizeValue === undefined ? size : String(sizeValue)}
+          value={String(sizeValue)}
         ></calcite-input-number>
       </calcite-label>
     </>

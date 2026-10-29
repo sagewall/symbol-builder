@@ -61,6 +61,224 @@ async function addLayer(page: Page, route: string, action: string) {
   await showJSON(page);
 }
 
+test("text controls reflect SDK defaults, normalized values, and switches", async ({
+  page,
+}) => {
+  await page.goto("/text-symbol");
+  await showJSON(page);
+  await expect(
+    page.getByRole("textbox", { name: "lineWidth input", exact: true }),
+  ).toHaveValue("192");
+  await expect(
+    page.getByRole("textbox", { name: "borderLineSize input", exact: true }),
+  ).toHaveValue("0");
+  await fillNumber(page, "lineHeight input", "5");
+  await expect(
+    page.getByRole("textbox", { name: "lineHeight input", exact: true }),
+  ).toHaveValue("4");
+  await expect
+    .poll(async () => (await readSymbolJSON(page)).lineHeight)
+    .toBe(4);
+  await fillNumber(page, "lineHeight input", "5");
+  await expect(
+    page.getByRole("textbox", { name: "lineHeight input", exact: true }),
+  ).toHaveValue("4");
+  for (const property of ["kerning", "rotated"]) {
+    const control = page
+      .locator("calcite-label")
+      .filter({ hasText: new RegExp(`^\\s*${property}\\s*$`) })
+      .getByRole("switch");
+    await expect(control).not.toBeChecked();
+    await control.check();
+    await expect
+      .poll(async () => (await readSymbolJSON(page))[property])
+      .toBe(true);
+    await expect(control).toBeChecked();
+  }
+});
+
+test("text color controls preserve their independently edited opacity", async ({
+  page,
+}) => {
+  await page.goto("/text-symbol");
+  await showJSON(page);
+  for (const property of ["backgroundColor", "borderLineColor"]) {
+    const opacity = page
+      .locator("calcite-label")
+      .filter({ hasText: new RegExp(`^\\s*${property} opacity`) })
+      .locator("calcite-slider");
+    await expect(opacity).toHaveJSProperty("value", 0);
+    await opacity.evaluate((element: HTMLCalciteSliderElement) => {
+      element.value = 0.4;
+      element.dispatchEvent(
+        new CustomEvent("calciteSliderChange", { bubbles: true }),
+      );
+    });
+    const color = page
+      .locator("calcite-label")
+      .filter({ hasText: new RegExp(`^\\s*${property}\\s*$`) })
+      .locator("calcite-input");
+    await color.evaluate((element: HTMLCalciteInputElement) => {
+      element.value = "#007ac2";
+      element.dispatchEvent(
+        new CustomEvent("calciteInputInput", { bubbles: true }),
+      );
+    });
+    await expect
+      .poll(async () => (await readSymbolJSON(page))[property])
+      .toEqual([0, 122, 194, 102]);
+    await expect(color).toHaveJSProperty("value", "#007ac2");
+    await expect(opacity).toHaveJSProperty("value", 0.4);
+  }
+});
+
+for (const route of [
+  "/simple-marker-symbol",
+  "/simple-fill-symbol",
+  "/picture-fill-symbol",
+]) {
+  test(`${route} outline edits preserve other current outline properties`, async ({
+    page,
+  }) => {
+    await page.goto(route);
+    await showJSON(page);
+    await page.getByRole("button", { name: "outline:", exact: true }).click();
+    const outline = page.locator("calcite-block").filter({
+      has: page.getByRole("button", { name: "outline:", exact: true }),
+    });
+    const width = outline.getByRole("textbox", {
+      name: "width input",
+      exact: true,
+    });
+    await width.fill("3.5");
+    await width.press("Enter");
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).outline.width)
+      .toBe(3.5);
+    await outline.getByRole("combobox", {
+      name: "cap selection",
+      exact: true,
+    }).selectOption("square");
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).outline)
+      .toMatchObject({ width: 3.5, cap: "square" });
+    await expect(width).toHaveValue("3.5");
+  });
+}
+
+for (const editor of [
+  {
+    route: "/simple-line-symbol",
+    input: "width input",
+    initial: "1",
+    value: "4.5",
+    property: "width",
+  },
+  {
+    route: "/simple-marker-symbol",
+    input: "size input",
+    initial: "12",
+    value: "21",
+    property: "size",
+  },
+  {
+    route: "/simple-fill-symbol",
+    input: "width input",
+    initial: "1",
+    value: "4.5",
+    property: "width",
+    outline: true,
+  },
+  {
+    route: "/picture-marker-symbol",
+    input: "width input",
+    initial: "100",
+    value: "42",
+    property: "width",
+  },
+  {
+    route: "/picture-fill-symbol",
+    input: "width input",
+    initial: "75",
+    value: "42",
+    property: "width",
+  },
+]) {
+  test(`${editor.route} displays and updates current symbol values`, async ({ page }) => {
+    await page.goto(editor.route);
+    await showJSON(page);
+    if (editor.outline) {
+      await page.getByRole("button", { name: "outline:", exact: true }).click();
+    }
+    const input = page.getByRole("textbox", { name: editor.input, exact: true });
+    await expect(input).toHaveValue(editor.initial);
+    await fillNumber(page, editor.input, editor.value);
+    await expect(input).toHaveValue(editor.value);
+    await expect
+      .poll(async () => {
+        const symbol = await readSymbolJSON(page);
+        return (editor.outline ? symbol.outline : symbol)[editor.property];
+      })
+      .toBe(Number(editor.value));
+  });
+}
+
+for (const editor of [
+  {
+    route: "/point-symbol-3d",
+    action: "Add ObjectSymbol3DLayer",
+    anchorInput: "anchor position x",
+  },
+  {
+    route: "/polygon-symbol-3d",
+    action: "Add ObjectSymbol3DLayer",
+    anchorInput: "anchor position x",
+  },
+  {
+    route: "/point-symbol-3d",
+    action: "Add IconSymbol3DLayer",
+    anchorInput: "x anchor position",
+  },
+  {
+    route: "/polygon-symbol-3d",
+    action: "Add IconSymbol3DLayer",
+    anchorInput: "x anchor position",
+  },
+]) {
+  test(`${editor.route} ${editor.action} restores current anchor coordinates`, async ({ page }) => {
+    await addLayer(page, editor.route, editor.action);
+    await selectProperty(page, "anchor selection", "relative");
+    await page.getByRole("button", { name: "anchorPosition", exact: true }).click();
+    await fillNumber(page, editor.anchorInput, "0.5");
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers[0].anchorPosition[0])
+      .toBe(0.5);
+    await selectProperty(page, "anchor selection", "center");
+    await expect(
+      page.getByRole("textbox", { name: editor.anchorInput, exact: true }),
+    ).toHaveCount(0);
+    await selectProperty(page, "anchor selection", "relative");
+    await page.getByRole("button", { name: "anchorPosition", exact: true }).click();
+    await expect(
+      page.getByRole("textbox", { name: editor.anchorInput, exact: true }),
+    ).toHaveValue("0.5");
+  });
+}
+
+for (const route of ["/point-symbol-3d", "/polygon-symbol-3d"]) {
+  test(`${route} object primitive matches the sphere in the symbol`, async ({ page }) => {
+    await addLayer(page, route, "Add ObjectSymbol3DLayer");
+    await page.getByRole("button", { name: "resource", exact: true }).click();
+    await expect(
+      page.getByRole("combobox", { name: "primitive selection", exact: true }),
+    ).toHaveValue("sphere");
+    await selectProperty(page, "primitive selection", "cube");
+    await expect
+      .poll(async () => (await readSymbolJSON(page)).symbolLayers[0].resource.primitive)
+      .toBe("cube");
+  });
+}
+
 test("text line-height and independent font controls update the symbol", async ({
   page,
 }) => {
