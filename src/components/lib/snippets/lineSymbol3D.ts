@@ -46,6 +46,7 @@ const lineSymbol3D = new LineSymbol3D({
       style: "${symbolLayer.marker.style}"
     },
     material: {
+      emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
       color: [${symbolLayer.material.color.toRgba().toString()}],
     },
     pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "CDN")},
@@ -59,6 +60,7 @@ const lineSymbol3D = new LineSymbol3D({
     cap: "${symbolLayer.cap}",
     join: "${symbolLayer.join}",
     material: {
+      emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
       color: [${symbolLayer.material.color.toRgba().toString()}],
     },
     pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "CDN")},
@@ -79,6 +81,7 @@ const lineSymbol3D = new LineSymbol3D({
     height: ${symbolLayer.height},
     join: "${symbolLayer.join}",
     material: {
+      emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
       color: [${(symbolLayer.material?.color.toRgba() ?? []).toString()}],
     },
     profile: "${symbolLayer.profile}",
@@ -172,6 +175,7 @@ const lineSymbol3D = new LineSymbol3D({
         style: "${symbolLayer.marker.style}"
       }),
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "ESM")},
@@ -184,6 +188,7 @@ const lineSymbol3D = new LineSymbol3D({
       cap: "${symbolLayer.cap}",
       join: "${symbolLayer.join}",
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       pattern: ${generateLinePatternSnippet(symbolLayer.pattern, "ESM")},
@@ -203,6 +208,7 @@ const lineSymbol3D = new LineSymbol3D({
       height: ${symbolLayer.height},
       join: "${symbolLayer.join}",
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       profile: "${symbolLayer.profile}",

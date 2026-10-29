@@ -6,8 +6,12 @@ import "@esri/calcite-components/components/calcite-select";
 import { useState } from "react";
 import { colorMixModeOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
+import Symbol3DEmissiveForm, {
+  type EmissiveChangeHandler,
+} from "./Symbol3DEmissiveForm";
 
 interface Props {
+  handleEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleColorMixModeChange: (
@@ -21,6 +25,7 @@ interface Props {
 }
 
 function FillSymbol3DLayerMaterialForm({
+  handleEmissiveChange,
   layerIndex,
   handleColorChange,
   handleColorMixModeChange,
@@ -66,6 +71,12 @@ function FillSymbol3DLayerMaterialForm({
           ))}
         </calcite-select>
       </calcite-label>
+      {handleEmissiveChange && (
+        <Symbol3DEmissiveForm
+          layerIndex={layerIndex}
+          handleChange={handleEmissiveChange}
+        />
+      )}
     </>
   );
 }

@@ -19,6 +19,9 @@ import IconSymbol3DLayerForm from "./IconSymbol3DLayerForm";
 import ObjectSymbol3DLayerForm from "./ObjectSymbol3DLayerForm";
 import WaterSymbol3DLayerForm from "./WaterSymbol3DLayerForm";
 import { blockStyles } from "./lib/styles";
+import { cloneSymbolLayers, getSymbolLayerKey } from "./lib/symbolLayerKeys";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
+import type { EdgesChangeHandler } from "./Edges3DForm";
 
 interface Props {
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
@@ -89,7 +92,7 @@ function PolygonSymbol3DSymbolLayersForm({
   const [symbolLayers, setSymbolLayers] = useState(new Collection());
 
   const addExtrudeSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const extrudeSymbol3DLayer = createNewExtrudeSymbol3DLayer();
     newSymbolLayers.add(extrudeSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
@@ -97,7 +100,7 @@ function PolygonSymbol3DSymbolLayersForm({
   };
 
   const addFillSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const fillSymbol3DLayer = createNewFillSymbol3DLayer();
     newSymbolLayers.add(fillSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
@@ -105,7 +108,7 @@ function PolygonSymbol3DSymbolLayersForm({
   };
 
   const addIconSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const iconSymbol3DLayer = createNewIconSymbol3DLayer();
     newSymbolLayers.add(iconSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
@@ -113,7 +116,7 @@ function PolygonSymbol3DSymbolLayersForm({
   };
 
   const addObjectSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const objectSymbol3DLayer = createNewObjectSymbol3DLayer();
     newSymbolLayers.add(objectSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
@@ -121,7 +124,7 @@ function PolygonSymbol3DSymbolLayersForm({
   };
 
   const addWaterSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const waterSymbol3DLayer = createNewWaterSymbol3DLayer();
     newSymbolLayers.add(waterSymbol3DLayer);
     setSymbolLayers(newSymbolLayers);
@@ -129,7 +132,7 @@ function PolygonSymbol3DSymbolLayersForm({
   };
 
   const deleteSymbol3DLayer = (index: number): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     newSymbolLayers.removeAt(index);
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
@@ -139,7 +142,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: boolean,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ExtrudeSymbol3DLayer;
@@ -152,7 +155,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ExtrudeSymbol3DLayer;
@@ -167,7 +170,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ExtrudeSymbol3DLayer;
@@ -182,7 +185,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ExtrudeSymbol3DLayer;
@@ -197,7 +200,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ExtrudeSymbol3DLayer;
@@ -212,7 +215,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ExtrudeSymbol3DLayer;
@@ -225,7 +228,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: boolean,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -238,7 +241,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -253,7 +256,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -268,7 +271,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -283,7 +286,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -302,7 +305,7 @@ function PolygonSymbol3DSymbolLayersForm({
       >["colorMixMode"]
     >,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -317,7 +320,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -332,7 +335,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -354,7 +357,7 @@ function PolygonSymbol3DSymbolLayersForm({
       >["patternCap"]
     >,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -369,7 +372,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -384,7 +387,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof StylePattern3D>["style"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as FillSymbol3DLayer;
@@ -399,7 +402,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof IconSymbol3DLayer>["anchor"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -412,7 +415,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -425,7 +428,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -438,7 +441,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: number,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -451,7 +454,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -466,7 +469,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: OccludedVisibilityMode,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -479,7 +482,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -494,7 +497,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -509,7 +512,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -528,7 +531,7 @@ function PolygonSymbol3DSymbolLayersForm({
       >["primitive"]
     >,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -543,7 +546,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as IconSymbol3DLayer;
@@ -556,7 +559,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof ObjectSymbol3DLayer>["anchor"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -569,7 +572,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -584,7 +587,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -599,7 +602,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -614,7 +617,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: boolean,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -627,7 +630,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -640,7 +643,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: number,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -653,7 +656,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -666,7 +669,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -681,7 +684,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -700,7 +703,7 @@ function PolygonSymbol3DSymbolLayersForm({
       >["primitive"]
     >,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -715,7 +718,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: number,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -728,7 +731,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: number,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -741,7 +744,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as ObjectSymbol3DLayer;
@@ -754,7 +757,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as WaterSymbol3DLayer;
@@ -767,7 +770,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof WaterSymbol3DLayer>["waterbodySize"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as WaterSymbol3DLayer;
@@ -780,7 +783,7 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: number,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as WaterSymbol3DLayer;
@@ -793,13 +796,34 @@ function PolygonSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: InstanceType<typeof WaterSymbol3DLayer>["waveStrength"],
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as WaterSymbol3DLayer;
     symbolLayer.waveStrength = value;
     setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleEdgesChange: EdgesChangeHandler = (index, value) => {
+    const layers = cloneSymbolLayers(symbolLayers);
+    (layers.getItemAt(index) as ExtrudeSymbol3DLayer).edges = value;
+    setSymbolLayers(layers);
+    updateSymbolLayers(layers);
+  };
+
+  const handleMaterialEmissiveChange: EmissiveChangeHandler = (
+    index,
+    value,
+  ) => {
+    const layers = cloneSymbolLayers(symbolLayers);
+    const layer = layers.getItemAt(index) as
+      | FillSymbol3DLayer
+      | ExtrudeSymbol3DLayer
+      | ObjectSymbol3DLayer;
+    if (layer.material) layer.material.emissive = value;
+    setSymbolLayers(layers);
+    updateSymbolLayers(layers);
   };
 
   const createSymbol3DLayerCollectionForm = ():
@@ -823,7 +847,7 @@ function PolygonSymbol3DSymbolLayersForm({
               <calcite-block
                 expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
@@ -833,6 +857,9 @@ function PolygonSymbol3DSymbolLayersForm({
                 ></calcite-action>
 
                 <ExtrudeSymbol3DLayerForm
+                  edges={symbolLayer.edges}
+                  handleEdgesChange={handleEdgesChange}
+                  handleMaterialEmissiveChange={handleMaterialEmissiveChange}
                   layerIndex={index}
                   handleCastShadowsChange={
                     handleExtrudeSymbol3DLayerCastShadowsChange
@@ -860,7 +887,7 @@ function PolygonSymbol3DSymbolLayersForm({
               <calcite-block
                 expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
@@ -914,7 +941,7 @@ function PolygonSymbol3DSymbolLayersForm({
               <calcite-block
                 expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
@@ -965,7 +992,7 @@ function PolygonSymbol3DSymbolLayersForm({
               <calcite-block
                 expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
@@ -974,6 +1001,7 @@ function PolygonSymbol3DSymbolLayersForm({
                   text="Delete"
                 ></calcite-action>
                 <ObjectSymbol3DLayerForm
+                  handleMaterialEmissiveChange={handleMaterialEmissiveChange}
                   layerIndex={index}
                   handleAnchorChange={handleObjectSymbol3DLayerAnchorChange}
                   handleObjectSymbol3DLayerAnchorPositionXChange={
@@ -1013,7 +1041,7 @@ function PolygonSymbol3DSymbolLayersForm({
               <calcite-block
                 expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"

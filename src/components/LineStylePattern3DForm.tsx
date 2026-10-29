@@ -7,6 +7,7 @@ import { lineStyleOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  styleValue?: LineStylePattern3D["style"];
   layerIndex: number;
   handleStyleChange: (
     layerIndex: number,
@@ -15,6 +16,7 @@ interface Props {
 }
 
 function LineStylePattern3DForm({
+  styleValue,
   layerIndex,
   handleStyleChange,
 }: Props): React.ReactElement {
@@ -25,7 +27,7 @@ function LineStylePattern3DForm({
       <calcite-label layout="default" style={labelStyles}>
         style
         <calcite-select
-          label={"join selection"}
+          label="pattern style selection"
           oncalciteSelectChange={(event) => {
             setStyle(event.target.value);
             handleStyleChange(
@@ -35,7 +37,7 @@ function LineStylePattern3DForm({
               >["style"],
             );
           }}
-          value={style}
+          value={styleValue ?? style}
         >
           {lineStyleOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>

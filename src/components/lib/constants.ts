@@ -17,6 +17,9 @@ import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js
 import type IconSymbol3DLayerResource from "@arcgis/core/symbols/support/IconSymbol3DLayerResource.js";
 import type ObjectSymbol3DLayerResource from "@arcgis/core/symbols/support/ObjectSymbol3DLayerResource.js";
 import type Symbol3DOutline from "@arcgis/core/symbols/support/Symbol3DOutline.js";
+import type SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
+import type SketchEdges3D from "@arcgis/core/symbols/edges/SketchEdges3D.js";
+import type { Symbol3DEmissive } from "@arcgis/core/symbols/support/Symbol3DEmissive.js";
 import fontData from "./esri-labeling-page-data.json";
 
 type OptionSupport<Value extends string, Unsupported extends Value = never> = {
@@ -54,6 +57,25 @@ export const colorMixModeOptions = supportedOptions({
   tint: "tint",
 } as const satisfies OptionSupport<
   NonNullable<NonNullable<FillSymbol3DLayer["material"]>["colorMixMode"]>
+>);
+
+export const emissiveSourceOptions = supportedOptions({
+  color: "color",
+  emissive: "emissive",
+} as const satisfies OptionSupport<Symbol3DEmissive["source"]>);
+
+export const edgeStyleOptions = supportedOptions({
+  solid: "solid",
+  sketch: "sketch",
+} as const satisfies OptionSupport<
+  SolidEdges3D["type"] | SketchEdges3D["type"]
+>);
+
+export const linePatternTypeOptions = supportedOptions({
+  style: "style",
+  template: "template",
+} as const satisfies OptionSupport<
+  NonNullable<LineSymbol3DLayer["pattern"]>["type"]
 >);
 
 export const esri2DPointSymbolsStyleNameOptions = [

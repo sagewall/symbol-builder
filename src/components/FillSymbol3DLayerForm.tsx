@@ -4,13 +4,18 @@ import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-switch";
 import { useState } from "react";
-import Edges3DForm from "./Edges3DForm";
+import Edges3DForm, { type EdgesChangeHandler } from "./Edges3DForm";
+import type Edges3D from "@arcgis/core/symbols/edges/Edges3D.js";
 import FillSymbol3DLayerMaterialForm from "./FillSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import FillSymbol3DLayerOutlineForm from "./FillSymbol3DLayerOutlineForm";
 import { blockStyles, labelStyles } from "./lib/styles";
 import StylePattern3DForm from "./StylePattern3DForm";
 
 interface Props {
+  edges?: Edges3D | null;
+  handleEdgesChange?: EdgesChangeHandler;
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   isMeshSymbol3D: boolean;
   handleCastShadowsChange: (layerIndex: number, value: boolean) => void;
@@ -67,6 +72,9 @@ interface Props {
 }
 
 function FillSymbol3DLayerForm({
+  edges,
+  handleEdgesChange,
+  handleMaterialEmissiveChange,
   layerIndex,
   isMeshSymbol3D,
   handleCastShadowsChange,
@@ -99,9 +107,11 @@ function FillSymbol3DLayerForm({
         </calcite-label>
       )}
 
-      {isMeshSymbol3D && (
+      {isMeshSymbol3D && handleEdgesChange && (
         <calcite-block style={blockStyles} expandable heading={"edges"}>
           <Edges3DForm
+            edges={edges}
+            handleEdgesChange={handleEdgesChange}
             layerIndex={layerIndex}
             handleColorChange={handleFillSymbol3DLayerEdgesColorChange}
             handleExtensionLengthChange={
@@ -114,6 +124,9 @@ function FillSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"material"}>
         <FillSymbol3DLayerMaterialForm
+          handleEmissiveChange={
+            isMeshSymbol3D ? handleMaterialEmissiveChange : undefined
+          }
           layerIndex={layerIndex}
           handleColorChange={handleFillSymbol3DLayerMaterialColorChange}
           handleColorMixModeChange={

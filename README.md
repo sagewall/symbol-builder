@@ -22,6 +22,8 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`     |
 | `npm run astro -- --help` | Get help using the Astro CLI                         |
 
+Set `PLAYWRIGHT_BASE_URL` to run browser tests against an existing server without starting a development server.
+
 ## Symbol Property Options
 
 Enum options in `src/components/lib/constants.ts` use exhaustive registries checked against the owning SDK property types. Registry insertion order controls UI order, and the derived option arrays are read-only and frozen.

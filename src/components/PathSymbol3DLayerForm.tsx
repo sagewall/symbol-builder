@@ -15,8 +15,10 @@ import {
 } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 
 interface Props {
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleAnchorChange: (
     layerIndex: number,
@@ -48,6 +50,7 @@ interface Props {
 }
 
 function LineSymbol3DLayerForm({
+  handleMaterialEmissiveChange,
   layerIndex,
   handleAnchorChange,
   handleCapChange,
@@ -173,6 +176,7 @@ function LineSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"material"}>
         <PathSymbol3DLayerMaterialForm
+          handleEmissiveChange={handleMaterialEmissiveChange}
           layerIndex={layerIndex}
           handleColorChange={handlePathSymbol3DLayerMaterialColorChange}
         ></PathSymbol3DLayerMaterialForm>

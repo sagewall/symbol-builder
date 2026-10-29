@@ -1,4 +1,5 @@
 import type PolygonSymbol3D from "@arcgis/core/symbols/PolygonSymbol3D.js";
+import { stringifyConstructorProperties } from "./constructorProperties";
 
 export function generatePolygonSymbol3DCDNSnippet(
   polygonSymbol3D: PolygonSymbol3D,
@@ -22,6 +23,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       type: "fill",
       castShadows: ${symbolLayer.castShadows},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}],
         colorMixMode: "${symbolLayer.material.colorMixMode}",
       },
@@ -49,13 +51,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
     {
       type: "extrude",
       castShadows: ${symbolLayer.castShadows},
-      edges: {
-        type: "solid",
-        color: [${symbolLayer.edges?.color?.toRgba().toString()}],
-        extensionLength: ${symbolLayer.edges?.extensionLength},
-        size: ${symbolLayer.edges?.size}
-      },
+      edges: ${stringifyConstructorProperties(symbolLayer.edges?.toJSON() ?? null)},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}],
       },
       size: ${symbolLayer.size}
@@ -92,6 +90,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       },
       angle: ${symbolLayer.angle},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       occludedVisibility: {
@@ -122,6 +121,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       },
       angle: ${symbolLayer.angle},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       occludedVisibility: {
@@ -156,6 +156,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
@@ -184,6 +185,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
@@ -306,6 +308,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
     new FillSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
         colorMixMode: "${symbolLayer.material.colorMixMode}",
       },
@@ -330,12 +333,9 @@ const polygonSymbol3D = new PolygonSymbol3D({
         codeSnippet += `
     new ExtrudeSymbol3DLayer({
       castShadows: ${symbolLayer.castShadows},
-      edges: new SolidEdges3D({
-        color: new Color([${symbolLayer.edges?.color?.toRgba().toString()}]),
-        extensionLength: ${symbolLayer.edges?.extensionLength},
-        size: ${symbolLayer.edges?.size}
-      }),
+      edges: ${stringifyConstructorProperties(symbolLayer.edges?.toJSON() ?? null)},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       size: ${symbolLayer.size}
@@ -366,6 +366,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       },
       angle: ${symbolLayer.angle},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       occludedVisibility: {
@@ -412,6 +413,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {
@@ -439,6 +441,7 @@ const polygonSymbol3D = new PolygonSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${JSON.stringify(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {

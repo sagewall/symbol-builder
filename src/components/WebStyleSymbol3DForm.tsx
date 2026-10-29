@@ -9,7 +9,7 @@ import "@esri/calcite-components/dist/components/calcite-tab";
 import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   esriIconsStyleNameOptions,
   esriInfrastructureStyleNameOptions,
@@ -48,11 +48,17 @@ function WebStyleSymbolForm({
   const [styleName, setStyleName] = useState("EsriIconsStyle");
   const [portalUrl, setPortalUrl] = useState("");
   const [styleUrl, setStyleUrl] = useState("");
+  const requestId = useRef(0);
 
   async function getStyleItemDataFromUrl(url: string): Promise<void> {
+    const currentRequestId = ++requestId.current;
+    setPointWebStyleSymbolItems([]);
     const response = await esriRequest(url, {
       responseType: "json",
     });
+    if (currentRequestId !== requestId.current) {
+      return;
+    }
     const data = response.data as { items: WebStyleSymbolItem[] };
     const items = data.items;
 
@@ -75,6 +81,7 @@ function WebStyleSymbolForm({
       return;
     }
     if (selectedTitle.tab === "standard") {
+      requestId.current += 1;
       setName("Accessibility");
       setStyleName("EsriIconsStyle");
       handleStyleNameChange("EsriIconsStyle", portalUrl);
@@ -174,6 +181,7 @@ function WebStyleSymbolForm({
             <calcite-select
               label={"styleName selection"}
               oncalciteSelectChange={(event) => {
+                requestId.current += 1;
                 setStyleName(event.target.value);
                 handleStyleNameChange(event.target.value, portalUrl);
                 updateNames(event.target.value);
@@ -191,6 +199,7 @@ function WebStyleSymbolForm({
             <calcite-input-text
               label="Portal URL"
               oncalciteInputTextChange={(event) => {
+                requestId.current += 1;
                 setPortalUrl(event.target.value);
                 handleStyleNameChange(styleName, event.target.value);
               }}
@@ -225,6 +234,7 @@ function WebStyleSymbolForm({
                       key={index}
                       label={item.name}
                       onClick={() => {
+                        requestId.current += 1;
                         handleCustomStyleChange(
                           styleUrl,
                           item.name,

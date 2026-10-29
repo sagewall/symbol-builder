@@ -14,15 +14,30 @@ import TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
 import WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
+import LineTemplatePattern3D from "@arcgis/core/symbols/patterns/LineTemplatePattern3D.js";
+import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
+import SketchEdges3D from "@arcgis/core/symbols/edges/SketchEdges3D.js";
 import StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
 import IconSymbol3DLayerResource from "@arcgis/core/symbols/support/IconSymbol3DLayerResource.js";
 import ObjectSymbol3DLayerResource from "@arcgis/core/symbols/support/ObjectSymbol3DLayerResource.js";
 import Symbol3DOutline from "@arcgis/core/symbols/support/Symbol3DOutline.js";
+import { Symbol3DEmissive } from "@arcgis/core/symbols/support/Symbol3DEmissive.js";
 import { afterEach, expect, test, vi } from "vitest";
 import * as options from "./constants";
 import { colorMixModeOptions } from "./constants";
 
 afterEach(() => vi.restoreAllMocks());
+
+test("variant selectors match SDK discriminators", () => {
+  expect(options.edgeStyleOptions).toEqual([
+    new SolidEdges3D().type,
+    new SketchEdges3D().type,
+  ]);
+  expect(options.linePatternTypeOptions).toEqual([
+    new LineStylePattern3D().type,
+    new LineTemplatePattern3D().type,
+  ]);
+});
 
 test("fill material color mix mode options are accepted by the SDK", () => {
   expect(colorMixModeOptions).toEqual(["multiply", "replace", "tint"]);
@@ -106,6 +121,13 @@ function checkOptions<Target extends object, Key extends keyof Target>(
     });
   }
 }
+
+checkOptions(
+  "Symbol3DEmissive",
+  () => new Symbol3DEmissive(),
+  "source",
+  options.emissiveSourceOptions,
+);
 
 checkOptions(
   "SimpleLineSymbol",

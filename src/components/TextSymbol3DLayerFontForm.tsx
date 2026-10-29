@@ -1,5 +1,4 @@
 import type Font from "@arcgis/core/symbols/Font.js";
-import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
@@ -19,7 +18,6 @@ interface Props {
     value: InstanceType<typeof Font>["decoration"],
   ) => void;
   handleFamilyChange: (layerIndex: number, value: string) => void;
-  handleSizeChange: (layerIndex: number, value: string) => void;
   handleStyleChange: (
     layerIndex: number,
     value: InstanceType<typeof Font>["style"],
@@ -34,13 +32,11 @@ function TextSymbol3DLayerFontForm({
   layerIndex,
   handleDecorationChange,
   handleFamilyChange,
-  handleSizeChange,
   handleStyleChange,
   handleWeightChange,
 }: Props): React.ReactElement {
   const [decoration, setDecoration] = useState("none");
   const [family, setFamily] = useState("sans-serif");
-  const [size, setSize] = useState("9");
   const [style, setStyle] = useState("normal");
   const [weight, setWeight] = useState("normal");
 
@@ -75,19 +71,6 @@ function TextSymbol3DLayerFontForm({
           }}
           value={family}
         ></calcite-input-text>
-      </calcite-label>
-
-      <calcite-label layout="default" style={labelStyles}>
-        size
-        <calcite-input-number
-          label={"font size input"}
-          min={0}
-          oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
-            handleSizeChange(layerIndex, event.target.value);
-          }}
-          value={size}
-        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

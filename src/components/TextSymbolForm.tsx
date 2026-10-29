@@ -18,6 +18,10 @@ import {
 import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
+  font: Font;
+  handleFontPropertiesChange: (
+    value: Partial<Pick<Font, "family" | "style" | "weight">>,
+  ) => void;
   handleAngleChange: (value: number) => void;
   handleBackgroundColorChange: (value: string) => void;
   handleBorderLineColorChange: (value: string) => void;
@@ -34,6 +38,7 @@ interface Props {
     value: InstanceType<typeof TextSymbol>["horizontalAlignment"],
   ) => void;
   handleKerningChange: (value: boolean) => void;
+  handleLineHeightChange: (value: string) => void;
   handleLineWidthChange: (value: string) => void;
   handleRotatedChange: (value: boolean) => void;
   handleTextChange: (value: string) => void;
@@ -45,6 +50,8 @@ interface Props {
 }
 
 function TextSymbolForm({
+  font,
+  handleFontPropertiesChange,
   handleAngleChange,
   handleBackgroundColorChange,
   handleBorderLineColorChange,
@@ -57,6 +64,7 @@ function TextSymbolForm({
   handleHaloSizeChange,
   handleHorizontalAlignmentChange,
   handleKerningChange,
+  handleLineHeightChange,
   handleLineWidthChange,
   handleRotatedChange,
   handleTextChange,
@@ -73,6 +81,7 @@ function TextSymbolForm({
   const [haloSize, setHaloSize] = useState("0");
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [kerning, setKerning] = useState(false);
+  const [lineHeight, setLineHeight] = useState("1");
   const [lineWidth, setLineWidth] = useState("1");
   const [rotated, setRotated] = useState(false);
   const [text, setText] = useState("Hello World!");
@@ -168,6 +177,8 @@ function TextSymbolForm({
 
       <calcite-block style={blockStyles} expandable heading={"font"}>
         <FontForm
+          font={font}
+          handlePropertiesChange={handleFontPropertiesChange}
           handleDecorationChange={handleFontDecorationChange}
           handleFontChange={handleFontChange}
           handleSizeChange={handleFontSizeChange}
@@ -250,6 +261,20 @@ function TextSymbolForm({
           }}
           value={kerning}
         ></calcite-switch>
+      </calcite-label>
+
+      <calcite-label layout="default" style={labelStyles}>
+        lineHeight
+        <calcite-input-number
+          label="lineHeight input"
+          min={0}
+          step={0.1}
+          oncalciteInputNumberChange={(event) => {
+            setLineHeight(event.target.value);
+            handleLineHeightChange(event.target.value);
+          }}
+          value={lineHeight}
+        ></calcite-input-number>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>

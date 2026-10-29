@@ -11,9 +11,11 @@ import { objectSymbol3DLayerAnchorOptions } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import ObjectSymbol3DLayerAnchorPositionForm from "./ObjectSymbol3DLayerAnchorPositionForm";
 import ObjectSymbol3DLayerMaterialForm from "./ObjectSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 import ObjectSymbol3DLayerResourceForm from "./ObjectSymbol3DLayerResourceForm";
 
 interface Props {
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleAnchorChange: (
     layerIndex: number,
@@ -57,6 +59,7 @@ interface Props {
 }
 
 function ObjectSymbol3DLayerForm({
+  handleMaterialEmissiveChange,
   layerIndex,
   handleAnchorChange,
   handleObjectSymbol3DLayerAnchorPositionXChange,
@@ -178,6 +181,7 @@ function ObjectSymbol3DLayerForm({
 
       <calcite-block style={blockStyles} expandable heading={"material"}>
         <ObjectSymbol3DLayerMaterialForm
+          handleEmissiveChange={handleMaterialEmissiveChange}
           layerIndex={layerIndex}
           handleColorChange={handleObjectSymbol3DLayerMaterialColorChange}
         ></ObjectSymbol3DLayerMaterialForm>

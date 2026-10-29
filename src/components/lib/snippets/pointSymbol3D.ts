@@ -1,4 +1,5 @@
 import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
+import { stringifyConstructorProperties } from "./constructorProperties";
 
 export function generatePointSymbol3DCDNSnippet(
   pointSymbol3D: PointSymbol3D,
@@ -7,11 +8,7 @@ export function generatePointSymbol3DCDNSnippet(
 const PointSymbol3D = await $arcgis.import("@arcgis/core/symbols/PointSymbol3D.js");
 
 const pointSymbol3D = new PointSymbol3D({
-  callout: {
-    type: "line",
-    color: [${(pointSymbol3D.callout?.color?.toRgba() ?? []).toString()}],
-    size: ${pointSymbol3D.callout?.size}
-  },
+  callout: ${stringifyConstructorProperties(pointSymbol3D.callout?.toJSON() ?? null)},
   symbolLayers: [
  `;
 
@@ -32,6 +29,7 @@ const pointSymbol3D = new PointSymbol3D({
     },
     angle: ${symbolLayer.angle},
     material: {
+      emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
       color: [${symbolLayer.material.color.toRgba().toString()}]
     },
     occludedVisibility: {
@@ -62,6 +60,7 @@ const pointSymbol3D = new PointSymbol3D({
       },
       angle: ${symbolLayer.angle},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       occludedVisibility: {
@@ -96,6 +95,7 @@ const pointSymbol3D = new PointSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
@@ -124,6 +124,7 @@ const pointSymbol3D = new PointSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}]
       },
       resource: {
@@ -138,17 +139,11 @@ const pointSymbol3D = new PointSymbol3D({
     }
 
     if (symbolLayer.type === "text") {
-      if (
-        symbolLayer.background?.color &&
-        symbolLayer.halo?.color &&
-        symbolLayer.material?.color
-      ) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
     {
       type: "text",
-      background: {
-        color: [${symbolLayer.background.color.toRgba().toString()}],
-      },
+      background: ${stringifyConstructorProperties(symbolLayer.background?.toJSON() ?? null)},
       font: {
         decoration: "${symbolLayer.font?.decoration}",
         family: ${JSON.stringify(symbolLayer.font?.family)},
@@ -156,13 +151,11 @@ const pointSymbol3D = new PointSymbol3D({
         style: "${symbolLayer.font?.style}",
         weight: "${symbolLayer.font?.weight}"
       },
-      halo: {
-        color: [${symbolLayer.halo.color.toRgba().toString()}],
-        size: ${symbolLayer.halo.size}
-      },
+      halo: ${stringifyConstructorProperties(symbolLayer.halo?.toJSON() ?? null)},
       horizontalAlignment: "${symbolLayer.horizontalAlignment}",
       lineHeight: ${symbolLayer.lineHeight},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: [${symbolLayer.material.color.toRgba().toString()}],
       },
       occludedVisibility: {
@@ -179,11 +172,7 @@ const pointSymbol3D = new PointSymbol3D({
 
   codeSnippet += `
   ],
-  verticalOffset: {
-    maxWorldLength: ${pointSymbol3D.verticalOffset?.maxWorldLength},
-    minWorldLength: ${pointSymbol3D.verticalOffset?.minWorldLength},
-    screenLength: ${pointSymbol3D.verticalOffset?.screenLength}
-  }
+  verticalOffset: ${JSON.stringify(pointSymbol3D.verticalOffset?.toJSON() ?? null)}
 });`;
 
   return codeSnippet;
@@ -247,10 +236,7 @@ export function generatePointSymbol3DESMSnippet(
 
   codeSnippet += `
 const pointSymbol3D = new PointSymbol3D({
-  callout: new LineCallout3D({
-    color: new Color([${(pointSymbol3D.callout?.color?.toRgba() ?? []).toString()}]),
-    size: ${pointSymbol3D.callout?.size}
-  }),
+  callout: ${pointSymbol3D.callout ? `new LineCallout3D(${stringifyConstructorProperties(pointSymbol3D.callout.toJSON())})` : "null"},
   symbolLayers: [
 `;
 
@@ -270,6 +256,7 @@ const pointSymbol3D = new PointSymbol3D({
       },
       angle: ${symbolLayer.angle},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       occludedVisibility: {
@@ -299,6 +286,7 @@ const pointSymbol3D = new PointSymbol3D({
       },
       angle: ${symbolLayer.angle},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       occludedVisibility: {
@@ -332,6 +320,7 @@ const pointSymbol3D = new PointSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {
@@ -359,6 +348,7 @@ const pointSymbol3D = new PointSymbol3D({
       heading: ${symbolLayer.heading},
       height: ${symbolLayer.height},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}])
       },
       resource: {
@@ -373,16 +363,10 @@ const pointSymbol3D = new PointSymbol3D({
     }
 
     if (symbolLayer.type === "text") {
-      if (
-        symbolLayer.background?.color &&
-        symbolLayer.halo?.color &&
-        symbolLayer.material?.color
-      ) {
+      if (symbolLayer.material?.color) {
         codeSnippet += `
     new TextSymbol3DLayer({
-      background: {
-        color: new Color([${symbolLayer.background?.color.toRgba().toString()}]),
-      },
+      background: ${stringifyConstructorProperties(symbolLayer.background?.toJSON() ?? null)},
       font: new Font({
         decoration: "${symbolLayer.font?.decoration}",
         family: ${JSON.stringify(symbolLayer.font?.family)},
@@ -390,13 +374,11 @@ const pointSymbol3D = new PointSymbol3D({
         style: "${symbolLayer.font?.style}",
         weight: "${symbolLayer.font?.weight}"
       }),
-      halo: {
-        color: new Color([${symbolLayer.halo.color.toRgba().toString()}]),
-        size: ${symbolLayer.halo.size}
-      },
+      halo: ${stringifyConstructorProperties(symbolLayer.halo?.toJSON() ?? null)},
       horizontalAlignment: "${symbolLayer.horizontalAlignment}",
       lineHeight: ${symbolLayer.lineHeight},
       material: {
+        emissive: ${stringifyConstructorProperties(symbolLayer.material?.emissive?.toJSON() ?? null)},
         color: new Color([${symbolLayer.material.color.toRgba().toString()}]),
       },
       occludedVisibility: {
@@ -413,11 +395,7 @@ const pointSymbol3D = new PointSymbol3D({
 
   codeSnippet += `
   ],
-  verticalOffset: new Symbol3DVerticalOffset({
-    maxWorldLength: ${pointSymbol3D.verticalOffset?.maxWorldLength},
-    minWorldLength: ${pointSymbol3D.verticalOffset?.minWorldLength},
-    screenLength: ${pointSymbol3D.verticalOffset?.screenLength}
-  })
+  verticalOffset: ${pointSymbol3D.verticalOffset ? `new Symbol3DVerticalOffset(${JSON.stringify(pointSymbol3D.verticalOffset.toJSON())})` : "null"}
 });`;
 
   return codeSnippet;

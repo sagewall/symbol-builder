@@ -85,6 +85,205 @@ async function roundTrip(
   return result;
 }
 
+for (const format of formats) {
+  test(`TextSymbol ${format} preserves lineHeight`, async () => {
+    const symbol = new constructors.TextSymbol({ lineHeight: 1.75 });
+    const result = await roundTrip("TextSymbol", format, symbol);
+    expect(result.lineHeight).toBe(1.75);
+  });
+}
+
+for (const [symbolType, layerType] of [
+  ["MeshSymbol3D", "fill"],
+  ["PolygonSymbol3D", "extrude"],
+] as const) {
+  for (const format of formats) {
+    for (const edgeType of [null, "solid", "sketch"] as const) {
+      test(`${symbolType} ${format} preserves ${edgeType} edges`, async () => {
+        const symbol = new constructors[symbolType]({
+          symbolLayers: [
+            {
+              type: layerType,
+              material: { color: "red" },
+              edges: edgeType
+                ? { type: edgeType, color: "blue", size: 2, extensionLength: 3 }
+                : null,
+            },
+          ],
+        });
+        const result = await roundTrip(symbolType, format, symbol);
+        expect(result.symbolLayers.length).toBe(1);
+        expect(
+          result.symbolLayers.getItemAt(0).edges?.toJSON() ?? null,
+        ).toEqual(symbol.symbolLayers.getItemAt(0).edges?.toJSON() ?? null);
+      });
+    }
+  }
+}
+
+for (const format of formats) {
+  for (const background of [null, { color: "white" }]) {
+    for (const halo of [null, { color: "black", size: 2 }]) {
+      test(`PointSymbol3D ${format} preserves text appearance ${JSON.stringify({ background, halo })}`, async () => {
+        const symbol = new constructors.PointSymbol3D({
+          symbolLayers: [
+            {
+              type: "text",
+              text: "Label",
+              font: { family: "Arial", size: 9 },
+              size: 20,
+              background,
+              halo,
+              material: { color: "red" },
+            },
+          ],
+        });
+        const result = await roundTrip("PointSymbol3D", format, symbol);
+        expect(result.symbolLayers.length).toBe(1);
+        const layer = result.symbolLayers.getItemAt(0);
+        expect(layer.size).toBe(20);
+        expect(layer.background?.toJSON() ?? null).toEqual(
+          symbol.symbolLayers.getItemAt(0).background?.toJSON() ?? null,
+        );
+        expect(layer.halo?.toJSON() ?? null).toEqual(
+          symbol.symbolLayers.getItemAt(0).halo?.toJSON() ?? null,
+        );
+      });
+    }
+  }
+}
+
+test.each(formats)(
+  "PointSymbol3D %s preserves color transparency in constructor properties",
+  async (format) => {
+    const symbol = new constructors.PointSymbol3D({
+      callout: {
+        type: "line",
+        color: [255, 0, 0, 0.25],
+        border: { color: [0, 0, 255, 0.5], size: 2 },
+      },
+      symbolLayers: [
+        {
+          type: "text",
+          text: "Label",
+          font: { family: "Arial", size: 9 },
+          background: { color: [0, 255, 0, 0.4] },
+          halo: { color: [0, 0, 255, 0.75], size: 2 },
+          material: { color: "red" },
+        },
+      ],
+    });
+
+    const result = await roundTrip("PointSymbol3D", format, symbol);
+    const layer = result.symbolLayers.getItemAt(0);
+
+    expect(result.callout.color.toRgba()[3]).toBeCloseTo(0.25);
+    expect(result.callout.border.color.toRgba()[3]).toBeCloseTo(0.5);
+    expect(layer.background.color.toRgba()[3]).toBeCloseTo(0.4);
+    expect(layer.halo.color.toRgba()[3]).toBeCloseTo(0.75);
+  },
+);
+
+for (const format of formats) {
+  test(`MeshSymbol3D ${format} preserves edge transparency`, async () => {
+    const symbol = new constructors.MeshSymbol3D({
+      symbolLayers: [
+        {
+          type: "fill",
+          material: { color: "red" },
+          edges: { type: "solid", color: [0, 0, 255, 0.35] },
+        },
+      ],
+    });
+    const result = await roundTrip("MeshSymbol3D", format, symbol);
+
+    expect(
+      result.symbolLayers.getItemAt(0).edges.color.toRgba()[3],
+    ).toBeCloseTo(0.35);
+  });
+
+  test(`PolygonSymbol3D ${format} preserves edge transparency`, async () => {
+    const symbol = new constructors.PolygonSymbol3D({
+      symbolLayers: [
+        {
+          type: "extrude",
+          material: { color: "red" },
+          edges: { type: "solid", color: [0, 0, 255, 0.65] },
+        },
+      ],
+    });
+    const result = await roundTrip("PolygonSymbol3D", format, symbol);
+
+    expect(
+      result.symbolLayers.getItemAt(0).edges.color.toRgba()[3],
+    ).toBeCloseTo(0.65);
+  });
+}
+
+const emissiveCases = [
+  { symbolType: "LineSymbol3D", layerType: "path" },
+  { symbolType: "MeshSymbol3D", layerType: "fill" },
+  { symbolType: "PointSymbol3D", layerType: "object" },
+  { symbolType: "PolygonSymbol3D", layerType: "extrude" },
+  { symbolType: "PolygonSymbol3D", layerType: "object" },
+] as const;
+
+for (const format of formats) {
+  for (const callout of [
+    null,
+    { color: "red", size: 2, border: { color: "blue" } },
+    { color: "red", size: 1, border: null },
+  ]) {
+    test(`PointSymbol3D ${format} preserves callout ${JSON.stringify(callout)}`, async () => {
+      const symbol = new constructors.PointSymbol3D({
+        callout,
+        verticalOffset: null,
+      });
+      const result = await roundTrip("PointSymbol3D", format, symbol);
+      expect(result.callout?.toJSON() ?? null).toEqual(
+        symbol.callout?.toJSON() ?? null,
+      );
+      expect(result.verticalOffset).toBeNull();
+    });
+  }
+}
+
+for (const { symbolType, layerType } of emissiveCases) {
+  for (const format of formats) {
+    test(`${symbolType} ${layerType} ${format} preserves emissive material`, async () => {
+      const emissive = { source: "color", strength: 0.6 };
+      const symbol = new constructors[symbolType]({
+        symbolLayers: [
+          {
+            type: layerType,
+            material: {
+              color: "red",
+              emissive,
+              ...(layerType === "fill" ? { colorMixMode: "multiply" } : {}),
+            },
+            ...(layerType === "fill"
+              ? { pattern: { type: "style", style: "solid" } }
+              : {}),
+            ...(layerType === "object"
+              ? {
+                  resource: { primitive: "sphere" },
+                  anchorPosition: { x: 0, y: 0, z: 0 },
+                }
+              : {}),
+            ...(layerType === "fill" || layerType === "extrude"
+              ? { edges: { type: "solid" } }
+              : {}),
+          },
+        ],
+      });
+      const result = await roundTrip(symbolType, format, symbol);
+      expect(
+        result.symbolLayers.getItemAt(0).material.emissive.toJSON(),
+      ).toEqual(emissive);
+    });
+  }
+}
+
 for (const symbolType of symbolTypes) {
   for (const format of formats) {
     test(`${symbolType} ${format} snippet constructs a symbol without mutating its input`, async () => {

@@ -1,4 +1,3 @@
-import Color from "@arcgis/core/Color.js";
 import type Collection from "@arcgis/core/core/Collection.js";
 import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
 import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
@@ -29,10 +28,6 @@ import {
 } from "./lib/styles";
 
 function PointSymbol3DShell(): React.ReactElement {
-  const [lineCallout3D, setLineCallout3D] = useState(
-    new LineCallout3D({ size: 1 }),
-  );
-
   const [symbol3DVerticalOffset, setSymbol3DVerticalOffset] = useState(
     new Symbol3DVerticalOffset({
       maxWorldLength: 100,
@@ -43,7 +38,7 @@ function PointSymbol3DShell(): React.ReactElement {
 
   const [pointSymbol3D, setPointSymbol3D] = useState(
     new PointSymbol3D({
-      callout: lineCallout3D,
+      callout: new LineCallout3D({ size: 1 }),
       verticalOffset: symbol3DVerticalOffset,
     }),
   );
@@ -57,24 +52,16 @@ function PointSymbol3DShell(): React.ReactElement {
     updatePreview(newPointSymbol3D);
   };
 
-  const handleCalloutColorChange = (currentColor: string): void => {
-    const newLineCallout3D = lineCallout3D.clone();
-    newLineCallout3D.color = new Color(currentColor);
-    setLineCallout3D(newLineCallout3D);
-
+  const handleCalloutChange = (value: LineCallout3D | null): void => {
     const newPointSymbol3D = pointSymbol3D.clone();
-    newPointSymbol3D.callout = newLineCallout3D;
+    newPointSymbol3D.callout = value;
     updateGraphics(newPointSymbol3D);
   };
 
-  const handleCalloutSizeChange = (currentSize: string): void => {
-    const newLineCallout3D = lineCallout3D.clone();
-    newLineCallout3D.size = Number(currentSize);
-    setLineCallout3D(newLineCallout3D);
-
-    const newPointSymbol3D = pointSymbol3D.clone();
-    newPointSymbol3D.callout = newLineCallout3D;
-    updateGraphics(newPointSymbol3D);
+  const handleVerticalOffsetEnabledChange = (enabled: boolean): void => {
+    const next = pointSymbol3D.clone();
+    next.verticalOffset = enabled ? symbol3DVerticalOffset.clone() : null;
+    updateGraphics(next);
   };
 
   const updateSymbolLayers = (
@@ -132,8 +119,12 @@ function PointSymbol3DShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <PointSymbol3DForm
-                handleCalloutColorChange={handleCalloutColorChange}
-                handleCalloutSizeChange={handleCalloutSizeChange}
+                callout={pointSymbol3D.callout}
+                handleCalloutChange={handleCalloutChange}
+                verticalOffset={pointSymbol3D.verticalOffset}
+                handleVerticalOffsetEnabledChange={
+                  handleVerticalOffsetEnabledChange
+                }
                 handleVerticalOffsetMaxWorldLengthChange={
                   handleVerticalOffsetMaxWorldLengthChange
                 }

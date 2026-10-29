@@ -8,7 +8,7 @@ import "@esri/calcite-components/dist/components/calcite-tab";
 import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Map from "./Map";
 import TextSymbolCDNPanel from "./TextSymbolCDNPanel";
 import TextSymbolESMPanel from "./TextSymbolESMPanel";
@@ -42,17 +42,19 @@ function TextSymbolShell(): React.ReactElement {
     }),
   );
 
+  const symbolRef = useRef(textSymbol);
   const { graphics, updatePreview } = useSymbolPreview(point, textSymbol);
 
   const viewElement = <Map graphics={graphics}></Map>;
 
   const updateGraphics = (newTextSymbol: TextSymbol): void => {
+    symbolRef.current = newTextSymbol;
     setTextSymbol(newTextSymbol);
     updatePreview(newTextSymbol);
   };
 
   const handleAngleChange = (currentAngle: number): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.angle = currentAngle;
     updateGraphics(newTextSymbol);
   };
@@ -60,7 +62,7 @@ function TextSymbolShell(): React.ReactElement {
   const handleBackgroundColorChange = (
     currentBackgroundColor: string,
   ): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.backgroundColor = new Color(currentBackgroundColor);
     updateGraphics(newTextSymbol);
   };
@@ -68,26 +70,26 @@ function TextSymbolShell(): React.ReactElement {
   const handleBorderLineColorChange = (
     currentBorderLineColor: string,
   ): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.borderLineColor = new Color(currentBorderLineColor);
     updateGraphics(newTextSymbol);
   };
 
   const handleBorderLineSizeChange = (currentBorderLineSize: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.borderLineSize = Number(currentBorderLineSize);
     updateGraphics(newTextSymbol);
   };
 
   const handleColorChange = (currentColor: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.color = new Color(currentColor);
     updateGraphics(newTextSymbol);
   };
 
   const handleFontChange = (currentFontData: string): void => {
     const currentFontDataObject = JSON.parse(currentFontData) as FontData;
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.font.family = currentFontDataObject.font.family;
     newTextSymbol.font.style = currentFontDataObject.font.style;
     newTextSymbol.font.weight = currentFontDataObject.font.weight;
@@ -95,30 +97,39 @@ function TextSymbolShell(): React.ReactElement {
     updateGraphics(newTextSymbol);
   };
 
+  const handleFontPropertiesChange = (
+    value: Partial<Pick<Font, "family" | "style" | "weight">>,
+  ) => {
+    const next = symbolRef.current.clone();
+    next.font.set(value);
+    setFont(next.font);
+    updateGraphics(next);
+  };
+
   const handleFontDecorationChange = (
     currentFontDecoration: InstanceType<typeof Font>["decoration"],
   ): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.font.decoration = currentFontDecoration;
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
   const handleFontSizeChange = (currentFontSize: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.font.size = Number(currentFontSize);
     setFont(newTextSymbol.font);
     updateGraphics(newTextSymbol);
   };
 
   const handleHaloColorChange = (currentHaloColor: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.haloColor = new Color(currentHaloColor);
     updateGraphics(newTextSymbol);
   };
 
   const handleHaloSizeChange = (currentHaloSize: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.haloSize = Number(currentHaloSize);
     updateGraphics(newTextSymbol);
   };
@@ -128,31 +139,37 @@ function TextSymbolShell(): React.ReactElement {
       typeof TextSymbol
     >["horizontalAlignment"],
   ): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.horizontalAlignment = currentHorizontalAlignment;
     updateGraphics(newTextSymbol);
   };
 
   const handleKerningChange = (currentKerning: boolean): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.kerning = currentKerning;
     updateGraphics(newTextSymbol);
   };
 
+  const handleLineHeightChange = (value: string): void => {
+    const newTextSymbol = symbolRef.current.clone();
+    newTextSymbol.lineHeight = Number(value);
+    updateGraphics(newTextSymbol);
+  };
+
   const handleLineWidthChange = (currentLineWidth: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.lineWidth = Number(currentLineWidth);
     updateGraphics(newTextSymbol);
   };
 
   const handleRotatedChange = (currentRotated: boolean): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.rotated = currentRotated;
     updateGraphics(newTextSymbol);
   };
 
   const handleTextChange = (currentText: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.text = currentText;
     updateGraphics(newTextSymbol);
   };
@@ -162,19 +179,19 @@ function TextSymbolShell(): React.ReactElement {
       typeof TextSymbol
     >["verticalAlignment"],
   ): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.verticalAlignment = currentVerticalAlignment;
     updateGraphics(newTextSymbol);
   };
 
   const handleXOffsetChange = (currentXOffset: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.xoffset = Number(currentXOffset);
     updateGraphics(newTextSymbol);
   };
 
   const handleYOffsetChange = (currentYOffset: string): void => {
-    const newTextSymbol = textSymbol.clone();
+    const newTextSymbol = symbolRef.current.clone();
     newTextSymbol.yoffset = Number(currentYOffset);
     updateGraphics(newTextSymbol);
   };
@@ -187,6 +204,8 @@ function TextSymbolShell(): React.ReactElement {
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <TextSymbolForm
+                font={textSymbol.font}
+                handleFontPropertiesChange={handleFontPropertiesChange}
                 handleAngleChange={handleAngleChange}
                 handleBackgroundColorChange={handleBackgroundColorChange}
                 handleBorderLineColorChange={handleBorderLineColorChange}
@@ -201,6 +220,7 @@ function TextSymbolShell(): React.ReactElement {
                   handleHorizontalAlignmentChange
                 }
                 handleKerningChange={handleKerningChange}
+                handleLineHeightChange={handleLineHeightChange}
                 handleLineWidthChange={handleLineWidthChange}
                 handleRotatedChange={handleRotatedChange}
                 handleTextChange={handleTextChange}

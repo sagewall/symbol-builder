@@ -4,11 +4,13 @@ import { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  colorValue?: string;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
 }
 
 function TextSymbol3DLayerBackgroundForm({
+  colorValue,
   layerIndex,
   handleColorChange,
 }: Props): React.ReactElement {
@@ -26,7 +28,7 @@ function TextSymbol3DLayerBackgroundForm({
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}
+          value={colorValue ?? color}
         ></calcite-input>
       </calcite-label>
     </>

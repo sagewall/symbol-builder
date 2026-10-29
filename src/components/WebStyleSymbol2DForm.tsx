@@ -9,7 +9,7 @@ import "@esri/calcite-components/dist/components/calcite-tab";
 import "@esri/calcite-components/dist/components/calcite-tab-nav";
 import "@esri/calcite-components/dist/components/calcite-tab-title";
 import "@esri/calcite-components/dist/components/calcite-tabs";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   esri2DPointSymbolsStyleNameOptions,
   webStyleSymbols2DStyleOptions,
@@ -50,9 +50,11 @@ function WebStyleSymbol2DForm({
   const [styleUrl, setStyleUrl] = useState(
     "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
   );
+  const requestId = useRef(0);
 
   const getStyleItemDataFromItem = useCallback(
     async (groupItem: GroupItem) => {
+      const currentRequestId = ++requestId.current;
       setPointWebStyleSymbolItems([]);
       setLineWebStyleSymbolItems([]);
       setPolygonWebStyleSymbolItems([]);
@@ -68,6 +70,9 @@ function WebStyleSymbol2DForm({
               responseType: "json",
             },
           );
+          if (currentRequestId !== requestId.current) {
+            return;
+          }
           const items =
             (response.data as { items?: WebStyleSymbolItem[] }).items ?? [];
           const pointItems = items
@@ -137,9 +142,11 @@ function WebStyleSymbol2DForm({
             setPolygonWebStyleSymbolItems([]);
           }
         } catch (error) {
-          setPointWebStyleSymbolItems([]);
-          setLineWebStyleSymbolItems([]);
-          setPolygonWebStyleSymbolItems([]);
+          if (currentRequestId === requestId.current) {
+            setPointWebStyleSymbolItems([]);
+            setLineWebStyleSymbolItems([]);
+            setPolygonWebStyleSymbolItems([]);
+          }
           // Optionally, handle/log the error here
         }
       }
@@ -148,9 +155,16 @@ function WebStyleSymbol2DForm({
   );
 
   const getStyleItemDataFromUrl = async (url: string): Promise<void> => {
+    const currentRequestId = ++requestId.current;
+    setPointWebStyleSymbolItems([]);
+    setLineWebStyleSymbolItems([]);
+    setPolygonWebStyleSymbolItems([]);
     const response = await esriRequest(url, {
       responseType: "json",
     });
+    if (currentRequestId !== requestId.current) {
+      return;
+    }
     const items = (response.data as { items: WebStyleSymbolItem[] }).items;
     const pointItems = items
       .filter((item: WebStyleSymbolItem) => item.itemType === "pointSymbol")
@@ -199,6 +213,7 @@ function WebStyleSymbol2DForm({
       return;
     }
     if (selectedTitle.tab === "standard") {
+      requestId.current += 1;
       setName("extent-hollow-gray");
       setStyleName("Esri2DPointSymbolsStyle");
       handleStyleNameChange("Esri2DPointSymbolsStyle", portalUrl);
@@ -267,6 +282,7 @@ function WebStyleSymbol2DForm({
                       key={index}
                       label={item.name}
                       onClick={() => {
+                        requestId.current += 1;
                         handleCustomStyleChange(
                           styleUrl,
                           item.name,
@@ -294,6 +310,7 @@ function WebStyleSymbol2DForm({
                       key={index}
                       label={item.name}
                       onClick={() => {
+                        requestId.current += 1;
                         handleCustomStyleChange(
                           styleUrl,
                           item.name,
@@ -321,6 +338,7 @@ function WebStyleSymbol2DForm({
                       key={index}
                       label={item.name}
                       onClick={() => {
+                        requestId.current += 1;
                         handleCustomStyleChange(
                           styleUrl,
                           item.name,

@@ -1,6 +1,5 @@
 import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
-import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
@@ -10,10 +9,14 @@ import { useState } from "react";
 import { capOptions, joinOptions } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import LineStyleMarker3DForm from "./LineStyleMarker3DForm";
-import LineStylePattern3DForm from "./LineStylePattern3DForm";
+import LinePattern3DForm, {
+  type LinePatternChangeHandler,
+} from "./LinePattern3DForm";
 import LineSymbol3DLayerMaterialForm from "./LineSymbol3DLayerMaterialForm";
 
 interface Props {
+  pattern: LineSymbol3DLayer["pattern"];
+  handlePatternChange: LinePatternChangeHandler;
   layerIndex: number;
   handleCapChange: (
     layerIndex: number,
@@ -43,14 +46,12 @@ interface Props {
     layerIndex: number,
     value: string,
   ) => void;
-  handleLineSymbol3DLayerPatternStyleChange: (
-    layerIndex: number,
-    value: InstanceType<typeof LineStylePattern3D>["style"],
-  ) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
 function LineSymbol3DLayerForm({
+  pattern,
+  handlePatternChange,
   layerIndex,
   handleCapChange,
   handleJoinChange,
@@ -59,7 +60,6 @@ function LineSymbol3DLayerForm({
   handleLineSymbol3DLayerMarkerPlacementChange,
   handleLineSymbol3DLayerMarkerStyleChange,
   handleLineSymbol3DLayerMaterialColorChange,
-  handleLineSymbol3DLayerPatternStyleChange,
   handleSizeChange,
 }: Props): React.ReactElement {
   const [cap, setCap] = useState("butt");
@@ -143,10 +143,11 @@ function LineSymbol3DLayerForm({
       </calcite-block>
 
       <calcite-block style={blockStyles} expandable heading={"pattern"}>
-        <LineStylePattern3DForm
+        <LinePattern3DForm
           layerIndex={layerIndex}
-          handleStyleChange={handleLineSymbol3DLayerPatternStyleChange}
-        ></LineStylePattern3DForm>
+          pattern={pattern}
+          handleChange={handlePatternChange}
+        />
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>

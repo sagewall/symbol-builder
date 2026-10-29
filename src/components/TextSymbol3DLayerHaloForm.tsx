@@ -5,12 +5,16 @@ import { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  colorValue?: string;
+  sizeValue?: number;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleSizeChange: (layerIndex: number, value: string) => void;
 }
 
 function TextSymbol3DLayerHaloForm({
+  colorValue,
+  sizeValue,
   layerIndex,
   handleColorChange,
   handleSizeChange,
@@ -30,7 +34,7 @@ function TextSymbol3DLayerHaloForm({
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
-          value={color}
+          value={colorValue ?? color}
         ></calcite-input>
       </calcite-label>
 
@@ -43,7 +47,7 @@ function TextSymbol3DLayerHaloForm({
             setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
-          value={size}
+          value={sizeValue === undefined ? size : String(sizeValue)}
         ></calcite-input-number>
       </calcite-label>
     </>

@@ -1,5 +1,7 @@
 import type Font from "@arcgis/core/symbols/Font.js";
 import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
+import Symbol3DTextBackground from "@arcgis/core/symbols/support/Symbol3DTextBackground.js";
+import Symbol3DHalo from "@arcgis/core/symbols/support/Symbol3DHalo.js";
 import type { OccludedVisibilityMode } from "@arcgis/core/symbols/support/types.js";
 import "@esri/calcite-components/components/calcite-block";
 import "@esri/calcite-components/components/calcite-input-number";
@@ -7,6 +9,7 @@ import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
+import "@esri/calcite-components/components/calcite-switch";
 import { useState } from "react";
 import {
   horizontalAlignmentOptions,
@@ -20,6 +23,11 @@ import TextSymbol3DLayerHaloForm from "./TextSymbol3DLayerHaloForm";
 import TextSymbol3DLayerMaterialForm from "./TextSymbol3DLayerMaterialForm";
 
 interface Props {
+  symbolLayer: TextSymbol3DLayer;
+  handleAppearanceChange: (
+    index: number,
+    value: Partial<Pick<TextSymbol3DLayer, "background" | "halo">>,
+  ) => void;
   layerIndex: number;
   handleTextSymbol3DLayerBackgroundColorChange: (
     layerIndex: number,
@@ -30,10 +38,6 @@ interface Props {
     value: InstanceType<typeof Font>["decoration"],
   ) => void;
   handleTextSymbol3DLayerFontFamilyChange: (
-    layerIndex: number,
-    value: string,
-  ) => void;
-  handleTextSymbol3DLayerFontSizeChange: (
     layerIndex: number,
     value: string,
   ) => void;
@@ -75,10 +79,11 @@ interface Props {
 }
 
 function TextSymbol3DLayerForm({
+  symbolLayer,
+  handleAppearanceChange,
   handleTextSymbol3DLayerBackgroundColorChange,
   handleTextSymbol3DLayerFontDecorationChange,
   handleTextSymbol3DLayerFontFamilyChange,
-  handleTextSymbol3DLayerFontSizeChange,
   handleTextSymbol3DLayerFontStyleChange,
   handleTextSymbol3DLayerFontWeightChange,
   handleTextSymbol3DLayerHaloColorChange,
@@ -92,6 +97,16 @@ function TextSymbol3DLayerForm({
   handleVerticalAlignmentChange,
   layerIndex,
 }: Props): React.ReactElement {
+  const [savedBackground, setSavedBackground] = useState(
+    symbolLayer.background?.clone() ??
+      new Symbol3DTextBackground({ color: "#aaaaaa" }),
+  );
+  const [savedHalo, setSavedHalo] = useState(
+    new Symbol3DHalo({
+      color: symbolLayer.halo?.color?.toRgba() ?? "#000000",
+      size: symbolLayer.halo?.size ?? 0,
+    }),
+  );
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [lineHeight, setLineHeight] = useState("1");
   const [occludedVisibility, setOccludedVisibility] =
@@ -115,10 +130,29 @@ function TextSymbol3DLayerForm({
       </calcite-label>
 
       <calcite-block style={blockStyles} expandable heading={"background"}>
-        <TextSymbol3DLayerBackgroundForm
-          layerIndex={layerIndex}
-          handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
-        ></TextSymbol3DLayerBackgroundForm>
+        <calcite-label layout="default" style={labelStyles}>
+          enabled
+          <calcite-switch
+            label="background enabled"
+            checked={!!symbolLayer.background}
+            oncalciteSwitchChange={(event) => {
+              if (symbolLayer.background)
+                setSavedBackground(symbolLayer.background.clone());
+              handleAppearanceChange(layerIndex, {
+                background: event.target.checked
+                  ? savedBackground.clone()
+                  : null,
+              });
+            }}
+          ></calcite-switch>
+        </calcite-label>
+        {symbolLayer.background && (
+          <TextSymbol3DLayerBackgroundForm
+            colorValue={symbolLayer.background.color?.toHex()}
+            layerIndex={layerIndex}
+            handleColorChange={handleTextSymbol3DLayerBackgroundColorChange}
+          ></TextSymbol3DLayerBackgroundForm>
+        )}
       </calcite-block>
 
       <calcite-block style={blockStyles} expandable heading={"font"}>
@@ -126,18 +160,45 @@ function TextSymbol3DLayerForm({
           layerIndex={layerIndex}
           handleDecorationChange={handleTextSymbol3DLayerFontDecorationChange}
           handleFamilyChange={handleTextSymbol3DLayerFontFamilyChange}
-          handleSizeChange={handleTextSymbol3DLayerFontSizeChange}
           handleStyleChange={handleTextSymbol3DLayerFontStyleChange}
           handleWeightChange={handleTextSymbol3DLayerFontWeightChange}
         ></TextSymbol3DLayerFontForm>
       </calcite-block>
 
       <calcite-block style={blockStyles} expandable heading={"halo"}>
-        <TextSymbol3DLayerHaloForm
-          layerIndex={layerIndex}
-          handleColorChange={handleTextSymbol3DLayerHaloColorChange}
-          handleSizeChange={handleTextSymbol3DLayerHaloSizeChange}
-        ></TextSymbol3DLayerHaloForm>
+        <calcite-label layout="default" style={labelStyles}>
+          enabled
+          <calcite-switch
+            label="halo enabled"
+            checked={!!symbolLayer.halo}
+            oncalciteSwitchChange={(event) => {
+              if (symbolLayer.halo)
+                setSavedHalo(
+                  new Symbol3DHalo({
+                    color: symbolLayer.halo.color?.toRgba(),
+                    size: symbolLayer.halo.size,
+                  }),
+                );
+              handleAppearanceChange(layerIndex, {
+                halo: event.target.checked
+                  ? new Symbol3DHalo({
+                      color: savedHalo.color?.toRgba(),
+                      size: savedHalo.size,
+                    })
+                  : null,
+              });
+            }}
+          ></calcite-switch>
+        </calcite-label>
+        {symbolLayer.halo && (
+          <TextSymbol3DLayerHaloForm
+            colorValue={symbolLayer.halo.color?.toHex()}
+            sizeValue={symbolLayer.halo.size}
+            layerIndex={layerIndex}
+            handleColorChange={handleTextSymbol3DLayerHaloColorChange}
+            handleSizeChange={handleTextSymbol3DLayerHaloSizeChange}
+          ></TextSymbol3DLayerHaloForm>
+        )}
       </calcite-block>
 
       <calcite-label layout="default" style={labelStyles}>
