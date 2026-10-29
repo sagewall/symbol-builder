@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest run --execArgv=--experimental-vm-modules",
     "test:e2e": "playwright test",
+    "check:catalogs": "node scripts/check-style-catalogs.mjs",
     "dev": "astro dev",
     "dev:stop": "astro dev stop",
     "build": "astro build",
