@@ -33,7 +33,7 @@ function TextSymbolShell(): React.ReactElement {
     new TextSymbol({
       backgroundColor: [255, 255, 255, 0],
       borderLineColor: [255, 255, 255, 0],
-      borderLineSize: undefined,
+      borderLineSize: 0,
       font,
       haloColor: "#ffffff",
       haloSize: 0,
@@ -63,7 +63,17 @@ function TextSymbolShell(): React.ReactElement {
     currentBackgroundColor: string,
   ): void => {
     const newTextSymbol = symbolRef.current.clone();
-    newTextSymbol.backgroundColor = new Color(currentBackgroundColor);
+    const color = new Color(currentBackgroundColor);
+    color.a = newTextSymbol.backgroundColor?.a ?? 1;
+    newTextSymbol.backgroundColor = color;
+    updateGraphics(newTextSymbol);
+  };
+
+  const handleBackgroundOpacityChange = (currentOpacity: number): void => {
+    const newTextSymbol = symbolRef.current.clone();
+    const color = newTextSymbol.backgroundColor?.clone() ?? new Color("#ffffff");
+    color.a = currentOpacity;
+    newTextSymbol.backgroundColor = color;
     updateGraphics(newTextSymbol);
   };
 
@@ -71,7 +81,18 @@ function TextSymbolShell(): React.ReactElement {
     currentBorderLineColor: string,
   ): void => {
     const newTextSymbol = symbolRef.current.clone();
-    newTextSymbol.borderLineColor = new Color(currentBorderLineColor);
+    const color = new Color(currentBorderLineColor);
+    color.a = newTextSymbol.borderLineColor?.a ?? 1;
+    newTextSymbol.borderLineColor = color;
+    updateGraphics(newTextSymbol);
+  };
+
+  const handleBorderLineOpacityChange = (currentOpacity: number): void => {
+    const newTextSymbol = symbolRef.current.clone();
+    const color =
+      newTextSymbol.borderLineColor?.clone() ?? new Color("#ffffff");
+    color.a = currentOpacity;
+    newTextSymbol.borderLineColor = color;
     updateGraphics(newTextSymbol);
   };
 
@@ -205,10 +226,15 @@ function TextSymbolShell(): React.ReactElement {
             <div style={formStyles}>
               <TextSymbolForm
                 font={textSymbol.font}
+                lineWidth={String(textSymbol.lineWidth)}
+                backgroundOpacity={textSymbol.backgroundColor?.a ?? 1}
+                borderLineOpacity={textSymbol.borderLineColor?.a ?? 1}
                 handleFontPropertiesChange={handleFontPropertiesChange}
                 handleAngleChange={handleAngleChange}
                 handleBackgroundColorChange={handleBackgroundColorChange}
+                handleBackgroundOpacityChange={handleBackgroundOpacityChange}
                 handleBorderLineColorChange={handleBorderLineColorChange}
+                handleBorderLineOpacityChange={handleBorderLineOpacityChange}
                 handleBorderLineSizeChange={handleBorderLineSizeChange}
                 handleColorChange={handleColorChange}
                 handleFontChange={handleFontChange}

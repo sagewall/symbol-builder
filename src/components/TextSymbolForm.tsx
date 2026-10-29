@@ -19,12 +19,17 @@ import { blockStyles, labelStyles } from "./lib/styles";
 
 interface Props {
   font: Font;
+  lineWidth: string;
+  backgroundOpacity: number;
+  borderLineOpacity: number;
   handleFontPropertiesChange: (
     value: Partial<Pick<Font, "family" | "style" | "weight">>,
   ) => void;
   handleAngleChange: (value: number) => void;
   handleBackgroundColorChange: (value: string) => void;
+  handleBackgroundOpacityChange: (value: number) => void;
   handleBorderLineColorChange: (value: string) => void;
+  handleBorderLineOpacityChange: (value: number) => void;
   handleBorderLineSizeChange: (value: string) => void;
   handleColorChange: (value: string) => void;
   handleFontChange: (value: string) => void;
@@ -51,10 +56,15 @@ interface Props {
 
 function TextSymbolForm({
   font,
+  lineWidth,
+  backgroundOpacity,
+  borderLineOpacity,
   handleFontPropertiesChange,
   handleAngleChange,
   handleBackgroundColorChange,
+  handleBackgroundOpacityChange,
   handleBorderLineColorChange,
+  handleBorderLineOpacityChange,
   handleBorderLineSizeChange,
   handleColorChange,
   handleFontChange,
@@ -82,7 +92,6 @@ function TextSymbolForm({
   const [horizontalAlignment, setHorizontalAlignment] = useState("center");
   const [kerning, setKerning] = useState(false);
   const [lineHeight, setLineHeight] = useState("1");
-  const [lineWidth, setLineWidth] = useState("1");
   const [rotated, setRotated] = useState(false);
   const [text, setText] = useState("Hello World!");
   const [verticalAlignment, setVerticalAlignment] = useState("baseline");
@@ -135,6 +144,20 @@ function TextSymbolForm({
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
+        backgroundColor opacity
+        <calcite-slider
+          labelHandles={true}
+          max={1}
+          min={0}
+          oncalciteSliderChange={(event) => {
+            handleBackgroundOpacityChange(event.target.value as number);
+          }}
+          step={0.01}
+          value={backgroundOpacity}
+        ></calcite-slider>
+      </calcite-label>
+
+      <calcite-label layout="default" style={labelStyles}>
         borderLineColor
         <calcite-input
           oncalciteInputInput={(event) => {
@@ -146,6 +169,20 @@ function TextSymbolForm({
           type="color"
           value={borderLineColor}
         ></calcite-input>
+      </calcite-label>
+
+      <calcite-label layout="default" style={labelStyles}>
+        borderLineColor opacity
+        <calcite-slider
+          labelHandles={true}
+          max={1}
+          min={0}
+          oncalciteSliderChange={(event) => {
+            handleBorderLineOpacityChange(event.target.value as number);
+          }}
+          step={0.01}
+          value={borderLineOpacity}
+        ></calcite-slider>
       </calcite-label>
 
       <calcite-label layout="default" style={labelStyles}>
@@ -283,7 +320,6 @@ function TextSymbolForm({
           label={"lineWidth input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setLineWidth(event.target.value);
             handleLineWidthChange(event.target.value);
           }}
           value={lineWidth}
