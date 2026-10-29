@@ -18,12 +18,15 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`              |
 | `npm test`                | Runs type checking, unit tests, and browser tests    |
 | `npm run typecheck`       | Checks TypeScript against installed dependency types |
+| `npm run test:e2e`        | Runs browser tests with a single worker              |
 | `npm run check:catalogs`  | Checks static WebStyle names against public REST catalogs |
 | `npm run preview`         | Preview your build locally, before deploying         |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`     |
 | `npm run astro -- --help` | Get help using the Astro CLI                         |
 
 Set `PLAYWRIGHT_BASE_URL` to run browser tests against an existing server without starting a development server.
+
+Browser tests use one Playwright worker to avoid timeouts observed when running multiple browser instances concurrently.
 
 ## Symbol Property Options
 

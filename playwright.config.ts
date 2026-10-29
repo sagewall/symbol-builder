@@ -6,7 +6,7 @@ const baseURL = externalBaseURL ?? "http://localhost:4321";
 export default defineConfig({
   testDir: "./e2e",
   testMatch: "**/*.e2e.ts",
-  fullyParallel: true,
+  workers: 1,
   reporter: "list",
   use: {
     baseURL,
