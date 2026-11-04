@@ -9,4 +9,9 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [react()],
   site: "https://symbol-builder.s46e.com",
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 2000,
+    },
+  },
 });
