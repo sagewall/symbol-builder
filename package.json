@@ -20,8 +20,8 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@arcgis/core": "~5.2.0-next.169",
-    "@arcgis/map-components": "~5.2.0-next.169",
+    "@arcgis/core": "~5.2.0",
+    "@arcgis/map-components": "~5.2.0",
     "@astrojs/cloudflare": "^14.4.2",
     "@astrojs/react": "^7.1.1",
     "@esri/calcite-components": "~5.2.0",
