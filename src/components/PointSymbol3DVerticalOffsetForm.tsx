@@ -1,23 +1,21 @@
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
-import { useState } from "react";
+import type Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  value: Symbol3DVerticalOffset;
   handleMaxWorldLengthChange: (value: string) => void;
   handleMinWorldLengthChange: (value: string) => void;
   handleScreenLengthChange: (value: string) => void;
 }
 
 function PointSymbol3DVerticalOffsetForm({
+  value,
   handleMaxWorldLengthChange,
   handleMinWorldLengthChange,
   handleScreenLengthChange,
 }: Props): React.ReactElement {
-  const [maxWorldLength, setMaxWorldLength] = useState("100");
-  const [minWorldLength, setMinWorldLength] = useState("0");
-  const [screenLength, setScreenLength] = useState("0");
-
   return (
     <>
       <calcite-label layout="default" style={labelStyles}>
@@ -26,10 +24,11 @@ function PointSymbol3DVerticalOffsetForm({
           label={"maxWorldLength input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setMaxWorldLength(event.target.value);
             handleMaxWorldLengthChange(event.target.value);
           }}
-          value={maxWorldLength}
+          value={
+            value.maxWorldLength == null ? "" : String(value.maxWorldLength)
+          }
         ></calcite-input-number>
       </calcite-label>
 
@@ -39,10 +38,9 @@ function PointSymbol3DVerticalOffsetForm({
           label={"minWorldLength input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setMinWorldLength(event.target.value);
             handleMinWorldLengthChange(event.target.value);
           }}
-          value={minWorldLength}
+          value={String(value.minWorldLength)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -52,10 +50,9 @@ function PointSymbol3DVerticalOffsetForm({
           label={"screenLength input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setScreenLength(event.target.value);
             handleScreenLengthChange(event.target.value);
           }}
-          value={screenLength}
+          value={String(value.screenLength)}
         ></calcite-input-number>
       </calcite-label>
     </>

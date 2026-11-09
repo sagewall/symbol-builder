@@ -1,7 +1,7 @@
-import Mesh from "@arcgis/core/geometry/Mesh.js";
 import Point from "@arcgis/core/geometry/Point.js";
 import Polygon from "@arcgis/core/geometry/Polygon.js";
 import Polyline from "@arcgis/core/geometry/Polyline.js";
+import { createBox } from "@arcgis/core/geometry/support/meshUtils.js";
 
 const polygonCoordinates = [
   [
@@ -112,7 +112,7 @@ export const polygon = new Polygon({
   rings: polygonCoordinates,
 });
 
-export const mesh = Mesh.createBox(point, {
+export const mesh = createBox(point, {
   size: {
     width: 10,
     height: 5,

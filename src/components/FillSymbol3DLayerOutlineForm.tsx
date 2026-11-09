@@ -5,12 +5,12 @@ import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { capOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 import LineStylePattern3DForm from "./LineStylePattern3DForm";
 
 interface Props {
+  symbolLayer: FillSymbol3DLayer;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleLineSylePattern3DStyleChange: (
@@ -29,15 +29,16 @@ interface Props {
 }
 
 function FillSymbol3DLayerOutlineForm({
+  symbolLayer,
   layerIndex,
   handleColorChange,
   handleLineSylePattern3DStyleChange,
   handlePatternCapChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#111111");
-  const [patternCap, setPatternCap] = useState("butt");
-  const [size, setSize] = useState("3");
+  const color = symbolLayer.outline?.color?.toHex() ?? "#000000";
+  const patternCap = symbolLayer.outline?.patternCap ?? "butt";
+  const size = String(symbolLayer.outline?.size ?? 0);
 
   return (
     <>
@@ -45,9 +46,7 @@ function FillSymbol3DLayerOutlineForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
@@ -56,6 +55,7 @@ function FillSymbol3DLayerOutlineForm({
       </calcite-label>
 
       <LineStylePattern3DForm
+        styleValue={symbolLayer.outline?.pattern?.style ?? "solid"}
         layerIndex={layerIndex}
         handleStyleChange={handleLineSylePattern3DStyleChange}
       ></LineStylePattern3DForm>
@@ -65,7 +65,6 @@ function FillSymbol3DLayerOutlineForm({
         <calcite-select
           label={"patternCap selection"}
           oncalciteSelectChange={(event) => {
-            setPatternCap(event.target.value);
             handlePatternCapChange(
               layerIndex,
               event.target.value as NonNullable<
@@ -89,7 +88,6 @@ function FillSymbol3DLayerOutlineForm({
           label={"size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(layerIndex, event.target.value);
           }}
           value={size}

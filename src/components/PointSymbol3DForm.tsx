@@ -1,13 +1,21 @@
 import type Collection from "@arcgis/core/core/Collection.js";
+import type PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D.js";
+import type LineCallout3D from "@arcgis/core/symbols/callouts/LineCallout3D.js";
+import type Symbol3DVerticalOffset from "@arcgis/core/symbols/support/Symbol3DVerticalOffset.js";
 import "@esri/calcite-components/components/calcite-block";
-import { blockStyles } from "./lib/styles";
+import "@esri/calcite-components/components/calcite-switch";
+import "@esri/calcite-components/components/calcite-label";
+import { blockStyles, labelStyles } from "./lib/styles";
 import PointSymbol3DCalloutForm from "./PointSymbol3DCalloutForm";
 import PointSymbol3DSymbolLayersForm from "./PointSymbol3DSymbolLayersForm";
 import PointSymbol3DVerticalOffsetForm from "./PointSymbol3DVerticalOffsetForm";
 
 interface Props {
-  handleCalloutColorChange: (value: string) => void;
-  handleCalloutSizeChange: (value: string) => void;
+  symbolLayers: PointSymbol3D["symbolLayers"];
+  callout: LineCallout3D | null | undefined;
+  handleCalloutChange: (value: LineCallout3D | null) => void;
+  verticalOffset: Symbol3DVerticalOffset | null | undefined;
+  handleVerticalOffsetEnabledChange: (value: boolean) => void;
   handleVerticalOffsetMaxWorldLengthChange: (value: string) => void;
   handleVerticalOffsetMinWorldLengthChange: (value: string) => void;
   handleVerticalOffsetScreenLengthChange: (value: string) => void;
@@ -15,8 +23,11 @@ interface Props {
 }
 
 function PointSymbol3DForm({
-  handleCalloutColorChange,
-  handleCalloutSizeChange,
+  symbolLayers,
+  callout,
+  handleCalloutChange,
+  verticalOffset,
+  handleVerticalOffsetEnabledChange,
   handleVerticalOffsetMaxWorldLengthChange,
   handleVerticalOffsetMinWorldLengthChange,
   handleVerticalOffsetScreenLengthChange,
@@ -24,21 +35,39 @@ function PointSymbol3DForm({
 }: Props): React.ReactElement {
   return (
     <>
-      <calcite-block style={blockStyles} collapsible heading={"callout"}>
+      <calcite-block style={blockStyles} expandable heading={"callout"}>
         <PointSymbol3DCalloutForm
-          handleColorChange={handleCalloutColorChange}
-          handleSizeChange={handleCalloutSizeChange}
+          callout={callout}
+          handleChange={handleCalloutChange}
         ></PointSymbol3DCalloutForm>
       </calcite-block>
       <PointSymbol3DSymbolLayersForm
+        symbolLayers={symbolLayers}
         updateSymbolLayers={updateSymbolLayers}
       ></PointSymbol3DSymbolLayersForm>
-      <calcite-block style={blockStyles} collapsible heading={"verticalOffset"}>
-        <PointSymbol3DVerticalOffsetForm
-          handleMaxWorldLengthChange={handleVerticalOffsetMaxWorldLengthChange}
-          handleMinWorldLengthChange={handleVerticalOffsetMinWorldLengthChange}
-          handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}
-        ></PointSymbol3DVerticalOffsetForm>
+      <calcite-block style={blockStyles} expandable heading={"verticalOffset"}>
+        <calcite-label layout="default" style={labelStyles}>
+          enabled
+          <calcite-switch
+            label="verticalOffset enabled"
+            checked={!!verticalOffset}
+            oncalciteSwitchChange={(event) =>
+              handleVerticalOffsetEnabledChange(event.target.checked)
+            }
+          ></calcite-switch>
+        </calcite-label>
+        {verticalOffset && (
+          <PointSymbol3DVerticalOffsetForm
+            value={verticalOffset}
+            handleMaxWorldLengthChange={
+              handleVerticalOffsetMaxWorldLengthChange
+            }
+            handleMinWorldLengthChange={
+              handleVerticalOffsetMinWorldLengthChange
+            }
+            handleScreenLengthChange={handleVerticalOffsetScreenLengthChange}
+          ></PointSymbol3DVerticalOffsetForm>
+        )}
       </calcite-block>
     </>
   );

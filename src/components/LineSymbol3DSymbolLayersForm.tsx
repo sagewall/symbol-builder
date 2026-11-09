@@ -1,23 +1,28 @@
-import Color from "@arcgis/core/Color.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import { colorWithAlpha } from "./lib/color";
+import type Collection from "@arcgis/core/core/Collection.js";
+import type LineSymbol3D from "@arcgis/core/symbols/LineSymbol3D.js";
 import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
 import LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
 import PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
 import LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
 import "@esri/calcite-components/components/calcite-action";
+import "@esri/calcite-components/components/calcite-action-menu";
 import "@esri/calcite-components/components/calcite-block";
-import "@esri/calcite-components/components/calcite-chip";
-import "@esri/calcite-components/components/calcite-tooltip";
 import React, { useState } from "react";
-import { blockStyles, chipStyles } from "./lib/styles";
+import { blockStyles } from "./lib/styles";
+import { cloneSymbolLayers, getSymbolLayerKey } from "./lib/symbolLayerKeys";
 import LineSymbol3DLayerForm from "./LineSymbol3DLayerForm";
 import PathSymbol3DLayerForm from "./PathSymbol3DLayerForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
+import type { LinePatternChangeHandler } from "./LinePattern3DForm";
 
 interface Props {
+  symbolLayers: LineSymbol3D["symbolLayers"];
   updateSymbolLayers: (newSymbolLayers: Collection) => void;
 }
 
 function LineSymbol3DSymbolLayersForm({
+  symbolLayers,
   updateSymbolLayers,
 }: Props): React.ReactElement {
   const createNewLineSymbol3DLayer = (): LineSymbol3DLayer => {
@@ -40,49 +45,45 @@ function LineSymbol3DSymbolLayersForm({
     return newPathSymbol3DLayer;
   };
 
-  const [symbolLayers, setSymbolLayers] = useState(new Collection());
-
-  const [lineStyleMarker3Ds, setLineStyleMarker3Ds] = useState(
-    new Collection([
-      new LineStyleMarker3D({
-        color: "#007ac2",
-        placement: "begin-end",
-        style: "arrow",
-      }),
-    ]),
-  );
+  const [lineStyleMarker3Ds, setLineStyleMarker3Ds] = useState<
+    Map<number, LineStyleMarker3D>
+  >(() => new Map());
 
   const addLineSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const lineSymbol3DLayer = createNewLineSymbol3DLayer();
     newSymbolLayers.add(lineSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
 
-    const newLineStyleMarker3Ds = lineStyleMarker3Ds.clone();
-    newLineStyleMarker3Ds.add(
-      new LineStyleMarker3D({
-        color: "#007ac2",
-        placement: "begin-end",
-        style: "arrow",
-      }),
+    const newLineStyleMarker3D = new LineStyleMarker3D({
+      color: "#007ac2",
+      placement: "begin-end",
+      style: "arrow",
+    });
+    const newLineStyleMarker3Ds = new Map(lineStyleMarker3Ds);
+    newLineStyleMarker3Ds.set(
+      getSymbolLayerKey(lineSymbol3DLayer),
+      newLineStyleMarker3D,
     );
     setLineStyleMarker3Ds(newLineStyleMarker3Ds);
   };
 
   const addPathSymbol3DLayer = (): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const pathSymbol3DLayer = createNewPathSymbol3DLayer();
     newSymbolLayers.add(pathSymbol3DLayer);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
   const deleteSymbol3DLayer = (index: number): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     newSymbolLayers.removeAt(index);
-    lineStyleMarker3Ds.removeAt(index);
-    setSymbolLayers(newSymbolLayers);
+    const removedLayer = symbolLayers.getItemAt(index);
+    if (removedLayer?.type === "line") {
+      const newLineStyleMarker3Ds = new Map(lineStyleMarker3Ds);
+      newLineStyleMarker3Ds.delete(getSymbolLayerKey(removedLayer));
+      setLineStyleMarker3Ds(newLineStyleMarker3Ds);
+    }
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -90,12 +91,11 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
     symbolLayer.cap = value as InstanceType<typeof LineSymbol3DLayer>["cap"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -103,12 +103,11 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
     symbolLayer.join = value as InstanceType<typeof LineSymbol3DLayer>["join"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -116,23 +115,25 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     currentMarkerBlock: HTMLCalciteBlockElement,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
+    const key = getSymbolLayerKey(symbolLayer);
     if (currentMarkerBlock.expanded && !symbolLayer.marker) {
-      symbolLayer.marker = lineStyleMarker3Ds.getItemAt(
-        layerIndex,
-      ) as LineStyleMarker3D;
-    } else {
-      const newLineStyleMarker3Ds = lineStyleMarker3Ds.clone();
-      newLineStyleMarker3Ds.removeAt(layerIndex);
-      newLineStyleMarker3Ds.add(symbolLayer.marker!, layerIndex);
+      symbolLayer.marker =
+        lineStyleMarker3Ds.get(key)?.clone() ??
+        new LineStyleMarker3D({
+          color: "#007ac2",
+          placement: "begin-end",
+          style: "arrow",
+        });
+    } else if (!currentMarkerBlock.expanded && symbolLayer.marker) {
+      const newLineStyleMarker3Ds = new Map(lineStyleMarker3Ds);
+      newLineStyleMarker3Ds.set(key, symbolLayer.marker.clone());
       setLineStyleMarker3Ds(newLineStyleMarker3Ds);
       symbolLayer.marker = null;
-      updateSymbolLayers(newSymbolLayers);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -140,14 +141,13 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
     if (symbolLayer.marker) {
-      symbolLayer.marker.color = new Color(value);
+      symbolLayer.marker.color = colorWithAlpha(value, symbolLayer.marker.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -155,7 +155,7 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
@@ -164,7 +164,6 @@ function LineSymbol3DSymbolLayersForm({
         typeof LineStyleMarker3D
       >["placement"];
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -172,7 +171,7 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
@@ -181,7 +180,6 @@ function LineSymbol3DSymbolLayersForm({
         typeof LineStyleMarker3D
       >["style"];
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -189,44 +187,31 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
-  const handleLineSymbol3DLayerPatternStyleChange = (
-    layerIndex: number,
-    value: string,
-  ): void => {
-    const newSymbolLayers = symbolLayers.clone();
-    const symbolLayer = newSymbolLayers.getItemAt(
-      layerIndex,
-    ) as LineSymbol3DLayer;
-    if (symbolLayer.pattern) {
-      symbolLayer.pattern.style = value as InstanceType<
-        typeof LineStylePattern3D
-      >["style"];
-    }
-    setSymbolLayers(newSymbolLayers);
-    updateSymbolLayers(newSymbolLayers);
+  const handlePatternChange: LinePatternChangeHandler = (index, value) => {
+    const layers = cloneSymbolLayers(symbolLayers);
+    (layers.getItemAt(index) as LineSymbol3DLayer).pattern = value;
+    updateSymbolLayers(layers);
   };
 
   const handleLineSymbol3DLayerSizeChange = (
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as LineSymbol3DLayer;
     symbolLayer.size = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -234,14 +219,13 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.anchor = value as InstanceType<
       typeof PathSymbol3DLayer
     >["anchor"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -249,12 +233,11 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.cap = value as InstanceType<typeof PathSymbol3DLayer>["cap"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -262,12 +245,11 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: boolean,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.castShadows = value;
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -275,12 +257,11 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.height = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -288,12 +269,11 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.join = value as InstanceType<typeof PathSymbol3DLayer>["join"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -301,14 +281,13 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     if (symbolLayer.material) {
-      symbolLayer.material.color = new Color(value);
+      symbolLayer.material.color = colorWithAlpha(value, symbolLayer.material.color);
     }
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -316,14 +295,13 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.profile = value as InstanceType<
       typeof PathSymbol3DLayer
     >["profile"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -331,14 +309,13 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.profileRotation = value as InstanceType<
       typeof PathSymbol3DLayer
     >["profileRotation"];
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
   };
 
@@ -346,13 +323,22 @@ function LineSymbol3DSymbolLayersForm({
     layerIndex: number,
     value: string,
   ): void => {
-    const newSymbolLayers = symbolLayers.clone();
+    const newSymbolLayers = cloneSymbolLayers(symbolLayers);
     const symbolLayer = newSymbolLayers.getItemAt(
       layerIndex,
     ) as PathSymbol3DLayer;
     symbolLayer.width = Number(value);
-    setSymbolLayers(newSymbolLayers);
     updateSymbolLayers(newSymbolLayers);
+  };
+
+  const handleMaterialEmissiveChange: EmissiveChangeHandler = (
+    index,
+    value,
+  ) => {
+    const layers = cloneSymbolLayers(symbolLayers);
+    const layer = layers.getItemAt(index) as PathSymbol3DLayer;
+    if (layer.material) layer.material.emissive = value;
+    updateSymbolLayers(layers);
   };
 
   const createSymbol3DLayerCollectionForm = ():
@@ -366,18 +352,25 @@ function LineSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "line") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
 
                 <LineSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
+                  marker={
+                    symbolLayer.marker ??
+                    lineStyleMarker3Ds.get(getSymbolLayerKey(symbolLayer))
+                  }
+                  pattern={symbolLayer.pattern}
+                  handlePatternChange={handlePatternChange}
                   layerIndex={index}
                   handleCapChange={handleLineSymbol3DLayerCapChange}
                   handleJoinChange={handleLineSymbol3DLayerJoinChange}
@@ -396,9 +389,6 @@ function LineSymbol3DSymbolLayersForm({
                   handleLineSymbol3DLayerMaterialColorChange={
                     handleLineSymbol3DLayerMaterialColorChange
                   }
-                  handleLineSymbol3DLayerPatternStyleChange={
-                    handleLineSymbol3DLayerPatternStyleChange
-                  }
                   handleSizeChange={handleLineSymbol3DLayerSizeChange}
                 ></LineSymbol3DLayerForm>
               </calcite-block>,
@@ -408,17 +398,19 @@ function LineSymbol3DSymbolLayersForm({
           if (symbolLayer.type === "path") {
             symbol3DLayerCollectionForm.push(
               <calcite-block
-                collapsible
+                expandable
                 heading={`symbolLayers[${index}]`}
-                key={index}
+                key={getSymbolLayerKey(symbolLayer)}
               >
                 <calcite-action
                   icon="trash"
                   onClick={() => deleteSymbol3DLayer(index)}
-                  slot="control"
+                  slot="actions-end"
                   text="Delete"
                 ></calcite-action>
                 <PathSymbol3DLayerForm
+                  symbolLayer={symbolLayer}
+                  handleMaterialEmissiveChange={handleMaterialEmissiveChange}
                   layerIndex={index}
                   handleAnchorChange={handlePathSymbol3DLayerAnchorChange}
                   handleCapChange={handlePathSymbol3DLayerCapChange}
@@ -449,39 +441,37 @@ function LineSymbol3DSymbolLayersForm({
     <>
       <calcite-block
         style={blockStyles}
-        collapsible
+        expandable
         heading={"symbolLayers"}
         expanded
       >
-        <calcite-chip
-          id="add-layer-chip"
-          icon="add-layer"
-          label="Add Layer"
-          slot="control"
-          value="Information"
-          style={chipStyles}
-        ></calcite-chip>
-        <calcite-tooltip reference-element={"add-layer-chip"}>
-          <span>
-            Add symbol layer by opening the dropdown menu on the right
-          </span>
-        </calcite-tooltip>
+        <calcite-action-menu
+          label="Add symbol layer"
+          placement="bottom-end"
+          slot="actions-end"
+        >
+          <calcite-action
+            icon="add-layer"
+            label="Add symbol layer"
+            slot="trigger"
+            text="Add layer"
+          ></calcite-action>
+          <calcite-action
+            onClick={() => addLineSymbol3DLayer()}
+            icon="line"
+            label="Add LineSymbol3DLayer"
+            text-enabled
+            text="Add LineSymbol3DLayer"
+          ></calcite-action>
 
-        <calcite-action
-          onClick={() => addLineSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="line"
-          text-enabled
-          text="Add LineSymbol3DLayer"
-        ></calcite-action>
-
-        <calcite-action
-          onClick={() => addPathSymbol3DLayer()}
-          slot="header-menu-actions"
-          icon="line"
-          text-enabled
-          text="Add PathSymbol3DLayer"
-        ></calcite-action>
+          <calcite-action
+            onClick={() => addPathSymbol3DLayer()}
+            icon="line"
+            label="Add PathSymbol3DLayer"
+            text-enabled
+            text="Add PathSymbol3DLayer"
+          ></calcite-action>
+        </calcite-action-menu>
 
         {createSymbol3DLayerCollectionForm()}
       </calcite-block>

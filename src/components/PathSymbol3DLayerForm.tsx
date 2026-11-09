@@ -5,7 +5,6 @@ import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-switch";
-import { useState } from "react";
 import {
   cap3DOptions,
   joinOptions,
@@ -15,8 +14,11 @@ import {
 } from "./lib/constants";
 import { blockStyles, labelStyles } from "./lib/styles";
 import PathSymbol3DLayerMaterialForm from "./PathSymbol3DLayerMaterialForm";
+import type { EmissiveChangeHandler } from "./Symbol3DEmissiveForm";
 
 interface Props {
+  symbolLayer: PathSymbol3DLayer;
+  handleMaterialEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleAnchorChange: (
     layerIndex: number,
@@ -48,6 +50,8 @@ interface Props {
 }
 
 function LineSymbol3DLayerForm({
+  symbolLayer,
+  handleMaterialEmissiveChange,
   layerIndex,
   handleAnchorChange,
   handleCapChange,
@@ -59,14 +63,9 @@ function LineSymbol3DLayerForm({
   handleProfileRotationChange,
   handleWidthChange,
 }: Props): React.ReactElement {
-  const [anchor, setAnchor] = useState("center");
-  const [cap, setCap] = useState("butt");
-  const [castShadows, setCastShadows] = useState(true);
-  const [height, setHeight] = useState("5");
-  const [join, setJoin] = useState("miter");
-  const [profile, setProfile] = useState("quad");
-  const [profileRotation, setProfileRotation] = useState("all");
-  const [width, setWidth] = useState("3");
+  const { anchor, cap, castShadows, join, profile, profileRotation } = symbolLayer;
+  const height = String(symbolLayer.height);
+  const width = String(symbolLayer.width);
 
   return (
     <>
@@ -75,7 +74,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"anchor selection"}
           oncalciteSelectChange={(event) => {
-            setAnchor(event.target.value);
             handleAnchorChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -96,7 +94,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"cap selection"}
           oncalciteSelectChange={(event) => {
-            setCap(event.target.value);
             handleCapChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -117,10 +114,8 @@ function LineSymbol3DLayerForm({
         <calcite-switch
           checked={castShadows}
           oncalciteSwitchChange={(event) => {
-            setCastShadows(event.target.checked);
             handleCastShadowsChange(layerIndex, event.target.checked);
           }}
-          value={castShadows}
         ></calcite-switch>
       </calcite-label>
 
@@ -130,7 +125,6 @@ function LineSymbol3DLayerForm({
           label={"height input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setHeight(event.target.value);
             handleHeightChange(layerIndex, event.target.value);
           }}
           value={height}
@@ -143,7 +137,6 @@ function LineSymbol3DLayerForm({
           label={"width input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
             handleWidthChange(layerIndex, event.target.value);
           }}
           value={width}
@@ -155,7 +148,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"join selection"}
           oncalciteSelectChange={(event) => {
-            setJoin(event.target.value);
             handleJoinChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -171,8 +163,10 @@ function LineSymbol3DLayerForm({
         </calcite-select>
       </calcite-label>
 
-      <calcite-block style={blockStyles} collapsible heading={"material"}>
+      <calcite-block style={blockStyles} expandable heading={"material"}>
         <PathSymbol3DLayerMaterialForm
+          symbolLayer={symbolLayer}
+          handleEmissiveChange={handleMaterialEmissiveChange}
           layerIndex={layerIndex}
           handleColorChange={handlePathSymbol3DLayerMaterialColorChange}
         ></PathSymbol3DLayerMaterialForm>
@@ -183,7 +177,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"profile selection"}
           oncalciteSelectChange={(event) => {
-            setProfile(event.target.value);
             handleProfileChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -204,7 +197,6 @@ function LineSymbol3DLayerForm({
         <calcite-select
           label={"profileRotation selection"}
           oncalciteSelectChange={(event) => {
-            setProfileRotation(event.target.value);
             handleProfileRotationChange(
               layerIndex,
               event.target.value as InstanceType<

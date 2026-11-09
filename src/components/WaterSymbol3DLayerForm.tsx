@@ -4,11 +4,11 @@ import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
 import "@esri/calcite-components/dist/components/calcite-slider";
-import { useState } from "react";
 import { waterbodySizeOptions, waveStrengthOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbolLayer: WaterSymbol3DLayer;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleWaterbodySizeChange: (
@@ -23,16 +23,15 @@ interface Props {
 }
 
 function WaterSymbol3DLayerForm({
+  symbolLayer,
   layerIndex,
   handleColorChange,
   handleWaterbodySizeChange,
   handleWaveDirectionChange,
   handleWaveStrengthChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#0077BE");
-  const [waterbodySize, setWaterbodySize] = useState("medium");
-  const [waveDirection, setWaveDirection] = useState(0);
-  const [waveStrength, setWaveStrength] = useState("moderate");
+  const { waterbodySize, waveDirection, waveStrength } = symbolLayer;
+  const color = symbolLayer.color.toHex();
 
   return (
     <>
@@ -40,9 +39,7 @@ function WaterSymbol3DLayerForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
@@ -55,7 +52,6 @@ function WaterSymbol3DLayerForm({
         <calcite-select
           label={"waterbodySize selection"}
           oncalciteSelectChange={(event) => {
-            setWaterbodySize(event.target.value);
             handleWaterbodySizeChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -65,15 +61,9 @@ function WaterSymbol3DLayerForm({
           }}
           value={waterbodySize}
         >
-          {waterbodySizeOptions.map((option, index) =>
-            option === "medium" ? (
-              <calcite-option key={index} selected>
-                {option}
-              </calcite-option>
-            ) : (
-              <calcite-option key={index}>{option}</calcite-option>
-            ),
-          )}
+          {waterbodySizeOptions.map((option) => (
+            <calcite-option key={option} value={option}>{option}</calcite-option>
+          ))}
         </calcite-select>
       </calcite-label>
 
@@ -85,12 +75,11 @@ function WaterSymbol3DLayerForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setWaveDirection(event.target.value as number);
             handleWaveDirectionChange(layerIndex, event.target.value as number);
           }}
           step={1}
           ticks={180}
-          value={waveDirection}
+          value={waveDirection ?? 0}
         ></calcite-slider>
       </calcite-label>
 
@@ -99,7 +88,6 @@ function WaterSymbol3DLayerForm({
         <calcite-select
           label={"waveStrength selection"}
           oncalciteSelectChange={(event) => {
-            setWaveStrength(event.target.value);
             handleWaveStrengthChange(
               layerIndex,
               event.target.value as InstanceType<
@@ -109,15 +97,9 @@ function WaterSymbol3DLayerForm({
           }}
           value={waveStrength}
         >
-          {waveStrengthOptions.map((option, index) =>
-            option === "moderate" ? (
-              <calcite-option key={index} selected>
-                {option}
-              </calcite-option>
-            ) : (
-              <calcite-option key={index}>{option}</calcite-option>
-            ),
-          )}
+          {waveStrengthOptions.map((option) => (
+            <calcite-option key={option} value={option}>{option}</calcite-option>
+          ))}
         </calcite-select>
       </calcite-label>
     </>

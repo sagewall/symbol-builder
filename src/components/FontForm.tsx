@@ -3,11 +3,20 @@ import "@esri/calcite-components/dist/components/calcite-input-number";
 import "@esri/calcite-components/dist/components/calcite-label";
 import "@esri/calcite-components/dist/components/calcite-option";
 import "@esri/calcite-components/dist/components/calcite-select";
-import { useState } from "react";
-import { fonts, fontDecorationOptions } from "./lib/constants";
+import "@esri/calcite-components/components/calcite-input-text";
+import {
+  fonts,
+  fontDecorationOptions,
+  fontStyleOptions,
+  fontWeightOptions,
+} from "./lib/constants";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  font: Font;
+  handlePropertiesChange: (
+    value: Partial<Pick<Font, "family" | "style" | "weight">>,
+  ) => void;
   handleDecorationChange: (
     value: InstanceType<typeof Font>["decoration"],
   ) => void;
@@ -16,28 +25,88 @@ interface Props {
 }
 
 function FontForm({
+  font,
+  handlePropertiesChange,
   handleDecorationChange,
   handleFontChange,
   handleSizeChange,
 }: Props): React.ReactElement {
-  const [decoration, setDecoration] = useState("none");
-  const [font, setFont] = useState("Arial Regular");
-  const [size, setSize] = useState("12");
+  const preset = fonts.find(
+    (option) =>
+      option.font.family === font.family &&
+      option.font.style === font.style &&
+      option.font.weight === font.weight,
+  );
 
   return (
     <>
       <calcite-label layout="default" style={labelStyles}>
+        preset
         <calcite-select
           label={"font selection"}
           oncalciteSelectChange={(event) => {
-            setFont(event.target.value);
-            handleFontChange(event.target.value);
+            if (event.target.value !== "custom")
+              handleFontChange(event.target.value);
           }}
-          value={font}
+          value={preset ? JSON.stringify(preset) : "custom"}
         >
+          {!preset && (
+            <calcite-option value="custom" disabled>
+              Custom
+            </calcite-option>
+          )}
           {fonts.map((option, index) => (
             <calcite-option key={index} value={JSON.stringify(option)}>
               {option.name}
+            </calcite-option>
+          ))}
+        </calcite-select>
+      </calcite-label>
+
+      <calcite-label layout="default" style={labelStyles}>
+        family
+        <calcite-input-text
+          label="font family input"
+          value={font.family}
+          oncalciteInputTextChange={(event) =>
+            handlePropertiesChange({ family: event.target.value })
+          }
+        ></calcite-input-text>
+      </calcite-label>
+
+      <calcite-label layout="default" style={labelStyles}>
+        style
+        <calcite-select
+          label="font style selection"
+          value={font.style}
+          oncalciteSelectChange={(event) =>
+            handlePropertiesChange({
+              style: event.target.value as Font["style"],
+            })
+          }
+        >
+          {fontStyleOptions.map((option) => (
+            <calcite-option key={option} value={option}>
+              {option}
+            </calcite-option>
+          ))}
+        </calcite-select>
+      </calcite-label>
+
+      <calcite-label layout="default" style={labelStyles}>
+        weight
+        <calcite-select
+          label="font weight selection"
+          value={font.weight}
+          oncalciteSelectChange={(event) =>
+            handlePropertiesChange({
+              weight: event.target.value as Font["weight"],
+            })
+          }
+        >
+          {fontWeightOptions.map((option) => (
+            <calcite-option key={option} value={option}>
+              {option}
             </calcite-option>
           ))}
         </calcite-select>
@@ -48,12 +117,11 @@ function FontForm({
         <calcite-select
           label={"font decoration selection"}
           oncalciteSelectChange={(event) => {
-            setDecoration(event.target.value);
             handleDecorationChange(
               event.target.value as InstanceType<typeof Font>["decoration"],
             );
           }}
-          value={decoration}
+          value={font.decoration}
         >
           {fontDecorationOptions.map((option, index) => (
             <calcite-option key={index}>{option}</calcite-option>
@@ -67,10 +135,9 @@ function FontForm({
           label={"font size input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setSize(event.target.value);
             handleSizeChange(event.target.value);
           }}
-          value={size}
+          value={String(font.size)}
         ></calcite-input-number>
       </calcite-label>
     </>

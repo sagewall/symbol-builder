@@ -3,11 +3,15 @@ import "@esri/calcite-components/components/calcite-input";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
-import { useState } from "react";
 import { colorMixModeOptions } from "./lib/constants";
 import { labelStyles } from "./lib/styles";
+import Symbol3DEmissiveForm, {
+  type EmissiveChangeHandler,
+} from "./Symbol3DEmissiveForm";
 
 interface Props {
+  symbolLayer: FillSymbol3DLayer;
+  handleEmissiveChange?: EmissiveChangeHandler;
   layerIndex: number;
   handleColorChange: (layerIndex: number, value: string) => void;
   handleColorMixModeChange: (
@@ -21,12 +25,14 @@ interface Props {
 }
 
 function FillSymbol3DLayerMaterialForm({
+  symbolLayer,
+  handleEmissiveChange,
   layerIndex,
   handleColorChange,
   handleColorMixModeChange,
 }: Props): React.ReactElement {
-  const [color, setColor] = useState("#007ac2");
-  const [colorMixMode, setColorMixMode] = useState("multiply");
+  const color = symbolLayer.material?.color?.toHex() ?? "#ffffff";
+  const colorMixMode = symbolLayer.material?.colorMixMode ?? "multiply";
 
   return (
     <>
@@ -34,9 +40,7 @@ function FillSymbol3DLayerMaterialForm({
         color
         <calcite-input
           oncalciteInputInput={(event) => {
-            if (event.target.value) {
-              setColor(event.target.value);
-            }
+            if (!event.target.value) return;
             handleColorChange(layerIndex, event.target.value);
           }}
           type="color"
@@ -47,9 +51,8 @@ function FillSymbol3DLayerMaterialForm({
       <calcite-label layout="default" style={labelStyles}>
         colorMixMode
         <calcite-select
-          label={"cap selection"}
+          label="colorMixMode selection"
           oncalciteSelectChange={(event) => {
-            setColorMixMode(event.target.value);
             handleColorMixModeChange(
               layerIndex,
               event.target.value as NonNullable<
@@ -66,6 +69,13 @@ function FillSymbol3DLayerMaterialForm({
           ))}
         </calcite-select>
       </calcite-label>
+      {handleEmissiveChange && (
+        <Symbol3DEmissiveForm
+          emissive={symbolLayer.material?.emissive}
+          layerIndex={layerIndex}
+          handleChange={handleEmissiveChange}
+        />
+      )}
     </>
   );
 }

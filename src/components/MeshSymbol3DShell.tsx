@@ -1,5 +1,4 @@
-import Graphic from "@arcgis/core/Graphic.js";
-import Collection from "@arcgis/core/core/Collection.js";
+import type Collection from "@arcgis/core/core/Collection.js";
 import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
 import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D.js";
 import "@esri/calcite-components/components/calcite-panel";
@@ -16,6 +15,7 @@ import MeshSymbol3DForm from "./MeshSymbol3DForm";
 import MeshSymbol3DJSONPanel from "./MeshSymbol3DJSONPanel";
 import Scene from "./Scene";
 import { mesh } from "./lib/geometry";
+import { useSymbolPreview } from "./lib/useSymbolPreview";
 import {
   formStyles,
   shellPanelStyles,
@@ -26,29 +26,13 @@ import {
 function MeshSymbol3DShell(): React.ReactElement {
   const [meshSymbol3D, setMeshSymbol3D] = useState(new MeshSymbol3D());
 
-  const meshGraphic = new Graphic({
-    geometry: mesh,
-    symbol: meshSymbol3D,
-  });
-
-  const graphicsCollection = new Collection();
-  graphicsCollection.add(meshGraphic);
-
-  const [graphics, setGraphics] =
-    useState<Collection<Graphic>>(graphicsCollection);
+  const { graphics, updatePreview } = useSymbolPreview(mesh, meshSymbol3D);
 
   const viewElement = <Scene graphics={graphics}></Scene>;
 
   const updateGraphics = (newMeshSymbol3D: MeshSymbol3D): void => {
     setMeshSymbol3D(newMeshSymbol3D);
-
-    const newPolygonGraphic = graphics.getItemAt(0)?.clone();
-    if (newPolygonGraphic) {
-      newPolygonGraphic.symbol = newMeshSymbol3D;
-    }
-    const newGraphics = new Collection();
-    newGraphics.add(newPolygonGraphic);
-    setGraphics(newGraphics);
+    updatePreview(newMeshSymbol3D);
   };
 
   const updateSymbolLayers = (
@@ -63,11 +47,12 @@ function MeshSymbol3DShell(): React.ReactElement {
   return (
     <>
       <calcite-shell style={shellStyles}>
-        <calcite-shell-panel slot="panel-start" position="start" resizable>
+        <calcite-shell-panel slot="panel-start" resizable>
           <calcite-panel>
             <div slot="header-content">Properties </div>
             <div style={formStyles}>
               <MeshSymbol3DForm
+                symbolLayers={meshSymbol3D.symbolLayers}
                 updateSymbolLayers={updateSymbolLayers}
               ></MeshSymbol3DForm>
             </div>
@@ -76,7 +61,6 @@ function MeshSymbol3DShell(): React.ReactElement {
 
         <calcite-shell-panel
           slot="panel-end"
-          position="end"
           resizable
           style={shellPanelStyles}
         >

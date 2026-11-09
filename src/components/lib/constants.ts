@@ -1,45 +1,82 @@
+import type FillSymbol3DLayer from "@arcgis/core/symbols/FillSymbol3DLayer.js";
+import type Font from "@arcgis/core/symbols/Font.js";
+import type IconSymbol3DLayer from "@arcgis/core/symbols/IconSymbol3DLayer.js";
+import type LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";
+import type LineSymbol3DLayer from "@arcgis/core/symbols/LineSymbol3DLayer.js";
+import type LineSymbolMarker from "@arcgis/core/symbols/LineSymbolMarker.js";
+import type ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer.js";
+import type PathSymbol3DLayer from "@arcgis/core/symbols/PathSymbol3DLayer.js";
+import type SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol.js";
+import type SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol.js";
 import type SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol.js";
-import type { Symbol3DColorMixMode } from "@arcgis/core/symbols/support/types.js";
-import type {
-  FillStyle,
-  FontDecoration,
-  FontStyle,
-  FontWeight,
-  IconSymbol3DLayerAnchor,
-  IconSymbol3DLayerPrimitive,
-  LineCap,
-  LineJoin,
-  LineMarkerPlacement,
-  LineMarkerStyle,
-  LineStyle,
-  ObjectSymbol3DLayerAnchor,
-  ObjectSymbol3DLayerPrimitiveType,
-  PathSymbol3DLayerAnchor,
-  PathSymbol3DLayerCap,
-  PathSymbol3DLayerProfile,
-  PathSymbol3DLayerProfileRotation,
-  TextHorizontalAlignment,
-  TextVerticalAlignment,
-  WaterBodySize,
-  WaveStrength,
-} from "@arcgis/core/symbols/types.js";
+import type TextSymbol from "@arcgis/core/symbols/TextSymbol.js";
+import type TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer.js";
+import type WaterSymbol3DLayer from "@arcgis/core/symbols/WaterSymbol3DLayer.js";
+import type LineStylePattern3D from "@arcgis/core/symbols/patterns/LineStylePattern3D.js";
+import type StylePattern3D from "@arcgis/core/symbols/patterns/StylePattern3D.js";
+import type IconSymbol3DLayerResource from "@arcgis/core/symbols/support/IconSymbol3DLayerResource.js";
+import type ObjectSymbol3DLayerResource from "@arcgis/core/symbols/support/ObjectSymbol3DLayerResource.js";
+import type Symbol3DOutline from "@arcgis/core/symbols/support/Symbol3DOutline.js";
+import type SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D.js";
+import type SketchEdges3D from "@arcgis/core/symbols/edges/SketchEdges3D.js";
+import type { Symbol3DEmissive } from "@arcgis/core/symbols/support/Symbol3DEmissive.js";
 import fontData from "./esri-labeling-page-data.json";
 
-export const capOptions: LineCap[] = ["round", "butt", "square"];
+type OptionSupport<Value extends string, Unsupported extends Value = never> = {
+  readonly [Option in Value]: Option extends Unsupported ? null : Option;
+};
 
-export const cap3DOptions: PathSymbol3DLayerCap[] = [
-  "butt",
-  "square",
-  "round",
-  "none",
-];
+function supportedOptions<Value extends string>(
+  support: Readonly<Record<string, Value | null>>,
+): readonly Value[] {
+  return Object.freeze(
+    Object.values(support).filter((value): value is Value => value !== null),
+  );
+}
 
-export const colorMixModeOptions: Symbol3DColorMixMode[] = [
-  "multiply",
-  "ignore",
-  "replace",
-  "tint",
-];
+export const capOptions = supportedOptions({
+  round: "round",
+  butt: "butt",
+  square: "square",
+} as const satisfies OptionSupport<
+  | SimpleLineSymbol["cap"]
+  | LineSymbol3DLayer["cap"]
+  | NonNullable<Symbol3DOutline["patternCap"]>
+>);
+
+export const cap3DOptions = supportedOptions({
+  butt: "butt",
+  square: "square",
+  round: "round",
+  none: "none",
+} as const satisfies OptionSupport<PathSymbol3DLayer["cap"]>);
+
+export const colorMixModeOptions = supportedOptions({
+  multiply: "multiply",
+  replace: "replace",
+  tint: "tint",
+} as const satisfies OptionSupport<
+  NonNullable<NonNullable<FillSymbol3DLayer["material"]>["colorMixMode"]>
+>);
+
+export const emissiveSourceOptions = supportedOptions({
+  color: "color",
+  emissive: "emissive",
+} as const satisfies OptionSupport<Symbol3DEmissive["source"]>);
+
+export const edgeStyleOptions = supportedOptions({
+  solid: "solid",
+  sketch: "sketch",
+} as const satisfies OptionSupport<
+  SolidEdges3D["type"] | SketchEdges3D["type"]
+>);
+
+export const linePatternTypeOptions = supportedOptions({
+  style: "style",
+  template: "template",
+} as const satisfies OptionSupport<
+  NonNullable<LineSymbol3DLayer["pattern"]>["type"]
+>);
 
 export const esri2DPointSymbolsStyleNameOptions = [
   "extent-hollow-gray",
@@ -604,24 +641,26 @@ export const esriThematicTreesStyleNameOptions = [
   "Hamamelis",
 ];
 
-export const fillOptions: FillStyle[] = [
-  "solid",
-  "backward-diagonal",
-  "cross",
-  "diagonal-cross",
-  "forward-diagonal",
-  "horizontal",
-  "none",
-  "vertical",
-];
+export const fillOptions = supportedOptions({
+  solid: "solid",
+  "backward-diagonal": "backward-diagonal",
+  cross: "cross",
+  "diagonal-cross": "diagonal-cross",
+  "forward-diagonal": "forward-diagonal",
+  horizontal: "horizontal",
+  none: "none",
+  vertical: "vertical",
+} as const satisfies OptionSupport<
+  SimpleFillSymbol["style"] | StylePattern3D["style"]
+>);
 
-export const fontDecorationOptions: FontDecoration[] = [
-  "none",
-  "underline",
-  "line-through",
-];
+export const fontDecorationOptions = supportedOptions({
+  none: "none",
+  underline: "underline",
+  "line-through": "line-through",
+} as const satisfies OptionSupport<Font["decoration"]>);
 
-export const fonts = fontData;
+export const fonts = fontData.fontList;
 
 export const fontFamilyOptions = [
   "Abril Fatface",
@@ -670,121 +709,161 @@ export const fontFamilyOptions = [
   "Walter Turncoat",
 ];
 
-export const fontStyleOptions: FontStyle[] = ["normal", "italic", "oblique"];
+export const fontStyleOptions = supportedOptions({
+  normal: "normal",
+  italic: "italic",
+  oblique: "oblique",
+} as const satisfies OptionSupport<Font["style"]>);
 
-export const fontWeightOptions: FontWeight[] = [
-  "normal",
-  "bold",
-  "bolder",
-  "lighter",
-];
+export const fontWeightOptions = supportedOptions({
+  normal: "normal",
+  bold: "bold",
+  bolder: "bolder",
+  lighter: "lighter",
+} as const satisfies OptionSupport<Font["weight"]>);
 
-export const horizontalAlignmentOptions: TextHorizontalAlignment[] = [
-  "center",
-  "right",
-  "left",
-];
+export const horizontalAlignmentSupport = {
+  center: "center",
+  right: "right",
+  left: "left",
+  justify: null,
+} as const satisfies OptionSupport<
+  TextSymbol["horizontalAlignment"] | TextSymbol3DLayer["horizontalAlignment"],
+  "justify"
+>;
 
-export const iconSymbol3dLayerAnchorOptions: IconSymbol3DLayerAnchor[] = [
-  "center",
-  "left",
-  "right",
-  "top",
-  "bottom",
-  "top-left",
-  "top-right",
-  "bottom-left",
-  "bottom-right",
-  "relative",
-];
+export const horizontalAlignmentOptions = supportedOptions(
+  horizontalAlignmentSupport,
+);
 
-export const iconSymbol3dLayerResourcePrimitiveOptions: IconSymbol3DLayerPrimitive[] =
-  ["circle", "square", "cross", "x", "kite", "triangle"];
+export const iconSymbol3dLayerAnchorOptions = supportedOptions({
+  center: "center",
+  left: "left",
+  right: "right",
+  top: "top",
+  bottom: "bottom",
+  "top-left": "top-left",
+  "top-right": "top-right",
+  "bottom-left": "bottom-left",
+  "bottom-right": "bottom-right",
+  relative: "relative",
+} as const satisfies OptionSupport<IconSymbol3DLayer["anchor"]>);
 
-export const joinOptions: LineJoin[] = ["miter", "round", "bevel"];
+export const iconSymbol3dLayerResourcePrimitiveOptions = supportedOptions({
+  circle: "circle",
+  square: "square",
+  cross: "cross",
+  x: "x",
+  kite: "kite",
+  triangle: "triangle",
+} as const satisfies OptionSupport<
+  NonNullable<IconSymbol3DLayerResource["primitive"]>
+>);
 
-export const lineStyleMarker3dStyleOptions: LineMarkerStyle[] = [
-  "arrow",
-  "circle",
-  "square",
-  "diamond",
-  "cross",
-  "x",
-];
+export const joinOptions = supportedOptions({
+  miter: "miter",
+  round: "round",
+  bevel: "bevel",
+} as const satisfies OptionSupport<
+  | SimpleLineSymbol["join"]
+  | LineSymbol3DLayer["join"]
+  | PathSymbol3DLayer["join"]
+>);
 
-export const lineStyleOptions: LineStyle[] = [
-  "solid",
-  "dash",
-  "dash-dot",
-  "dot",
-  "long-dash",
-  "long-dash-dot",
-  "long-dash-dot-dot",
-  "none",
-  "short-dash",
-  "short-dash-dot",
-  "short-dash-dot-dot",
-  "short-dot",
-];
+export const lineStyleMarker3dStyleOptions = supportedOptions({
+  arrow: "arrow",
+  circle: "circle",
+  square: "square",
+  diamond: "diamond",
+  cross: "cross",
+  x: "x",
+} as const satisfies OptionSupport<
+  LineStyleMarker3D["style"] | LineSymbolMarker["style"]
+>);
 
-export const markerPlacementOptions: LineMarkerPlacement[] = [
-  "begin",
-  "end",
-  "begin-end",
-];
+export const lineStyleOptions = supportedOptions({
+  solid: "solid",
+  dash: "dash",
+  "dash-dot": "dash-dot",
+  dot: "dot",
+  "long-dash": "long-dash",
+  "long-dash-dot": "long-dash-dot",
+  "long-dash-dot-dot": "long-dash-dot-dot",
+  none: "none",
+  "short-dash": "short-dash",
+  "short-dash-dot": "short-dash-dot",
+  "short-dash-dot-dot": "short-dash-dot-dot",
+  "short-dot": "short-dot",
+} as const satisfies OptionSupport<
+  SimpleLineSymbol["style"] | LineStylePattern3D["style"]
+>);
 
-export const markerStyleOptions: LineMarkerStyle[] = [
-  "arrow",
-  "circle",
-  "square",
-  "diamond",
-  "cross",
-  "x",
-];
+export const markerPlacementOptions = supportedOptions({
+  begin: "begin",
+  end: "end",
+  "begin-end": "begin-end",
+} as const satisfies OptionSupport<
+  LineSymbolMarker["placement"] | LineStyleMarker3D["placement"]
+>);
 
-export const objectSymbol3DLayerAnchorOptions: ObjectSymbol3DLayerAnchor[] = [
-  "center",
-  "top",
-  "bottom",
-  "origin",
-  "relative",
-];
+export const markerStyleOptions = lineStyleMarker3dStyleOptions;
 
-export const objectSymbol3dLayerResourcePrimitiveOptions: ObjectSymbol3DLayerPrimitiveType[] =
-  [
-    "sphere",
-    "cylinder",
-    "cube",
-    "cone",
-    "inverted-cone",
-    "diamond",
-    "tetrahedron",
-  ];
+export const objectSymbol3DLayerAnchorOptions = supportedOptions({
+  center: "center",
+  top: "top",
+  bottom: "bottom",
+  origin: "origin",
+  relative: "relative",
+} as const satisfies OptionSupport<NonNullable<ObjectSymbol3DLayer["anchor"]>>);
 
-export const pathSymbol3dLayerAnchorOptions: PathSymbol3DLayerAnchor[] = [
-  "center",
-  "bottom",
-  "top",
-];
+export const objectSymbol3dLayerResourcePrimitiveOptions = supportedOptions({
+  sphere: "sphere",
+  cylinder: "cylinder",
+  cube: "cube",
+  cone: "cone",
+  "inverted-cone": "inverted-cone",
+  diamond: "diamond",
+  tetrahedron: "tetrahedron",
+} as const satisfies OptionSupport<
+  NonNullable<ObjectSymbol3DLayerResource["primitive"]>
+>);
 
-export const profileOptions: PathSymbol3DLayerProfile[] = ["quad", "circle"];
+export const occludedVisibilityOptions = supportedOptions({
+  adaptive: "adaptive",
+  hidden: "hidden",
+  visible: "visible",
+} as const satisfies OptionSupport<
+  NonNullable<
+    | NonNullable<IconSymbol3DLayer["occludedVisibility"]>["mode"]
+    | NonNullable<TextSymbol3DLayer["occludedVisibility"]>["mode"]
+  >
+>);
 
-export const rotationOptions: PathSymbol3DLayerProfileRotation[] = [
-  "all",
-  "heading",
-];
+export const pathSymbol3dLayerAnchorOptions = supportedOptions({
+  center: "center",
+  bottom: "bottom",
+  top: "top",
+} as const satisfies OptionSupport<PathSymbol3DLayer["anchor"]>);
 
-export const simpleMarkerSymbolStyleOptions: InstanceType<
-  typeof SimpleMarkerSymbol
->["style"][] = [
-  "circle",
-  "square",
-  "cross",
-  "x",
-  "diamond",
-  "triangle",
-  "path",
-];
+export const profileOptions = supportedOptions({
+  quad: "quad",
+  circle: "circle",
+} as const satisfies OptionSupport<PathSymbol3DLayer["profile"]>);
+
+export const rotationOptions = supportedOptions({
+  all: "all",
+  heading: "heading",
+} as const satisfies OptionSupport<PathSymbol3DLayer["profileRotation"]>);
+
+export const simpleMarkerSymbolStyleOptions = supportedOptions({
+  circle: "circle",
+  square: "square",
+  cross: "cross",
+  x: "x",
+  diamond: "diamond",
+  triangle: "triangle",
+  path: "path",
+} as const satisfies OptionSupport<SimpleMarkerSymbol["style"]>);
 
 export const symbols = [
   {
@@ -945,25 +1024,27 @@ export const symbols = [
   },
 ];
 
-export const verticalAlignmentOptions: TextVerticalAlignment[] = [
-  "baseline",
-  "top",
-  "middle",
-  "bottom",
-];
+export const verticalAlignmentOptions = supportedOptions({
+  baseline: "baseline",
+  top: "top",
+  middle: "middle",
+  bottom: "bottom",
+} as const satisfies OptionSupport<
+  TextSymbol["verticalAlignment"] | TextSymbol3DLayer["verticalAlignment"]
+>);
 
-export const waterbodySizeOptions: WaterBodySize[] = [
-  "small",
-  "medium",
-  "large",
-];
+export const waterbodySizeOptions = supportedOptions({
+  small: "small",
+  medium: "medium",
+  large: "large",
+} as const satisfies OptionSupport<WaterSymbol3DLayer["waterbodySize"]>);
 
-export const waveStrengthOptions: WaveStrength[] = [
-  "calm",
-  "rippled",
-  "slight",
-  "moderate",
-];
+export const waveStrengthOptions = supportedOptions({
+  calm: "calm",
+  rippled: "rippled",
+  slight: "slight",
+  moderate: "moderate",
+} as const satisfies OptionSupport<WaterSymbol3DLayer["waveStrength"]>);
 
 export const webStyleSymbols2DStyleOptions = ["Esri2DPointSymbolsStyle"];
 

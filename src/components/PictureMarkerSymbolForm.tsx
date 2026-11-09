@@ -1,11 +1,12 @@
+import type PictureMarkerSymbol from "@arcgis/core/symbols/PictureMarkerSymbol.js";
 import "@esri/calcite-components/components/calcite-input-number";
 import "@esri/calcite-components/components/calcite-input-text";
 import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-slider";
-import { useState } from "react";
 import { labelStyles } from "./lib/styles";
 
 interface Props {
+  symbol: PictureMarkerSymbol;
   handleAngleChange: (value: number) => void;
   handleHeightChange: (value: string) => void;
   handleUrlChange: (value: string) => void;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 function PictureMarkerSymbolForm({
+  symbol,
   handleAngleChange,
   handleHeightChange,
   handleUrlChange,
@@ -22,14 +24,7 @@ function PictureMarkerSymbolForm({
   handleXoffsetChange,
   handleYoffsetChange,
 }: Props): React.ReactElement {
-  const [angle, setAngle] = useState(0);
-  const [height, setHeight] = useState("100");
-  const [url, setUrl] = useState(
-    "https://sagewall.github.io/test-images/globie.png",
-  );
-  const [width, setWidth] = useState("100");
-  const [xoffset, setXoffset] = useState("0");
-  const [yoffset, setYoffset] = useState("0");
+  const { angle, height, url, width, xoffset, yoffset } = symbol;
 
   return (
     <>
@@ -41,7 +36,6 @@ function PictureMarkerSymbolForm({
           max={360}
           min={0}
           oncalciteSliderChange={(event) => {
-            setAngle(event.target.value as number);
             handleAngleChange(event.target.value as number);
           }}
           step={1}
@@ -56,10 +50,9 @@ function PictureMarkerSymbolForm({
           label={"height input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setHeight(event.target.value);
             handleHeightChange(event.target.value);
           }}
-          value={height}
+          value={String(height)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -69,10 +62,9 @@ function PictureMarkerSymbolForm({
           label={"width input"}
           min={0}
           oncalciteInputNumberChange={(event) => {
-            setWidth(event.target.value);
             handleWidthChange(event.target.value);
           }}
-          value={width}
+          value={String(width)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -81,10 +73,9 @@ function PictureMarkerSymbolForm({
         <calcite-input-text
           label={"url input"}
           oncalciteInputTextChange={(event) => {
-            setUrl(event.target.value);
             handleUrlChange(event.target.value);
           }}
-          value={url}
+          value={url ?? ""}
         ></calcite-input-text>
       </calcite-label>
 
@@ -93,10 +84,9 @@ function PictureMarkerSymbolForm({
         <calcite-input-number
           label={"xoffset input"}
           oncalciteInputNumberChange={(event) => {
-            setXoffset(event.target.value);
             handleXoffsetChange(event.target.value);
           }}
-          value={xoffset}
+          value={String(xoffset)}
         ></calcite-input-number>
       </calcite-label>
 
@@ -105,10 +95,9 @@ function PictureMarkerSymbolForm({
         <calcite-input-number
           label={"yoffset input"}
           oncalciteInputNumberChange={(event) => {
-            setYoffset(event.target.value);
             handleYoffsetChange(event.target.value);
           }}
-          value={yoffset}
+          value={String(yoffset)}
         ></calcite-input-number>
       </calcite-label>
     </>
