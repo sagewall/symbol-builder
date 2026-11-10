@@ -92,8 +92,12 @@ const formCases: {
     type: "SimpleLineSymbol",
     initial: initialOutline,
     edited: {
-      color: [15, 25, 35, 0.4], cap: "square", join: "bevel",
-      miterLimit: 3, width: 4, style: "dash",
+      color: [15, 25, 35, 0.4],
+      cap: "square",
+      join: "bevel",
+      miterLimit: 3,
+      width: 4,
+      style: "dash",
       marker: { color: [10, 20, 30, 0.5], placement: "end", style: "diamond" },
     },
   },
@@ -102,8 +106,13 @@ const formCases: {
     type: "SimpleMarkerSymbol",
     initial: { color: "#007ac2", outline: initialOutline },
     edited: {
-      color: [15, 25, 35, 0.4], angle: 45, size: 22,
-      style: "path", path: "M0 0 L10 10 Z", xoffset: 3, yoffset: 4,
+      color: [15, 25, 35, 0.4],
+      angle: 45,
+      size: 22,
+      style: "path",
+      path: "M0 0 L10 10 Z",
+      xoffset: 3,
+      yoffset: 4,
       outline: { ...initialOutline, cap: "square", width: 3 },
     },
   },
@@ -112,7 +121,8 @@ const formCases: {
     type: "SimpleFillSymbol",
     initial: { color: "#007ac2", outline: initialOutline },
     edited: {
-      color: [15, 25, 35, 0.4], style: "cross",
+      color: [15, 25, 35, 0.4],
+      style: "cross",
       outline: { ...initialOutline, join: "bevel", width: 3 },
     },
   },
@@ -120,25 +130,36 @@ const formCases: {
     name: "picture marker",
     type: "PictureMarkerSymbol",
     initial: {
-      height: 100, width: 100,
-      url: "https://sagewall.github.io/test-images/globie.png",
+      height: 100,
+      width: 100,
+      url: "https://assets.s46e.com/globie.png",
     },
     edited: {
-      angle: 45, height: 30, width: 40,
-      url: "https://example.com/marker.png", xoffset: 3, yoffset: 4,
+      angle: 45,
+      height: 30,
+      width: 40,
+      url: "https://example.com/marker.png",
+      xoffset: 3,
+      yoffset: 4,
     },
   },
   {
     name: "picture fill",
     type: "PictureFillSymbol",
     initial: {
-      height: 75, width: 75,
-      url: "https://sagewall.github.io/test-images/globie.png",
+      height: 75,
+      width: 75,
+      url: "https://assets.s46e.com/globie.png",
       outline: initialOutline,
     },
     edited: {
-      height: 30, width: 40, url: "https://example.com/fill.png",
-      xoffset: 3, yoffset: 4, xscale: 2, yscale: 3,
+      height: 30,
+      width: 40,
+      url: "https://example.com/fill.png",
+      xoffset: 3,
+      yoffset: 4,
+      xscale: 2,
+      yscale: 3,
       outline: { ...initialOutline, color: [15, 25, 35, 0.4], width: 3 },
     },
   },
@@ -146,21 +167,39 @@ const formCases: {
     name: "text",
     type: "TextSymbol",
     initial: {
-      backgroundColor: [255, 255, 255, 0], borderLineColor: [255, 255, 255, 0],
-      borderLineSize: 0, font: { family: "Abril Fatface", size: 12 },
-      haloColor: "#ffffff", haloSize: 0, kerning: false, text: "Hello World!",
+      backgroundColor: [255, 255, 255, 0],
+      borderLineColor: [255, 255, 255, 0],
+      borderLineSize: 0,
+      font: { family: "Abril Fatface", size: 12 },
+      haloColor: "#ffffff",
+      haloSize: 0,
+      kerning: false,
+      text: "Hello World!",
     },
     edited: {
-      angle: 45, backgroundColor: [15, 25, 35, 0.4],
-      borderLineColor: [30, 40, 50, 0.6], borderLineSize: 3,
+      angle: 45,
+      backgroundColor: [15, 25, 35, 0.4],
+      borderLineColor: [30, 40, 50, 0.6],
+      borderLineSize: 3,
       color: [40, 50, 60, 0.5],
       font: {
-        family: "Arial", size: 20, decoration: "underline",
-        style: "italic", weight: "bold",
+        family: "Arial",
+        size: 20,
+        decoration: "underline",
+        style: "italic",
+        weight: "bold",
       },
-      haloColor: [60, 70, 80, 0.3], haloSize: 2, horizontalAlignment: "right",
-      kerning: true, lineHeight: 1.8, lineWidth: 250, rotated: true,
-      text: 'Edited "label"\nSecond line', verticalAlignment: "top", xoffset: 3, yoffset: 4,
+      haloColor: [60, 70, 80, 0.3],
+      haloSize: 2,
+      horizontalAlignment: "right",
+      kerning: true,
+      lineHeight: 1.8,
+      lineWidth: 250,
+      rotated: true,
+      text: 'Edited "label"\nSecond line',
+      verticalAlignment: "top",
+      xoffset: 3,
+      yoffset: 4,
     },
   },
   {
@@ -168,26 +207,46 @@ const formCases: {
     type: "PointSymbol3D",
     initial: {
       callout: { type: "line", size: 1 },
-      verticalOffset: { maxWorldLength: 100, minWorldLength: 0, screenLength: 0 },
+      verticalOffset: {
+        maxWorldLength: 100,
+        minWorldLength: 0,
+        screenLength: 0,
+      },
       symbolLayers: [initialIcon, initialObject],
     },
     edited: {
       callout: {
-        type: "line", color: [15, 25, 35, 0.4], size: 2,
+        type: "line",
+        color: [15, 25, 35, 0.4],
+        size: 2,
         border: { color: "white" },
       },
-      verticalOffset: { maxWorldLength: 250, minWorldLength: 10, screenLength: 20 },
+      verticalOffset: {
+        maxWorldLength: 250,
+        minWorldLength: 10,
+        screenLength: 20,
+      },
       symbolLayers: [
         {
-          ...initialIcon, anchor: "relative",
-          anchorPosition: { x: 0.5, y: 0.25 }, angle: 45, size: 22,
+          ...initialIcon,
+          anchor: "relative",
+          anchorPosition: { x: 0.5, y: 0.25 },
+          angle: 45,
+          size: 22,
           resource: { href: "https://example.com/icon.svg" },
         },
         {
-          ...initialObject, anchor: "relative",
+          ...initialObject,
+          anchor: "relative",
           anchorPosition: { x: 0.5, y: 0.25, z: -0.5 },
-          depth: 12, height: 15, width: 18, heading: 45, roll: 20, tilt: 10,
-          castShadows: true, resource: { primitive: "cube" },
+          depth: 12,
+          height: 15,
+          width: 18,
+          heading: 45,
+          roll: 20,
+          tilt: 10,
+          castShadows: true,
+          resource: { primitive: "cube" },
         },
       ],
     },
@@ -196,24 +255,41 @@ const formCases: {
     name: "point text",
     type: "PointSymbol3D",
     initial: {
-      symbolLayers: [{
-        type: "text", background: { color: "#aaaaaa" }, font: {},
-        halo: { color: "black", size: 0 }, horizontalAlignment: "center",
-        lineHeight: 1, material: { color: "white" }, size: 9,
-        text: "Hello World!", verticalAlignment: "baseline",
-      }],
+      symbolLayers: [
+        {
+          type: "text",
+          background: { color: "#aaaaaa" },
+          font: {},
+          halo: { color: "black", size: 0 },
+          horizontalAlignment: "center",
+          lineHeight: 1,
+          material: { color: "white" },
+          size: 9,
+          text: "Hello World!",
+          verticalAlignment: "baseline",
+        },
+      ],
     },
     edited: {
-      symbolLayers: [{
-        type: "text", background: { color: [15, 25, 35, 0.4] },
-        font: {
-          family: "Arial", weight: "bold",
-          style: "italic", decoration: "underline",
+      symbolLayers: [
+        {
+          type: "text",
+          background: { color: [15, 25, 35, 0.4] },
+          font: {
+            family: "Arial",
+            weight: "bold",
+            style: "italic",
+            decoration: "underline",
+          },
+          halo: { color: "blue", size: 2 },
+          horizontalAlignment: "right",
+          lineHeight: 1.8,
+          material: { color: "red" },
+          size: 20,
+          text: 'Edited "label"\nSecond line',
+          verticalAlignment: "top",
         },
-        halo: { color: "blue", size: 2 }, horizontalAlignment: "right",
-        lineHeight: 1.8, material: { color: "red" }, size: 20,
-        text: 'Edited "label"\nSecond line', verticalAlignment: "top",
-      }],
+      ],
     },
   },
   {
@@ -222,12 +298,18 @@ const formCases: {
     initial: {
       symbolLayers: [
         {
-          type: "line", material: { color: "#007ac2" },
-          pattern: { type: "style", style: "solid" }, size: 3,
+          type: "line",
+          material: { color: "#007ac2" },
+          pattern: { type: "style", style: "solid" },
+          size: 3,
         },
         {
-          type: "path", castShadows: true, height: 5,
-          material: { color: "#007ac2" }, profile: "quad", width: 3,
+          type: "path",
+          castShadows: true,
+          height: 5,
+          material: { color: "#007ac2" },
+          profile: "quad",
+          width: 3,
         },
       ],
     },
@@ -235,14 +317,30 @@ const formCases: {
       worldSized: true,
       symbolLayers: [
         {
-          type: "line", cap: "round", join: "bevel",
+          type: "line",
+          cap: "round",
+          join: "bevel",
           material: { color: "blue" },
-          pattern: { type: "template", dashTemplate: [[3, 2], [1, 2]] }, size: 6,
+          pattern: {
+            type: "template",
+            dashTemplate: [
+              [3, 2],
+              [1, 2],
+            ],
+          },
+          size: 6,
         },
         {
-          type: "path", anchor: "bottom", cap: "round", join: "bevel",
-          castShadows: false, height: 8, material: { color: "red" },
-          profile: "circle", profileRotation: "heading", width: 5,
+          type: "path",
+          anchor: "bottom",
+          cap: "round",
+          join: "bevel",
+          castShadows: false,
+          height: 8,
+          material: { color: "red" },
+          profile: "circle",
+          profileRotation: "heading",
+          width: 5,
         },
       ],
     },
@@ -256,36 +354,50 @@ const formCases: {
           type: "fill",
           material: { color: "#007ac2", colorMixMode: "multiply" },
           outline: {
-            color: "#111111", pattern: { type: "style", style: "solid" }, size: 3,
+            color: "#111111",
+            pattern: { type: "style", style: "solid" },
+            size: 3,
           },
           pattern: { type: "style", style: "solid" },
         },
         {
-          type: "extrude", edges: { type: "solid", size: 1 },
-          material: { color: "#007ac2" }, size: 20,
+          type: "extrude",
+          edges: { type: "solid", size: 1 },
+          material: { color: "#007ac2" },
+          size: 20,
         },
-        initialIcon, initialObject, { type: "water", waveDirection: 0 },
+        initialIcon,
+        initialObject,
+        { type: "water", waveDirection: 0 },
       ],
     },
     edited: {
       symbolLayers: [
         {
-          type: "fill", castShadows: false,
+          type: "fill",
+          castShadows: false,
           material: { color: "red", colorMixMode: "replace" },
           outline: {
-            color: "blue", pattern: { type: "style", style: "dash" },
-            patternCap: "round", size: 5,
+            color: "blue",
+            pattern: { type: "style", style: "dash" },
+            patternCap: "round",
+            size: 5,
           },
           pattern: { type: "style", style: "cross" },
         },
         {
           type: "extrude",
           edges: { type: "sketch", color: "blue", size: 2, extensionLength: 3 },
-          material: { color: "red" }, size: 35, castShadows: false,
+          material: { color: "red" },
+          size: 35,
+          castShadows: false,
         },
         {
-          type: "water", color: "red", waveDirection: 90,
-          waveStrength: "moderate", waterbodySize: "large",
+          type: "water",
+          color: "red",
+          waveDirection: 90,
+          waveStrength: "moderate",
+          waterbodySize: "large",
         },
       ],
     },
@@ -294,23 +406,29 @@ const formCases: {
     name: "mesh fill",
     type: "MeshSymbol3D",
     initial: {
-      symbolLayers: [{
-        type: "fill",
-        material: { color: "#007ac2", colorMixMode: "multiply" },
-        edges: { type: "solid", color: "black" },
-        pattern: { type: "style", style: "solid" },
-      }],
+      symbolLayers: [
+        {
+          type: "fill",
+          material: { color: "#007ac2", colorMixMode: "multiply" },
+          edges: { type: "solid", color: "black" },
+          pattern: { type: "style", style: "solid" },
+        },
+      ],
     },
     edited: {
-      symbolLayers: [{
-        type: "fill", castShadows: false,
-        material: {
-          color: "red", colorMixMode: "replace",
-          emissive: { source: "color", strength: 0.6 },
+      symbolLayers: [
+        {
+          type: "fill",
+          castShadows: false,
+          material: {
+            color: "red",
+            colorMixMode: "replace",
+            emissive: { source: "color", strength: 0.6 },
+          },
+          edges: { type: "sketch", size: 2, extensionLength: 3 },
+          pattern: { type: "style", style: "cross" },
         },
-        edges: { type: "sketch", size: 2, extensionLength: 3 },
-        pattern: { type: "style", style: "cross" },
-      }],
+      ],
     },
   },
   {
@@ -318,10 +436,12 @@ const formCases: {
     type: "WebStyleSymbol",
     initial: {
       name: "Armadillo",
-      styleUrl: "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
+      styleUrl:
+        "https://www.arcgis.com/sharing/rest/content/items/1fbb242c54e4415d9b8e8a343ca7a9d0/data",
     },
     edited: {
-      name: "Cell_Phone_Antenna", styleName: "EsriInfrastructureStyle",
+      name: "Cell_Phone_Antenna",
+      styleName: "EsriInfrastructureStyle",
       portal: { url: "https://portal.example.test" },
     },
   },
@@ -333,7 +453,9 @@ for (const fixture of formCases) {
       test(`${fixture.name} ${state} ${format} snippet matches all symbol properties`, async () => {
         const symbol = new constructors[fixture.type](fixture[state]);
         if (fixture.name === "polygon layers" && state === "edited") {
-          expect(symbol.symbolLayers.getItemAt(2).waveStrength).toBe("moderate");
+          expect(symbol.symbolLayers.getItemAt(2).waveStrength).toBe(
+            "moderate",
+          );
         }
         const result = await roundTrip(fixture.type, format, symbol);
         expect(JSON.parse(JSON.stringify(result.toJSON()))).toEqual(
@@ -589,11 +711,13 @@ for (const symbolType of ["PointSymbol3D", "PolygonSymbol3D"] as const) {
     ]) {
       test(`${symbolType} ${format} preserves an unset object anchor with ${JSON.stringify(resource)}`, async () => {
         const symbol = new constructors[symbolType]({
-          symbolLayers: [{
-            type: "object",
-            material: { color: "red" },
-            resource,
-          }],
+          symbolLayers: [
+            {
+              type: "object",
+              material: { color: "red" },
+              resource,
+            },
+          ],
         });
         expect(symbol.symbolLayers.getItemAt(0).anchor).toBeUndefined();
 
@@ -784,7 +908,9 @@ for (const format of formats) {
         ).toEqual(symbol.symbolLayers.getItemAt(0).marker?.toJSON() ?? null);
         if (format === "ESM") {
           expect(
-            generators.LineSymbol3D.generateLineSymbol3DESMSnippet(symbol).includes(
+            generators.LineSymbol3D.generateLineSymbol3DESMSnippet(
+              symbol,
+            ).includes(
               'import LineStyleMarker3D from "@arcgis/core/symbols/LineStyleMarker3D.js";',
             ),
           ).toBe(markerEnabled);

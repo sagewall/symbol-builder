@@ -31,7 +31,7 @@ function PictureMarkerSymbolShell(): React.ReactElement {
   const [pictureMarkerSymbol, setPictureMarkerSymbol] = useState(
     new PictureMarkerSymbol({
       height: 100,
-      url: "https://sagewall.github.io/test-images/globie.png",
+      url: "https://assets.s46e.com/globie.png",
       width: 100,
     }),
   );

@@ -27,8 +27,12 @@ function PictureFillSymbolShell(): React.ReactElement {
   const [pictureFillSymbol, setPictureFillSymbol] = useState(
     new PictureFillSymbol({
       height: 75,
-      outline: new SimpleLineSymbol({ color: "#007ac2", miterLimit: 1, width: 1 }),
-      url: "https://sagewall.github.io/test-images/globie.png",
+      outline: new SimpleLineSymbol({
+        color: "#007ac2",
+        miterLimit: 1,
+        width: 1,
+      }),
+      url: "https://assets.s46e.com/globie.png",
       width: 75,
     }),
   );
